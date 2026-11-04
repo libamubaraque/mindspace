@@ -1,0 +1,249 @@
+/* Mindspace- Main styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0, 400;0, 500;1,400;1,500&family=Dancing+script:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #F3EBDD;
+    color: #304638;
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== NAVIGATION =====*/
+
+.navbar {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 22px 8%;
+    background-color: #F3EBDD;
+    gap: 25px
+}
+
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    white-space: nowrap;
+}
+
+.logo span {
+    color:#819681
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap:30px;
+    list-style: none;
+}
+
+.nav-links a{
+    font-size: 14px;
+    color: #526157;
+    transition: color 0.3;
+}
+
+.nav-links a:hover {
+    color: #819681
+}
+
+.nav-button,
+.primary-button {
+    display: inline-block;
+    background-color: #304638;
+    color: #FFFFFF;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-button:hover,
+.primary-button:hover {
+    background-color: #819681;
+    color: #FFFFFF;
+}
+
+
+/* ====== HERO SECTION ======*/
+
+.hero {
+    min-height: 570px;
+    padding:70px 8%;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 45px;
+    background-color: #F3EBDD;
+}
+
+.hero-content {
+    max-width: 550px;
+}
+
+.eyebrow,
+.section-label {
+    color: #718875;
+    font-size:12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    margin-bottom: 20px;
+}
+
+.hero h1{
+    font-family: 'Coromorant Garamond' , serif;
+    font-size: clamp(46px, 5vw, 72px);
+    font-weight:500;
+    line-height: 1.08;
+    margin-bottom: 24px;
+}
+
+,hero h1 span {
+    display: inline-block;
+    font-family: 'Coromant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: #819681;
+}
+
+.hero-description {
+    max-width: 440px;
+    color:#62675E;
+    font-size: 15px;
+    margin-bottom: 28px;
+}
+
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.secondary-button{
+    color: #304638;
+    font-size: 14px;
+
+}
+
+.secondary-button:hover {
+    color: #819681;
+
+}
+
+.hero-note {
+    display-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    color: #73776D;
+    font-size: 12px;
+}
+
+.note-icon {
+    color: #819681;
+    font-size: 25px;
+}
+
+/*===== HERO DECORATIONS=====*/
+
+.hero-art {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sun {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: #E4E8D9;
+}
+
+.art-card {
+    position: relative;
+    z-index:1;
+    width: 260px;
+    padding: 35px 25px;
+    text-align: center;
+    background-color: #FAF6EE;
+    border: 1px solid #E3DACA;
+    border-radius : 18px;
+    box-shadow: 0 20px 50px #30463812;
+    transform: rotate(-3deg);
+}
+
+.art-small{
+    font-size: 10px;
+    letter-spacing: 2px;
+    colorr: #819681;
+    margin-bottom: 15px;
+}
+
+.art-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:30px;
+    font-weight: 500;
+    line-height:1.3;
+}
+
+.art-bottom {
+    margin-top: 20px;
+    color: #819681;
+    font-family: 'Dancing script', cursive;
+    font-size: 19px;
+
+}
+
+.floating-star {
+    position: absolute;
+    color: #819681;
+
+}
+
+.star-one {
+    top: 20px;
+    right:20px;
+    font-size:30px;
+}
+
+.stae-two {
+    bottom:30px;
+    left:5px;
+    font-size: 28px;
+}
+
+.star-three {
+    top:70px;
+    left:10px;
+    font-size:23px;
+}
+
+/*=======ABOUT SECTION======*/
+
+.about-section {
+    padding:85px 10%;
+}
