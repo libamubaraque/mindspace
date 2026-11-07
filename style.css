@@ -1,24 +1,21 @@
 
 /* =========================================
-   TO THE ETHER — BURGUNDY & CHAMPAGNE
+   TO THE ETHER — DARK OCEAN THEME
 ========================================= */
 
 :root {
-    --burgundy: #481B2C;
-    --burgundy-dark: #32111F;
-    --burgundy-light: #702F45;
-    --burgundy-soft: #8B5263;
+    --midnight: #071D2B;
+    --deep-blue: #102F42;
+    --ocean: #17465A;
+    --teal: #286477;
 
-    --champagne: #F1E3CC;
-    --champagne-light: #F8EFDF;
-    --ivory: #FFFAF2;
+    --champagne: #DCC69F;
+    --gold-light: #E9D9BC;
+    --ivory: #F8F5ED;
 
-    --text-dark: #481B2C;
-    --text-light: #F8EFDF;
-    --muted: #BCA4A2;
-
-    --border: rgba(241, 227, 204, 0.22);
-    --shadow: 0 15px 45px rgba(50, 17, 31, 0.16);
+    --muted: #B5C3C8;
+    --border: rgba(220, 198, 159, 0.25);
+    --shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
 }
 
 /* RESET */
@@ -32,8 +29,8 @@
 
 body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--ivory);
-    color: var(--text-dark);
+    background: var(--midnight);
+    color: var(--ivory);
     overflow-x: hidden;
 }
 
@@ -58,7 +55,7 @@ button {
     align-items: center;
     justify-content: space-between;
     gap: 25px;
-    background: var(--burgundy);
+    background: var(--midnight);
     color: var(--champagne);
     position: sticky;
     top: 0;
@@ -88,19 +85,19 @@ button {
 
 .nav-links a {
     font-size: 13px;
-    color: var(--champagne-light);
+    color: var(--ivory);
     transition: 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: white;
+    color: var(--champagne);
 }
 
 .nav-button {
     padding: 12px 22px;
     background: var(--champagne);
-    color: var(--burgundy);
-    border-radius: 4px;
+    color: var(--midnight);
+    border-radius: 3px;
     font-size: 12px;
     font-weight: 700;
     transition: 0.3s ease;
@@ -108,7 +105,7 @@ button {
 }
 
 .nav-button:hover {
-    background: white;
+    background: var(--ivory);
     transform: translateY(-3px);
 }
 
@@ -119,8 +116,8 @@ button {
 .hero {
     min-height: 660px;
     padding: 90px 9%;
-    background: var(--burgundy);
-    color: var(--champagne);
+    background: var(--midnight);
+    color: var(--ivory);
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     align-items: center;
@@ -137,13 +134,8 @@ button {
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--burgundy-soft);
-    margin-bottom: 22px;
-}
-
-.hero .eyebrow {
     color: var(--champagne);
-    opacity: 0.8;
+    margin-bottom: 22px;
 }
 
 .hero h1 {
@@ -162,7 +154,7 @@ button {
 
 .hero-description {
     max-width: 440px;
-    color: #E5D3CB;
+    color: var(--muted);
     font-size: 15px;
     line-height: 1.9;
     margin-bottom: 32px;
@@ -179,7 +171,7 @@ button {
     display: inline-block;
     padding: 15px 30px;
     background: var(--champagne);
-    color: var(--burgundy);
+    color: var(--midnight);
     font-size: 13px;
     font-weight: 700;
     border: 1px solid var(--champagne);
@@ -187,15 +179,15 @@ button {
 }
 
 .primary-button:hover {
-    background: white;
-    border-color: white;
+    background: var(--ivory);
+    border-color: var(--ivory);
     transform: translateY(-3px);
 }
 
 .secondary-button {
     display: inline-block;
     padding: 15px 25px;
-    border: 1px solid rgba(241, 227, 204, 0.5);
+    border: 1px solid var(--border);
     color: var(--champagne);
     font-size: 13px;
     transition: 0.3s ease;
@@ -203,7 +195,7 @@ button {
 
 .secondary-button:hover {
     background: var(--champagne);
-    color: var(--burgundy);
+    color: var(--midnight);
 }
 
 .hero-note {
@@ -221,20 +213,20 @@ button {
 }
 
 .hero-note p {
-    color: #E5D3CB;
+    color: var(--muted);
     font-size: 12px;
     line-height: 1.7;
 }
 
-/* HERO PHOTOGRAPH */
+/* HERO IMAGE — ONE PHOTOGRAPH */
 
 .hero-art {
     width: 100%;
     height: 465px;
     overflow: hidden;
     border-radius: 4px;
-    border: 8px solid rgba(241, 227, 204, 0.12);
-    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.2);
+    border: 7px solid var(--deep-blue);
+    box-shadow: var(--shadow);
 }
 
 .hero-art img {
@@ -257,7 +249,8 @@ button {
 .about-section {
     padding: 110px 20px;
     text-align: center;
-    background: var(--champagne-light);
+    background: var(--deep-blue);
+    color: var(--ivory);
 }
 
 .about-section h2,
@@ -275,14 +268,14 @@ button {
 .section-heading h2 span,
 .interactive-section h2 span,
 .coming-soon h2 span {
-    color: var(--burgundy-light);
+    color: var(--champagne);
     font-style: italic;
 }
 
 .about-section > p:last-child {
     max-width: 680px;
     margin: 25px auto 0;
-    color: #79666A;
+    color: var(--muted);
     font-size: 15px;
     line-height: 2;
 }
@@ -293,7 +286,7 @@ button {
 
 .features-section {
     padding: 105px 9%;
-    background: var(--ivory);
+    background: var(--midnight);
 }
 
 .section-heading {
@@ -306,7 +299,7 @@ button {
 
 .section-heading > p {
     max-width: 320px;
-    color: #79666A;
+    color: var(--muted);
     font-size: 14px;
     line-height: 1.9;
 }
@@ -328,18 +321,14 @@ button {
 .feature-card {
     min-height: 275px;
     padding: 32px 28px;
-    background: var(--burgundy);
+    background: var(--deep-blue);
     color: var(--champagne);
-    border: 1px solid var(--burgundy);
+    border: 1px solid var(--border);
     border-radius: 4px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    transition: background 0.35s ease,
-                color 0.35s ease,
-                transform 0.35s ease,
-                border-color 0.35s ease,
-                box-shadow 0.35s ease;
+    transition: 0.35s ease;
 }
 
 .feature-icon {
@@ -347,7 +336,7 @@ button {
     height: 45px;
     display: grid;
     place-items: center;
-    background: rgba(241, 227, 204, 0.13);
+    background: rgba(220, 198, 159, 0.12);
     color: var(--champagne);
     border-radius: 50%;
     font-size: 25px;
@@ -359,7 +348,7 @@ button {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 2px;
-    color: #D5BCA9;
+    color: #A8BBC3;
     margin-bottom: 12px;
 }
 
@@ -373,7 +362,7 @@ button {
 .feature-card > p:not(.card-number) {
     font-size: 13px;
     line-height: 1.8;
-    color: #E6D6D0;
+    color: var(--muted);
     margin-bottom: 22px;
 }
 
@@ -385,59 +374,56 @@ button {
     transition: 0.3s ease;
 }
 
-/* HOVER EFFECT */
+/* CHAMPAGNE HOVER */
 
 .feature-card:hover {
     background: var(--champagne);
-    color: var(--burgundy);
+    color: var(--midnight);
     border-color: var(--champagne);
     transform: translateY(-7px);
     box-shadow: var(--shadow);
 }
 
 .feature-card:hover .feature-icon {
-    background: var(--burgundy);
+    background: var(--midnight);
     color: var(--champagne);
 }
 
 .feature-card:hover .card-number {
-    color: var(--burgundy-light);
+    color: var(--ocean);
+}
+
+.feature-card:hover h3,
+.feature-card:hover > a {
+    color: var(--midnight);
 }
 
 .feature-card:hover > p:not(.card-number) {
-    color: #70525A;
-}
-
-.feature-card:hover > a {
-    color: var(--burgundy);
-}
-
-.feature-card:hover h3 {
-    color: var(--burgundy);
+    color: #40535A;
 }
 
 /* =========================================
-   INTERACTIVE MOOD SECTION
+   MOOD SECTION
 ========================================= */
 
 .interactive-section {
     padding: 105px 20px;
     text-align: center;
-    background: var(--burgundy);
-    color: var(--champagne);
+    background: var(--ocean);
+    color: var(--ivory);
 }
 
 .interactive-section .section-label {
-    color: #D5BCA9;
+    color: var(--champagne);
 }
 
 .interactive-section h2 span {
-    color: white;
+    color: var(--champagne);
 }
 
 .interactive-section > p:not(.section-label) {
     margin-top: 18px;
-    color: #E5D3CB;
+    color: #D2DDE0;
     font-size: 14px;
     line-height: 1.8;
 }
@@ -454,9 +440,9 @@ button {
 .mood-option {
     min-width: 115px;
     padding: 17px 20px;
-    border: 1px solid rgba(241, 227, 204, 0.35);
+    border: 1px solid var(--border);
     background: transparent;
-    color: var(--champagne);
+    color: var(--ivory);
     border-radius: 4px;
     cursor: pointer;
     font-size: 13px;
@@ -472,7 +458,7 @@ button {
 .mood-option:hover,
 .mood-option.active {
     background: var(--champagne);
-    color: var(--burgundy);
+    color: var(--midnight);
     border-color: var(--champagne);
     transform: translateY(-4px);
 }
@@ -486,23 +472,24 @@ button {
 }
 
 /* =========================================
-   RESOURCES SECTION
+   RESOURCES
 ========================================= */
 
 .coming-soon {
     padding: 110px 20px;
     text-align: center;
-    background: var(--champagne);
+    background: var(--deep-blue);
+    color: var(--ivory);
 }
 
 .coming-soon .section-label {
-    color: var(--burgundy-light);
+    color: var(--champagne);
 }
 
 .coming-soon > p:last-child {
     max-width: 480px;
     margin: 22px auto 0;
-    color: #79666A;
+    color: var(--muted);
     font-size: 14px;
     line-height: 1.9;
 }
@@ -514,7 +501,7 @@ button {
 footer {
     padding: 65px 20px 30px;
     text-align: center;
-    background: var(--burgundy-dark);
+    background: #04141E;
     color: var(--champagne);
 }
 
@@ -525,25 +512,25 @@ footer .logo {
 
 footer > p {
     font-size: 13px;
-    color: #E5D3CB;
+    color: var(--muted);
     margin-bottom: 15px;
 }
 
 .footer-small {
     font-size: 11px;
-    color: #BCA4A2;
+    color: #82969F;
 }
 
 .copyright {
     margin-top: 35px;
     padding-top: 22px;
     border-top: 1px solid var(--border);
-    color: #BCA4A2;
+    color: #82969F;
     font-size: 11px;
 }
 
 /* =========================================
-   RESPONSIVE DESIGN — TABLETS
+   TABLET RESPONSIVE
 ========================================= */
 
 @media (max-width: 1000px) {
@@ -568,11 +555,10 @@ footer > p {
     .feature-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 }
 
 /* =========================================
-   RESPONSIVE DESIGN — MOBILE
+   MOBILE RESPONSIVE
 ========================================= */
 
 @media (max-width: 650px) {
@@ -671,7 +657,6 @@ footer > p {
     footer {
         padding: 55px 20px 25px;
     }
-
 }
 
 /* =========================================
@@ -700,5 +685,4 @@ footer > p {
     .secondary-button {
         padding: 13px 17px;
     }
-
 }
