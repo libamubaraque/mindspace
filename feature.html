@@ -4,254 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#35442E">
-    <title>To the Ether | Your Space</title>
+    <meta name="theme-color" content="#24151D">
+    <title>Your Space | To the Ether</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="feature.js" defer></script>
 </head>
-
 <body>
 
-    <header class="navbar">
+<header class="site-header">
+    <nav class="navbar">
         <a href="index.html" class="logo">To the ether.</a>
-        <a href="index.html#explore" class="nav-button">Explore other spaces ↗</a>
-    </header>
-
-    <main class="feature-page">
-        <div class="feature-page-content">
-            <a href="index.html#explore" class="back-link">← Back to Explore</a>
-
-            <span class="section-tag">YOUR SPACE</span>
-            <h1 id="featureTitle">Welcome</h1>
-            <p class="feature-intro" id="featureDescription"></p>
-
-            <div id="featureContent"></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#explore">Explore</a>
+            <a href="index.html#saved">My Pages</a>
         </div>
-    </main>
+        <a href="index.html#saved" class="button button-primary">My Saved Pages</a>
+    </nav>
+</header>
 
-    <footer>
-        <h2>To the ether.</h2>
-        <p>A little space to grow, learn and begin again.</p>
-    </footer>
+<main class="feature-page">
+    <a href="index.html#explore" class="back-link">← Back to all spaces</a>
 
-    <script>
-    /* FEATURE PAGE CONTENT */
+    <div id="featureContent">
+        <p>Opening your space...</p>
+    </div>
+</main>
 
-    const features = {
-        mood: {
-            title: "Mood Journal",
-            description: "A quiet place to check in with yourself.",
-            heading: "What is on your mind?",
-            prompts: [
-                "What was one moment that stood out today?",
-                "What has been taking up your thoughts?",
-                "What is something you wish someone understood?",
-                "What is one thing you need right now?",
-                "What would you like to tell your future self?"
-            ]
-        },
+<footer>
+    <h2>To the ether.</h2>
+    <p>A little space to breathe, grow and become.</p>
+    <a href="index.html">Return home ↑</a>
+</footer>
 
-        breathing: {
-            title: "Breathing Space",
-            description: "Take a gentle pause. There is no pressure to do anything perfectly.",
-            heading: "Choose a small pause",
-            content: `
-                <p>Try breathing in gently for 4 seconds and breathing out comfortably for 4 seconds. Stop if you feel uncomfortable.</p>
-                <p><a href="https://www.youtube.com/results?search_query=beginner+gentle+yoga+for+students" target="_blank" rel="noopener">Explore beginner yoga classes on YouTube ↗</a></p>
-                <p><a href="https://www.youtube.com/results?search_query=nature+sounds+relaxation" target="_blank" rel="noopener">Listen to nature sounds ↗</a></p>
-            `
-        },
-
-        gratitude: {
-            title: "Gratitude Journal",
-            description: "Collect the little things you want to remember.",
-            heading: "Three things from today",
-            prompts: [
-                "Something that made me smile",
-                "Something I learned",
-                "Something I want to remember"
-            ]
-        },
-
-        fitness: {
-            title: "Fitness & Wellness",
-            description: "Explore enjoyable movement and everyday wellbeing without pressure.",
-            heading: "A little movement",
-            content: `
-                <p>Choose an activity that feels comfortable today: a walk, a relaxed cycle, stretching or dancing to a favourite song.</p>
-                <p>Running is a skill you can build gradually, with rest days and support when needed.</p>
-                <p><a href="https://www.strava.com/" target="_blank" rel="noopener">Visit Strava ↗</a></p>
-                <p><a href="https://www.youtube.com/results?search_query=beginner+stretching+for+students" target="_blank" rel="noopener">Find gentle stretching videos ↗</a></p>
-            `
-        },
-
-        checkin: {
-            title: "Daily Check-in",
-            description: "You do not need to have everything figured out today.",
-            heading: "How has today been?",
-            prompts: [
-                "One little win from today",
-                "One thing that felt difficult",
-                "Something I am looking forward to"
-            ]
-        },
-
-        study: {
-            title: "Study & Focus",
-            description: "Make space for focused learning and refreshing breaks.",
-            heading: "Your study session",
-            content: `
-                <p>Try a 10-minute study session followed by a 5-minute screen-free break.</p>
-                <p><a href="https://open.spotify.com/" target="_blank" rel="noopener">Spotify ↗</a></p>
-                <p><a href="https://music.youtube.com/" target="_blank" rel="noopener">YouTube Music ↗</a></p>
-                <p><a href="https://www.apple.com/apple-music/" target="_blank" rel="noopener">Apple Music ↗</a></p>
-                <p><a href="https://quran.com/" target="_blank" rel="noopener">Read the Quran ↗</a></p>
-            `
-        },
-
-        selfcare: {
-            title: "Self-care Corner",
-            description: "Small, practical ways to look after yourself.",
-            heading: "What might help today?",
-            prompts: [
-                "Have I had enough rest?",
-                "Have I taken a break from screens?",
-                "Is there someone I can talk to?",
-                "What is one kind thing I can do for myself?"
-            ],
-            content: `
-                <p>For health concerns that worry you, speak with a trusted adult or qualified healthcare professional. This space is for reflection, not diagnosis.</p>
-            `
-        },
-
-        stories: {
-            title: "Stories & Reality",
-            description: "Learn about real challenges, people and efforts to make things better.",
-            heading: "Explore reliable sources",
-            content: `
-                <p><a href="https://www.unicef.org/stories" target="_blank" rel="noopener">UNICEF stories ↗</a></p>
-                <p><a href="https://www.unhcr.org/news/stories" target="_blank" rel="noopener">UNHCR stories ↗</a></p>
-                <p><a href="https://www.who.int/news-room/feature-stories" target="_blank" rel="noopener">WHO feature stories ↗</a></p>
-            `
-        },
-
-        career: {
-            title: "Find Your Direction",
-            description: "Explore interests and possible futures. A quiz cannot decide your future for you.",
-            heading: "Start with your interests",
-            prompts: [
-                "What subjects or topics make me curious?",
-                "Do I enjoy helping people, creating things, solving problems or exploring ideas?",
-                "What kind of problems would I like to help solve?",
-                "What matters to me outside a career?"
-            ],
-            content: `
-                <p><a href="https://www.ncs.gov.in/" target="_blank" rel="noopener">India's National Career Service ↗</a></p>
-                <p><a href="https://www.careeronestop.org/" target="_blank" rel="noopener">Explore career information ↗</a></p>
-            `
-        },
-
-        world: {
-            title: "My Little World",
-            description: "A personal space for memories, ideas and pages you want to keep.",
-            heading: "Create a page",
-            prompts: [
-                "A memory I want to keep",
-                "A letter to my future self",
-                "Something I am proud of",
-                "A thought I want to let out"
-            ]
-        }
-    };
-
-    const params = new URLSearchParams(window.location.search);
-    const featureKey = params.get("feature");
-    const feature = features[featureKey];
-
-    const title = document.getElementById("featureTitle");
-    const description = document.getElementById("featureDescription");
-    const content = document.getElementById("featureContent");
-
-    if (!feature) {
-        title.textContent = "Space not found";
-        description.textContent = "Please return to the Explore page and choose a feature.";
-    } else {
-        document.title = feature.title + " | To the Ether";
-        title.textContent = feature.title;
-        description.textContent = feature.description;
-
-        const panel = document.createElement("section");
-        panel.className = "feature-panel";
-
-        const heading = document.createElement("h2");
-        heading.textContent = feature.heading;
-        panel.appendChild(heading);
-
-        if (feature.prompts) {
-            feature.prompts.forEach(function (prompt) {
-                const p = document.createElement("p");
-                p.textContent = "• " + prompt;
-                p.style.marginBottom = "10px";
-                panel.appendChild(p);
-            });
-        }
-
-        if (feature.content) {
-            const extra = document.createElement("div");
-            extra.innerHTML = feature.content;
-            panel.appendChild(extra);
-        }
-
-        const label = document.createElement("label");
-        label.textContent = "Your page";
-        label.htmlFor = "entryText";
-
-        const textarea = document.createElement("textarea");
-        textarea.id = "entryText";
-        textarea.placeholder = "Write anything you would like to save...";
-
-        const saveButton = document.createElement("button");
-        saveButton.textContent = "Save this page";
-
-        const status = document.createElement("p");
-        status.setAttribute("aria-live", "polite");
-        status.style.marginTop = "12px";
-
-        saveButton.addEventListener("click", function () {
-            const text = textarea.value.trim();
-
-            if (!text) {
-                status.textContent = "Write something before saving.";
-                return;
-            }
-
-            let pages = [];
-
-            try {
-                pages = JSON.parse(localStorage.getItem("etherSavedPages")) || [];
-            } catch (error) {
-                pages = [];
-            }
-
-            pages.unshift({
-                id: Date.now(),
-                title: feature.title,
-                content: text,
-                date: new Date().toLocaleString()
-            });
-
-            try {
-                localStorage.setItem("etherSavedPages", JSON.stringify(pages));
-                status.textContent = "Your page has been saved in this browser.";
-                textarea.value = "";
-            } catch (error) {
-                status.textContent = "Could not save. Your browser storage may be full.";
-            }
-        });
-
-        panel.append(label, textarea, saveButton, status);
-        content.appendChild(panel);
-    }
-    </script>
+<div id="notice" class="notice" role="status"></div>
 
 </body>
 </html>
