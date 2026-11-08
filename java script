@@ -1,265 +1,503 @@
 
 /* =========================================================
    TO THE ETHER — HOMEPAGE JAVASCRIPT
-   This file controls navigation, account pop-up, card colours
-   and the homepage saved-pages collection.
+   This file controls the homepage, cards, account and saves.
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  // 01. SHORTCUT FOR FINDING HTML ELEMENTS BY THEIR ID
-  const $ = id => document.getElementById(id);
 
-  // 02. MOBILE NAVIGATION MENU
-  $("menuToggle")?.addEventListener("click", () => {
-    $("mainNav")?.classList.toggle("open");
-  });
+/* =========================================================
+   01. START WHEN THE PAGE IS READY
+   This waits until the HTML has loaded.
+   ========================================================= */
 
-  document.querySelectorAll("#mainNav a").forEach(link => {
-    link.addEventListener("click", () => {
-      $("mainNav")?.classList.remove("open");
-    });
-  });
+document.addEventListener("DOMContentLoaded", function () {
 
-  // 03. READ THE SAVED DEMO PROFILE
-  function getProfile() {
-    try {
-      return JSON.parse(localStorage.getItem("etherProfile")) || null;
-    } catch {
-      return null;
-    }
-  }
+    // A shortcut to find an HTML element by its ID.
+    const $ = (id) => document.getElementById(id);
 
-  // 04. ACCOUNT POP-UP OPEN AND CLOSE FUNCTIONS
-  const modal = $("accountModal");
 
-  function showModal(message = "") {
-    $("accountMessage").textContent = message;
-    modal.classList.add("show");
-  }
+    /* =====================================================
+       02. MOBILE MENU
+       This opens and closes the navigation on small screens.
+       ===================================================== */
 
-  function closeModal() {
-    modal.classList.remove("show");
-  }
+    const menuToggle = $("menuToggle");
+    const mainNav = $("mainNav");
 
-  $("accountButton")?.addEventListener("click", () => {
-    const profile = getProfile();
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener("click", function () {
+            mainNav.classList.toggle("active");
+        });
 
-    if (profile) {
-      $("accountName").value = profile.name || "";
-      $("accountEmail").value = profile.email || "";
-      showModal("Your local demo profile is saved in this browser.");
-    } else {
-      showModal();
-    }
-  });
-
-  $("closeModal")?.addEventListener("click", closeModal);
-
-  modal?.addEventListener("click", event => {
-    if (event.target === modal) closeModal();
-  });
-
-  // 05. CREATE OR UPDATE THE LOCAL DEMO PROFILE
-  // This is not a real online account or secure login system.
-  $("accountForm")?.addEventListener("submit", event => {
-    event.preventDefault();
-
-    const name = $("accountName").value.trim();
-    const email = $("accountEmail").value.trim();
-
-    if (!name) return;
-
-    const profile = { name, email };
-
-    try {
-      localStorage.setItem("etherProfile", JSON.stringify(profile));
-    } catch {
-      $("accountMessage").textContent = "Your browser could not save this profile.";
-      return;
+        // Close the menu after choosing a navigation link.
+        mainNav.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                mainNav.classList.remove("active");
+            });
+        });
     }
 
-    $("accountButton").textContent = "Welcome, " + name;
 
-    // If a visitor was waiting to open a card, open it now.
-    const pendingFeature = sessionStorage.getItem("etherPendingFeature");
+    /* =====================================================
+       03. ACCOUNT ELEMENTS
+       These are the elements inside your account pop-up.
+       ===================================================== */
 
-    if (pendingFeature) {
-      sessionStorage.removeItem("etherPendingFeature");
-      closeModal();
+    const accountButton = $("accountButton");
+    const accountModal = $("accountModal");
+    const closeModal = $("closeModal");
+    const accountForm = $("accountForm");
+    const accountName = $("accountName");
+    const accountEmail = $("accountEmail");
+    const accountMessage = $("accountMessage");
 
-      window.location.href =
-        "feature.html?feature=" + encodeURIComponent(pendingFeature);
-      return;
+
+    /* =====================================================
+       04. READ THE SAVED PROFILE
+       This checks whether the visitor has made a demo profile.
+       ===================================================== */
+
+    function getProfile() {
+        try {
+            return JSON.parse(localStorage.getItem("etherProfile")) || null;
+        } catch (error) {
+            return null;
+        }
     }
 
-    $("accountMessage").textContent = "Your demo profile is ready!";
-    setTimeout(closeModal, 1200);
-  });
 
-  // 06. UPDATE THE ACCOUNT BUTTON IF A PROFILE ALREADY EXISTS
-  const existingProfile = getProfile();
+    /* =====================================================
+       05. OPEN AND CLOSE THE ACCOUNT POP-UP
+       This shows or hides the account form.
+       ===================================================== */
 
-  if (existingProfile?.name) {
-    $("accountButton").textContent = "Welcome, " + existingProfile.name;
-  }
+    function showModal(message) {
+        if (!accountModal) return;
 
-  // 07. CARD NAVIGATION AND FEATURE USAGE TRACKING
-  // Only the article card gets this click event.
-  // This prevents the old duplicate-navigation problem.
-  const cards = document.querySelectorAll(".feature-card");
+        accountModal.classList.add("active");
+        accountModal.style.display = "flex";
 
-  function openFeature(card) {
-    const feature = card.dataset.feature;
-    if (!feature) return;
-
-    let usedFeatures = [];
-
-    try {
-      usedFeatures = JSON.parse(localStorage.getItem("etherUsedFeatures")) || [];
-    } catch {
-      usedFeatures = [];
+        if (accountMessage) {
+            accountMessage.textContent = message || "";
+        }
     }
 
-    // Count each different feature only once.
-    if (!usedFeatures.includes(feature)) {
-      usedFeatures.push(feature);
+    function hideModal() {
+        if (!accountModal) return;
 
-      try {
-        localStorage.setItem("etherUsedFeatures", JSON.stringify(usedFeatures));
-      } catch {
-        // Navigation can still work if storage is unavailable.
-      }
+        accountModal.classList.remove("active");
+        accountModal.style.display = "";
     }
 
-    // Ask for a demo profile after more than three different features.
-    const profile = getProfile();
+    if (accountButton) {
+        accountButton.addEventListener("click", function () {
+            const profile = getProfile();
 
-    if (usedFeatures.length > 3 && !profile) {
-      sessionStorage.setItem("etherPendingFeature", feature);
-      showModal("You've explored more than three spaces. Create a local demo profile to continue.");
-      return;
+            if (profile) {
+                showModal("Welcome back, " + profile.name + "!");
+                if (accountName) accountName.value = profile.name;
+                if (accountEmail) accountEmail.value = profile.email || "";
+            } else {
+                showModal("");
+            }
+        });
     }
 
-    // Open the shared feature page with the selected feature name.
-    window.location.href =
-      "feature.html?feature=" + encodeURIComponent(feature);
-  }
-
-  cards.forEach(card => {
-    card.addEventListener("click", () => openFeature(card));
-
-    // Keyboard access: Enter or Space opens the selected card.
-    card.addEventListener("keydown", event => {
-      if (event.target !== card) return;
-
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openFeature(card);
-      }
-    });
-  });
-
-  // 08. CUSTOMISE EACH HOMEPAGE CARD'S BACKGROUND COLOUR
-  cards.forEach(card => {
-    const feature = card.dataset.feature;
-    const storageKey = "etherBackground_" + feature;
-
-    let savedColour = localStorage.getItem(storageKey);
-
-    // Use a saved colour only if it is a valid six-digit hex colour.
-    if (savedColour && /^#[0-9a-f]{6}$/i.test(savedColour)) {
-      card.style.background = savedColour;
-    } else {
-      savedColour = "";
+    if (closeModal) {
+        closeModal.addEventListener("click", hideModal);
     }
 
-    // Add a small colour picker to the card.
-    const control = document.createElement("div");
-    control.className = "background-control";
-
-    const label = document.createElement("span");
-    label.textContent = "Choose colour";
-
-    const picker = document.createElement("input");
-    picker.type = "color";
-    picker.value = savedColour || "#71845a";
-    picker.setAttribute("aria-label", "Choose card background colour");
-
-    // Do not open the feature when someone uses the colour picker.
-    picker.addEventListener("click", event => event.stopPropagation());
-
-    picker.addEventListener("keydown", event => event.stopPropagation());
-
-    picker.addEventListener("input", event => {
-      event.stopPropagation();
-      card.style.background = picker.value;
-
-      try {
-        localStorage.setItem(storageKey, picker.value);
-      } catch {
-        // The card colour still changes for this visit.
-      }
-    });
-
-    control.append(label, picker);
-    card.appendChild(control);
-  });
-
-  // 09. DISPLAY ALL SAVED PAGES ON THE HOMEPAGE
-  function renderSavedPages() {
-    const container = $("savedPages");
-    if (!container) return;
-
-    let pages = [];
-
-    try {
-      pages = JSON.parse(localStorage.getItem("etherSavedPages")) || [];
-    } catch {
-      pages = [];
+    // Close the pop-up when the dark background is clicked.
+    if (accountModal) {
+        accountModal.addEventListener("click", function (event) {
+            if (event.target === accountModal) {
+                hideModal();
+            }
+        });
     }
 
-    container.innerHTML = "";
 
-    if (!pages.length) {
-      const empty = document.createElement("p");
-      empty.textContent = "Your saved pages will appear here.";
-      container.appendChild(empty);
-      return;
+    /* =====================================================
+       06. SAVE A DEMO PROFILE
+       This is a local demonstration, not secure registration.
+       ===================================================== */
+
+    let pendingFeature = null;
+
+    if (accountForm) {
+        accountForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = accountName.value.trim();
+            const email = accountEmail.value.trim();
+
+            if (!name) {
+                if (accountMessage) {
+                    accountMessage.textContent = "Please enter your name.";
+                }
+                return;
+            }
+
+            const profile = {
+                name: name,
+                email: email,
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                localStorage.setItem("etherProfile", JSON.stringify(profile));
+            } catch (error) {
+                if (accountMessage) {
+                    accountMessage.textContent =
+                        "Your browser could not save this profile.";
+                }
+                return;
+            }
+
+            if (accountMessage) {
+                accountMessage.textContent =
+                    "Your demo profile has been created!";
+            }
+
+            if (accountButton) {
+                accountButton.textContent = "Welcome, " + name + " ↗";
+            }
+
+            // Continue to the feature that was waiting.
+            if (pendingFeature) {
+                const feature = pendingFeature;
+                pendingFeature = null;
+
+                setTimeout(function () {
+                    hideModal();
+                    addUsedFeature(feature);
+                    window.location.href =
+                        "feature.html?feature=" +
+                        encodeURIComponent(feature);
+                }, 500);
+            } else {
+                setTimeout(hideModal, 900);
+            }
+        });
     }
 
-    pages.slice().reverse().forEach(page => {
-      const item = document.createElement("article");
-      item.className = "saved-item";
 
-      const heading = document.createElement("h3");
-      heading.textContent = page.title || "My page";
+    /* =====================================================
+       07. COUNT THE DIFFERENT FEATURES VISITED
+       Visitors can try three different spaces before a
+       demo profile is requested.
+       ===================================================== */
 
-      const text = document.createElement("p");
-      text.textContent = page.content || "";
+    function getUsedFeatures() {
+        try {
+            const saved = JSON.parse(
+                localStorage.getItem("etherUsedFeatures")
+            );
 
-      const date = document.createElement("small");
-      date.textContent = page.date || "";
+            return Array.isArray(saved) ? saved : [];
+        } catch (error) {
+            return [];
+        }
+    }
 
-      const remove = document.createElement("button");
-      remove.type = "button";
-      remove.textContent = "Delete";
+    function addUsedFeature(feature) {
+        const usedFeatures = getUsedFeatures();
 
-      remove.addEventListener("click", () => {
-        pages = pages.filter(savedPage => savedPage.id !== page.id);
+        if (!usedFeatures.includes(feature)) {
+            usedFeatures.push(feature);
+        }
 
         try {
-          localStorage.setItem("etherSavedPages", JSON.stringify(pages));
-          renderSavedPages();
-        } catch {
-          alert("Could not update your saved pages.");
+            localStorage.setItem(
+                "etherUsedFeatures",
+                JSON.stringify(usedFeatures)
+            );
+        } catch (error) {
+            console.warn("Could not save feature history.", error);
         }
-      });
+    }
 
-      item.append(heading, text, date, remove);
-      container.appendChild(item);
+
+    /* =====================================================
+       08. FEATURE CARD NAVIGATION
+       Each card opens its own feature page.
+       A profile is requested after three different features.
+       ===================================================== */
+
+    const featureCards = document.querySelectorAll(".feature-card");
+
+    featureCards.forEach(function (card) {
+
+        card.addEventListener("click", function (event) {
+
+            // Ignore clicks on the card's colour picker.
+            if (event.target.closest(".background-control")) {
+                return;
+            }
+
+            const feature = card.dataset.feature;
+
+            if (!feature) {
+                return;
+            }
+
+            // Stop the normal link until we check the profile rule.
+            event.preventDefault();
+
+            const usedFeatures = getUsedFeatures();
+            const alreadyUsed = usedFeatures.includes(feature);
+            const profile = getProfile();
+
+            // A saved profile allows the visitor to enter any feature.
+            if (profile) {
+                addUsedFeature(feature);
+
+                window.location.href =
+                    "feature.html?feature=" +
+                    encodeURIComponent(feature);
+
+                return;
+            }
+
+            // Count only different features, not repeat visits.
+            const newTotal = alreadyUsed
+                ? usedFeatures.length
+                : usedFeatures.length + 1;
+
+            // Ask for a profile before entering the fourth new feature.
+            if (newTotal > 3) {
+                pendingFeature = feature;
+
+                showModal(
+                    "You've explored three spaces! " +
+                    "Create a little demo profile to continue."
+                );
+
+                return;
+            }
+
+            // The first three different features open normally.
+            addUsedFeature(feature);
+
+            window.location.href =
+                "feature.html?feature=" +
+                encodeURIComponent(feature);
+        });
+
     });
-  }
 
-  // 10. LOAD SAVED PAGES WHEN THE HOMEPAGE OPENS
-  renderSavedPages();
+
+    /* =====================================================
+       09. CUSTOM COLOURS FOR THE TEN CARDS
+       Visitors can choose their own card background colours.
+       Each card remembers its colour in this browser.
+       ===================================================== */
+
+    featureCards.forEach(function (card) {
+
+        const feature = card.dataset.feature;
+
+        if (!feature) return;
+
+        const storageKey = "etherBackground_" + feature;
+
+        // Restore the previously selected colour.
+        let savedColour = null;
+
+        try {
+            savedColour = localStorage.getItem(storageKey);
+        } catch (error) {
+            savedColour = null;
+        }
+
+        if (savedColour) {
+            card.style.backgroundColor = savedColour;
+        }
+
+        // Do not add the same colour picker twice.
+        if (card.querySelector(".background-control")) {
+            return;
+        }
+
+        // Make the small colour-control area.
+        const control = document.createElement("div");
+        control.className = "background-control";
+
+        const label = document.createElement("label");
+        label.className = "background-label";
+        label.textContent = "Card colour";
+
+        const picker = document.createElement("input");
+        picker.type = "color";
+        picker.className = "card-colour-picker";
+        picker.setAttribute("aria-label", "Choose this card's background colour");
+
+        // Use the saved colour or a default colour.
+        picker.value = savedColour || "#71845A";
+
+        const resetButton = document.createElement("button");
+        resetButton.type = "button";
+        resetButton.className = "reset-card-colour";
+        resetButton.textContent = "Reset";
+
+        // Put the controls together.
+        label.appendChild(picker);
+        control.appendChild(label);
+        control.appendChild(resetButton);
+
+        // Add the controls to the card.
+        card.appendChild(control);
+
+        // Prevent the colour controls from opening the feature page.
+        control.addEventListener("click", function (event) {
+            event.stopPropagation();
+        });
+
+        control.addEventListener("keydown", function (event) {
+            event.stopPropagation();
+        });
+
+        // Save and apply the selected colour.
+        picker.addEventListener("input", function (event) {
+            event.stopPropagation();
+
+            card.style.backgroundColor = picker.value;
+
+            try {
+                localStorage.setItem(storageKey, picker.value);
+            } catch (error) {
+                console.warn("Could not save card colour.", error);
+            }
+        });
+
+        // Restore the card's original stylesheet colour.
+        resetButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            card.style.backgroundColor = "";
+
+            try {
+                localStorage.removeItem(storageKey);
+            } catch (error) {
+                console.warn("Could not reset card colour.", error);
+            }
+
+            picker.value = "#71845A";
+        });
+
+    });
+
+
+    /* =====================================================
+       10. UPDATE THE ACCOUNT BUTTON
+       Show the saved visitor's name when available.
+       ===================================================== */
+
+    const savedProfile = getProfile();
+
+    if (savedProfile && accountButton) {
+        accountButton.textContent =
+            "Welcome, " + savedProfile.name + " ↗";
+    }
+
+
+    /* =====================================================
+       11. SHOW SAVED JOURNAL PAGES
+       This displays saved entries from feature.js.
+       ===================================================== */
+
+    const savedPagesContainer = $("savedPages");
+
+    function renderSavedPages() {
+
+        if (!savedPagesContainer) return;
+
+        savedPagesContainer.innerHTML = "";
+
+        let savedPages = [];
+
+        try {
+            savedPages = JSON.parse(
+                localStorage.getItem("etherSavedPages")
+            ) || [];
+        } catch (error) {
+            savedPages = [];
+        }
+
+        if (!Array.isArray(savedPages) || savedPages.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.className = "empty-saved-message";
+            emptyMessage.textContent =
+                "Your saved creations will appear here.";
+
+            savedPagesContainer.appendChild(emptyMessage);
+            return;
+        }
+
+        savedPages.forEach(function (page, index) {
+
+            const card = document.createElement("article");
+            card.className = "saved-page-card";
+
+            const heading = document.createElement("h3");
+            heading.textContent = page.title || "My saved page";
+
+            const content = document.createElement("p");
+            content.textContent = page.content || "";
+
+            const date = document.createElement("small");
+
+            if (page.date) {
+                const parsedDate = new Date(page.date);
+
+                date.textContent = isNaN(parsedDate.getTime())
+                    ? ""
+                    : parsedDate.toLocaleDateString();
+            }
+
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-saved-page";
+
+            deleteButton.addEventListener("click", function () {
+
+                const updatedPages = savedPages.filter(
+                    function (savedPage, savedIndex) {
+                        return savedIndex !== index;
+                    }
+                );
+
+                try {
+                    localStorage.setItem(
+                        "etherSavedPages",
+                        JSON.stringify(updatedPages)
+                    );
+                } catch (error) {
+                    console.warn("Could not update saved pages.", error);
+                }
+
+                renderSavedPages();
+            });
+
+            card.appendChild(heading);
+            card.appendChild(content);
+            card.appendChild(date);
+            card.appendChild(deleteButton);
+
+            savedPagesContainer.appendChild(card);
+        });
+    }
+
+    renderSavedPages();
+
+
+    /* =====================================================
+       12. FINISH
+       The homepage JavaScript has now been loaded.
+       ===================================================== */
+
+    console.log("To the Ether homepage is working!");
+
 });
