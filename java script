@@ -1,77 +1,167 @@
 
 /* =========================================================
    TO THE ETHER — HOMEPAGE JAVASCRIPT
+   Complete corrected version
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* 01. SHORTCUTS */
   const $ = id => document.getElementById(id);
 
-  /* 01. MOBILE NAVIGATION */
   const menuToggle = $("menuToggle");
   const mainNav = $("mainNav");
 
-  if (menuToggle && mainNav) {
-    menuToggle.addEventListener("click", () => {
-      mainNav.classList.toggle("active");
-    });
-
-    mainNav.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        mainNav.classList.remove("active");
-      });
-    });
-  }
-
-  /* 02. ACCOUNT ELEMENTS */
   const accountButton = $("accountButton");
   const accountModal = $("accountModal");
   const closeModal = $("closeModal");
   const accountForm = $("accountForm");
+
   const accountName = $("accountName");
   const accountEmail = $("accountEmail");
   const accountMessage = $("accountMessage");
 
+  const savedPagesContainer = $("savedPages");
+
   let pendingFeature = null;
 
-  /* 03. READ THE DEMO PROFILE */
-  function getProfile() {
+  /* 02. SAFE LOCAL STORAGE */
+  function readStorage(key, fallback = null) {
     try {
-      return JSON.parse(localStorage.getItem("etherProfile")) || null;
-    } catch {
-      return null;
+      const value = localStorage.getItem(key);
+      return value === null ? fallback : JSON.parse(value);
+    } catch (error) {
+      console.warn("Storage reading error:", key, error);
+      return fallback;
     }
   }
 
-  /* 04. SHOW AND HIDE ACCOUNT POP-UP */
+  function writeStorage(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (error) {
+      console.warn("Storage saving error:", key, error);
+      return false;
+    }
+  }
+
+  /* 03. PROFILE */
+  function getProfile() {
+    const profile = readStorage("etherProfile");
+
+    if (
+      !profile ||
+      typeof profile !== "object" ||
+      typeof profile.name !== "string"
+    ) {
+      return null;
+    }
+
+    return profile;
+  }
+
+  function updateAccountButton() {
+    const profile = getProfile();
+
+    if (profile && accountButton) {
+      accountButton.textContent =
+        "Welcome, " + profile.name + " ↗";
+    }
+  }
+
+  /* 04. MOBILE NAVIGATION */
+  if (menuToggle && mainNav) {
+
+    menuToggle.setAttribute("aria-expanded", "false");
+
+    menuToggle.addEventListener("click", () => {
+
+      const isOpen = mainNav.classList.toggle("active");
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+      );
+
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+
+    });
+
+    mainNav.querySelectorAll("a").forEach(link => {
+
+      link.addEventListener("click", () => {
+
+        mainNav.classList.remove("active");
+
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+
+      });
+
+    });
+
+  }
+
+  /* 05. ACCOUNT MODAL */
   function showModal(message = "") {
+
     if (!accountModal) return;
 
     accountModal.classList.add("active");
+    accountModal.setAttribute("aria-hidden", "false");
 
     if (accountMessage) {
       accountMessage.textContent = message;
     }
+
+    if (accountName) {
+      accountName.focus();
+    }
+
   }
 
   function hideModal() {
+
     if (!accountModal) return;
+
     accountModal.classList.remove("active");
+    accountModal.setAttribute("aria-hidden", "true");
+
+    pendingFeature = null;
+
+  }
+
+  if (accountModal) {
+    accountModal.setAttribute("aria-hidden", "true");
   }
 
   if (accountButton) {
+
     accountButton.addEventListener("click", () => {
+
       const profile = getProfile();
 
       if (profile) {
-        if (accountName) accountName.value = profile.name;
-        if (accountEmail) accountEmail.value = profile.email || "";
+
+        if (accountName) {
+          accountName.value = profile.name;
+        }
+
+        if (accountEmail) {
+          accountEmail.value = profile.email || "";
+        }
 
         showModal("Welcome back, " + profile.name + "!");
+
       } else {
+
         showModal();
+
       }
+
     });
+
   }
 
   if (closeModal) {
@@ -79,124 +169,211 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (accountModal) {
+
     accountModal.addEventListener("click", event => {
-      if (event.target === accountModal) hideModal();
+
+      if (event.target === accountModal) {
+        hideModal();
+      }
+
     });
+
   }
 
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape") hideModal();
+
+    if (event.key === "Escape") {
+
+      if (
+        accountModal &&
+        accountModal.classList.contains("active")
+      ) {
+        hideModal();
+      }
+
+    }
+
   });
 
-  /* 05. SAVE DEMO PROFILE */
+  /* 06. SAVE DEMO PROFILE */
   if (accountForm) {
+
     accountForm.addEventListener("submit", event => {
+
       event.preventDefault();
 
-      const name = accountName.value.trim();
-      const email = accountEmail.value.trim();
+      const name = accountName
+        ? accountName.value.trim()
+        : "";
+
+      const email = accountEmail
+        ? accountEmail.value.trim()
+        : "";
 
       if (!name) {
-        accountMessage.textContent = "Please enter your name.";
+
+        if (accountMessage) {
+          accountMessage.textContent =
+            "Please enter your name.";
+        }
+
         return;
+
       }
 
       const profile = {
-        name,
-        email,
+        name: name,
+        email: email,
         createdAt: new Date().toISOString()
       };
 
-      try {
-        localStorage.setItem("etherProfile", JSON.stringify(profile));
-      } catch {
-        accountMessage.textContent =
-          "Your browser could not save your profile.";
+      const saved = writeStorage("etherProfile", profile);
+
+      if (!saved) {
+
+        if (accountMessage) {
+          accountMessage.textContent =
+            "Your browser could not save your profile.";
+        }
+
         return;
+
       }
 
-      if (accountButton) {
-        accountButton.textContent = "Welcome, " + name + " ↗";
-      }
+      updateAccountButton();
 
-      accountMessage.textContent = "Your demo profile is ready!";
+      if (accountMessage) {
+        accountMessage.textContent =
+          "Your demo profile is ready!";
+      }
 
       if (pendingFeature) {
+
         const feature = pendingFeature;
         pendingFeature = null;
 
         addUsedFeature(feature);
 
         setTimeout(() => {
+
           hideModal();
           openFeature(feature);
+
         }, 500);
+
       } else {
+
         setTimeout(hideModal, 900);
+
       }
+
     });
+
   }
 
-  /* 06. TRACK DIFFERENT FEATURES */
+  /* 07. FEATURE HISTORY */
   function getUsedFeatures() {
-    try {
-      const data = JSON.parse(
-        localStorage.getItem("etherUsedFeatures")
-      );
 
-      return Array.isArray(data) ? data : [];
-    } catch {
-      return [];
-    }
+    const data = readStorage("etherUsedFeatures", []);
+
+    return Array.isArray(data) ? data : [];
+
   }
 
   function addUsedFeature(feature) {
+
+    if (!feature) return;
+
     const used = getUsedFeatures();
 
     if (!used.includes(feature)) {
+
       used.push(feature);
+
+      writeStorage("etherUsedFeatures", used);
+
     }
 
-    try {
-      localStorage.setItem("etherUsedFeatures", JSON.stringify(used));
-    } catch (error) {
-      console.warn("Could not save feature history.", error);
+  }
+
+  /* 08. OPEN FEATURE PAGE */
+  function openFeature(card) {
+
+    const destination = card.getAttribute("href");
+
+    if (destination) {
+
+      window.location.href = destination;
+
+    } else {
+
+      const feature = card.dataset.feature;
+
+      if (feature) {
+
+        window.location.href =
+          "feature.html?feature=" +
+          encodeURIComponent(feature);
+
+      }
+
     }
+
   }
 
-  /* 07. OPEN FEATURE PAGE */
-  function openFeature(feature) {
-    window.location.href =
-      "feature.html?feature=" + encodeURIComponent(feature);
-  }
-
-  /* 08. CARD CLICK EVENTS */
-  const featureCards = document.querySelectorAll(".feature-card");
+  /* 09. FEATURE CARD NAVIGATION */
+  const featureCards = document.querySelectorAll(
+    ".feature-card[data-feature]"
+  );
 
   featureCards.forEach(card => {
 
     card.addEventListener("click", event => {
 
-      const feature = card.dataset.feature;
-
-      if (!feature) {
-        event.preventDefault();
+      // Preserve normal browser link behaviour.
+      if (
+        event.button !== 0 ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
         return;
       }
+
+      const feature = card.dataset.feature;
+
+      if (!feature) return;
 
       const profile = getProfile();
       const used = getUsedFeatures();
 
-      // Existing profile: allow entry.
+      // Existing profile: unrestricted demo access.
       if (profile) {
+
         event.preventDefault();
+
         addUsedFeature(feature);
-        openFeature(feature);
+        openFeature(card);
+
         return;
+
       }
 
-      // First three different spaces: free demo access.
-      if (!used.includes(feature) && used.length >= 3) {
+      // Returning to an already explored space.
+      if (used.includes(feature)) {
+
+        event.preventDefault();
+
+        openFeature(card);
+
+        return;
+
+      }
+
+      // Require a demo profile after three different spaces.
+      if (used.length >= 3) {
+
         event.preventDefault();
 
         pendingFeature = feature;
@@ -206,27 +383,30 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         return;
+
       }
 
-      // Allow the first three spaces.
+      // First three different spaces are free.
       event.preventDefault();
+
       addUsedFeature(feature);
-      openFeature(feature);
+      openFeature(card);
 
     });
 
   });
 
-  /* 09. UPDATE ACCOUNT BUTTON */
-  const savedProfile = getProfile();
+  /* 10. LOAD EXISTING ACCOUNT */
+  updateAccountButton();
 
-  if (savedProfile && accountButton) {
-    accountButton.textContent =
-      "Welcome, " + savedProfile.name + " ↗";
+  /* 11. SAVED CREATIONS */
+  function getSavedPages() {
+
+    const pages = readStorage("etherSavedPages", []);
+
+    return Array.isArray(pages) ? pages : [];
+
   }
-
-  /* 10. DISPLAY SAVED CREATIONS */
-  const savedPagesContainer = $("savedPages");
 
   function renderSavedPages() {
 
@@ -234,77 +414,108 @@ document.addEventListener("DOMContentLoaded", () => {
 
     savedPagesContainer.innerHTML = "";
 
-    let pages = [];
+    const pages = getSavedPages();
 
-    try {
-      pages = JSON.parse(
-        localStorage.getItem("etherSavedPages")
-      ) || [];
-    } catch {
-      pages = [];
-    }
+    if (pages.length === 0) {
 
-    if (!Array.isArray(pages) || pages.length === 0) {
       const message = document.createElement("p");
+
       message.className = "empty-saved-message";
+
       message.textContent =
         "Your saved creations will appear here.";
 
       savedPagesContainer.appendChild(message);
+
       return;
+
     }
 
     pages.forEach((page, index) => {
 
       const card = document.createElement("article");
+
       card.className = "saved-page-card";
 
       const heading = document.createElement("h3");
-      heading.textContent = page.title || "My saved page";
+
+      heading.textContent =
+        page.title || "My saved page";
 
       const content = document.createElement("p");
-      content.textContent = page.content || "";
+
+      content.textContent =
+        page.content || "";
 
       const date = document.createElement("small");
 
       if (page.date) {
+
         const parsed = new Date(page.date);
 
-        date.textContent = isNaN(parsed.getTime())
-          ? ""
-          : parsed.toLocaleDateString();
+        date.textContent = !isNaN(parsed.getTime())
+          ? parsed.toLocaleDateString()
+          : "";
+
       }
 
       const deleteButton = document.createElement("button");
+
       deleteButton.className = "delete-saved-page";
       deleteButton.textContent = "Delete";
       deleteButton.type = "button";
 
       deleteButton.addEventListener("click", () => {
 
-        const updated = pages.filter((item, i) => i !== index);
+        const updated = getSavedPages();
 
-        try {
-          localStorage.setItem(
-            "etherSavedPages",
-            JSON.stringify(updated)
-          );
+        updated.splice(index, 1);
+
+        if (writeStorage("etherSavedPages", updated)) {
 
           renderSavedPages();
-        } catch {
+
+        } else {
+
           alert("Could not delete this page.");
+
         }
 
       });
 
-      card.append(heading, content, date, deleteButton);
+      card.append(
+        heading,
+        content,
+        date,
+        deleteButton
+      );
+
       savedPagesContainer.appendChild(card);
 
     });
+
   }
 
+  /* 12. INITIALISE SAVED PAGES */
   renderSavedPages();
 
-  console.log("To the Ether homepage loaded successfully.");
+  /* 13. STORAGE SYNCHRONISATION */
+  window.addEventListener("storage", event => {
+
+    if (
+      event.key === "etherSavedPages" ||
+      event.key === "etherProfile"
+    ) {
+
+      renderSavedPages();
+      updateAccountButton();
+
+    }
+
+  });
+
+  console.log(
+    "To the Ether homepage loaded successfully."
+  );
 
 });
