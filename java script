@@ -1,857 +1,130 @@
-// TO THE ETHER — Main JavaScript
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Mobile navigation
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
+    // MOOD SELECTOR
 
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener("click", () => {
-            navLinks.classList.toggle("active");
-        });
-    }
+    const moodButtons = document.querySelectorAll(".mood-option");
+    const moodMessage = document.getElementById("mood-message");
 
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener("click", function (event) {
-            const target = document.querySelector(this.getAttribute("href"));
-
-            if (target) {
-                event.preventDefault();
-                target.scrollIntoView({
-                    behavior: "smooth"
-                });
-
-                navLinks?.classList.remove("active");
-            }
-        });
-    });
-
-    // Navigation background on scroll
-    const navbar = document.querySelector(".navbar");
-
-    window.addEventListener("scroll", () => {
-        if (navbar) {
-            navbar.classList.toggle("scrolled", window.scrollY > 50);
-        }
-    });
-
-    // Reveal sections when scrolling
-    const revealElements = document.querySelectorAll(
-        ".feature-card, .extra-section, .interactive-section"
-    );
-
-    if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.15
-        });
-
-        revealElements.forEach(element => {
-            observer.observe(element);
-        });
-    } else {
-        revealElements.forEach(element => {
-            element.classList.add("visible");
-        });
-    }
-
-    // Journal word counter
-    const journal = document.querySelector("#journal");
-    const wordCount = document.querySelector("#word-count");
-
-    if (journal && wordCount) {
-        journal.addEventListener("input", () => {
-            const words = journal.value.trim().split(/\s+/).filter(Boolean);
-            wordCount.textContent = journal.value.trim()
-                ? words.length + " words"
-                : "0 words";
-        });
-    }
-
-    // Back to top button
-    const backToTop = document.querySelector("#back-to-top");
-
-    if (backToTop) {
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
-
-    console.log("To the Ether is ready.");
-
-});
-
-
-/* =========================================
-   TO THE ETHER — MAIN JAVASCRIPT
-   ========================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    // ---------- HELPERS ----------
-
-    const $ = (selector, parent = document) =>
-        parent.querySelector(selector);
-
-    const $$ = (selector, parent = document) =>
-        [...parent.querySelectorAll(selector)];
-
-    const getData = (key, fallback = []) => {
-        try {
-            return JSON.parse(localStorage.getItem(key)) ?? fallback;
-        } catch {
-            return fallback;
-        }
+    const moodMessages = {
+        Happy: "Keep a little piece of this happiness with you. 🌿",
+        Okay: "Okay is a perfectly valid place to be.",
+        Tired: "Rest is productive too. Give yourself some time.",
+        Overwhelmed: "Take one small step at a time. You don't need to solve everything now.",
+        Unsure: "You don't need to have all the answers today."
     };
 
-    const saveData = (key, value) => {
-        localStorage.setItem(key, JSON.stringify(value));
-    };
-
-    const escapeHTML = (value = "") =>
-        String(value).replace(/[&<>"']/g, char => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-        })[char]);
-
-    // ---------- NAVIGATION ----------
-
-    $$('a[href^="#"]').forEach(link => {
-        link.addEventListener("click", event => {
-            const target = $(link.getAttribute("href"));
-
-            if (target) {
-                event.preventDefault();
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        });
-    });
-
-    const menuButton = $(".menu-toggle");
-    const navigation = $(".nav-links");
-
-    if (menuButton && navigation) {
-        menuButton.addEventListener("click", () => {
-            navigation.classList.toggle("active");
-        });
-    }
-
-    // ---------- PERSONAL ACCOUNT ----------
-
-    const profile = getData("etherProfile", null);
-
-    function updatePersonalisation() {
-        const gender = localStorage.getItem("etherGender");
-
-        $$("[data-girl-only]").forEach(element => {
-            element.hidden = gender !== "girl";
-        });
-    }
-
-    function createProfile() {
-        const name = $("#userName")?.value.trim();
-        const gender = $('input[name="gender"]:checked')?.value;
-
-        if (!name || !gender) {
-            alert("Please enter your name and choose an option.");
-            return;
-        }
-
-        const user = {
-            name,
-            gender,
-            created: new Date().toISOString()
-        };
-
-        saveData("etherProfile", user);
-        localStorage.setItem("etherGender", gender);
-
-        updatePersonalisation();
-
-        alert(`Welcome to To the Ether, ${name}.`);
-
-        const welcome = $("#welcome-screen");
-        if (welcome) welcome.hidden = true;
-    }
-
-    $("#createAccount")?.addEventListener("click", createProfile);
-
-    if (profile) {
-        localStorage.setItem("etherGender", profile.gender);
-    }
-
-    updatePersonalisation();
-
-    // ---------- GENERAL CHECKLISTS ----------
-
-    $$(".checklist input[type='checkbox']").forEach((checkbox, index) => {
-        const key = `etherChecklist_${index}`;
-
-        checkbox.checked = localStorage.getItem(key) === "true";
-
-        checkbox.addEventListener("change", () => {
-            localStorage.setItem(key, checkbox.checked);
-        });
-    });
-
-    // ---------- JOURNAL ----------
-
-    const journalInput = $("#journalEntry");
-    const journalList = $("#journalEntries");
-    const journalKey = "etherJournal";
-
-    function displayJournal() {
-        if (!journalList) return;
-
-        const entries = getData(journalKey);
-
-        journalList.innerHTML = entries.map((entry, index) => `
-            <article class="journal-entry">
-                <small>${escapeHTML(entry.date)}</small>
-                <p>${escapeHTML(entry.text)}</p>
-                <button data-delete-journal="${index}">Delete</button>
-            </article>
-        `).join("");
-    }
-
-    $("#saveJournal")?.addEventListener("click", () => {
-        const text = journalInput?.value.trim();
-        if (!text) return alert("Write something first.");
-
-        const entries = getData(journalKey);
-
-        entries.unshift({
-            text,
-            date: new Date().toLocaleString()
-        });
-
-        saveData(journalKey, entries);
-
-        journalInput.value = "";
-        displayJournal();
-    });
-
-    journalList?.addEventListener("click", event => {
-        const button = event.target.closest("[data-delete-journal]");
-        if (!button) return;
-
-        const index = Number(button.dataset.deleteJournal);
-        const entries = getData(journalKey);
-
-        entries.splice(index, 1);
-        saveData(journalKey, entries);
-        displayJournal();
-    });
-
-    displayJournal();
-
-    // ---------- SELF-CARE ----------
-
-    const selfCareKey = "etherSelfCare";
-
-    function displaySelfCare() {
-        const container = $("#selfCareProgress");
-        if (!container) return;
-
-        const activities = getData(selfCareKey);
-
-        container.textContent =
-            `${activities.length} self-care activities completed.`;
-    }
-
-    $$(".self-care-option").forEach(option => {
-        const checkbox = $("input[type='checkbox']", option);
-        if (!checkbox) return;
-
-        const activities = getData(selfCareKey);
-        checkbox.checked = activities.includes(checkbox.value);
-
-        checkbox.addEventListener("change", () => {
-            let updated = getData(selfCareKey);
-
-            if (checkbox.checked) {
-                if (!updated.includes(checkbox.value)) {
-                    updated.push(checkbox.value);
-                }
-            } else {
-                updated = updated.filter(item => item !== checkbox.value);
-            }
-
-            saveData(selfCareKey, updated);
-            displaySelfCare();
-        });
-    });
-
-    displaySelfCare();
-
-    // ---------- PERIOD TRACKER ----------
-
-    $("#savePeriod")?.addEventListener("click", () => {
-        const start = $("#periodStart")?.value;
-        const end = $("#periodEnd")?.value;
-
-        if (!start) return alert("Select a start date.");
-
-        if (end && end < start) {
-            return alert("End date cannot be before start date.");
-        }
-
-        const records = getData("etherPeriods");
-
-        records.unshift({
-            start,
-            end: end || "",
-            saved: new Date().toISOString()
-        });
-
-        saveData("etherPeriods", records);
-
-        alert("Your period record has been saved.");
-    });
-
-    $("#saveCramp")?.addEventListener("click", () => {
-        const intensity = $("#crampIntensity")?.value;
-        const notes = $("#crampNotes")?.value.trim();
-
-        if (!intensity) return alert("Select an intensity.");
-
-        const records = getData("etherCramps");
-
-        records.unshift({
-            intensity,
-            notes,
-            date: new Date().toLocaleDateString()
-        });
-
-        saveData("etherCramps", records);
-
-        alert("Your cramp diary has been updated.");
-    });
-
-    // ---------- HEALTH NOTES ----------
-
-    $("#saveHealthNote")?.addEventListener("click", () => {
-        const note = $("#healthNote")?.value.trim();
-
-        if (!note) return alert("Write a note first.");
-
-        const notes = getData("etherHealthNotes");
-
-        notes.unshift({
-            note,
-            date: new Date().toLocaleDateString()
-        });
-
-        saveData("etherHealthNotes", notes);
-
-        $("#healthNote").value = "";
-        alert("Health note saved.");
-    });
-
-    // ---------- MUSIC CONNECTIONS ----------
-
-    const musicLinks = {
-        spotify: "https://open.spotify.com/",
-        youtube: "https://music.youtube.com/",
-        apple: "https://music.apple.com/"
-    };
-
-    $$("[data-music]").forEach(button => {
+    moodButtons.forEach(button => {
         button.addEventListener("click", () => {
-            const platform = button.dataset.music;
+            moodButtons.forEach(item => item.classList.remove("selected"));
+            button.classList.add("selected");
 
-            if (musicLinks[platform]) {
-                window.open(
-                    musicLinks[platform],
-                    "_blank",
-                    "noopener,noreferrer"
+            const mood = button.dataset.mood;
+            moodMessage.textContent = moodMessages[mood];
+        });
+    });
+
+
+    // ACCOUNT SYSTEM - FRONT-END DEMO
+
+    const modal = document.getElementById("account-modal");
+    const closeModal = document.getElementById("close-modal");
+    const guestButton = document.getElementById("guest-button");
+    const accountForm = document.getElementById("account-form");
+
+    let pendingDestination = "";
+
+    function getUsedCards() {
+        try {
+            return JSON.parse(localStorage.getItem("etherUsedCards")) || [];
+        } catch {
+            return [];
+        }
+    }
+
+    function continueToFeature() {
+        if (pendingDestination) {
+            const destination = pendingDestination;
+            pendingDestination = "";
+            window.location.href = destination;
+        }
+    }
+
+    function closeAccountModal() {
+        modal.classList.remove("show");
+        continueToFeature();
+    }
+
+    // INTERCEPT FEATURE CARD CLICKS
+
+    document.querySelectorAll(".feature-card").forEach(card => {
+
+        card.addEventListener("click", event => {
+
+            const destination = card.getAttribute("href");
+
+            if (!destination) return;
+
+            const cardName = new URL(destination, location.href)
+                .searchParams.get("card");
+
+            const usedCards = getUsedCards();
+            const hasProfile = localStorage.getItem("etherProfile");
+
+            if (!usedCards.includes(cardName)) {
+                usedCards.push(cardName);
+                localStorage.setItem(
+                    "etherUsedCards",
+                    JSON.stringify(usedCards)
                 );
             }
-        });
-    });
 
-    // ---------- CAREER DISCOVERY ----------
-
-    const questions = [
-        {
-            question: "What did you dream of becoming as a child?",
-            options: [
-                "Doctor", "Teacher", "Artist",
-                "Scientist", "Traveller", "Entrepreneur"
-            ]
-        },
-        {
-            question: "What makes you lose track of time?",
-            options: [
-                "Reading", "Helping people", "Creating",
-                "Exploring", "Solving problems", "Researching"
-            ]
-        },
-        {
-            question: "Which subjects interest you?",
-            options: [
-                "Biology", "Physics", "Mathematics",
-                "History", "Literature", "Psychology"
-            ]
-        },
-        {
-            question: "What lifestyle do you imagine?",
-            options: [
-                "Travel", "Peaceful life", "Helping communities",
-                "Financial independence", "Research", "Business"
-            ]
-        },
-        {
-            question: "Which problems would you like to solve?",
-            options: [
-                "Medical", "Poverty", "Environment",
-                "Science", "Social injustice", "Economics"
-            ]
-        },
-        {
-            question: "What are your natural strengths?",
-            options: [
-                "Listening", "Explaining", "Creativity",
-                "Leadership", "Curiosity", "Problem-solving"
-            ]
-        },
-        {
-            question: "Where would you enjoy working?",
-            options: [
-                "Hospital", "Laboratory", "Office",
-                "Outdoors", "University", "Business"
-            ]
-        },
-        {
-            question: "What matters most to you?",
-            options: [
-                "Income", "Free time", "Helping people",
-                "Recognition", "Travel", "Learning"
-            ]
-        },
-        {
-            question: "Why do you sometimes leave things unfinished?",
-            options: [
-                "New interests", "Lose interest", "Overwhelmed",
-                "Fear of failure", "Too many interests", "Consistency"
-            ]
-        },
-        {
-            question: "What would you explore without judgement?",
-            options: [
-                "Medicine", "Science", "Humanitarian work",
-                "Arts", "Business", "Travel", "Law"
-            ]
-        }
-    ];
-
-    const careerAnswers = {};
-    let currentQuestion = 0;
-
-    function renderCareerQuestion() {
-        const container = $("#careerQuestion");
-        if (!container) return;
-
-        const question = questions[currentQuestion];
-
-        container.innerHTML = `
-            <p>QUESTION ${currentQuestion + 1} OF 10</p>
-            <h3>${escapeHTML(question.question)}</h3>
-            <div class="career-options">
-                ${question.options.map(option => `
-                    <label>
-                        <input type="checkbox"
-                            value="${escapeHTML(option)}"
-                            ${careerAnswers[currentQuestion]?.includes(option)
-                                ? "checked" : ""}>
-                        ${escapeHTML(option)}
-                    </label>
-                `).join("")}
-            </div>
-            <button id="previousCareer"
-                ${currentQuestion === 0 ? "disabled" : ""}>
-                Previous
-            </button>
-            <button id="nextCareer">
-                ${currentQuestion === 9 ? "Discover my directions" : "Next"}
-            </button>
-        `;
-
-        $("#previousCareer")?.addEventListener("click", () => {
-            collectCareerAnswers();
-            currentQuestion--;
-            renderCareerQuestion();
-        });
-
-        $("#nextCareer")?.addEventListener("click", () => {
-            collectCareerAnswers();
-
-            if (currentQuestion < 9) {
-                currentQuestion++;
-                renderCareerQuestion();
-            } else {
-                showCareerResults();
+            if (usedCards.length > 3 && !hasProfile) {
+                event.preventDefault();
+                pendingDestination = destination;
+                modal.classList.add("show");
             }
-        });
-    }
 
-    function collectCareerAnswers() {
-        careerAnswers[currentQuestion] =
-            $$("#careerQuestion input:checked").map(input => input.value);
-    }
-
-    function showCareerResults() {
-        saveData("etherCareerAnswers", careerAnswers);
-
-        const selected = Object.values(careerAnswers).flat();
-
-        const careers = [
-            {
-                name: "Medicine & Healthcare",
-                match: ["Doctor", "Biology", "Medical", "Hospital"],
-                degree: "MBBS → Specialisation",
-                duration: "About 5.5 years for MBBS in India, including internship"
-            },
-            {
-                name: "Humanitarian Medicine",
-                match: ["Doctor", "Helping people", "Humanitarian work", "Travel"],
-                degree: "MBBS → Relevant clinical experience",
-                duration: "Medical training followed by further experience"
-            },
-            {
-                name: "Scientific Research",
-                match: ["Scientist", "Researching", "Science", "Laboratory"],
-                degree: "BSc → MSc → PhD",
-                duration: "Varies by subject and qualification"
-            },
-            {
-                name: "Psychology",
-                match: ["Psychology", "Listening", "Helping people"],
-                degree: "BA/BSc Psychology → Further training",
-                duration: "Varies by specialisation and country"
-            },
-            {
-                name: "Law & Social Justice",
-                match: ["Law", "Social injustice", "History"],
-                degree: "BA LLB or LLB",
-                duration: "Usually 5 years for an integrated BA LLB in India"
-            },
-            {
-                name: "Environmental Science",
-                match: ["Environment", "Outdoors", "Exploring"],
-                degree: "BSc Environmental Science → Specialisation",
-                duration: "Varies by pathway"
-            },
-            {
-                name: "Business & Entrepreneurship",
-                match: ["Entrepreneur", "Business", "Economics"],
-                degree: "BBA / BCom / other relevant degrees",
-                duration: "Varies by pathway"
-            },
-            {
-                name: "Education & Academia",
-                match: ["Teacher", "Explaining", "University"],
-                degree: "Relevant bachelor's degree → Teaching qualification",
-                duration: "Depends on subject and route"
-            }
-        ];
-
-        const results = careers
-            .map(career => ({
-                ...career,
-                score: career.match.filter(item =>
-                    selected.some(answer =>
-                        answer.toLowerCase().includes(item.toLowerCase())
-                    )
-                ).length
-            }))
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 5);
-
-        const container = $("#careerResults");
-        if (!container) return;
-
-        container.innerHTML = `
-            <h2>Your Possible Directions</h2>
-            <p>These are starting points for exploration, not fixed decisions.</p>
-            ${results.map(career => `
-                <article class="career-result">
-                    <h3>${escapeHTML(career.name)}</h3>
-                    <p>Interest matches: ${career.score}</p>
-                    <p><strong>Possible degrees:</strong>
-                    ${escapeHTML(career.degree)}</p>
-                    <p><strong>Study duration:</strong>
-                    ${escapeHTML(career.duration)}</p>
-                </article>
-            `).join("")}
-        `;
-
-        container.scrollIntoView({ behavior: "smooth" });
-    }
-
-    $("#startCareerQuiz")?.addEventListener("click", () => {
-        currentQuestion = 0;
-        renderCareerQuestion();
-    });
-
-    // ---------- PHOTO GALLERY ----------
-
-    const galleryKey = "etherGallery";
-
-    function displayGallery() {
-        const gallery = $("#photoGallery");
-        if (!gallery) return;
-
-        const photos = getData(galleryKey);
-
-        gallery.innerHTML = photos.map((photo, index) => `
-            <article class="memory-photo">
-                <img src="${photo.image}" alt="Personal memory">
-                <p>${escapeHTML(photo.caption)}</p>
-                <button data-delete-photo="${index}">Remove</button>
-            </article>
-        `).join("");
-    }
-
-    $("#uploadPhoto")?.addEventListener("change", event => {
-        const files = [...event.target.files];
-        const existing = getData(galleryKey);
-
-        files.forEach(file => {
-            if (!file.type.startsWith("image/")) return;
-
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                const caption = prompt("Add a caption for this memory:") || "";
-
-                existing.unshift({
-                    image: reader.result,
-                    caption,
-                    date: new Date().toISOString()
-                });
-
-                try {
-                    saveData(galleryKey, existing);
-                    displayGallery();
-                } catch {
-                    alert("Storage limit reached. Try a smaller photograph.");
-                }
-            };
-
-            reader.readAsDataURL(file);
         });
 
-        event.target.value = "";
     });
 
-    $("#photoGallery")?.addEventListener("click", event => {
-        const button = event.target.closest("[data-delete-photo]");
-        if (!button) return;
 
-        const index = Number(button.dataset.deletePhoto);
-        const photos = getData(galleryKey);
+    // CREATE A DEMONSTRATION PROFILE
 
-        photos.splice(index, 1);
-        saveData(galleryKey, photos);
-        displayGallery();
+    accountForm.addEventListener("submit", event => {
+
+        event.preventDefault();
+
+        const name = document.getElementById("profile-name").value.trim();
+        const email = document.getElementById("profile-email").value.trim();
+
+        if (!name || !email) return;
+
+        localStorage.setItem("etherProfile", JSON.stringify({
+            name: name,
+            email: email
+        }));
+
+        alert("Welcome to your little world, " + name + "!");
+
+        modal.classList.remove("show");
+
+        continueToFeature();
+
     });
 
-    displayGallery();
 
-    // ---------- PERSONAL MEMORIES ----------
+    // CONTINUE AS GUEST
 
-    $("#saveMemory")?.addEventListener("click", () => {
-        const title = $("#memoryTitle")?.value.trim();
-        const content = $("#memoryContent")?.value.trim();
-        const mood = $("#memoryMood")?.value || "Unlabelled";
+    guestButton.addEventListener("click", closeAccountModal);
 
-        if (!title || !content) {
-            return alert("Add a title and your memory.");
+    closeModal.addEventListener("click", closeAccountModal);
+
+    modal.addEventListener("click", event => {
+        if (event.target === modal) {
+            closeAccountModal();
         }
-
-        const memories = getData("etherMemories");
-
-        memories.unshift({
-            title,
-            content,
-            mood,
-            date: new Date().toLocaleString()
-        });
-
-        saveData("etherMemories", memories);
-
-        $("#memoryTitle").value = "";
-        $("#memoryContent").value = "";
-
-        alert("Your memory has been saved.");
     });
-
-    // ---------- LETTER TO MYSELF ----------
-
-    $("#saveLetter")?.addEventListener("click", () => {
-        const letter = $("#futureLetter")?.value.trim();
-        const date = $("#letterDate")?.value;
-
-        if (!letter || !date) {
-            return alert("Write your letter and choose a date.");
-        }
-
-        const letters = getData("etherLetters");
-
-        letters.push({
-            letter,
-            date,
-            created: new Date().toISOString()
-        });
-
-        saveData("etherLetters", letters);
-
-        $("#futureLetter").value = "";
-
-        alert("Your letter has been saved.");
-    });
-
-    // ---------- PHOTO FILTERS ----------
-
-    const photoPreview = $("#photoPreview");
-
-    $$("[data-filter]").forEach(button => {
-        button.addEventListener("click", () => {
-            if (!photoPreview) return;
-
-            const filters = {
-                normal: "none",
-                grayscale: "grayscale(100%)",
-                vintage: "sepia(65%)",
-                soft: "brightness(1.1) saturate(0.8)",
-                contrast: "contrast(1.3)",
-                warm: "sepia(25%) saturate(1.3)"
-            };
-
-            photoPreview.style.filter =
-                filters[button.dataset.filter] || "none";
-        });
-    });
-
-    // ---------- IMAGE CUSTOMISATION ----------
-
-    $$("[data-edit-image]").forEach(button => {
-        button.addEventListener("click", () => {
-            const target = $(button.dataset.editImage);
-            if (!target) return;
-
-            const input = document.createElement("input");
-            input.type = "file";
-            input.accept = "image/*";
-
-            input.addEventListener("change", () => {
-                const file = input.files[0];
-                if (!file) return;
-
-                const reader = new FileReader();
-
-                reader.onload = () => {
-                    target.src = reader.result;
-
-                    if (target.id) {
-                        try {
-                            localStorage.setItem(
-                                `etherImage_${target.id}`,
-                                reader.result
-                            );
-                        } catch {
-                            alert("Image is too large to save locally.");
-                        }
-                    }
-                };
-
-                reader.readAsDataURL(file);
-            });
-
-            input.click();
-        });
-    });
-
-    $$("img[id]").forEach(img => {
-        const savedImage = localStorage.getItem(`etherImage_${img.id}`);
-
-        if (savedImage) img.src = savedImage;
-    });
-
-    // ---------- DREAM BOARD ----------
-
-    $("#saveDream")?.addEventListener("click", () => {
-        const dream = $("#dreamInput")?.value.trim();
-        if (!dream) return;
-
-        const dreams = getData("etherDreams");
-        dreams.push({
-            text: dream,
-            date: new Date().toLocaleDateString()
-        });
-
-        saveData("etherDreams", dreams);
-        $("#dreamInput").value = "";
-        alert("Dream added to your list.");
-    });
-
-    // ---------- DAILY DATE ----------
-
-    const dateElement = $("#currentDate");
-
-    if (dateElement) {
-        dateElement.textContent =
-            new Date().toLocaleDateString(undefined, {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-                year: "numeric"
-            });
-    }
-
-    // ---------- ACCORDIONS ----------
-
-    $$(".accordion-header").forEach(header => {
-        header.addEventListener("click", () => {
-            const content = header.nextElementSibling;
-
-            if (!content) return;
-
-            content.hidden = !content.hidden;
-            header.setAttribute(
-                "aria-expanded",
-                String(!content.hidden)
-            );
-        });
-    });
-
-    // ---------- SCROLL TO TOP ----------
-
-    $("#backToTop")?.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-
-    console.log("To the Ether is ready.");
 
 });
