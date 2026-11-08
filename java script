@@ -1,130 +1,242 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+  const $ = (id) => document.getElementById(id);
 
-    // MOOD SELECTOR
+  const menuToggle = $("menuToggle");
+  const mainNav = $("mainNav");
 
-    const moodButtons = document.querySelectorAll(".mood-option");
-    const moodMessage = document.getElementById("mood-message");
-
-    const moodMessages = {
-        Happy: "Keep a little piece of this happiness with you. 🌿",
-        Okay: "Okay is a perfectly valid place to be.",
-        Tired: "Rest is productive too. Give yourself some time.",
-        Overwhelmed: "Take one small step at a time. You don't need to solve everything now.",
-        Unsure: "You don't need to have all the answers today."
-    };
-
-    moodButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            moodButtons.forEach(item => item.classList.remove("selected"));
-            button.classList.add("selected");
-
-            const mood = button.dataset.mood;
-            moodMessage.textContent = moodMessages[mood];
-        });
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener("click", () => {
+      mainNav.classList.toggle("open");
     });
 
+    mainNav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => mainNav.classList.remove("open"));
+    });
+  }
 
-    // ACCOUNT SYSTEM - FRONT-END DEMO
+  const modal = $("accountModal");
+  const accountButton = $("accountButton");
+  const closeModal = $("closeModal");
+  const accountForm = $("accountForm");
 
-    const modal = document.getElementById("account-modal");
-    const closeModal = document.getElementById("close-modal");
-    const guestButton = document.getElementById("guest-button");
-    const accountForm = document.getElementById("account-form");
+  function getProfile() {
+    try {
+      return JSON.parse(localStorage.getItem("etherProfile")) || null;
+    } catch {
+      return null;
+    }
+  }
 
-    let pendingDestination = "";
+  function showModal() {
+    modal?.classList.add("show");
+  }
 
-    function getUsedCards() {
-        try {
-            return JSON.parse(localStorage.getItem("etherUsedCards")) || [];
-        } catch {
-            return [];
-        }
+  function hideModal() {
+    modal?.classList.remove("show");
+  }
+
+  accountButton?.addEventListener("click", () => {
+    const profile = getProfile();
+
+    if (profile) {
+      alert("Welcome back, " + profile.name + "!");
+    } else {
+      showModal();
+    }
+  });
+
+  closeModal?.addEventListener("click", hideModal);
+
+  modal?.addEventListener("click", event => {
+    if (event.target === modal) hideModal();
+  });
+
+  accountForm?.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = $("accountName").value.trim();
+    const email = $("accountEmail").value.trim();
+
+    if (!name) return;
+
+    const profile = { name, email, created: new Date().toISOString() };
+
+    localStorage.setItem("etherProfile", JSON.stringify(profile));
+
+    $("accountMessage").textContent =
+      "Your local demo profile has been created. Welcome, " + name + "!";
+
+    accountButton.textContent = "Welcome, " + name;
+    setTimeout(hideModal, 1500);
+  });
+
+  const cards = document.querySelectorAll("[data-feature]");
+
+  function getUsedFeatures() {
+    try {
+      return JSON.parse(localStorage.getItem("etherUsedFeatures")) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function openFeature(feature) {
+    let used = getUsedFeatures();
+
+    if (!used.includes(feature)) {
+      used.push(feature);
+      localStorage.setItem("etherUsedFeatures", JSON.stringify(used));
     }
 
-    function continueToFeature() {
-        if (pendingDestination) {
-            const destination = pendingDestination;
-            pendingDestination = "";
-            window.location.href = destination;
-        }
+    const profile = getProfile();
+
+    // Ask for a profile after the user has explored
+    // more than three different feature spaces.
+    if (used.length > 3 && !profile) {
+      sessionStorage.setItem("etherPendingFeature", feature);
+      showModal();
+      $("accountMessage").textContent =
+        "You've explored more than three spaces. Create a profile to continue.";
+      return;
     }
 
-    function closeAccountModal() {
-        modal.classList.remove("show");
-        continueToFeature();
+    window.location.href =
+      "feature.html?feature=" + encodeURIComponent(feature);
+  }
+
+  cards.forEach(card => {
+    card.addEventListener("click", event => {
+      if (event.target.closest("a")) return;
+
+      const feature = card.dataset.feature;
+      if (feature) openFeature(feature);
+    });
+  });
+
+  // Also support clicking the card's button.
+  document.querySelectorAll(".card-open").forEach(button => {
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      openFeature(button.dataset.feature);
+    });
+  });
+
+  accountForm?.addEventListener("submit", event => {
+    // The profile is stored by the submit handler above.
+    // Resume the feature that triggered registration.
+    setTimeout(() => {
+      const pending = sessionStorage.getItem("etherPendingFeature");
+
+      if (pending) {
+        sessionStorage.removeItem("etherPendingFeature");
+        window.location.href =
+          "feature.html?feature=" + encodeURIComponent(pending);
+      }
+    }, 1600);
+  });
+
+  // Custom homepage card backgrounds.
+  // Saved separately for each card in this browser.
+  const cardsForBackground = document.querySelectorAll(".feature-card");
+
+  cardsForBackground.forEach(card => {
+    const feature = card.dataset.feature;
+    const key = "etherBackground_" + feature;
+    const saved = localStorage.getItem(key);
+
+    if (saved && /^#[0-9a-f]{6}$/i.test(saved)) {
+      card.style.background = saved;
     }
 
-    // INTERCEPT FEATURE CARD CLICKS
+    const picker = document.createElement("input");
+    picker.type = "color";
+    picker.className = "background-picker";
+    picker.value = saved || "#303b2b";
+    picker.title = "Choose this card's background";
+    picker.setAttribute("aria-label", "Choose card background");
 
-    document.querySelectorAll(".feature-card").forEach(card => {
+    const label = document.createElement("label");
+    label.className = "background-control";
+    label.textContent = "Colour ";
+    label.appendChild(picker);
 
-        card.addEventListener("click", event => {
+    card.appendChild(label);
 
-            const destination = card.getAttribute("href");
-
-            if (!destination) return;
-
-            const cardName = new URL(destination, location.href)
-                .searchParams.get("card");
-
-            const usedCards = getUsedCards();
-            const hasProfile = localStorage.getItem("etherProfile");
-
-            if (!usedCards.includes(cardName)) {
-                usedCards.push(cardName);
-                localStorage.setItem(
-                    "etherUsedCards",
-                    JSON.stringify(usedCards)
-                );
-            }
-
-            if (usedCards.length > 3 && !hasProfile) {
-                event.preventDefault();
-                pendingDestination = destination;
-                modal.classList.add("show");
-            }
-
-        });
-
+    picker.addEventListener("input", () => {
+      card.style.background = picker.value;
+      localStorage.setItem(key, picker.value);
     });
+  });
 
+  // Display saved pages on homepage.
+  function renderSavedPages() {
+    const container = $("savedPages");
+    if (!container) return;
 
-    // CREATE A DEMONSTRATION PROFILE
+    let pages = [];
 
-    accountForm.addEventListener("submit", event => {
+    try {
+      pages = JSON.parse(localStorage.getItem("etherSavedPages")) || [];
+    } catch {
+      pages = [];
+    }
 
-        event.preventDefault();
+    container.innerHTML = "";
 
-        const name = document.getElementById("profile-name").value.trim();
-        const email = document.getElementById("profile-email").value.trim();
+    if (!pages.length) {
+      container.innerHTML =
+        '<p class="empty-message">Your saved pages will appear here when you create them.</p>';
+      return;
+    }
 
-        if (!name || !email) return;
+    pages.slice().reverse().forEach((page, index) => {
+      const item = document.createElement("article");
+      item.className = "saved-item";
 
-        localStorage.setItem("etherProfile", JSON.stringify({
-            name: name,
-            email: email
-        }));
+      const title = document.createElement("h3");
+      title.textContent = page.title || "My page";
 
-        alert("Welcome to your little world, " + name + "!");
+      const content = document.createElement("p");
+      content.textContent = page.content || "";
 
-        modal.classList.remove("show");
+      const date = document.createElement("small");
+      date.textContent = page.date || "";
 
-        continueToFeature();
+      const remove = document.createElement("button");
+      remove.textContent = "Delete page";
+      remove.addEventListener("click", () => {
+        const originalIndex = pages.length - 1 - index;
+        pages.splice(originalIndex, 1);
+        localStorage.setItem("etherSavedPages", JSON.stringify(pages));
+        renderSavedPages();
+      });
 
+      item.append(title, content, date, remove);
+      container.appendChild(item);
     });
+  }
 
+  renderSavedPages();
 
-    // CONTINUE AS GUEST
+  // Reveal animation.
+  const revealElements = document.querySelectorAll(
+    ".feature-card, .story-card, .intro-section, .resource-links a"
+  );
 
-    guestButton.addEventListener("click", closeAccountModal);
-
-    closeModal.addEventListener("click", closeAccountModal);
-
-    modal.addEventListener("click", event => {
-        if (event.target === modal) {
-            closeAccountModal();
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          observer.unobserve(entry.target);
         }
-    });
+      });
+    }, { threshold: 0.12 });
 
+    revealElements.forEach(element => {
+      element.classList.add("reveal");
+      observer.observe(element);
+    });
+  }
 });
