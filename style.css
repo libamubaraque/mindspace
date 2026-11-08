@@ -1,39 +1,29 @@
 
-/* =========================================================
-   TO THE ETHER — COMPLETE MAIN STYLESHEET
-   Theme: Olive green, soft sage and warm ivory
-   ========================================================= */
+/* ==================================================
+   TO THE ETHER — DARK OLIVE TEXTURED THEME
+   ================================================== */
 
-/* ---------- 1. FONTS ---------- */
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
-/* ---------- 2. COLOUR SETTINGS ---------- */
-
+/* COLOURS */
 :root {
-    --olive-dark: #35452F;
-    --olive: #657A50;
-    --olive-medium: #7E9169;
-    --olive-light: #A9B995;
-    --sage: #D5DEC9;
-    --sage-light: #E7ECDF;
-    --ivory: #F7F5EC;
-    --cream: #F0EBDD;
-    --white: #FFFDF7;
-    --brown: #75634E;
+    --olive-dark: #303E29;
+    --olive-deep: #3B4B31;
+    --olive: #536744;
+    --olive-card: #687C54;
+    --olive-light: #87966D;
+    --sage: #C2CBAE;
+    --cream: #F3F0E5;
+    --ivory: #F9F7EF;
     --text: #35402F;
-    --muted: #68745F;
-    --border: rgba(69, 86, 57, 0.18);
-    --shadow: 0 12px 32px rgba(39, 55, 34, 0.10);
-    --radius: 22px;
+    --muted: #6B7562;
+    --border: rgba(72, 88, 59, 0.2);
+    --shadow: 0 12px 30px rgba(24, 35, 21, 0.15);
 }
 
-/* ---------- 3. GENERAL RESET ---------- */
-
+/* RESET */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html {
@@ -41,22 +31,22 @@ html {
 }
 
 body {
-    min-height: 100vh;
-    background: var(--ivory);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    line-height: 1.65;
-}
+    font-family: 'DM Sans', Arial, sans-serif;
+    background-color: var(--olive-dark);
+    color: var(--cream);
+    line-height: 1.7;
 
-button,
-input,
-textarea,
-select {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
+    /* Subtle natural texture */
+    background-image:
+        radial-gradient(ellipse at 15% 15%, rgba(190, 190, 130, 0.12), transparent 38%),
+        radial-gradient(ellipse at 85% 80%, rgba(10, 20, 10, 0.24), transparent 42%),
+        repeating-linear-gradient(
+            135deg,
+            rgba(255,255,255,0.018) 0px,
+            rgba(255,255,255,0.018) 1px,
+            transparent 1px,
+            transparent 6px
+        );
 }
 
 a {
@@ -64,127 +54,98 @@ a {
     text-decoration: none;
 }
 
-img {
-    max-width: 100%;
-    display: block;
+button, input {
+    font: inherit;
 }
 
-/* ---------- 4. HEADINGS ---------- */
+button {
+    cursor: pointer;
+}
 
-h1,
-h2,
-h3,
-h4 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
+/* HEADINGS */
+h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
     line-height: 1.2;
-    color: var(--olive-dark);
-}
-
-h1 {
-    font-size: clamp(2.5rem, 6vw, 5rem);
-}
-
-h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-}
-
-h3 {
-    font-size: 1.45rem;
 }
 
 p {
-    color: var(--muted);
+    color: inherit;
 }
 
-/* ---------- 5. NAVIGATION BAR ---------- */
-
-header,
+/* NAVIGATION */
 .navbar {
-    width: 100%;
-    background: rgba(247, 245, 236, 0.96);
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    z-index: 20;
-}
-
-.navbar {
-    min-height: 76px;
+    min-height: 78px;
     padding: 15px 7%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 25px;
+    gap: 20px;
+    background: rgba(35, 48, 30, 0.96);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    position: relative;
+    z-index: 10;
 }
 
-.logo,
-.nav-logo {
-    color: var(--olive-dark);
-    font-family: 'Playfair Display', serif;
+.logo {
+    font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.7rem;
-    font-weight: 700;
+    font-weight: bold;
+    color: var(--cream);
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 30px;
-    list-style: none;
+    gap: 28px;
 }
 
 .nav-links a {
-    color: var(--text);
-    font-size: 0.94rem;
-    transition: color 0.2s ease;
+    color: #E9E9D9;
+    font-size: 0.92rem;
 }
 
 .nav-links a:hover {
-    color: var(--olive);
+    color: #C8D2AE;
 }
 
 .nav-button,
-.explore-button,
 .primary-button {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
     padding: 12px 23px;
-    border: none;
-    border-radius: 50px;
-    background: var(--olive-dark);
-    color: var(--white);
-    font-weight: 600;
+    border: 0;
+    border-radius: 40px;
+    background: #B2BE96;
+    color: #293624;
+    font-weight: 700;
     transition: 0.25s ease;
 }
 
 .nav-button:hover,
-.explore-button:hover,
 .primary-button:hover {
-    background: var(--olive);
+    background: #D0D8BB;
     transform: translateY(-2px);
 }
 
 #menuToggle {
     display: none;
-    border: 0;
     background: transparent;
-    color: var(--olive-dark);
+    color: var(--cream);
+    border: 0;
     font-size: 1.6rem;
 }
 
-/* ---------- 6. HERO SECTION ---------- */
-
+/* HERO */
 .hero {
-    min-height: 580px;
+    min-height: 570px;
     padding: 100px 8%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+
     background:
-        radial-gradient(circle at 15% 20%, rgba(169,185,149,.35), transparent 32%),
-        radial-gradient(circle at 85% 75%, rgba(126,145,105,.20), transparent 35%),
-        var(--ivory);
+        radial-gradient(ellipse at 50% 30%, rgba(137, 155, 105, 0.22), transparent 55%),
+        linear-gradient(145deg, #34432D, #46583A 60%, #35452F);
 }
 
 .hero-content {
@@ -192,400 +153,368 @@ header,
 }
 
 .hero h1 {
-    margin-bottom: 22px;
+    font-size: clamp(2.8rem, 7vw, 5.3rem);
+    color: var(--cream);
+    margin-bottom: 24px;
 }
 
 .hero p {
     max-width: 650px;
-    margin: 0 auto 30px;
+    margin: 0 auto 32px;
+    color: #E0E4D4;
     font-size: 1.08rem;
 }
 
-.hero-tag,
 .section-tag {
     display: inline-block;
-    margin-bottom: 18px;
-    color: var(--olive);
-    font-size: 0.78rem;
-    font-weight: 700;
+    color: #C1CEA7;
     letter-spacing: 3px;
-    text-transform: uppercase;
+    font-size: 0.76rem;
+    font-weight: bold;
+    margin-bottom: 17px;
 }
 
-/* ---------- 7. GENERAL SECTIONS ---------- */
-
+/* SECTIONS */
 section {
     padding: 85px 7%;
 }
 
 .section-heading {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto 45px;
     text-align: center;
 }
 
+.section-heading h2 {
+    color: var(--cream);
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
 .section-heading p {
     margin-top: 15px;
+    color: #D5DCC9;
 }
 
-/* ---------- 8. EXPLORE / FEATURE GRID ---------- */
-
-.explore-section,
-.features-section {
-    background: var(--sage-light);
+/* ABOUT */
+.about-section {
+    background:
+        radial-gradient(circle at 15% 50%, rgba(160, 174, 126, 0.12), transparent 45%),
+        #3B4A31;
 }
 
-.feature-grid,
-.cards-container,
-.explore-grid {
+.about-section .section-heading {
+    margin-bottom: 0;
+}
+
+/* EXPLORE */
+.explore-section {
+    background:
+        radial-gradient(ellipse at 80% 10%, rgba(177, 187, 143, 0.10), transparent 40%),
+        #303E29;
+}
+
+.feature-grid {
+    max-width: 1250px;
+    margin: auto;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    max-width: 1250px;
-    margin: 0 auto;
+    gap: 23px;
 }
 
-/* All ten cards share the same lighter olive colour. */
-
-.feature-card,
-.mood-card,
-.breathing-card,
-.gratitude-card,
-.fitness-card,
-.checkin-card,
-.study-card,
-.selfcare-card,
-.stories-card,
-.career-card,
-.world-card {
+/* FEATURE CARDS */
+.feature-card {
     min-height: 245px;
-    position: relative;
-    overflow: hidden;
-    padding: 30px;
+    padding: 29px;
+    border-radius: 23px;
+    border: 1px solid rgba(240, 239, 215, 0.2);
+
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     gap: 12px;
 
-    background: linear-gradient(135deg, #AAB995, #8FA47A) !important;
-    color: #fffdf4;
-
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-
     cursor: pointer;
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        filter 0.25s ease;
+    color: #FFFDF2;
+
+    /* Matching darker olive with a subtle texture */
+    background:
+        radial-gradient(ellipse at 15% 15%, rgba(225, 225, 185, 0.13), transparent 60%),
+        repeating-linear-gradient(
+            140deg,
+            rgba(255,255,255,0.025) 0px,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px,
+            transparent 7px
+        ),
+        linear-gradient(140deg, #71835C, #5B7048);
+
+    box-shadow: 0 10px 25px rgba(15, 25, 13, 0.16);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .feature-card:hover {
     transform: translateY(-7px);
-    box-shadow: 0 18px 38px rgba(39, 55, 34, 0.17);
-    filter: saturate(1.08);
+    box-shadow: 0 17px 35px rgba(10, 20, 10, 0.25);
 }
 
-.feature-card h3,
-.feature-card h2,
-.feature-card p {
-    color: #fffdf4;
-    position: relative;
-    z-index: 1;
+.feature-card:focus-visible {
+    outline: 3px solid #E1E7C9;
+    outline-offset: 4px;
 }
 
-.feature-card h3 {
-    font-size: 1.65rem;
-}
-
-.feature-card p {
-    max-width: 95%;
-    color: rgba(255, 253, 244, 0.92);
-    font-size: 0.94rem;
-}
-
-.feature-card .card-icon {
+.card-icon {
     font-size: 2rem;
     margin-bottom: auto;
 }
 
-.feature-card:focus-visible {
-    outline: 4px solid var(--olive-dark);
-    outline-offset: 4px;
+.feature-card h3 {
+    font-size: 1.65rem;
+    color: #FFFDF2;
 }
 
-/* ---------- 9. CARD BACKGROUND CONTROLS ---------- */
-
-.background-control {
-    position: relative;
-    z-index: 5;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    width: fit-content;
-    margin-top: 10px;
+.feature-card p {
+    font-size: 0.94rem;
+    color: #F0F0E5;
 }
 
-.card-background-input {
-    max-width: 100%;
-    color: white;
-    font-size: 0.78rem;
+/* SAVED PAGES */
+.saved-section {
+    background: #3B4A31;
 }
 
-.card-background-input::file-selector-button {
-    padding: 7px 12px;
-    border: 0;
-    border-radius: 20px;
-    background: rgba(255,255,255,.9);
-    color: var(--olive-dark);
-    cursor: pointer;
-}
-
-.reset-card-background {
-    padding: 7px 12px;
-    border: 1px solid rgba(255,255,255,.7);
-    border-radius: 20px;
-    background: transparent;
-    color: white;
-}
-
-/* ---------- 10. ABOUT SECTION ---------- */
-
-.about-section {
-    background: var(--ivory);
-}
-
-.about-content {
-    max-width: 900px;
+.saved-grid {
+    max-width: 1100px;
     margin: auto;
-    text-align: center;
-}
-
-.about-content p {
-    margin-top: 18px;
-    font-size: 1.03rem;
-}
-
-/* ---------- 11. BUTTONS ---------- */
-
-button,
-.button {
-    transition: 0.2s ease;
-}
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid var(--olive);
-    outline-offset: 3px;
-}
-
-.secondary-button {
-    padding: 11px 20px;
-    border: 1px solid var(--olive);
-    border-radius: 40px;
-    background: transparent;
-    color: var(--olive-dark);
-}
-
-.secondary-button:hover {
-    background: var(--sage);
-}
-
-/* ---------- 12. FORMS AND INPUTS ---------- */
-
-input,
-textarea,
-select {
-    width: 100%;
-    padding: 13px 15px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--white);
-    color: var(--text);
-}
-
-textarea {
-    min-height: 130px;
-    resize: vertical;
-}
-
-label {
-    display: block;
-    margin-bottom: 7px;
-    color: var(--olive-dark);
-    font-weight: 600;
-}
-
-.form-group {
-    margin-bottom: 18px;
-}
-
-/* ---------- 13. ACCOUNT MODAL ---------- */
-
-#accountModal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    padding: 20px;
-    align-items: center;
-    justify-content: center;
-    background: rgba(24, 34, 23, 0.68);
-}
-
-#accountModal.show {
-    display: flex;
-}
-
-.account-modal-content,
-.modal-content {
-    position: relative;
-    width: min(100%, 450px);
-    padding: 38px;
-    border-radius: 25px;
-    background: var(--ivory);
-    box-shadow: 0 25px 70px rgba(0,0,0,.22);
-}
-
-.account-modal-content h2,
-.modal-content h2 {
-    margin-bottom: 12px;
-    font-size: 2rem;
-}
-
-#closeAccountModal {
-    position: absolute;
-    top: 15px;
-    right: 18px;
-    width: 35px;
-    height: 35px;
-    border: none;
-    border-radius: 50%;
-    background: var(--sage);
-    color: var(--olive-dark);
-    font-size: 1.3rem;
-}
-
-/* ---------- 14. FEATURE PAGE ---------- */
-
-.feature-page,
-.feature-detail {
-    min-height: 80vh;
-    padding: 65px 7%;
-    background: var(--ivory);
-}
-
-.feature-page-content,
-.feature-detail-content {
-    max-width: 950px;
-    margin: auto;
-}
-
-.feature-page h1,
-.feature-detail h1 {
-    margin-bottom: 15px;
-}
-
-.feature-panel,
-.content-panel,
-.tool-card {
-    margin-top: 25px;
-    padding: 28px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: var(--shadow);
-}
-
-.feature-panel h2,
-.content-panel h2,
-.tool-card h2 {
-    margin-bottom: 12px;
-}
-
-/* ---------- 15. SAVED PAGES ---------- */
-
-#savedPagesList {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
-    margin-top: 25px;
 }
 
 .saved-page-item {
-    padding: 22px;
-    border: 1px solid var(--border);
+    padding: 23px;
     border-radius: 18px;
-    background: var(--white);
+    background: #F5F2E7;
+    color: #35402F;
     overflow-wrap: anywhere;
 }
 
 .saved-page-item h3 {
-    margin-bottom: 7px;
+    color: #35402F;
+    margin-bottom: 8px;
+}
+
+.saved-page-item p {
+    color: #5D6954;
+    white-space: pre-wrap;
 }
 
 .saved-page-item small {
     display: block;
     margin-bottom: 12px;
-    color: var(--muted);
-}
-
-.saved-page-item p {
-    white-space: pre-wrap;
+    color: #78816F;
 }
 
 .delete-saved-page {
     margin-top: 15px;
-    padding: 8px 14px;
     border: 0;
-    border-radius: 20px;
-    background: #E9D9D1;
-    color: #704C3E;
+    border-radius: 25px;
+    padding: 8px 15px;
+    background: #E7D8CE;
+    color: #694B3E;
 }
 
 .empty-saved-message {
     grid-column: 1 / -1;
-    padding: 25px;
     text-align: center;
+    color: #E0E4D4;
 }
 
-/* ---------- 16. FOOTER ---------- */
+/* FEATURE PAGE */
+.feature-page {
+    min-height: 80vh;
+    padding: 65px 7%;
+    background:
+        radial-gradient(ellipse at 80% 10%, rgba(177,187,143,.12), transparent 40%),
+        #35442E;
+}
 
+.feature-page-content {
+    max-width: 950px;
+    margin: auto;
+}
+
+.feature-page h1 {
+    color: var(--cream);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    margin-bottom: 15px;
+}
+
+.feature-intro {
+    color: #DDE3D2;
+    margin-bottom: 30px;
+}
+
+.feature-panel {
+    margin-top: 22px;
+    padding: 27px;
+    border-radius: 20px;
+    background: #F5F2E7;
+    color: #35402F;
+    box-shadow: var(--shadow);
+}
+
+.feature-panel h2,
+.feature-panel h3 {
+    color: #35402F;
+    margin-bottom: 12px;
+}
+
+.feature-panel p {
+    color: #5D6954;
+}
+
+.feature-panel a {
+    color: #536744;
+    text-decoration: underline;
+}
+
+.feature-panel label {
+    display: block;
+    margin: 15px 0 7px;
+    color: #35402F;
+    font-weight: 600;
+}
+
+.feature-panel input,
+.feature-panel textarea,
+.feature-panel select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #C7CEB9;
+    border-radius: 10px;
+    background: #FFFEF9;
+    color: #35402F;
+}
+
+.feature-panel textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.feature-panel button {
+    margin-top: 14px;
+    padding: 11px 19px;
+    border: 0;
+    border-radius: 30px;
+    background: #536744;
+    color: white;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #E0E7D3;
+}
+
+/* ACCOUNT MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(12, 20, 10, 0.78);
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    width: min(100%, 450px);
+    padding: 35px;
+    border-radius: 22px;
+    background: var(--cream);
+    color: #35402F;
+}
+
+.modal-content h2 {
+    color: #35402F;
+    margin-bottom: 12px;
+}
+
+.modal-content p {
+    color: #66715C;
+    margin-bottom: 18px;
+}
+
+.modal-content label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 600;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #C5CEB6;
+    border-radius: 10px;
+    background: white;
+    color: #35402F;
+}
+
+.form-button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    border: 0;
+    background: transparent;
+    color: #35402F;
+    font-size: 1.8rem;
+}
+
+.small-note {
+    margin-top: 15px;
+    font-size: 0.78rem;
+}
+
+/* FOOTER */
 footer {
     padding: 45px 7%;
-    background: var(--olive-dark);
-    color: var(--white);
     text-align: center;
+    background: #253220;
 }
 
-footer p,
-footer a {
-    color: rgba(255,255,255,.85);
+footer h2 {
+    color: var(--cream);
+    margin-bottom: 10px;
 }
 
-/* ---------- 17. RESPONSIVE DESIGN ---------- */
+footer p {
+    color: #D5DCC9;
+}
 
+.footer-small {
+    margin-top: 14px;
+    font-size: 0.82rem;
+}
+
+/* RESPONSIVE */
 @media (max-width: 900px) {
-    .feature-grid,
-    .cards-container,
-    .explore-grid {
+    .feature-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .navbar {
-        padding-left: 5%;
-        padding-right: 5%;
     }
 }
 
 @media (max-width: 650px) {
-    section {
-        padding: 60px 6%;
-    }
-
     .navbar {
         flex-wrap: wrap;
     }
@@ -600,22 +529,20 @@ footer a {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
-        padding: 15px 0;
+        padding: 12px 0;
     }
 
     .nav-links.show {
         display: flex;
     }
 
-    .feature-grid,
-    .cards-container,
-    .explore-grid,
-    #savedPagesList {
-        grid-template-columns: 1fr;
+    .nav-button {
+        display: none;
     }
 
-    .feature-card {
-        min-height: 220px;
+    .feature-grid,
+    .saved-grid {
+        grid-template-columns: 1fr;
     }
 
     .hero {
@@ -623,8 +550,11 @@ footer a {
         padding: 75px 6%;
     }
 
-    .account-modal-content,
-    .modal-content {
-        padding: 30px 22px;
+    section {
+        padding: 60px 6%;
+    }
+
+    .feature-card {
+        min-height: 220px;
     }
 }
