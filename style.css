@@ -1,858 +1,630 @@
 
 /* =========================================================
-   01. FONTS AND MAIN COLOUR SETTINGS
-   Change these values to change the overall website theme.
+   TO THE ETHER — COMPLETE MAIN STYLESHEET
+   Theme: Olive green, soft sage and warm ivory
    ========================================================= */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap');
+
+/* ---------- 1. FONTS ---------- */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* ---------- 2. COLOUR SETTINGS ---------- */
 
 :root {
-  --bg: #252d21;
-  --olive: #71845a;
-  --sage: #a2ae83;
-  --cream: #f1eadc;
-  --champagne: #c5aa80;
-  --burgundy: #784454;
-  --muted: #c5c5b8;
-  --border: rgba(255,255,255,.16);
-  --serif: 'Cormorant Garamond', serif;
-  --sans: 'DM Sans', sans-serif;
-  --script: 'Dancing Script', cursive;
+    --olive-dark: #35452F;
+    --olive: #657A50;
+    --olive-medium: #7E9169;
+    --olive-light: #A9B995;
+    --sage: #D5DEC9;
+    --sage-light: #E7ECDF;
+    --ivory: #F7F5EC;
+    --cream: #F0EBDD;
+    --white: #FFFDF7;
+    --brown: #75634E;
+    --text: #35402F;
+    --muted: #68745F;
+    --border: rgba(69, 86, 57, 0.18);
+    --shadow: 0 12px 32px rgba(39, 55, 34, 0.10);
+    --radius: 22px;
 }
 
-/* =========================================================
-   02. BASIC PAGE SETTINGS
-   ========================================================= */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ---------- 3. GENERAL RESET ---------- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 85px;
+    scroll-behavior: smooth;
 }
 
 body {
-  background: var(--bg);
-  color: var(--cream);
-  font-family: var(--sans);
-  line-height: 1.7;
+    min-height: 100vh;
+    background: var(--ivory);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.65;
 }
 
-a { text-decoration: none; color: inherit; }
-button, input, textarea, select { font: inherit; }
-button { cursor: pointer; }
-
-::selection {
-  background: var(--champagne);
-  color: #252d21;
+button,
+input,
+textarea,
+select {
+    font: inherit;
 }
 
-/* =========================================================
-   03. NAVIGATION BAR
-   ========================================================= */
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ---------- 4. HEADINGS ---------- */
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--olive-dark);
+}
+
+h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3 {
+    font-size: 1.45rem;
+}
+
+p {
+    color: var(--muted);
+}
+
+/* ---------- 5. NAVIGATION BAR ---------- */
+
+header,
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  padding: 15px 6%;
-  background: rgba(37,45,33,.96);
-  backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--border);
+    width: 100%;
+    background: rgba(247, 245, 236, 0.96);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 20;
 }
 
-.logo {
-  font: 600 31px var(--serif);
-  white-space: nowrap;
+.navbar {
+    min-height: 76px;
+    padding: 15px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
 }
 
-.logo span { color: var(--champagne); }
-
-.navbar nav {
-  display: flex;
-  gap: 23px;
+.logo,
+.nav-logo {
+    color: var(--olive-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
 }
 
-.navbar nav a {
-  color: var(--muted);
-  font-size: 12px;
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
 }
 
-.navbar nav a:hover { color: var(--champagne); }
-
-.account-button, .primary-button {
-  border: 1px solid var(--champagne);
-  background: var(--champagne);
-  color: #252d21;
-  padding: 11px 19px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  transition: .3s;
+.nav-links a {
+    color: var(--text);
+    font-size: 0.94rem;
+    transition: color 0.2s ease;
 }
 
-.account-button:hover, .primary-button:hover {
-  background: transparent;
-  color: var(--champagne);
+.nav-links a:hover {
+    color: var(--olive);
 }
 
-.menu-toggle {
-  display: none;
-  color: var(--cream);
-  background: none;
-  border: 0;
-  font-size: 25px;
+.nav-button,
+.explore-button,
+.primary-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 23px;
+    border: none;
+    border-radius: 50px;
+    background: var(--olive-dark);
+    color: var(--white);
+    font-weight: 600;
+    transition: 0.25s ease;
 }
 
-/* =========================================================
-   04. HERO SECTION
-   Main homepage heading and optional fern image.
-   ========================================================= */
+.nav-button:hover,
+.explore-button:hover,
+.primary-button:hover {
+    background: var(--olive);
+    transform: translateY(-2px);
+}
+
+#menuToggle {
+    display: none;
+    border: 0;
+    background: transparent;
+    color: var(--olive-dark);
+    font-size: 1.6rem;
+}
+
+/* ---------- 6. HERO SECTION ---------- */
+
 .hero {
-  min-height: 630px;
-  padding: 85px 8%;
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 60px;
-  align-items: center;
-  background: radial-gradient(ellipse at 15% 25%,#586d46,#252d21 70%);
+    min-height: 580px;
+    padding: 100px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(169,185,149,.35), transparent 32%),
+        radial-gradient(circle at 85% 75%, rgba(126,145,105,.20), transparent 35%),
+        var(--ivory);
 }
 
-.eyebrow {
-  color: var(--champagne);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 3px;
+.hero-content {
+    max-width: 850px;
 }
 
 .hero h1 {
-  font: 500 clamp(46px,6vw,76px)/1 var(--serif);
-  margin: 23px 0;
+    margin-bottom: 22px;
 }
 
-h1 em, h2 em {
-  color: var(--champagne);
-  font-weight: 400;
+.hero p {
+    max-width: 650px;
+    margin: 0 auto 30px;
+    font-size: 1.08rem;
 }
 
-.hero-content > p {
-  max-width: 470px;
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 27px;
+.hero-tag,
+.section-tag {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: var(--olive);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
-.handwritten {
-  font: 26px var(--script);
-  color: var(--champagne);
-  margin-top: 23px;
+/* ---------- 7. GENERAL SECTIONS ---------- */
+
+section {
+    padding: 85px 7%;
 }
-
-.hero-image {
-  position: relative;
-  height: 430px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 180px 180px 8px 8px;
-  overflow: hidden;
-}
-
-.hero-image img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 170px 170px 5px 5px;
-  filter: brightness(.8);
-}
-
-.hero-image span {
-  position: absolute;
-  bottom: 30px;
-  left: 25px;
-  right: 25px;
-  padding: 10px;
-  background: rgba(37,45,33,.85);
-  text-align: center;
-  font: 23px var(--script);
-}
-
-/* =========================================================
-   05. ABOUT SECTION
-   ========================================================= */
-.about-section {
-  background: var(--cream);
-  color: #30382b;
-  padding: 95px 12%;
-  text-align: center;
-}
-
-.about-section .eyebrow { color: #78835c; }
-
-.about-section h2,
-.section-heading h2,
-.stories-section h2,
-.resources-section h2,
-.saved-section h2,
-.closing-section h2 {
-  font: 500 clamp(38px,5vw,60px)/1.05 var(--serif);
-  margin: 20px 0;
-}
-
-.about-section h2 em { color: #71845a; }
-
-.about-section > p {
-  max-width: 690px;
-  margin: 20px auto;
-  color: #6e705f;
-  font-size: 14px;
-}
-
-.about-points {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 32px;
-  color: #62734d;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* =========================================================
-   06. EXPLORE SECTION AND CARD GRID
-   ========================================================= */
-.explore-section { padding: 100px 7%; }
 
 .section-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 25px;
-  margin-bottom: 45px;
+    max-width: 720px;
+    margin: 0 auto 45px;
+    text-align: center;
 }
 
-.section-heading > p {
-  color: var(--muted);
-  font-size: 13px;
+.section-heading p {
+    margin-top: 15px;
 }
 
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 23px;
+/* ---------- 8. EXPLORE / FEATURE GRID ---------- */
+
+.explore-section,
+.features-section {
+    background: var(--sage-light);
 }
 
-/* =========================================================
-   07. SHARED FEATURE CARD DESIGN
-   ========================================================= */
-.feature-card {
-  min-height: 285px;
-  padding: 36px;
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 9px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform .3s, box-shadow .3s;
+.feature-grid,
+.cards-container,
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1250px;
+    margin: 0 auto;
 }
 
-.feature-card::after {
-  content: "";
-  position: absolute;
-  width: 190px;
-  height: 190px;
-  right: -65px;
-  bottom: -95px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.09);
-  transition: .4s;
-  pointer-events: none;
+/* All ten cards share the same lighter olive colour. */
+
+.feature-card,
+.mood-card,
+.breathing-card,
+.gratitude-card,
+.fitness-card,
+.checkin-card,
+.study-card,
+.selfcare-card,
+.stories-card,
+.career-card,
+.world-card {
+    min-height: 245px;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 12px;
+
+    background: linear-gradient(135deg, #AAB995, #8FA47A) !important;
+    color: #fffdf4;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
 }
 
 .feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 35px rgba(0,0,0,.22);
+    transform: translateY(-7px);
+    box-shadow: 0 18px 38px rgba(39, 55, 34, 0.17);
+    filter: saturate(1.08);
 }
 
-.feature-card:hover::after { transform: scale(1.5); }
-
-.card-number {
-  position: absolute;
-  top: 22px;
-  left: 28px;
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: rgba(255,255,255,.7);
-}
-
-.card-symbol {
-  position: absolute;
-  top: 8px;
-  right: 28px;
-  font: 72px var(--serif);
-  color: rgba(255,255,255,.35);
-}
-
-.card-tag {
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: rgba(255,255,255,.8);
+.feature-card h3,
+.feature-card h2,
+.feature-card p {
+    color: #fffdf4;
+    position: relative;
+    z-index: 1;
 }
 
 .feature-card h3 {
-  font: 500 39px var(--serif);
-  margin: 7px 0;
+    font-size: 1.65rem;
 }
 
 .feature-card p {
-  max-width: 340px;
-  color: rgba(255,255,255,.88);
-  font-size: 13px;
+    max-width: 95%;
+    color: rgba(255, 253, 244, 0.92);
+    font-size: 0.94rem;
 }
 
-.card-link {
-  width: fit-content;
-  margin-top: 25px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255,255,255,.8);
-  font-size: 12px;
-  font-weight: 600;
-  position: relative;
-  z-index: 1;
+.feature-card .card-icon {
+    font-size: 2rem;
+    margin-bottom: auto;
 }
 
-/* =========================================================
-   08. TEN DIFFERENT CARD COLOURS
-   Change a colour here to customise an individual card.
-   ========================================================= */
-.mood-card { background: linear-gradient(140deg,#795364,#493743); }
-.breathing-card { background: linear-gradient(140deg,#708a70,#3e604f); }
-.gratitude-card { background: linear-gradient(140deg,#b67c60,#86533e); }
-.fitness-card { background: linear-gradient(140deg,#71845a,#40543c); }
-.checkin-card { background: linear-gradient(140deg,#aa7180,#754b5a); }
-.study-card { background: linear-gradient(140deg,#527487,#304d61); }
-.selfcare-card { background: linear-gradient(140deg,#b59b75,#80684c); }
-.stories-card { background: linear-gradient(140deg,#607d88,#354d5b); }
-.career-card { background: linear-gradient(140deg,#875363,#553340); }
-.world-card { background: linear-gradient(140deg,#84956b,#536448); }
+.feature-card:focus-visible {
+    outline: 4px solid var(--olive-dark);
+    outline-offset: 4px;
+}
 
-/* =========================================================
-   09. CARD BACKGROUND COLOUR PICKER
-   ========================================================= */
+/* ---------- 9. CARD BACKGROUND CONTROLS ---------- */
+
 .background-control {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 15px;
-  font-size: 10px;
-  color: rgba(255,255,255,.9);
-  position: relative;
-  z-index: 3;
+    position: relative;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin-top: 10px;
 }
 
-.background-control input {
-  width: 25px;
-  height: 25px;
-  border: none;
-  background: none;
-  cursor: pointer;
+.card-background-input {
+    max-width: 100%;
+    color: white;
+    font-size: 0.78rem;
 }
 
-/* =========================================================
-   10. STORIES SECTION
-   ========================================================= */
-.stories-section {
-  background: var(--cream);
-  color: #30382b;
-  padding: 95px 7%;
+.card-background-input::file-selector-button {
+    padding: 7px 12px;
+    border: 0;
+    border-radius: 20px;
+    background: rgba(255,255,255,.9);
+    color: var(--olive-dark);
+    cursor: pointer;
 }
 
-.stories-section .eyebrow,
-.resources-section .eyebrow,
-.saved-section .eyebrow { color: #78835c; }
-
-.stories-section h2 em,
-.resources-section h2 em,
-.saved-section h2 em { color: #71845a; }
-
-.stories-section > p {
-  max-width: 650px;
-  color: #6d6e62;
-  font-size: 14px;
+.reset-card-background {
+    padding: 7px 12px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 20px;
+    background: transparent;
+    color: white;
 }
 
-.story-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
-  margin-top: 38px;
+/* ---------- 10. ABOUT SECTION ---------- */
+
+.about-section {
+    background: var(--ivory);
 }
 
-.story-grid article {
-  padding: 27px;
-  background: #f9f4e9;
-  border: 1px solid #ded7c8;
-  border-radius: 6px;
-  transition: .3s;
+.about-content {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
 }
 
-.story-grid article:hover { transform: translateY(-5px); }
-
-.story-grid article span {
-  font-size: 10px;
-  color: #8a7555;
-  letter-spacing: 2px;
+.about-content p {
+    margin-top: 18px;
+    font-size: 1.03rem;
 }
 
-.story-grid h3 {
-  font: 500 30px var(--serif);
-  margin: 15px 0;
+/* ---------- 11. BUTTONS ---------- */
+
+button,
+.button {
+    transition: 0.2s ease;
 }
 
-.story-grid p {
-  color: #6e6b60;
-  font-size: 12px;
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--olive);
+    outline-offset: 3px;
 }
 
-.story-grid a {
-  display: inline-block;
-  color: #61744c;
-  font-size: 12px;
-  margin-top: 20px;
+.secondary-button {
+    padding: 11px 20px;
+    border: 1px solid var(--olive);
+    border-radius: 40px;
+    background: transparent;
+    color: var(--olive-dark);
 }
 
-/* =========================================================
-   11. RESOURCES SECTION
-   ========================================================= */
-.resources-section { padding: 90px 10%; }
-
-.resource-links { margin-top: 30px; }
-
-.resource-links a {
-  display: block;
-  padding: 19px 5px;
-  border-bottom: 1px solid var(--border);
-  font: 25px var(--serif);
-  transition: .3s;
+.secondary-button:hover {
+    background: var(--sage);
 }
 
-.resource-links a:hover {
-  color: var(--champagne);
-  padding-left: 12px;
+/* ---------- 12. FORMS AND INPUTS ---------- */
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--white);
+    color: var(--text);
 }
 
-/* =========================================================
-   12. SAVED PAGES SECTION
-   ========================================================= */
-.saved-section {
-  padding: 90px 8%;
-  background: var(--cream);
-  color: #30382b;
+textarea {
+    min-height: 130px;
+    resize: vertical;
 }
 
-.saved-section > p {
-  color: #6d6e62;
-  font-size: 13px;
+label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--olive-dark);
+    font-weight: 600;
 }
 
-.saved-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(210px,1fr));
-  gap: 15px;
-  margin-top: 30px;
+.form-group {
+    margin-bottom: 18px;
 }
 
-.saved-item {
-  padding: 20px;
-  border: 1px solid #ddd5c5;
-  background: #f9f4e9;
-  border-radius: 6px;
-  overflow-wrap: anywhere;
+/* ---------- 13. ACCOUNT MODAL ---------- */
+
+#accountModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(24, 34, 23, 0.68);
 }
 
-.saved-item h3 { font: 25px var(--serif); }
-
-.saved-item p {
-  font-size: 12px;
-  white-space: pre-wrap;
-  color: #6e6b60;
-  margin: 10px 0;
+#accountModal.show {
+    display: flex;
 }
 
-.saved-item button {
-  border: 0;
-  background: transparent;
-  color: #805342;
-  font-size: 12px;
-  margin-top: 12px;
+.account-modal-content,
+.modal-content {
+    position: relative;
+    width: min(100%, 450px);
+    padding: 38px;
+    border-radius: 25px;
+    background: var(--ivory);
+    box-shadow: 0 25px 70px rgba(0,0,0,.22);
 }
 
-/* =========================================================
-   13. CLOSING SECTION AND FOOTER
-   ========================================================= */
-.closing-section {
-  padding: 100px 20px;
-  text-align: center;
-  background: radial-gradient(ellipse,#536b43,#252d21 75%);
+.account-modal-content h2,
+.modal-content h2 {
+    margin-bottom: 12px;
+    font-size: 2rem;
 }
 
-.closing-section h2 { font-size: 60px; }
+#closeAccountModal {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background: var(--sage);
+    color: var(--olive-dark);
+    font-size: 1.3rem;
+}
+
+/* ---------- 14. FEATURE PAGE ---------- */
+
+.feature-page,
+.feature-detail {
+    min-height: 80vh;
+    padding: 65px 7%;
+    background: var(--ivory);
+}
+
+.feature-page-content,
+.feature-detail-content {
+    max-width: 950px;
+    margin: auto;
+}
+
+.feature-page h1,
+.feature-detail h1 {
+    margin-bottom: 15px;
+}
+
+.feature-panel,
+.content-panel,
+.tool-card {
+    margin-top: 25px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.feature-panel h2,
+.content-panel h2,
+.tool-card h2 {
+    margin-bottom: 12px;
+}
+
+/* ---------- 15. SAVED PAGES ---------- */
+
+#savedPagesList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.saved-page-item {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--white);
+    overflow-wrap: anywhere;
+}
+
+.saved-page-item h3 {
+    margin-bottom: 7px;
+}
+
+.saved-page-item small {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--muted);
+}
+
+.saved-page-item p {
+    white-space: pre-wrap;
+}
+
+.delete-saved-page {
+    margin-top: 15px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 20px;
+    background: #E9D9D1;
+    color: #704C3E;
+}
+
+.empty-saved-message {
+    grid-column: 1 / -1;
+    padding: 25px;
+    text-align: center;
+}
+
+/* ---------- 16. FOOTER ---------- */
 
 footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 30px 7%;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 11px;
-}
-
-/* =========================================================
-   14. ACCOUNT POP-UP WINDOW
-   ========================================================= */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,.75);
-  padding: 20px;
-}
-
-.modal-overlay.show { display: flex; }
-
-.account-modal {
-  width: min(100%,440px);
-  position: relative;
-  padding: 38px;
-  background: #303c2b;
-  border: 1px solid var(--champagne);
-  border-radius: 8px;
-}
-
-.account-modal h2 {
-  font: 44px var(--serif);
-  margin: 15px 0;
-}
-
-.account-modal h2 em { color: var(--champagne); }
-
-.account-modal p {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.account-modal form {
-  display: grid;
-  gap: 12px;
-  margin-top: 25px;
-}
-
-.account-modal label {
-  color: var(--champagne);
-  font-size: 12px;
-}
-
-.account-modal input {
-  padding: 12px;
-  width: 100%;
-  background: #20291e;
-  color: white;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
-
-.modal-close {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  border: 0;
-  background: none;
-  color: white;
-  font-size: 27px;
-}
-
-/* =========================================================
-   15. SHARED INDIVIDUAL FEATURE PAGE STYLES
-   ========================================================= */
-.feature-page .navbar { position: relative; }
-
-.feature-main {
-  max-width: 1200px;
-  padding: 55px 7%;
-  margin: auto;
-}
-
-.feature-top { padding: 30px 0 45px; }
-
-.feature-top h1 {
-  font: 500 clamp(45px,7vw,70px) var(--serif);
-  margin: 15px 0;
-}
-
-.feature-top p { color: var(--muted); }
-
-.feature-content {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 22px;
-}
-
-.tool-card {
-  padding: 28px;
-  border: 1px solid var(--border);
-  background: #364333;
-  border-radius: 8px;
-  min-width: 0;
-}
-
-.tool-card.full { grid-column: 1/-1; }
-
-.tool-card h2 {
-  font: 500 34px var(--serif);
-  margin-bottom: 12px;
-}
-
-.tool-card p {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.tool-card label {
-  display: block;
-  color: var(--champagne);
-  font-size: 12px;
-  margin: 14px 0 7px;
-}
-
-.tool-card input:not([type=checkbox]):not([type=file]),
-.tool-card textarea,
-.tool-card select {
-  width: 100%;
-  padding: 12px;
-  margin: 5px 0;
-  background: #263124;
-  color: white;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
-
-.tool-card textarea {
-  min-height: 105px;
-  resize: vertical;
-}
-
-.tool-button {
-  display: inline-block;
-  margin: 9px 5px 5px 0;
-  padding: 10px 16px;
-  border: 1px solid var(--champagne);
-  border-radius: 4px;
-  background: var(--champagne);
-  color: #252d21;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.tool-button.secondary {
-  background: transparent;
-  color: var(--champagne);
-}
-
-.tool-result {
-  margin-top: 15px;
-  color: var(--champagne);
-  white-space: pre-wrap;
-  font-size: 13px;
-}
-
-.choice-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 15px;
-}
-
-.choice-list button {
-  padding: 9px 14px;
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  background: #526b47;
-  color: white;
-}
-
-.choice-list button.selected {
-  background: var(--champagne);
-  color: #252d21;
-}
-
-.breath-circle {
-  width: 155px;
-  height: 155px;
-  margin: 25px auto;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: radial-gradient(circle,#c0c99e,#70865b);
-  color: #263124;
-  font: 24px var(--serif);
-  transition: transform 4s ease-in-out;
-}
-
-.breath-circle.expand { transform: scale(1.3); }
-
-.breath-note {
-  text-align: center;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.timer-display {
-  font: 58px var(--serif);
-  text-align: center;
-  color: var(--champagne);
-  margin: 15px;
-}
-
-.career-question {
-  padding: 18px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.career-question h3 { font: 24px var(--serif); }
-
-.career-question label {
-  display: inline-block;
-  margin: 8px 12px 0 0;
-  color: var(--cream);
-}
-
-.career-question input { accent-color: var(--champagne); }
-
-.memory-card {
-  background: rgba(255,255,255,.06);
-  padding: 16px;
-  margin: 12px 0;
-  border-radius: 5px;
-}
-
-.memory-card img {
-  display: block;
-  max-width: 100%;
-  max-height: 250px;
-  object-fit: contain;
-  margin-top: 10px;
-}
-
-.image-preview {
-  max-width: 100%;
-  max-height: 250px;
-  object-fit: contain;
-}
-
-/* =========================================================
-   16. BACKGROUND CUSTOMISATION AND SAVED CONTENT
-   ========================================================= */
-.background-settings {
-  margin-bottom: 20px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.background-settings input {
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-.tool-card a {
-  color: var(--champagne);
-  text-decoration: underline;
-}
-
-.save-section {
-  margin-top: 70px;
-  padding-top: 35px;
-  border-top: 1px solid var(--border);
-}
-
-.save-section h2 {
-  font: 40px var(--serif);
-  margin: 10px 0;
-}
-
-.save-section > div > p {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.feature-page footer { margin-top: 40px; }
-
-/* =========================================================
-   17. MOBILE AND TABLET RESPONSIVE DESIGN
-   ========================================================= */
-@media(max-width:850px) {
-  .navbar nav { gap: 12px; }
-  .hero { gap: 30px; padding: 65px 6%; }
-  .story-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media(max-width:650px) {
-  .navbar { flex-wrap: wrap; }
-  .menu-toggle {
-    display: block;
-    margin-left: auto;
-  }
-
-  .navbar nav {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .navbar nav.open { display: flex; }
-
-  .account-button { padding: 9px 12px; }
-
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 60px 7%;
-  }
-
-  .hero-image {
-    height: 340px;
-    width: 100%;
-    max-width: 420px;
-    margin: auto;
-  }
-
-  .about-section { padding: 70px 7%; }
-  .explore-section { padding: 70px 6%; }
-  .section-heading { display: block; }
-  .section-heading > p { margin-top: 15px; }
-
-  .feature-grid,
-  .story-grid,
-  .feature-content { grid-template-columns: 1fr; }
-
-  .tool-card.full { grid-column: auto; }
-
-  .stories-section,
-  .resources-section,
-  .saved-section { padding: 70px 7%; }
-
-  footer {
-    flex-direction: column;
+    padding: 45px 7%;
+    background: var(--olive-dark);
+    color: var(--white);
     text-align: center;
-  }
+}
 
-  .closing-section h2 { font-size: 48px; }
+footer p,
+footer a {
+    color: rgba(255,255,255,.85);
+}
+
+/* ---------- 17. RESPONSIVE DESIGN ---------- */
+
+@media (max-width: 900px) {
+    .feature-grid,
+    .cards-container,
+    .explore-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .navbar {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+@media (max-width: 650px) {
+    section {
+        padding: 60px 6%;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    #menuToggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px 0;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .feature-grid,
+    .cards-container,
+    .explore-grid,
+    #savedPagesList {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        min-height: 220px;
+    }
+
+    .hero {
+        min-height: 480px;
+        padding: 75px 6%;
+    }
+
+    .account-modal-content,
+    .modal-content {
+        padding: 30px 22px;
+    }
 }
