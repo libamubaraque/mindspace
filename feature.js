@@ -1,581 +1,541 @@
 
 /* =========================================================
-   TO THE ETHER — FEATURE PAGE JAVASCRIPT
-
-   This file controls all ten individual feature spaces.
-   It loads the correct tools, saves writing and displays
-   the saved pages for the selected feature.
+   TO THE ETHER — FEATURE JAVASCRIPT
+   Controls all ten individual spaces.
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // 01. SHORTCUTS AND SELECT THE FEATURE FROM THE URL
   const $ = id => document.getElementById(id);
+
   const params = new URLSearchParams(window.location.search);
   const feature = params.get("feature");
 
-  // 02. FEATURE NAMES AND DESCRIPTIONS
+  const title = $("featureTitle");
+  const description = $("featureDescription");
+  const category = $("featureCategory");
+  const content = $("featureContent");
+
+  /* 01. FEATURE INFORMATION */
   const features = {
-    mood: ["UNDERSTAND", "Mood Journal", "A space to put your thoughts into words."],
-    breathing: ["SLOW DOWN", "Breathing Space", "Pause, breathe and reconnect with the present."],
-    gratitude: ["APPRECIATE", "Gratitude Journal", "Collect little moments worth remembering."],
-    fitness: ["MOVE & FEEL", "Fitness & Wellness", "Explore movement and everyday wellbeing."],
-    checkin: ["CONNECT", "Daily Check-in", "Celebrate little wins and small steps."],
-    study: ["FOCUS", "Study & Focus", "Make studying feel calmer and more manageable."],
-    selfcare: ["CARE", "Self-care Corner", "Small acts of care count."],
-    stories: ["THE WORLD", "Stories & Reality", "Understand real-world issues and positive change."],
-    career: ["DREAM", "Career Exploration", "Explore possibilities beyond what you already know."],
-    world: ["YOUR WORLD", "My Little World", "Your memories, diary and scrapbook."]
+
+    "mood-journal": {
+      title: "Mood Journal",
+      category: "REFLECT · 01",
+      description: "Give your feelings a little space.",
+      intro: "There is no right or wrong way to feel. Take a moment to understand your day.",
+      prompts: [
+        "What emotion describes your day?",
+        "What made you feel this way?",
+        "What was the most difficult part of today?",
+        "What is something you wish someone understood?",
+        "What is one kind thing you can tell yourself?"
+      ]
+    },
+
+    "breathing-space": {
+      title: "Breathing Space",
+      category: "PAUSE · 02",
+      description: "A quiet moment in a busy day.",
+      intro: "Choose a comfortable breathing exercise. Stop whenever you feel uncomfortable.",
+    },
+
+    "gratitude-journal": {
+      title: "Gratitude Journal",
+      category: "APPRECIATE · 03",
+      description: "Small things can hold big meaning.",
+      intro: "Collect the moments, people and experiences you want to remember.",
+      prompts: [
+        "Three things I appreciated today:",
+        "Someone who made my day better:",
+        "A moment I want to remember:",
+        "Something about myself I appreciate:",
+        "Something I am looking forward to:"
+      ]
+    },
+
+    "fitness-wellness": {
+      title: "Fitness & Wellness",
+      category: "MOVE · 04",
+      description: "Movement is a form of care.",
+      intro: "Focus on energy, enjoyment, strength and rest. Every body deserves care.",
+    },
+
+    "daily-check-in": {
+      title: "Daily Check-in",
+      category: "CONNECT · 05",
+      description: "A little conversation with yourself.",
+      intro: "No long explanations needed. Just check in with yourself.",
+    },
+
+    "study-focus": {
+      title: "Study & Focus",
+      category: "LEARN · 06",
+      description: "One small step at a time.",
+      intro: "Create a study session that respects your attention and your need for breaks.",
+    },
+
+    "self-care": {
+      title: "Self-care Corner",
+      category: "CARE · 07",
+      description: "Care is more than a routine.",
+      intro: "Explore physical, emotional and everyday wellbeing.",
+    },
+
+    "stories-hope": {
+      title: "Stories & Hope",
+      category: "DISCOVER · 08",
+      description: "Understand the world. Notice the change.",
+      intro: "Learn about real challenges and the people and organisations working towards solutions.",
+    },
+
+    "career-exploration": {
+      title: "Career Exploration",
+      category: "DREAM · 09",
+      description: "Your interests can lead in many directions.",
+      intro: "Discover different career families and the education behind them.",
+    },
+
+    "my-little-world": {
+      title: "My Little World",
+      category: "REMEMBER · 10",
+      description: "A collection of everything that makes you, you.",
+      intro: "Keep memories, photographs, thoughts and letters in your own little corner.",
+    }
+
   };
 
-  // 03. CHECK THAT THE SELECTED FEATURE EXISTS
-  if (!features[feature]) {
-    window.location.replace("index.html#explore");
+  /* 02. CHECK THE FEATURE NAME */
+  if (!feature || !features[feature]) {
+    title.textContent = "Space not found.";
+    description.textContent = "Return home and choose one of the ten spaces.";
+    category.textContent = "TO THE ETHER";
+    content.innerHTML = '<a href="index.html" class="feature-action">Back to homepage ↗</a>';
     return;
   }
 
-  // 04. PUT THE CORRECT TITLE AND DESCRIPTION ON THE PAGE
-  $("featureEyebrow").textContent = features[feature][0];
-  $("featureTitle").textContent = features[feature][1];
-  $("featureDescription").textContent = features[feature][2];
-  document.title = features[feature][1] + " | To the Ether.";
+  const current = features[feature];
 
-  const content = $("featureContent");
-  const savedContainer = $("featureSavedPages");
+  document.title = current.title + " | To the Ether.";
+  title.textContent = current.title;
+  category.textContent = current.category;
+  description.textContent = current.description;
 
-  // 05. SMALL HELPER TO CREATE A TOOL CARD
-  function makeCard(title, description = "", fullWidth = false) {
-    const card = document.createElement("section");
-    card.className = "tool-card" + (fullWidth ? " full" : "");
+  /* 03. COMMON SECTION BUILDER */
+  function section(heading, text = "") {
+    const box = document.createElement("section");
+    box.className = "tool-section";
 
-    const heading = document.createElement("h2");
-    heading.textContent = title;
-    card.appendChild(heading);
+    const h = document.createElement("h2");
+    h.textContent = heading;
+    box.appendChild(h);
 
-    if (description) {
-      const paragraph = document.createElement("p");
-      paragraph.textContent = description;
-      card.appendChild(paragraph);
+    if (text) {
+      const p = document.createElement("p");
+      p.textContent = text;
+      box.appendChild(p);
     }
 
-    content.appendChild(card);
-    return card;
+    return box;
   }
 
-  // 06. SMALL HELPER TO CREATE A BUTTON
-  function makeButton(parent, text, action, secondary = false) {
+  function addTextArea(parent, label, placeholder = "Write here...") {
+    const wrapper = document.createElement("div");
+    wrapper.className = "field-group";
+
+    const lab = document.createElement("label");
+    lab.textContent = label;
+
+    const area = document.createElement("textarea");
+    area.placeholder = placeholder;
+    area.rows = 4;
+
+    wrapper.append(lab, area);
+    parent.appendChild(wrapper);
+
+    return area;
+  }
+
+  function addSelect(parent, label, options) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "field-group";
+
+    const lab = document.createElement("label");
+    lab.textContent = label;
+
+    const select = document.createElement("select");
+
+    options.forEach(option => {
+      const item = document.createElement("option");
+      item.value = option;
+      item.textContent = option;
+      select.appendChild(item);
+    });
+
+    wrapper.append(lab, select);
+    parent.appendChild(wrapper);
+
+    return select;
+  }
+
+  function addButton(parent, text, action) {
     const button = document.createElement("button");
+    button.className = "feature-action";
     button.type = "button";
-    button.className = "tool-button" + (secondary ? " secondary" : "");
     button.textContent = text;
     button.addEventListener("click", action);
     parent.appendChild(button);
     return button;
   }
 
-  // 07. SMALL HELPER TO CREATE A TEXT AREA
-  function makeTextArea(parent, placeholder, rows = 5) {
-    const area = document.createElement("textarea");
-    area.placeholder = placeholder;
-    area.rows = rows;
-    parent.appendChild(area);
-    return area;
-  }
-
-  // 08. SMALL HELPER TO CREATE A TEXT INPUT
-  function makeInput(parent, placeholder) {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = placeholder;
-    parent.appendChild(input);
-    return input;
-  }
-
-  // 09. SAVE A PAGE TO LOCAL BROWSER STORAGE
-  // Saved entries remain in this browser on this device.
-  let pages = [];
-
-  function loadPages() {
+  /* 04. SAVE A CREATION */
+  function savePage(pageTitle, pageContent) {
     try {
-      pages = JSON.parse(localStorage.getItem("etherSavedPages")) || [];
-    } catch {
-      pages = [];
-    }
-  }
+      const pages = JSON.parse(
+        localStorage.getItem("etherSavedPages")
+      ) || [];
 
-  function savePage(title, text) {
-    if (!text.trim()) {
-      alert("Write something before saving.");
-      return;
-    }
-
-    const page = {
-      id: Date.now() + Math.random(),
-      feature,
-      title: title.trim() || features[feature][1],
-      content: text.trim(),
-      date: new Date().toLocaleString()
-    };
-
-    pages.push(page);
-
-    try {
-      localStorage.setItem("etherSavedPages", JSON.stringify(pages));
-      renderSaved();
-      alert("Your page has been saved!");
-    } catch {
-      pages.pop();
-      alert("Browser storage is full. Try removing some saved content.");
-    }
-  }
-
-  // 10. DISPLAY SAVED PAGES FOR THIS FEATURE ONLY
-  function renderSaved() {
-    savedContainer.innerHTML = "";
-
-    const currentPages = pages.filter(page => page.feature === feature);
-
-    if (!currentPages.length) {
-      const empty = document.createElement("p");
-      empty.textContent = "Nothing saved here yet. Your creations will appear here.";
-      savedContainer.appendChild(empty);
-      return;
-    }
-
-    currentPages.slice().reverse().forEach(page => {
-      const item = document.createElement("article");
-      item.className = "saved-item";
-
-      const heading = document.createElement("h3");
-      heading.textContent = page.title;
-
-      const text = document.createElement("p");
-      text.textContent = page.content;
-
-      const date = document.createElement("small");
-      date.textContent = page.date;
-
-      const remove = document.createElement("button");
-      remove.type = "button";
-      remove.textContent = "Delete";
-
-      remove.addEventListener("click", () => {
-        pages = pages.filter(savedPage => savedPage.id !== page.id);
-
-        try {
-          localStorage.setItem("etherSavedPages", JSON.stringify(pages));
-          renderSaved();
-        } catch {
-          alert("Could not update your saved pages.");
-        }
+      pages.push({
+        id: Date.now(),
+        title: pageTitle,
+        content: pageContent,
+        feature: feature,
+        date: new Date().toISOString()
       });
 
-      item.append(heading, text, date, remove);
-      savedContainer.appendChild(item);
-    });
-  }
+      localStorage.setItem(
+        "etherSavedPages",
+        JSON.stringify(pages)
+      );
 
-  loadPages();
-  renderSaved();
+      alert("Your creation has been saved!");
+      renderSavedPages();
 
-  // 11. FEATURE PAGE BACKGROUND COLOUR PICKER
-  const colourPicker = $("featureColour");
-  const resetColour = $("resetColour");
-  const defaultBackground = "#364333";
-  const backgroundKey = "etherPageBackground_" + feature;
-
-  const savedBackground = localStorage.getItem(backgroundKey);
-
-  if (savedBackground && /^#[0-9a-f]{6}$/i.test(savedBackground)) {
-    content.style.backgroundColor = savedBackground;
-    colourPicker.value = savedBackground;
-  }
-
-  colourPicker.addEventListener("input", () => {
-    content.style.backgroundColor = colourPicker.value;
-
-    try {
-      localStorage.setItem(backgroundKey, colourPicker.value);
     } catch {
-      // Colour still changes for the current visit.
+      alert("Your browser could not save this creation.");
     }
-  });
+  }
 
-  resetColour.addEventListener("click", () => {
-    content.style.backgroundColor = "";
-    colourPicker.value = defaultBackground;
-    localStorage.removeItem(backgroundKey);
-  });
+  /* 05. JOURNAL FEATURES */
+  function createJournal(prompts) {
+    const box = section("Your journal", current.intro);
 
-  // 12. MOOD JOURNAL
-  function moodJournal() {
-    const card = makeCard(
-      "A little check-in with yourself",
-      "You don't have to explain everything. Write whatever feels comfortable.",
-      true
+    const mood = addSelect(
+      box,
+      "Choose your mood",
+      ["Choose one", "Happy", "Calm", "Excited", "Tired",
+       "Worried", "Sad", "Frustrated", "Unsure", "Other"]
     );
 
-    const ideas = [
-      "What has been on my mind today?",
-      "What is one thing I wish someone understood?",
-      "What made today a little easier?",
-      "What do I need more of right now?",
-      "What would I tell a friend in my situation?"
+    const fields = [];
+
+    prompts.forEach((prompt, index) => {
+      fields.push(
+        addTextArea(box, (index + 1) + ". " + prompt)
+      );
+    });
+
+    addButton(box, "Save my journal ↗", () => {
+      const text = [
+        "Mood: " + mood.value,
+        ...prompts.map((p, i) => p + "\n" + fields[i].value)
+      ].join("\n\n");
+
+      if (!fields.some(field => field.value.trim())) {
+        alert("Write something before saving.");
+        return;
+      }
+
+      savePage(current.title, text);
+    });
+
+    content.appendChild(box);
+  }
+
+  /* 06. MOOD JOURNAL */
+  if (feature === "mood-journal") {
+    createJournal(current.prompts);
+  }
+
+  /* 07. GRATITUDE JOURNAL */
+  else if (feature === "gratitude-journal") {
+    createJournal(current.prompts);
+
+    const extra = section("Make it yours", "You can decorate your journal entry with your own words and memories.");
+
+    const font = addSelect(extra, "Choose a writing style", [
+      "Simple", "Poetic", "Letter to myself", "Diary style"
+    ]);
+
+    addTextArea(extra, "A title for this page", "My little moments");
+
+    content.appendChild(extra);
+  }
+
+  /* 08. BREATHING SPACE */
+  else if (feature === "breathing-space") {
+
+    const box = section(
+      "Choose your breathing space",
+      "Use a comfortable natural rhythm. Never force your breathing."
+    );
+
+    const exercises = [
+      ["Gentle breathing", "Breathe in comfortably, then breathe out gently. Repeat at your own pace."],
+      ["Box breathing", "If comfortable, breathe in for 4 counts, hold for 4, breathe out for 4, and pause for 4. Skip the holds if uncomfortable."],
+      ["Longer exhale", "Breathe in gently, then let your exhale be a little longer, without straining."]
     ];
 
-    const select = document.createElement("select");
-    ideas.forEach(idea => {
-      const option = document.createElement("option");
-      option.textContent = idea;
-      option.value = idea;
-      select.appendChild(option);
-    });
-
-    const area = makeTextArea(card, "Write freely here...");
-    card.insertBefore(select, area);
-
-    const title = makeInput(card, "Give this entry a title");
-    makeButton(card, "Save my entry", () => {
-      savePage(title.value || "Mood journal", select.value + "\n\n" + area.value);
-    });
-
-    const feelings = makeCard("Choose a word for today", "There is no right or wrong answer.");
-
-    const words = ["Calm", "Happy", "Tired", "Unsure", "Hopeful", "Overwhelmed", "Curious", "Okay"];
-    const result = document.createElement("p");
-    result.className = "tool-result";
-
-    const choices = document.createElement("div");
-    choices.className = "choice-list";
-
-    words.forEach(word => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = word;
-
-      button.addEventListener("click", () => {
-        result.textContent = "Today, I feel: " + word;
-        choices.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
-        button.classList.add("selected");
-      });
-
-      choices.appendChild(button);
-    });
-
-    feelings.append(choices, result);
-  }
-
-  // 13. BREATHING SPACE
-  function breathingSpace() {
-    const card = makeCard(
-      "A gentle breathing guide",
-      "This is optional. Breathe normally if following a pattern feels uncomfortable.",
-      true
+    const choice = addSelect(
+      box,
+      "Choose an exercise",
+      exercises.map(item => item[0])
     );
+
+    const explanation = document.createElement("p");
+    explanation.className = "exercise-description";
+    box.appendChild(explanation);
 
     const circle = document.createElement("div");
-    circle.className = "breath-circle";
-    circle.textContent = "Ready?";
-    card.appendChild(circle);
+    circle.className = "breathing-circle";
+    circle.textContent = "Breathe";
 
-    const note = document.createElement("p");
-    note.className = "breath-note";
-    note.textContent = "Choose a comfortable exercise and stop whenever you want.";
-    card.appendChild(note);
+    box.appendChild(circle);
 
-    const result = document.createElement("p");
-    result.className = "tool-result";
-    card.appendChild(result);
+    let breathingTimer = null;
+    let breathingStep = 0;
 
-    let timer = null;
-    let step = 0;
-    let cycles = 0;
-    let running = false;
+    const phases = [
+      ["Breathe in gently", 4000],
+      ["Breathe out gently", 5000]
+    ];
 
-    const patterns = {
-      gentle: [
-        ["Breathe in", 3, true],
-        ["Breathe out", 4, false]
-      ],
-      steady: [
-        ["Breathe in", 4, true],
-        ["Breathe out", 4, false]
-      ],
-      box: [
-        ["Breathe in", 4, true],
-        ["Pause gently", 4, true],
-        ["Breathe out", 4, false],
-        ["Pause gently", 4, false]
-      ]
-    };
+    function startBreathing() {
+      stopBreathing();
+      breathingStep = 0;
 
-    const patternSelect = document.createElement("select");
-    [
-      ["gentle", "Gentle breathing"],
-      ["steady", "Steady breathing"],
-      ["box", "Box breathing"]
-    ].forEach(([value, label]) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = label;
-      patternSelect.appendChild(option);
-    });
+      function nextPhase() {
+        const phase = phases[breathingStep % phases.length];
 
-    card.insertBefore(patternSelect, circle);
+        circle.textContent = phase[0];
+        circle.classList.toggle(
+          "breathing-in",
+          breathingStep % 2 === 0
+        );
+
+        breathingStep++;
+
+        breathingTimer = setTimeout(nextPhase, phase[1]);
+      }
+
+      nextPhase();
+    }
 
     function stopBreathing() {
-      if (timer) clearInterval(timer);
-      timer = null;
-      running = false;
-      circle.classList.remove("expand");
+      clearTimeout(breathingTimer);
+      breathingTimer = null;
       circle.textContent = "Paused";
-      note.textContent = "Take your time. You can stop here.";
+      circle.classList.remove("breathing-in");
     }
 
-    function nextBreathStep() {
-      const pattern = patterns[patternSelect.value];
-      const current = pattern[step];
-
-      note.textContent = current[0];
-      circle.textContent = current[0];
-      circle.classList.toggle("expand", current[2]);
-
-      step++;
-
-      if (step >= pattern.length) {
-        step = 0;
-        cycles++;
-
-        if (cycles >= 5) {
-          stopBreathing();
-          result.textContent = "You completed five gentle cycles. Well done for taking a pause.";
-        }
-      }
+    function updateExercise() {
+      const selected = exercises.find(item => item[0] === choice.value);
+      explanation.textContent = selected ? selected[1] : "";
     }
 
-    makeButton(card, "Start", () => {
-      if (running) return;
-      running = true;
-      step = 0;
-      cycles = 0;
-      result.textContent = "";
-      nextBreathStep();
-      timer = setInterval(nextBreathStep, 4000);
+    choice.addEventListener("change", updateExercise);
+    updateExercise();
+
+    addButton(box, "Begin breathing", startBreathing);
+    addButton(box, "Pause", stopBreathing);
+
+    const sounds = section("Sounds for your space", "Choose silence or listen to natural sounds.");
+
+    [
+      ["Rain sounds", "https://www.youtube.com/results?search_query=rain+nature+sounds"],
+      ["Forest sounds", "https://www.youtube.com/results?search_query=forest+birds+nature+sounds"],
+      ["Ocean sounds", "https://www.youtube.com/results?search_query=ocean+waves+relaxing+sounds"]
+    ].forEach(([name, url]) => {
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.className = "resource-button";
+      link.textContent = name + " ↗";
+      sounds.appendChild(link);
     });
 
-    makeButton(card, "Pause", stopBreathing, true);
-
-    const reflection = makeCard("After your pause", "How was that experience? You can skip this.");
-
-    const reflectionArea = makeTextArea(reflection, "I noticed...");
-    makeButton(reflection, "Save reflection", () => {
-      savePage("Breathing reflection", reflectionArea.value);
-    });
-
-    const links = makeCard("Gentle movement and yoga", "Choose a class that feels comfortable. You can stop whenever you need.");
-
-    const yogaLink = document.createElement("a");
-    yogaLink.href = "https://www.youtube.com/results?search_query=beginner+gentle+yoga+class";
-    yogaLink.target = "_blank";
-    yogaLink.rel = "noopener";
-    yogaLink.textContent = "Find beginner gentle yoga classes ↗";
-    links.appendChild(yogaLink);
-
-    const soundLink = document.createElement("a");
-    soundLink.href = "https://www.youtube.com/results?search_query=nature+sounds+forest+rain";
-    soundLink.target = "_blank";
-    soundLink.rel = "noopener";
-    soundLink.textContent = "Find nature sounds ↗";
-    links.appendChild(document.createElement("br"));
-    links.appendChild(soundLink);
+    content.append(box, sounds);
   }
 
-  // 14. GRATITUDE JOURNAL
-  function gratitudeJournal() {
-    const card = makeCard(
-      "Little things worth keeping",
-      "Gratitude does not mean pretending everything is perfect.",
-      true
+  /* 09. FITNESS AND WELLNESS */
+  else if (feature === "fitness-wellness") {
+
+    const box = section(
+      "Your movement space",
+      "There is no perfect routine. Choose activities you enjoy and give yourself rest when needed."
     );
 
-    const prompts = [
-      "Something small that made me smile",
-      "A person who helped me",
-      "Something I learned",
-      "A moment I want to remember",
-      "Something I appreciate about my surroundings"
-    ];
+    const activity = addSelect(box, "What would you like to do?", [
+      "A gentle walk", "Running", "Cycling", "Stretching",
+      "Yoga", "Dancing", "Outdoor games", "Rest day"
+    ]);
 
-    const select = document.createElement("select");
-    prompts.forEach(prompt => {
-      const option = document.createElement("option");
-      option.value = prompt;
-      option.textContent = prompt;
-      select.appendChild(option);
+    const duration = addSelect(box, "How much time do you have?", [
+      "5 minutes", "10 minutes", "15 minutes",
+      "20 minutes", "30 minutes", "Just resting"
+    ]);
+
+    const feeling = addSelect(box, "How do you feel afterwards?", [
+      "Choose one", "Refreshed", "Relaxed", "Energised",
+      "Tired", "No different"
+    ]);
+
+    addButton(box, "Save activity ↗", () => {
+      savePage("Wellness activity",
+        "Activity: " + activity.value +
+        "\nTime: " + duration.value +
+        "\nAfterwards: " + feeling.value
+      );
     });
 
-    const title = makeInput(card, "Entry title");
-    const area = makeTextArea(card, "Write your little moment...");
-    card.insertBefore(select, title);
+    const habits = section("Small habits", "Choose a habit you would like to practise.");
 
-    makeButton(card, "Save gratitude page", () => {
-      savePage(title.value || "Gratitude journal", select.value + "\n\n" + area.value);
-    });
-  }
-
-  // 15. FITNESS AND WELLNESS
-  function fitnessWellness() {
-    const card = makeCard(
-      "Movement without pressure",
-      "Movement can be a walk, a stretch, a cycle or simply taking a break from your screen.",
-      true
-    );
-
-    const activities = [
-      "Take a comfortable walk",
-      "Stretch gently",
-      "Cycle at a comfortable pace",
+    [
       "Take a screen break",
-      "Play a favourite outdoor game",
-      "Rest and recharge"
-    ];
+      "Go outside for fresh air",
+      "Drink water when thirsty",
+      "Stretch after sitting",
+      "Get enough rest",
+      "Spend time doing something enjoyable"
+    ].forEach(text => {
+      const label = document.createElement("label");
+      label.className = "check-line";
 
-    const choices = document.createElement("div");
-    choices.className = "choice-list";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.value = text;
 
-    const result = document.createElement("p");
-    result.className = "tool-result";
-
-    activities.forEach(activity => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = activity;
-
-      button.addEventListener("click", () => {
-        result.textContent = "Today's idea: " + activity;
-      });
-
-      choices.appendChild(button);
+      label.append(input, document.createTextNode(text));
+      habits.appendChild(label);
     });
 
-    card.append(choices, result);
+    addButton(habits, "Save my habits ↗", () => {
+      const selected = [...habits.querySelectorAll("input:checked")]
+        .map(input => input.value);
 
-    const journal = makeCard("My movement notes", "Record what you tried or how you felt afterwards.");
-    const area = makeTextArea(journal, "Today I...");
-    makeButton(journal, "Save my notes", () => {
-      savePage("Fitness and wellness notes", area.value);
+      savePage("My wellness habits", selected.join("\n") || "No habits selected.");
     });
 
-    const links = makeCard("Running and activity links");
+    const running = section("Running inspiration", "Explore running communities and learn about building a comfortable running habit.");
+
     const strava = document.createElement("a");
     strava.href = "https://www.strava.com/";
     strava.target = "_blank";
     strava.rel = "noopener";
-    strava.textContent = "Visit Strava ↗";
-    links.appendChild(strava);
+    strava.className = "resource-button";
+    strava.textContent = "Explore Strava ↗";
 
-    const note = document.createElement("p");
-    note.textContent = "This is an external link only. A real Strava account connection would require an approved API integration.";
-    links.appendChild(note);
+    const yoga = document.createElement("a");
+    yoga.href = "https://www.youtube.com/results?search_query=beginner+gentle+yoga";
+    yoga.target = "_blank";
+    yoga.rel = "noopener";
+    yoga.className = "resource-button";
+    yoga.textContent = "Beginner yoga classes ↗";
+
+    running.append(strava, yoga);
+    content.append(box, habits, running);
   }
 
-  // 16. DAILY CHECK-IN
-  function dailyCheckin() {
-    const card = makeCard(
-      "How is today going?",
-      "Choose anything you feel comfortable sharing."
-    );
+  /* 10. DAILY CHECK-IN */
+  else if (feature === "daily-check-in") {
 
-    const questions = [
-      ["What is one little win today?", "A small win counts too."],
-      ["What would make today easier?", "It can be something very simple."],
-      ["What do you want to remember?", "A moment, thought or conversation."]
+    const box = section("How are you today?", current.intro);
+
+    const mood = addSelect(box, "Today's mood", [
+      "Choose one", "Good", "Okay", "Tired",
+      "Excited", "Worried", "Confused", "Other"
+    ]);
+
+    const energy = addSelect(box, "How is your energy?", [
+      "Choose one", "A little", "Somewhere in the middle", "Lots of energy"
+    ]);
+
+    const win = addTextArea(box, "One little win today");
+
+    const thought = addTextArea(box, "Something on my mind");
+
+    const next = addTextArea(box, "One small thing I want to do next");
+
+    addButton(box, "Save my check-in ↗", () => {
+      savePage("Daily check-in",
+        "Mood: " + mood.value +
+        "\nEnergy: " + energy.value +
+        "\nLittle win: " + win.value +
+        "\nOn my mind: " + thought.value +
+        "\nNext step: " + next.value
+      );
+    });
+
+    const game = section("A tiny reminder", "Choose a little reminder for today.");
+
+    const reminders = [
+      "Small steps still count.",
+      "You are allowed to take breaks.",
+      "You do not have to do everything today.",
+      "Learning takes time.",
+      "Your worth is not your grades."
     ];
 
-    const answers = [];
-
-    questions.forEach(([question, hint], index) => {
-      const label = document.createElement("label");
-      label.textContent = question;
-
-      const area = makeTextArea(card, hint, 3);
-      card.appendChild(label);
-      card.appendChild(area);
-      answers.push(area);
+    addButton(game, "Give me a reminder ✦", () => {
+      game.querySelector(".reminder-result").textContent =
+        reminders[Math.floor(Math.random() * reminders.length)];
     });
 
-    makeButton(card, "Save my check-in", () => {
-      const text = questions.map((q, i) => q[0] + "\n" + answers[i].value).join("\n\n");
-      savePage("Daily check-in", text);
-    });
+    const result = document.createElement("p");
+    result.className = "reminder-result";
+    game.appendChild(result);
 
-    const fun = makeCard("A tiny idea wheel", "Press the button for a gentle idea.");
-
-    const ideas = [
-      "Drink some water.",
-      "Look outside for a minute.",
-      "Organise one small thing.",
-      "Message someone you trust.",
-      "Take a quiet break.",
-      "Write down one thought."
-    ];
-
-    const output = document.createElement("p");
-    output.className = "tool-result";
-    fun.appendChild(output);
-
-    makeButton(fun, "Give me an idea ✨", () => {
-      output.textContent = ideas[Math.floor(Math.random() * ideas.length)];
-    });
+    content.append(box, game);
   }
 
-  // 17. STUDY AND FOCUS
-  function studyFocus() {
-    const card = makeCard(
-      "A little focus session",
-      "Try a short study period followed by a proper break."
-    );
+  /* 11. STUDY AND FOCUS */
+  else if (feature === "study-focus") {
 
-    const duration = document.createElement("select");
+    const box = section("Your study session", "Choose a realistic task and work in a way that feels manageable.");
 
-    [
-      ["10", "10 minutes"],
-      ["15", "15 minutes"],
-      ["20", "20 minutes"],
-      ["25", "25 minutes"]
-    ].forEach(([value, label]) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = label;
-      duration.appendChild(option);
-    });
+    const task = addTextArea(box, "What are you studying?", "Subject or chapter");
 
-    card.appendChild(duration);
+    const level = addSelect(box, "Choose your session", [
+      "Beginner — 10 minutes",
+      "Intermediate — 20 minutes",
+      "Focused — 25 minutes"
+    ]);
 
-    const display = document.createElement("div");
-    display.className = "timer-display";
-    display.textContent = "10:00";
-    card.appendChild(display);
+    const timerDisplay = document.createElement("h2");
+    timerDisplay.className = "timer-display";
+    timerDisplay.textContent = "10:00";
+    box.appendChild(timerDisplay);
 
-    const status = document.createElement("p");
-    status.className = "tool-result";
-    card.appendChild(status);
-
-    let remaining = 600;
     let timer = null;
-    let isBreak = false;
+    let remaining = 600;
 
-    function showTime() {
+    function updateTimer() {
       const minutes = Math.floor(remaining / 60);
       const seconds = remaining % 60;
-      display.textContent =
+
+      timerDisplay.textContent =
         String(minutes).padStart(2, "0") + ":" +
         String(seconds).padStart(2, "0");
     }
 
-    function stopTimer() {
-      if (timer) clearInterval(timer);
-      timer = null;
+    function setSession() {
+      clearInterval(timer);
+
+      remaining = level.selectedIndex === 0 ? 600 :
+        level.selectedIndex === 1 ? 1200 : 1500;
+
+      updateTimer();
     }
 
     function startTimer() {
@@ -583,462 +543,458 @@ document.addEventListener("DOMContentLoaded", () => {
 
       timer = setInterval(() => {
         remaining--;
-        showTime();
+        updateTimer();
 
         if (remaining <= 0) {
-          stopTimer();
-
-          if (!isBreak) {
-            isBreak = true;
-            remaining = 300;
-            status.textContent = "Study session complete. Your five-minute rest is ready.";
-            showTime();
-          } else {
-            status.textContent = "Break complete. You can start another session whenever you want.";
-            isBreak = false;
-            remaining = Number(duration.value) * 60;
-            showTime();
-          }
+          clearInterval(timer);
+          timer = null;
+          alert("Study session completed! Take a break.");
         }
       }, 1000);
     }
 
-    function resetTimer() {
-      stopTimer();
-      isBreak = false;
-      remaining = Number(duration.value) * 60;
-      status.textContent = "Timer reset.";
-      showTime();
+    function pauseTimer() {
+      clearInterval(timer);
+      timer = null;
     }
 
-    duration.addEventListener("change", resetTimer);
+    level.addEventListener("change", setSession);
 
-    makeButton(card, "Start", startTimer);
-    makeButton(card, "Pause", stopTimer, true);
-    makeButton(card, "Reset", resetTimer, true);
+    addButton(box, "Start", startTimer);
+    addButton(box, "Pause", pauseTimer);
+    addButton(box, "Reset", () => {
+      pauseTimer();
+      setSession();
+    });
 
-    const music = makeCard("Choose your study atmosphere");
+    const breaks = section("Your rest matters too", "After your session, take a few minutes away from your screen.");
 
-    const musicLinks = [
-      ["Nature sounds", "https://www.youtube.com/results?search_query=nature+sounds+study"],
+    [
+      "Stretch gently",
+      "Look outside",
+      "Walk around",
+      "Have a drink of water",
+      "Sit quietly"
+    ].forEach(text => {
+      const p = document.createElement("p");
+      p.textContent = "✦ " + text;
+      breaks.appendChild(p);
+    });
+
+    const music = section("Your study atmosphere", "Choose music, nature sounds or silence.");
+
+    [
       ["Spotify", "https://open.spotify.com/"],
       ["YouTube Music", "https://music.youtube.com/"],
       ["Apple Music", "https://music.apple.com/"],
-      ["Quran recitation", "https://www.youtube.com/results?search_query=quran+recitation"]
-    ];
-
-    musicLinks.forEach(([label, url]) => {
-      const link = document.createElement("a");
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.textContent = label + " ↗";
-      link.style.display = "block";
-      link.style.margin = "10px 0";
-      music.appendChild(link);
+      ["Nature sounds", "https://www.youtube.com/results?search_query=nature+sounds+study"],
+      ["Quran recitation", "https://quran.com/"]
+    ].forEach(([name, url]) => {
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.className = "resource-button";
+      a.textContent = name + " ↗";
+      music.appendChild(a);
     });
 
-    const plan = makeCard("My small study plan");
-    const area = makeTextArea(plan, "What would you like to work on?");
-    makeButton(plan, "Save study plan", () => {
-      savePage("Study plan", area.value);
+    addButton(breaks, "Save study task ↗", () => {
+      savePage("Study task", task.value || "My study session");
     });
+
+    content.append(box, breaks, music);
   }
 
-  // 18. SELF-CARE CORNER
-  function selfCare() {
-    const card = makeCard(
-      "Everyday care",
-      "Choose what is useful for you. You do not need to complete every item."
-    );
+  /* 12. SELF-CARE CORNER */
+  else if (feature === "self-care") {
 
-    const habits = [
-      "Take a comfortable rest",
-      "Have a regular meal",
-      "Drink water",
-      "Spend a little time away from screens",
-      "Talk to someone I trust",
-      "Make time for something I enjoy"
+    const box = section("Care for yourself", "Self-care can be simple. It can mean resting, asking for help or taking care of everyday needs.");
+
+    const areas = [
+      ["Physical care", [
+        "Get enough sleep",
+        "Eat regular meals",
+        "Drink water",
+        "Move in a way I enjoy"
+      ]],
+      ["Emotional care", [
+        "Write down my thoughts",
+        "Talk to someone I trust",
+        "Take a quiet break",
+        "Do something I enjoy"
+      ]],
+      ["Everyday care", [
+        "Organise my surroundings",
+        "Spend time outdoors",
+        "Take a break from screens",
+        "Make time for family or friends"
+      ]]
     ];
 
-    const checklist = document.createElement("div");
+    areas.forEach(([heading, items]) => {
+      const group = section(heading);
 
-    habits.forEach(habit => {
-      const label = document.createElement("label");
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.style.width = "auto";
-      checkbox.style.marginRight = "10px";
+      items.forEach(text => {
+        const label = document.createElement("label");
+        label.className = "check-line";
 
-      label.append(checkbox, document.createTextNode(habit));
-      checklist.appendChild(label);
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.value = text;
+
+        label.append(input, document.createTextNode(text));
+        group.appendChild(label);
+      });
+
+      content.appendChild(group);
     });
 
-    card.appendChild(checklist);
+    const extra = section("A note to myself");
 
-    const journal = makeCard("A note to myself");
-    const area = makeTextArea(journal, "What kind thing would I like to remind myself?");
-    makeButton(journal, "Save my note", () => {
-      savePage("Self-care note", area.value);
+    const note = addTextArea(extra, "What do I need today?");
+
+    addButton(extra, "Save my self-care page ↗", () => {
+      const checked = [...content.querySelectorAll("input:checked")]
+        .map(item => item.value);
+
+      savePage("Self-care page",
+        checked.join("\n") + "\n\nMy note:\n" + note.value
+      );
     });
 
-    const cycle = makeCard(
-      "Optional cycle notes",
-      "You can privately record dates or general notes if this is useful to you. This is not a medical tracker or a diagnosis."
-    );
+    const support = section("Finding support", "If you are struggling, consider speaking with a trusted adult, school counsellor or healthcare professional.");
 
-    const dateLabel = document.createElement("label");
-    dateLabel.textContent = "Date";
-    const dateInput = document.createElement("input");
-    dateInput.type = "date";
-    cycle.append(dateLabel, dateInput);
+    const contact = document.createElement("a");
+    contact.href = "https://www.mohfw.gov.in/";
+    contact.target = "_blank";
+    contact.rel = "noopener";
+    contact.className = "resource-button";
+    contact.textContent = "India health resources ↗";
 
-    const cycleNotes = makeTextArea(cycle, "Optional notes...");
-    makeButton(cycle, "Save private note", () => {
-      savePage("Personal cycle note", dateInput.value + "\n" + cycleNotes.value);
-    });
-
-    const support = makeCard(
-      "When you need more support",
-      "If something is worrying you, consider talking to a trusted adult, school counsellor or qualified health professional."
-    );
-
-    const text = document.createElement("p");
-    text.textContent = "This website is not a counselling or emergency service. If you feel unsafe or need urgent help, contact a trusted adult or local emergency service.";
-    support.appendChild(text);
+    support.appendChild(contact);
+    content.append(extra, support);
   }
 
-  // 19. STORIES AND REALITY
-  function storiesReality() {
+  /* 13. STORIES AND HOPE */
+  else if (feature === "stories-hope") {
+
+    const box = section("Understand the world", "Real challenges deserve honest attention. Learn about the issues, the people affected and the work being done.");
+
     const stories = [
       {
-        title: "Education for every child",
-        description: "Learn about barriers to education, school access and programmes supporting children's learning.",
-        link: "https://www.unicef.org/education",
-        label: "UNICEF education information"
+        title: "Children in humanitarian crises",
+        text: "Children affected by conflict and displacement need education, protection, healthcare and safe environments.",
+        url: "https://www.unicef.org/emergencies"
       },
       {
-        title: "Humanitarian support",
-        description: "Explore how humanitarian organisations coordinate assistance during emergencies.",
-        link: "https://www.unocha.org/",
-        label: "United Nations OCHA"
+        title: "Global health and healthcare access",
+        text: "Access to essential healthcare remains unequal. Explore public health work and international responses.",
+        url: "https://www.who.int/emergencies"
       },
       {
-        title: "Global health",
-        description: "Read about public health challenges, healthcare access and international health work.",
-        link: "https://www.who.int/",
-        label: "World Health Organization"
+        title: "Education in emergencies",
+        text: "Education can provide stability and opportunities for children affected by crises.",
+        url: "https://www.unicef.org/education"
       },
       {
-        title: "Refugees and displacement",
-        description: "Understand why people are forced to leave home and how protection and support work.",
-        link: "https://www.unhcr.org/",
-        label: "UN Refugee Agency"
+        title: "Humanitarian action",
+        text: "Explore how humanitarian organisations provide emergency support and work with affected communities.",
+        url: "https://www.unocha.org/"
       }
     ];
 
     stories.forEach(story => {
-      const card = makeCard(story.title, story.description);
+      const article = document.createElement("article");
+      article.className = "story-card";
 
-      const link = document.createElement("a");
-      link.href = story.link;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.textContent = story.label + " ↗";
-      card.appendChild(link);
+      const h = document.createElement("h3");
+      h.textContent = story.title;
+
+      const p = document.createElement("p");
+      p.textContent = story.text;
+
+      const a = document.createElement("a");
+      a.href = story.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.className = "resource-button";
+      a.textContent = "Explore the source ↗";
+
+      article.append(h, p, a);
+      box.appendChild(article);
     });
 
-    const reflection = makeCard(
-      "What did I learn?",
-      "Write a thought, question or action you want to remember.",
-      true
-    );
+    const reflection = section("Your reflection");
+    const response = addTextArea(reflection, "What did you learn? What change would you like to see?");
 
-    const area = makeTextArea(reflection, "Today I learned...");
-    makeButton(reflection, "Save reflection", () => {
-      savePage("Stories and reality reflection", area.value);
+    addButton(reflection, "Save reflection ↗", () => {
+      savePage("Stories and hope reflection", response.value);
     });
+
+    content.append(box, reflection);
   }
 
-  // 20. CAREER EXPLORATION QUIZ
-  function careerExploration() {
-    const card = makeCard(
-      "Discover what interests you",
-      "This short quiz gives starting points, not fixed answers about your future.",
-      true
-    );
+  /* 14. CAREER EXPLORATION */
+  else if (feature === "career-exploration") {
+
+    const box = section("Discover your interests", "This short quiz is a starting point, not a test or a fixed career decision.");
 
     const questions = [
-      {
-        question: "Which kind of activity interests you most?",
-        answers: [
-          ["help", "Helping people"],
-          ["science", "Understanding science"],
-          ["create", "Creating or designing"],
-          ["lead", "Organising and leading"],
-          ["discover", "Researching and discovering"]
-        ]
-      },
-      {
-        question: "Which environment sounds interesting?",
-        answers: [
-          ["help", "Hospitals or communities"],
-          ["science", "Laboratories or research centres"],
-          ["create", "Studios or creative spaces"],
-          ["lead", "Organisations or institutions"],
-          ["discover", "Fieldwork or universities"]
-        ]
-      },
-      {
-        question: "What would you like your work to contribute?",
-        answers: [
-          ["help", "Better health and wellbeing"],
-          ["science", "New knowledge and discoveries"],
-          ["create", "Useful ideas and designs"],
-          ["lead", "Positive change in society"],
-          ["discover", "Understanding difficult questions"]
-        ]
-      }
+      ["What interests you most?", [
+        "Science and healthcare",
+        "Helping communities",
+        "Art and creativity",
+        "Nature and environment",
+        "Technology and engineering",
+        "Business and leadership"
+      ]],
+      ["What kind of work sounds meaningful?", [
+        "Helping individuals",
+        "Solving complex problems",
+        "Creating new things",
+        "Research and discovery",
+        "Working with communities",
+        "Organising and leading"
+      ]],
+      ["Which environment appeals to you?", [
+        "Hospitals and clinics",
+        "Fieldwork and travel",
+        "Laboratories",
+        "Schools and communities",
+        "Creative workplaces",
+        "International organisations"
+      ]],
+      ["What matters most in a career?", [
+        "Helping people",
+        "Stability",
+        "Creativity",
+        "Discovery",
+        "Leadership",
+        "Variety and travel"
+      ]],
+      ["Which subject do you enjoy?", [
+        "Biology",
+        "Social science",
+        "Mathematics",
+        "Languages",
+        "Art",
+        "Geography"
+      ]]
     ];
 
-    const selected = [];
+    const answers = [];
 
-    questions.forEach((question, index) => {
-      const block = document.createElement("div");
-      block.className = "career-question";
-
-      const heading = document.createElement("h3");
-      heading.textContent = (index + 1) + ". " + question.question;
-      block.appendChild(heading);
-
-      question.answers.forEach(([value, label]) => {
-        const labelElement = document.createElement("label");
-        const radio = document.createElement("input");
-        radio.type = "radio";
-        radio.name = "careerQuestion" + index;
-        radio.value = value;
-
-        radio.addEventListener("change", () => {
-          selected[index] = value;
-        });
-
-        labelElement.append(radio, document.createTextNode(" " + label));
-        block.appendChild(labelElement);
-      });
-
-      card.appendChild(block);
+    questions.forEach(([question, options], index) => {
+      answers.push(addSelect(box, (index + 1) + ". " + question, [
+        "Choose an answer", ...options
+      ]));
     });
 
-    const result = document.createElement("p");
-    result.className = "tool-result";
-    card.appendChild(result);
+    const results = document.createElement("div");
+    results.className = "career-results";
+    box.appendChild(results);
 
-    makeButton(card, "Show my interest areas", () => {
-      if (selected.length !== questions.length || selected.some(item => !item)) {
-        result.textContent = "Please choose one answer for each question first.";
+    addButton(box, "Explore my interests ↗", () => {
+
+      const selected = answers.map(a => a.value);
+
+      if (selected.some(a => a === "Choose an answer")) {
+        alert("Please answer all five questions first.");
         return;
       }
 
-      const counts = {};
-      selected.forEach(value => {
-        counts[value] = (counts[value] || 0) + 1;
-      });
-
-      const top = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
-
-      const careerIdeas = {
-        help: "Explore roles such as doctor, nurse, physiotherapist, public health worker, social worker and humanitarian programme officer.",
-        science: "Explore roles such as biomedical researcher, biotechnologist, laboratory scientist, environmental scientist and medical researcher.",
-        create: "Explore roles such as architect, graphic designer, product designer, animator and user-experience designer.",
-        lead: "Explore roles such as teacher, project manager, public administrator, lawyer and community programme coordinator.",
-        discover: "Explore roles such as researcher, archaeologist, data analyst, historian, psychologist and environmental researcher."
+      const families = {
+        "Science and healthcare": "Healthcare and medical sciences",
+        "Helping communities": "Humanitarian and social development",
+        "Art and creativity": "Creative and communication careers",
+        "Nature and environment": "Environmental and conservation careers",
+        "Technology and engineering": "Technology and engineering",
+        "Business and leadership": "Business and management"
       };
 
-      result.textContent =
-        "An area you may enjoy exploring: " + top.toUpperCase() +
-        "\n\nSome possible careers:\n" + careerIdeas[top] +
-        "\n\nThese are ideas to research, not a decision about your future.";
+      const family = families[selected[0]] || "Interdisciplinary careers";
+
+      results.textContent =
+        "Your first area to explore: " + family +
+        ". Try researching specific job titles, qualifications, entrance exams and the work involved.";
+
+      savePage("Career exploration results",
+        "Interest area: " + family +
+        "\nAnswers:\n" + selected.join("\n")
+      );
     });
 
-    const pathway = makeCard(
-      "Research a career pathway",
-      "Use these trusted starting points to check courses, exams and career information."
-    );
+    const pathways = section("Career research library", "Explore these starting points. Requirements, duration and salaries vary by country and institution.");
 
-    const links = [
-      ["National Career Service — India", "https://www.ncs.gov.in/"],
-      ["National Testing Agency — exam information", "https://nta.ac.in/"],
-      ["Study in India", "https://studyinindia.gov.in/"],
-      ["U.S. Bureau of Labor Statistics — career information", "https://www.bls.gov/ooh/"]
+    const careerLinks = [
+      ["Medical careers", "https://neet.nta.nic.in/"],
+      ["Study in India", "https://www.ncs.gov.in/"],
+      ["International education", "https://www.studyinternational.com/"],
+      ["United Nations careers", "https://careers.un.org/"]
     ];
 
-    links.forEach(([label, url]) => {
-      const link = document.createElement("a");
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.textContent = label + " ↗";
-      link.style.display = "block";
-      link.style.margin = "10px 0";
-      pathway.appendChild(link);
+    careerLinks.forEach(([name, url]) => {
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.className = "resource-button";
+      a.textContent = name + " ↗";
+      pathways.appendChild(a);
     });
 
-    const dreams = makeCard("Dreams beyond a career", "Your life can hold many ambitions, not just a job.");
-    const area = makeTextArea(dreams, "Places I want to see, things I want to learn, people I want to help...");
-    makeButton(dreams, "Save my dreams", () => {
-      savePage("Dreams beyond a career", area.value);
+    const dreams = section("Dreams beyond a career", "Your future is not limited to a job title.");
+
+    const dream = addTextArea(dreams, "What else would you like to experience in life?", "Places, causes, skills, adventures, people you want to help...");
+
+    addButton(dreams, "Save my dreams ↗", () => {
+      savePage("Dreams beyond career", dream.value);
     });
+
+    content.append(box, pathways, dreams);
   }
 
-  // 21. MY LITTLE WORLD — DIARY AND SCRAPBOOK
-  function myLittleWorld() {
-    const card = makeCard(
-      "A page from my world",
-      "Write a memory, a letter to your future self or anything you want to keep.",
-      true
-    );
+  /* 15. MY LITTLE WORLD */
+  else if (feature === "my-little-world") {
 
-    const title = makeInput(card, "Give your page a title");
-    const area = makeTextArea(card, "Dear diary...");
-    makeButton(card, "Save my diary page", () => {
-      savePage(title.value || "My little world", area.value);
-    });
+    const box = section("Your personal scrapbook", "Collect memories, thoughts, letters and moments. This prototype saves text locally in your browser.");
 
-    const photoCard = makeCard(
-      "Add a memory photo",
-      "Choose an image from your own device. The preview is temporary; this demo does not upload it to a server."
-    );
+    const pageTitle = document.createElement("input");
+    pageTitle.placeholder = "Give this memory a title";
+    pageTitle.className = "feature-input";
 
-    const photoInput = document.createElement("input");
-    photoInput.type = "file";
-    photoInput.accept = "image/*";
-    photoCard.appendChild(photoInput);
+    const entry = addTextArea(box, "Write your memory", "A moment, a letter, a thought or anything you want to remember...");
+
+    const photoLabel = document.createElement("label");
+    photoLabel.textContent = "Add a photograph (optional)";
+    photoLabel.className = "field-group";
+
+    const photo = document.createElement("input");
+    photo.type = "file";
+    photo.accept = "image/*";
+    photoLabel.appendChild(photo);
 
     const preview = document.createElement("img");
-    preview.className = "image-preview";
-    preview.alt = "Your selected photo preview";
+    preview.className = "scrapbook-preview";
+    preview.alt = "Your selected scrapbook photograph";
     preview.hidden = true;
-    photoCard.appendChild(preview);
 
-    const photoNote = document.createElement("p");
-    photoNote.className = "tool-result";
-    photoCard.appendChild(photoNote);
+    let photoData = "";
 
-    let selectedPhoto = "";
-
-    photoInput.addEventListener("change", () => {
-      const file = photoInput.files && photoInput.files[0];
+    photo.addEventListener("change", () => {
+      const file = photo.files[0];
 
       if (!file) return;
 
-      if (!file.type.startsWith("image/")) {
-        photoNote.textContent = "Please choose an image file.";
-        return;
-      }
-
-      if (file.size > 2 * 1024 * 1024) {
-        photoNote.textContent = "Please choose an image smaller than 2 MB for this demo.";
+      if (file.size > 1500000) {
+        alert("Please choose a photo smaller than 1.5 MB.");
+        photo.value = "";
         return;
       }
 
       const reader = new FileReader();
 
       reader.onload = () => {
-        selectedPhoto = reader.result;
-        preview.src = selectedPhoto;
+        photoData = reader.result;
+        preview.src = photoData;
         preview.hidden = false;
-        photoNote.textContent = "Photo preview ready.";
-      };
-
-      reader.onerror = () => {
-        photoNote.textContent = "The photo could not be opened.";
       };
 
       reader.readAsDataURL(file);
     });
 
-    makeButton(photoCard, "Save photo as a memory", () => {
-      if (!selectedPhoto) {
-        photoNote.textContent = "Choose a photo first.";
+    box.append(pageTitle, photoLabel, preview);
+
+    addButton(box, "Save to My Little World ↗", () => {
+      const text = entry.value.trim();
+      const heading = pageTitle.value.trim() || "A little memory";
+
+      if (!text && !photoData) {
+        alert("Add a memory or photograph first.");
         return;
       }
 
-      // Save a small photo record separately from the journal text.
-      let photos = [];
+      savePage(
+        heading,
+        text + (photoData ? "\n\n[Photograph attached in this session]" : "")
+      );
 
-      try {
-        photos = JSON.parse(localStorage.getItem("etherPhotos")) || [];
-      } catch {
-        photos = [];
-      }
+      if (photoData) {
+        try {
+          const photos = JSON.parse(
+            localStorage.getItem("etherScrapbookPhotos")
+          ) || [];
 
-      photos.push({
-        id: Date.now() + Math.random(),
-        image: selectedPhoto,
-        date: new Date().toLocaleString()
-      });
+          photos.push({
+            title: heading,
+            image: photoData,
+            date: new Date().toISOString()
+          });
 
-      try {
-        localStorage.setItem("etherPhotos", JSON.stringify(photos));
-        photoNote.textContent = "Your photo was saved in this browser.";
-      } catch {
-        photos.pop();
-        photoNote.textContent = "Browser storage is full. Try a smaller photo.";
+          localStorage.setItem(
+            "etherScrapbookPhotos",
+            JSON.stringify(photos)
+          );
+        } catch {
+          alert("The photo could not be saved. Try a smaller image.");
+        }
       }
     });
 
-    const gallery = makeCard("My saved photos", "Photos saved in this browser on this device.", true);
+    const letter = section("A letter to my future self");
+    const letterText = addTextArea(letter, "What would you like your future self to know?");
 
-    let photos = [];
-
-    try {
-      photos = JSON.parse(localStorage.getItem("etherPhotos")) || [];
-    } catch {
-      photos = [];
-    }
-
-    if (!photos.length) {
-      const empty = document.createElement("p");
-      empty.textContent = "Your photo memories will appear here.";
-      gallery.appendChild(empty);
-    } else {
-      photos.slice().reverse().forEach(photo => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "memory-card";
-
-        const image = document.createElement("img");
-        image.src = photo.image;
-        image.alt = "Saved memory";
-
-        const date = document.createElement("p");
-        date.textContent = photo.date;
-
-        wrapper.append(image, date);
-        gallery.appendChild(wrapper);
-      });
-    }
-
-    const letter = makeCard("A letter to my future self");
-    const letterArea = makeTextArea(letter, "Dear future me...");
-    makeButton(letter, "Save my letter", () => {
-      savePage("A letter to my future self", letterArea.value);
+    addButton(letter, "Save my letter ↗", () => {
+      savePage("Letter to my future self", letterText.value);
     });
+
+    content.append(box, letter);
   }
 
-  // 22. LOAD THE CORRECT FEATURE TOOLS
-  // Each feature name calls only its own function.
-  const featureLoaders = {
-    mood: moodJournal,
-    breathing: breathingSpace,
-    gratitude: gratitudeJournal,
-    fitness: fitnessWellness,
-    checkin: dailyCheckin,
-    study: studyFocus,
-    selfcare: selfCare,
-    stories: storiesReality,
-    career: careerExploration,
-    world: myLittleWorld
-  };
+  /* 16. SHARED SAVED PAGE LIBRARY */
+  function renderSavedPages() {
 
-  featureLoaders[feature]();
+    const container = $("featureSavedPages");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    let pages = [];
+
+    try {
+      pages = JSON.parse(
+        localStorage.getItem("etherSavedPages")
+      ) || [];
+    } catch {
+      pages = [];
+    }
+
+    pages.filter(page => page.feature === feature)
+      .slice(-5)
+      .reverse()
+      .forEach(page => {
+
+        const item = document.createElement("article");
+        item.className = "mini-saved-card";
+
+        const h = document.createElement("h3");
+        h.textContent = page.title;
+
+        const p = document.createElement("p");
+        p.textContent = page.content.slice(0, 150);
+
+        item.append(h, p);
+        container.appendChild(item);
+      });
+
+    if (!container.children.length) {
+      const p = document.createElement("p");
+      p.textContent = "Your saved pages will appear here.";
+      container.appendChild(p);
+    }
+  }
+
+  renderSavedPages();
+
 });
