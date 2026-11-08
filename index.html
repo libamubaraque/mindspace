@@ -2,249 +2,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#24151D">
-    <title>To the Ether. | Your Space to Grow</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+  <!-- 01. PAGE SETTINGS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#24271F">
+  <title>To the Ether. | Your Space to Grow</title>
+
+  <!-- 02. FONTS AND DESIGN -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="site-header">
-    <nav class="navbar">
-        <a class="logo" href="index.html">To the ether.</a>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#explore">Explore</a>
-            <a href="#resources">Resources</a>
-            <a href="#saved">My Pages</a>
-        </div>
-        <a class="button button-primary" href="#explore">Explore Now ↗</a>
+  <!-- 03. NAVIGATION -->
+  <header class="navbar">
+    <a href="index.html" class="logo">to the ether<span>.</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+
+    <nav id="mainNav">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#explore">Explore</a>
+      <a href="#stories">Stories</a>
+      <a href="#resources">Resources</a>
+      <a href="#saved">My Pages</a>
     </nav>
-</header>
 
-<main>
+    <button class="account-button" id="accountButton">My Account ↗</button>
+  </header>
+
+  <main>
+
+    <!-- 04. HERO: ORIGINAL FERN PHOTOGRAPH -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <span class="eyebrow">YOUR SPACE. YOUR PACE.</span>
-            <h1>A little space to <span>breathe, grow</span> and begin again.</h1>
-            <p>
-                Between studies, expectations, dreams and everything
-                in between, you deserve a space that belongs to you.
-                A place to explore, reflect, learn and simply be.
-            </p>
-            <div class="hero-actions">
-                <a href="#explore" class="button button-primary">Discover Your Space ↗</a>
-                <a href="#about" class="button button-outline">Our Story</a>
-            </div>
-            <p class="hero-note">You don't have to have everything figured out. 🌿</p>
-        </div>
+      <div class="hero-content">
+        <span class="eyebrow">A LITTLE SPACE. A NEW BEGINNING.</span>
+        <h1>Somewhere between<br>who you are and<br><em>who you'll become.</em></h1>
+        <p>A little space to breathe, understand yourself, discover your dreams and begin again. At your own pace.</p>
+        <a href="#explore" class="primary-button">Find your space ↗</a>
+        <div class="handwritten">You don't have to have it all figured out.</div>
+      </div>
 
-        <div class="hero-art">
-            <img src="images/images_013_qtLh.jpg"
-                 alt="Green fern in nature">
-            <div class="image-caption">
-                <span>GROW AT YOUR OWN PACE</span>
-                <strong>One day at a time.</strong>
-            </div>
-        </div>
+      <div class="hero-image">
+        <!-- Keep your original fern photograph here -->
+        <img src="images/fern.jpg" alt="Fern leaves">
+        <span>Grow through what you go through.</span>
+      </div>
     </section>
 
-    <section class="about section" id="about">
-        <span class="eyebrow">A PLACE TO BE YOURSELF</span>
-        <h2>More than a website.<br><span>A little world of your own.</span></h2>
-        <p>
-            To the Ether is a student-centred space for creativity,
-            self-discovery, everyday well-being and growth.
-            Explore your interests, make time for yourself,
-            understand the world and build your own little world.
-        </p>
+    <!-- 05. ABOUT -->
+    <section class="about-section" id="about">
+      <span class="eyebrow">WELCOME TO YOUR LITTLE WORLD</span>
+      <h2>Life isn't a race.<br><em>Neither is becoming yourself.</em></h2>
+      <p>School, expectations, friendships and future plans can sometimes feel overwhelming. This is a space made for students to explore, reflect, learn and take small steps forward.</p>
+      <div class="about-points">
+        <span>✳ No pressure</span>
+        <span>✳ No perfect routines</span>
+        <span>✳ Just progress</span>
+      </div>
     </section>
 
-    <section class="explore section" id="explore">
-        <div class="section-heading">
-            <div>
-                <span class="eyebrow">FIND YOUR LITTLE CORNER</span>
-                <h2>Explore <span>Your Space</span></h2>
-            </div>
-            <p>Ten different spaces. Choose what feels right today.</p>
+    <!-- 06. EXPLORE THE TEN FEATURES -->
+    <section class="explore-section" id="explore">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">EXPLORE YOURSELF</span>
+          <h2>Find your <em>little space.</em></h2>
         </div>
+        <p>Ten spaces. Different beginnings.<br>Choose whatever feels right today.</p>
+      </div>
 
-        <div class="features-grid" id="featuresGrid">
+      <div class="feature-grid">
 
-            <article class="feature-card mood-card" data-feature="mood">
-                <span class="card-number">01 / REFLECT</span>
-                <div class="feature-icon">♡</div>
-                <h3>Mood Journal</h3>
-                <p>Understand your emotions, notice patterns and express yourself without judgement.</p>
-                <a href="feature.html?feature=mood">Enter your space ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#603B48"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card mood-card" data-feature="mood" tabindex="0">
+          <span class="card-number">01</span><span class="card-symbol">☾</span>
+          <span class="card-tag">UNDERSTAND</span>
+          <h3>Mood Journal</h3>
+          <p>Put your feelings into words. No explanations needed.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="mood" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="mood" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card breath-card" data-feature="breathing">
-                <span class="card-number">02 / BREATHE</span>
-                <div class="feature-icon">❋</div>
-                <h3>Breathing Space</h3>
-                <p>Gentle breathing guides, nature sounds, silence and little moments of calm.</p>
-                <a href="feature.html?feature=breathing">Take a pause ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#394A38"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card breathing-card" data-feature="breathing" tabindex="0">
+          <span class="card-number">02</span><span class="card-symbol">◌</span>
+          <span class="card-tag">SLOW DOWN</span>
+          <h3>Breathing Space</h3>
+          <p>Pause, breathe, relax and reconnect with the present.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="breathing" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="breathing" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card gratitude-card" data-feature="gratitude">
-                <span class="card-number">03 / APPRECIATE</span>
-                <div class="feature-icon">✿</div>
-                <h3>Gratitude Journal</h3>
-                <p>Collect small moments, kind words, photographs and things you appreciate.</p>
-                <a href="feature.html?feature=gratitude">Find the good ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#786044"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card gratitude-card" data-feature="gratitude" tabindex="0">
+          <span class="card-number">03</span><span class="card-symbol">✿</span>
+          <span class="card-tag">APPRECIATE</span>
+          <h3>Gratitude Journal</h3>
+          <p>Collect little moments worth remembering.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="gratitude" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="gratitude" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card fitness-card" data-feature="fitness">
-                <span class="card-number">04 / MOVE</span>
-                <div class="feature-icon">✧</div>
-                <h3>Fitness & Wellness</h3>
-                <p>Running, cycling, gentle movement, yoga and healthy everyday habits.</p>
-                <a href="feature.html?feature=fitness">Explore wellness ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#526044"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card fitness-card" data-feature="fitness" tabindex="0">
+          <span class="card-number">04</span><span class="card-symbol">↗</span>
+          <span class="card-tag">MOVE & FEEL</span>
+          <h3>Fitness & Wellness</h3>
+          <p>Discover movement, running and everyday wellbeing.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="fitness" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="fitness" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card checkin-card" data-feature="checkin">
-                <span class="card-number">05 / CONNECT</span>
-                <div class="feature-icon">☼</div>
-                <h3>Daily Check-in</h3>
-                <p>Little wins, small thoughts, gentle prompts and playful activities.</p>
-                <a href="feature.html?feature=checkin">Check in ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#765344"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card checkin-card" data-feature="checkin" tabindex="0">
+          <span class="card-number">05</span><span class="card-symbol">♡</span>
+          <span class="card-tag">CONNECT</span>
+          <h3>Daily Check-in</h3>
+          <p>Celebrate little wins and take your first steps.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="checkin" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="checkin" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card study-card" data-feature="study">
-                <span class="card-number">06 / FOCUS</span>
-                <div class="feature-icon">⌘</div>
-                <h3>Study & Focus</h3>
-                <p>Study sessions, screen-free breaks, music, learning and focus tools.</p>
-                <a href="feature.html?feature=study">Enter focus mode ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#46505B"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card study-card" data-feature="study" tabindex="0">
+          <span class="card-number">06</span><span class="card-symbol">⌁</span>
+          <span class="card-tag">FOCUS</span>
+          <h3>Study & Focus</h3>
+          <p>Make studying feel calmer and more manageable.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="study" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="study" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card selfcare-card" data-feature="selfcare">
-                <span class="card-number">07 / CARE</span>
-                <div class="feature-icon">❀</div>
-                <h3>Self-care Corner</h3>
-                <p>Everyday routines, rest, personal care, relationships and reflections.</p>
-                <a href="feature.html?feature=selfcare">Care for yourself ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#705052"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card selfcare-card" data-feature="selfcare" tabindex="0">
+          <span class="card-number">07</span><span class="card-symbol">❋</span>
+          <span class="card-tag">CARE</span>
+          <h3>Self-care Corner</h3>
+          <p>Build gentle habits for everyday wellbeing.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="selfcare" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="selfcare" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card support-card" data-feature="support">
-                <span class="card-number">08 / LEARN & SEEK HELP</span>
-                <div class="feature-icon">＋</div>
-                <h3>Health & Support</h3>
-                <p>Reliable health information, support contacts and questions to discuss with trusted adults.</p>
-                <a href="feature.html?feature=support">Find support ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#42554F"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card stories-card" data-feature="stories" tabindex="0">
+          <span class="card-number">08</span><span class="card-symbol">✧</span>
+          <span class="card-tag">UNDERSTAND THE WORLD</span>
+          <h3>Stories & Reality</h3>
+          <p>Explore real experiences, global issues and positive change.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="stories" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="stories" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card career-card" data-feature="career">
-                <span class="card-number">09 / DISCOVER</span>
-                <div class="feature-icon">✦</div>
-                <h3>Find Your Direction</h3>
-                <p>Explore careers, degrees, different pathways and dreams beyond work.</p>
-                <a href="feature.html?feature=career">Discover possibilities ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#68553C"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card career-card" data-feature="career" tabindex="0">
+          <span class="card-number">09</span><span class="card-symbol">☆</span>
+          <span class="card-tag">DREAM</span>
+          <h3>Career Exploration</h3>
+          <p>Explore possibilities beyond what you already know.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="career" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="career" type="file" accept="image/*">
+        </article>
 
-            <article class="feature-card world-card" data-feature="myworld">
-                <span class="card-number">10 / REMEMBER</span>
-                <div class="feature-icon">✧</div>
-                <h3>My Little World</h3>
-                <p>Your scrapbook, personal diary, gallery, letters and timeline.</p>
-                <a href="feature.html?feature=myworld">Enter my world ↗</a>
-                <div class="card-custom">
-                    <label>Card colour <input type="color" class="card-color" value="#594C62"></label>
-                    <label>Background <input type="file" class="card-image" accept="image/*"></label>
-                </div>
-            </article>
+        <article class="feature-card world-card" data-feature="world" tabindex="0">
+          <span class="card-number">10</span><span class="card-symbol">❧</span>
+          <span class="card-tag">YOUR OWN WORLD</span>
+          <h3>My Little World</h3>
+          <p>A scrapbook, diary and collection of your memories.</p>
+          <span class="card-link">Enter space ↗</span>
+          <button class="card-background-button" data-background="world" type="button">Change image</button>
+          <input class="card-image-input hidden" data-background-input="world" type="file" accept="image/*">
+        </article>
 
-        </div>
-        <p class="small-note">You can customise the colour or upload a background image for each card.</p>
+      </div>
     </section>
 
-    <section class="saved-section section" id="saved">
-        <span class="eyebrow">YOUR COLLECTION</span>
-        <h2>My Saved <span>Pages</span></h2>
-        <p>Come back to the things you've written, created and saved.</p>
-        <div id="savedPages" class="saved-grid">
-            <p class="empty-state">Your saved pages will appear here.</p>
-        </div>
+    <!-- 07. REAL WORLD STORIES -->
+    <section class="stories-section" id="stories">
+      <span class="eyebrow">THE WORLD BEYOND US</span>
+      <h2>Reality, resilience <em>& possibility.</em></h2>
+      <p>Understanding difficult realities matters. So does recognising people working to make things better.</p>
+
+      <div class="story-grid">
+        <article>
+          <span>EDUCATION</span>
+          <h3>Every child deserves to learn</h3>
+          <p>Explore barriers to schooling and efforts to expand access.</p>
+          <a href="https://www.unicef.org/education" target="_blank" rel="noopener">Explore UNICEF ↗</a>
+        </article>
+        <article>
+          <span>HUMANITARIAN WORK</span>
+          <h3>Helping people through crises</h3>
+          <p>Learn how humanitarian teams support affected communities.</p>
+          <a href="https://www.unocha.org/" target="_blank" rel="noopener">Explore OCHA ↗</a>
+        </article>
+        <article>
+          <span>HEALTH</span>
+          <h3>Healthcare should reach everyone</h3>
+          <p>Discover global health challenges and solutions.</p>
+          <a href="https://www.who.int/" target="_blank" rel="noopener">Explore WHO ↗</a>
+        </article>
+      </div>
     </section>
 
-    <section class="resources section" id="resources">
-        <span class="eyebrow">A LITTLE MORE HELP</span>
-        <h2>Helpful <span>Resources</span></h2>
-        <div class="resource-grid">
-            <a class="resource-card" href="https://www.who.int/health-topics/mental-health" target="_blank" rel="noopener">WHO · Mental health ↗</a>
-            <a class="resource-card" href="https://www.unicef.org/" target="_blank" rel="noopener">UNICEF · Children and young people ↗</a>
-            <a class="resource-card" href="https://www.un.org/en/global-issues" target="_blank" rel="noopener">United Nations · Global issues ↗</a>
-        </div>
+    <!-- 08. RESOURCES -->
+    <section class="resources-section" id="resources">
+      <span class="eyebrow">USEFUL PLACES</span>
+      <h2>Resources for <em>your journey.</em></h2>
+      <div class="resource-links">
+        <a href="https://www.unicef.org/" target="_blank" rel="noopener">UNICEF ↗</a>
+        <a href="https://www.who.int/" target="_blank" rel="noopener">World Health Organization ↗</a>
+        <a href="https://www.mentalhealth.org.uk/" target="_blank" rel="noopener">Mental Health Foundation ↗</a>
+        <a href="https://www.strava.com/" target="_blank" rel="noopener">Strava ↗</a>
+        <a href="https://www.youtube.com/results?search_query=beginner+yoga" target="_blank" rel="noopener">Yoga classes ↗</a>
+        <a href="https://open.spotify.com/" target="_blank" rel="noopener">Spotify ↗</a>
+        <a href="https://music.youtube.com/" target="_blank" rel="noopener">YouTube Music ↗</a>
+        <a href="https://music.apple.com/" target="_blank" rel="noopener">Apple Music ↗</a>
+      </div>
     </section>
-</main>
 
-<footer>
-    <h2>To the ether.</h2>
-    <p>A little space to breathe, grow and become.</p>
-    <p>Made with care for every dreamer finding their way.</p>
-    <a href="#home">Back to top ↑</a>
-    <p class="copyright">© 2026 To the Ether.</p>
-</footer>
+    <!-- 09. SAVED PAGES -->
+    <section class="saved-section" id="saved">
+      <span class="eyebrow">YOUR COLLECTION</span>
+      <h2>My saved <em>pages.</em></h2>
+      <p>Your journals, memories and creations will appear here.</p>
+      <div id="savedPages" class="saved-grid"></div>
+    </section>
 
-<!-- ACCOUNT MODAL -->
-<div class="modal" id="accountModal" aria-hidden="true">
-    <div class="modal-box">
-        <button class="modal-close" id="closeModal" aria-label="Close">×</button>
-        <span class="eyebrow">YOUR SPACE, YOUR COLLECTION</span>
-        <h2>Create your <span>account</span></h2>
-        <p>You've explored three spaces! Create a local profile to continue exploring and keep your pages together.</p>
-        <form id="accountForm">
-            <label>Your display name</label>
-            <input id="accountName" required maxlength="40" placeholder="What should we call you?">
-            <label>Email (optional)</label>
-            <input id="accountEmail" type="email" placeholder="Your email">
-            <button class="button button-primary" type="submit">Create my profile</button>
-        </form>
-        <p class="small-note">Demo profile only: this does not create a secure online account or upload your information.</p>
+    <!-- 10. CLOSING -->
+    <section class="closing-section">
+      <div class="handwritten">A reminder, just for today.</div>
+      <h2>You are allowed to<br><em>begin again.</em></h2>
+      <a href="#home" class="primary-button">Back to the beginning ↑</a>
+    </section>
+  </main>
+
+  <!-- 11. FOOTER -->
+  <footer>
+    <a class="logo" href="index.html">to the ether<span>.</span></a>
+    <p>A little space to grow, reflect and begin again.</p>
+    <small>Made with intention · 2026</small>
+  </footer>
+
+  <!-- 12. LOCAL DEMO ACCOUNT -->
+  <div class="modal-overlay hidden" id="accountModal">
+    <div class="account-modal">
+      <button class="modal-close" id="closeModal" aria-label="Close">×</button>
+      <span class="eyebrow">YOUR OWN LITTLE SPACE</span>
+      <h2>Make yourself <em>at home.</em></h2>
+      <p>Create a local demo profile to continue exploring. This is not a secure online account.</p>
+
+      <form id="accountForm">
+        <label for="accountName">Your name</label>
+        <input id="accountName" required maxlength="40" placeholder="Your name">
+
+        <label for="accountEmail">Email (optional)</label>
+        <input id="accountEmail" type="email" placeholder="Your email">
+
+        <button class="primary-button" type="submit">Create my profile ↗</button>
+      </form>
+      <p id="accountMessage" aria-live="polite"></p>
     </div>
-</div>
+  </div>
 
-<div id="notice" class="notice" role="status"></div>
-
+  <!-- 13. JAVASCRIPT -->
+  <script src="script.js"></script>
 </body>
 </html>
