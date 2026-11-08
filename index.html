@@ -4,225 +4,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#A5AD83">
-    <title>To the ether. | Your Space to Grow</title>
+    <meta name="theme-color" content="#29372B">
+
+    <title>To the Ether. | Your Space to Grow</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
+
 <body>
 
 <header class="navbar">
-    <a href="#home" class="logo">To the <span>ether.</span></a>
+    <a href="index.html" class="logo">To the ether<span>.</span></a>
 
     <nav>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#features">Explore</a></li>
-            <li><a href="#resources">Resources</a></li>
-        </ul>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#explore">Explore</a>
+        <a href="#resources">Resources</a>
     </nav>
 
-    <a href="#features" class="nav-button">Explore Now ↗</a>
+    <a href="#explore" class="nav-button">Explore Now ↗</a>
 </header>
+
 
 <main>
 
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <p class="eyebrow">✿ YOUR LITTLE CORNER OF CALM</p>
+<!-- HERO -->
 
-            <h1>
-                Take a breath.<br>
-                <span>Find your space.</span>
-            </h1>
+<section class="hero" id="home">
 
-            <p class="hero-description">
-                Life can get overwhelming sometimes.
-                Give yourself a moment to pause, understand
-                your feelings, and grow at your own pace.
-            </p>
+    <div class="hero-content">
+        <p class="eyebrow">A LITTLE SPACE TO BREATHE</p>
 
-            <div class="hero-buttons">
-                <a href="#features" class="primary-button">Explore →</a>
-                <a href="#about" class="secondary-button">Get to know us</a>
-            </div>
+        <h1>
+            A little space.<br>
+            A chance to <span>grow.</span><br>
+            A place to begin again.
+        </h1>
 
-            <div class="hero-note">
-                <span class="note-icon">🌿</span>
-                <p>
-                    A gentle reminder: you don't have to
-                    have everything figured out.
-                </p>
-            </div>
+        <p class="hero-description">
+            Life gets overwhelming sometimes. Between school,
+            expectations, emotions and everything in between,
+            everyone deserves a space that feels like their own.
+        </p>
+
+        <a href="#explore" class="primary-button">
+            Find Your Space ↗
+        </a>
+
+        <p class="hero-note">Take your time. There is no rush here.</p>
+    </div>
+
+    <div class="hero-art">
+        <img src="images/fern.jpg" alt="Fern leaves in nature">
+        <div class="image-caption">Grow at your own pace.</div>
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about section" id="about">
+
+    <p class="eyebrow">A NOTE FROM US</p>
+
+    <h2>Not everything needs to be figured out today.</h2>
+
+    <p>
+        To the Ether is a little corner of the internet created
+        for students and young people navigating life.
+        It brings together journaling, wellness, creativity,
+        movement and self-discovery.
+    </p>
+
+    <p class="about-highlight">
+        You don't have to be productive every second.
+        You just have to be human.
+    </p>
+
+</section>
+
+
+<!-- EXPLORE -->
+
+<section class="explore section" id="explore">
+
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">YOUR PERSONAL SPACE</p>
+            <h2>Explore your little world.</h2>
         </div>
-
-        <div class="hero-art">
-            <img src="images/fern.jpg" alt="Fern leaves">
-        </div>
-    </section>
-
-    <section class="about-section" id="about">
-        <p class="section-label">A SPACE THAT GETS YOU</p>
-
-        <h2>
-            Because your well-being<br>
-            <span>matters, too.</span>
-        </h2>
 
         <p>
-            Between school, expectations, friendships, and
-            everyday life, it's easy to forget yourself.
-            To the ether is a student-focused space to pause,
-            reflect, and discover healthy habits.
+            Ten different spaces. Different purposes.
+            One place to start.
         </p>
-    </section>
+    </div>
 
-    <section class="features-section" id="features">
-        <div class="section-heading">
-            <div>
-                <p class="section-label">YOUR SPACE TO EXPLORE</p>
-                <h2>Little things for <span>you.</span></h2>
-            </div>
 
-            <p>
-                Choose what you need today.
-                There is no right or wrong place to start.
-            </p>
+    <div class="feature-grid">
+
+        <a href="feature.html?card=mood" class="feature-card">
+            <span class="card-number">01</span>
+            <div class="card-icon">☁</div>
+            <h3>Mood Journal</h3>
+            <p>Understand your feelings, one day at a time.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=breathing" class="feature-card">
+            <span class="card-number">02</span>
+            <div class="card-icon">◌</div>
+            <h3>Breathing Space</h3>
+            <p>Slow down, pause and reconnect with the present.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=gratitude" class="feature-card">
+            <span class="card-number">03</span>
+            <div class="card-icon">✿</div>
+            <h3>Gratitude Journal</h3>
+            <p>Collect little moments worth remembering.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=fitness" class="feature-card">
+            <span class="card-number">04</span>
+            <div class="card-icon">♡</div>
+            <h3>Fitness & Wellness</h3>
+            <p>Make room for movement, rest and everyday wellbeing.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=checkin" class="feature-card">
+            <span class="card-number">05</span>
+            <div class="card-icon">☀</div>
+            <h3>Daily Check-in</h3>
+            <p>Celebrate little wins and acknowledge small steps.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=focus" class="feature-card">
+            <span class="card-number">06</span>
+            <div class="card-icon">⌛</div>
+            <h3>Study & Focus</h3>
+            <p>Find your rhythm without forgetting to rest.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=selfcare" class="feature-card">
+            <span class="card-number">07</span>
+            <div class="card-icon">❀</div>
+            <h3>Self-care Corner</h3>
+            <p>Little routines that help you care for yourself.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=health" class="feature-card">
+            <span class="card-number">08</span>
+            <div class="card-icon">♧</div>
+            <h3>Health & Support</h3>
+            <p>Learn about wellbeing and finding trusted support.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=career" class="feature-card">
+            <span class="card-number">09</span>
+            <div class="card-icon">✧</div>
+            <h3>Find Your Direction</h3>
+            <p>Explore interests, possibilities and dreams beyond careers.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+
+        <a href="feature.html?card=reflection" class="feature-card">
+            <span class="card-number">10</span>
+            <div class="card-icon">📖</div>
+            <h3>My Little World</h3>
+            <p>Your private collection of memories, thoughts and moments.</p>
+            <span class="card-link">Explore ↗</span>
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- MOOD SECTION -->
+
+<section class="mood-section section" id="mood">
+
+    <p class="eyebrow">A MOMENT FOR YOURSELF</p>
+
+    <h2>How are you feeling today?</h2>
+
+    <p>There is no right or wrong answer.</p>
+
+    <div class="mood-options">
+        <button class="mood-option" data-mood="Happy">☀️<span>Happy</span></button>
+        <button class="mood-option" data-mood="Okay">🌿<span>Okay</span></button>
+        <button class="mood-option" data-mood="Tired">🌙<span>Tired</span></button>
+        <button class="mood-option" data-mood="Overwhelmed">☁️<span>Overwhelmed</span></button>
+        <button class="mood-option" data-mood="Unsure">🪷<span>Unsure</span></button>
+    </div>
+
+    <p id="mood-message" class="mood-message"></p>
+
+</section>
+
+
+<!-- RESOURCES -->
+
+<section class="resources section" id="resources">
+
+    <p class="eyebrow">A LITTLE MORE HELP</p>
+
+    <h2>You don't have to figure everything out alone.</h2>
+
+    <div class="resource-grid">
+
+        <div class="resource-card">
+            <h3>Take a pause</h3>
+            <p>Give yourself permission to slow down.</p>
+            <a href="feature.html?card=breathing">Visit Breathing Space ↗</a>
         </div>
 
-        <div class="feature-grid">
-
-            <article class="feature-card mood-card">
-                <div class="feature-icon">♡</div>
-                <p class="card-number">01 / REFLECT</p>
-                <h3>Mood Journal</h3>
-                <p>Check in with yourself and give your feelings a little space.</p>
-                <a href="#mood">Explore journal →</a>
-            </article>
-
-            <article class="feature-card breath-card">
-                <div class="feature-icon">❋</div>
-                <p class="card-number">02 / BREATHE</p>
-                <h3>Breathing Space</h3>
-                <p>Take a short pause and follow a gentle breathing exercise.</p>
-                <a href="#breathing">Take a pause →</a>
-            </article>
-
-            <article class="feature-card gratitude-card">
-                <div class="feature-icon">✿</div>
-                <p class="card-number">03 / APPRECIATE</p>
-                <h3>Gratitude Journal</h3>
-                <p>Notice the small moments that make your day brighter.</p>
-                <a href="#gratitude">Find the good →</a>
-            </article>
-
-            <article class="feature-card fitness-card">
-                <div class="feature-icon">❀</div>
-                <p class="card-number">04 / MOVE</p>
-                <h3>Fitness and Wellness</h3>
-                <p>Discover gentle movement and everyday healthy habits.</p>
-                <a href="#fitness">Explore wellness →</a>
-            </article>
-
-            <article class="feature-card checkin-card">
-                <div class="feature-icon">☘</div>
-                <p class="card-number">05 / CONNECT</p>
-                <h3>Daily Check-In</h3>
-                <p>Take a moment to notice how you are feeling today.</p>
-                <a href="#checkin">Check in →</a>
-            </article>
-
-            <article class="feature-card focus-card">
-                <div class="feature-icon">✧</div>
-                <p class="card-number">06 / FOCUS</p>
-                <h3>Steady and Focus</h3>
-                <p>Find your rhythm, organize your thoughts, and focus gently.</p>
-                <a href="#focus">Find your focus →</a>
-            </article>
-
-            <article class="feature-card selfcare-card">
-                <div class="feature-icon">❃</div>
-                <p class="card-number">07 / RESTORE</p>
-                <h3>Self-Care Corner</h3>
-                <p>Make time for yourself with little acts of self-kindness.</p>
-                <a href="#selfcare">Care for yourself →</a>
-            </article>
-
-            <article class="feature-card health-card">
-                <div class="feature-icon">♡</div>
-                <p class="card-number">08 / SUPPORT</p>
-                <h3>Health Support</h3>
-                <p>Find helpful health information and supportive resources.</p>
-                <a href="#health">Find support →</a>
-            </article>
-
-            <article class="feature-card career-card">
-                <div class="feature-icon">✿</div>
-                <p class="card-number">09 / DISCOVER</p>
-                <h3>Career Exploration</h3>
-                <p>Explore your interests, strengths, and possible future paths.</p>
-                <a href="#career">Discover possibilities →</a>
-            </article>
-
-            <article class="feature-card reflection-card">
-                <div class="feature-icon">❋</div>
-                <p class="card-number">10 / GROW</p>
-                <h3>Weekly Reflection</h3>
-                <p>Look back on your week and appreciate how far you've come.</p>
-                <a href="#reflection">Reflect on your week →</a>
-            </article>
-
-        </div>
-    </section>
-
-    <section class="interactive-section" id="mood">
-        <p class="section-label">A MOMENT FOR YOURSELF</p>
-
-        <h2>How are you feeling <span>today?</span></h2>
-
-        <p>
-            There is no right or wrong answer.
-            Take a moment to check in with yourself.
-        </p>
-
-        <div class="mood-options">
-            <button class="mood-option" type="button" data-mood="Happy"><span>☀</span> Happy</button>
-            <button class="mood-option" type="button" data-mood="Calm"><span>🌿</span> Calm</button>
-            <button class="mood-option" type="button" data-mood="Okay"><span>☁</span> Okay</button>
-            <button class="mood-option" type="button" data-mood="Stressed"><span>🌧</span> Stressed</button>
-            <button class="mood-option" type="button" data-mood="Sad"><span>🌙</span> Sad</button>
+        <div class="resource-card">
+            <h3>Find support</h3>
+            <p>Reach out to a trusted adult or qualified professional.</p>
+            <a href="feature.html?card=health">Explore Support ↗</a>
         </div>
 
-        <p class="interactive-message" id="mood-message" aria-live="polite">
-            Your feelings deserve space.
-        </p>
-    </section>
+        <div class="resource-card">
+            <h3>Discover yourself</h3>
+            <p>Your future doesn't need to be decided today.</p>
+            <a href="feature.html?card=career">Explore Possibilities ↗</a>
+        </div>
 
-    <section class="coming-soon" id="resources">
-        <p class="section-label">MORE GOOD THINGS AHEAD</p>
-        <h2>Your journey, <span>your pace.</span></h2>
-        <p>
-            Student resources and more helpful tools
-            are coming to To the ether.
-        </p>
-    </section>
+    </div>
 
-    <footer>
-        <a href="#home" class="logo">To the <span>ether.</span></a>
-        <p>A little space to pause, reflect, and grow.</p>
-        <p class="footer-small">
-            A student well-being project, not a substitute
-            for professional support.
-        </p>
-        <p class="copyright">© 2026 To the ether.</p>
-    </footer>
+</section>
+
+
+<!-- QUOTE -->
+
+<section class="quote-section">
+    <p>"You are allowed to grow slowly."</p>
+    <span>— To the Ether.</span>
+</section>
 
 </main>
+
+
+<!-- ACCOUNT MODAL -->
+
+<div class="modal-overlay" id="account-modal">
+
+    <div class="account-modal">
+
+        <button class="modal-close" id="close-modal">×</button>
+
+        <p class="eyebrow">A SPACE OF YOUR OWN</p>
+
+        <h2>Enjoying your little world?</h2>
+
+        <p>
+            You've explored more than three spaces!
+            Create a profile to personalise your experience.
+        </p>
+
+        <form id="account-form">
+
+            <input type="text" id="profile-name"
+                placeholder="Your name" required>
+
+            <input type="email" id="profile-email"
+                placeholder="Your email" required>
+
+            <button type="submit" class="primary-button">
+                Create My Profile ↗
+            </button>
+
+        </form>
+
+        <button id="guest-button" class="guest-button">
+            Continue as a guest
+        </button>
+
+        <small>This is a demonstration profile, not a secure online account.</small>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <a href="index.html" class="logo">To the ether<span>.</span></a>
+
+    <p>A little space to grow and begin again.</p>
+
+    <p class="copyright">© 2026 To the Ether. Made with care.</p>
+
+</footer>
+
 </body>
 </html>
