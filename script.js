@@ -66,11 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function readStorage(key, fallback = null) {
     try {
       const value = localStorage.getItem(key);
-
-      return value === null
-        ? fallback
-        : JSON.parse(value);
-
+      return value === null ? fallback : JSON.parse(value);
     } catch (error) {
       console.warn("Storage error:", error);
       return fallback;
@@ -81,7 +77,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       localStorage.setItem(key, JSON.stringify(value));
       return true;
-
     } catch (error) {
       console.warn("Storage error:", error);
       return false;
@@ -92,12 +87,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function getDisplayName() {
 
-    if (currentProfile?.displayname) {
-      return currentProfile.displayname;
+    if (currentProfile?.display_name) {
+      return currentProfile.display_name;
     }
 
-    if (currentUser?.user_metadata?.displayname) {
-      return currentUser.user_metadata.displayname;
+    if (currentUser?.user_metadata?.display_name) {
+      return currentUser.user_metadata.display_name;
     }
 
     return currentUser?.email?.split("@")[0] || "there";
@@ -107,16 +102,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!accountButton) return;
 
-    if (currentUser) {
-
-      accountButton.textContent =
-        "Welcome, " + getDisplayName() + " ↗";
-
-    } else {
-
-      accountButton.textContent = "My Space ↗";
-
-    }
+    accountButton.textContent = currentUser
+      ? "Welcome, " + getDisplayName() + " ↗"
+      : "My Space ↗";
   }
 
   /* 05. LOAD USER PROFILE */
@@ -131,17 +119,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const { data, error } = await supabase
       .from("profiles")
-      .select("username, displayname")
+      .select("username, display_name")
       .eq("id", user.id)
       .maybeSingle();
 
     if (error) {
-      console.warn("Profile loading error:", error);
+      console.error("Profile loading error:", error);
     }
 
     currentProfile = data || {
       username: user.user_metadata?.username || "",
-      displayname: user.user_metadata?.displayname || ""
+      display_name: user.user_metadata?.display_name || ""
     };
 
     updateAccountButton();
@@ -163,7 +151,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       menuToggle.textContent = isOpen ? "✕" : "☰";
-
     });
 
     mainNav.querySelectorAll("a").forEach(link => {
@@ -171,15 +158,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       link.addEventListener("click", () => {
 
         mainNav.classList.remove("active");
-
         menuToggle.setAttribute("aria-expanded", "false");
-
         menuToggle.textContent = "☰";
 
       });
 
     });
-
   }
 
   /* 07. MODAL CONTROLS */
@@ -215,9 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       logoutButton.hidden = true;
 
       updateAccountMode();
-
     }
-
   }
 
   function hideModal() {
@@ -225,11 +207,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!accountModal) return;
 
     accountModal.classList.remove("active");
-
     accountModal.setAttribute("aria-hidden", "true");
 
     pendingFeature = null;
-
   }
 
   function updateAccountMode() {
@@ -275,9 +255,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         "New to To the Ether?";
 
       accountSwitch.textContent = "Create account";
-
     }
-
   }
 
   if (accountModal) {
@@ -288,14 +266,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     accountButton.addEventListener("click", () => {
 
-      showModal(
-        currentUser
-          ? "You are signed in."
-          : ""
-      );
+      showModal(currentUser ? "You are signed in." : "");
 
     });
-
   }
 
   if (closeModal) {
@@ -309,9 +282,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (event.target === accountModal) {
         hideModal();
       }
-
     });
-
   }
 
   document.addEventListener("keydown", event => {
@@ -322,7 +293,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     ) {
       hideModal();
     }
-
   });
 
   /* 08. SWITCH SIGNUP / LOGIN */
@@ -332,20 +302,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     accountSwitch.addEventListener("click", () => {
 
       accountMode =
-        accountMode === "signup"
-          ? "login"
-          : "signup";
+        accountMode === "signup" ? "login" : "signup";
 
-      if (accountMessage) {
-        accountMessage.textContent = "";
-      }
+      accountMessage.textContent = "";
 
       accountForm.reset();
 
       updateAccountMode();
 
-    });
+      console.log("Account mode switched to:", accountMode);
 
+    });
   }
 
   /* 09. ACCOUNT FORM */
@@ -356,17 +323,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       event.preventDefault();
 
+      console.log("ACCOUNT FORM SUBMITTED:", accountMode);
+
       const email = accountEmail.value.trim();
       const password = accountPassword.value;
 
-      if (accountSubmit) {
-        accountSubmit.disabled = true;
-        accountSubmit.textContent = "Please wait...";
-      }
+      accountSubmit.disabled = true;
+      accountSubmit.textContent = "Please wait...";
 
-      if (accountMessage) {
-        accountMessage.textContent = "";
-      }
+      accountMessage.textContent = "";
 
       try {
 
@@ -393,13 +358,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           const { data, error } = await supabase.auth.signUp({
 
-            email: email,
-            password: password,
+            email,
+            password,
 
             options: {
               data: {
                 username: username,
-                displayname: displayname
+                display_name: displayname
               }
             }
 
@@ -419,7 +384,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (pendingFeature) {
 
               const feature = pendingFeature;
-
               pendingFeature = null;
 
               addUsedFeature(feature);
@@ -443,6 +407,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             accountForm.reset();
 
             accountMode = "login";
+
             updateAccountMode();
 
           }
@@ -452,6 +417,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         /* LOGIN */
 
         else {
+
+          console.log("ATTEMPTING LOGIN:", email);
 
           const { data, error } =
             await supabase.auth.signInWithPassword({
@@ -473,7 +440,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (pendingFeature) {
 
             const feature = pendingFeature;
-
             pendingFeature = null;
 
             addUsedFeature(feature);
@@ -497,20 +463,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         console.error("Account error:", error);
 
-        if (accountMessage) {
-          accountMessage.textContent =
-            error.message || "Something went wrong. Please try again.";
-        }
+        accountMessage.textContent =
+          error.message || "Something went wrong. Please try again.";
 
       } finally {
 
-        if (accountSubmit) {
-          accountSubmit.disabled = false;
-          accountSubmit.textContent =
-            accountMode === "signup"
-              ? "Create account ↗"
-              : "Log in ↗";
-        }
+        accountSubmit.disabled = false;
+
+        accountSubmit.textContent =
+          accountMode === "signup"
+            ? "Create account ↗"
+            : "Log in ↗";
 
       }
 
@@ -531,10 +494,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       logoutButton.disabled = false;
 
       if (error) {
-
         accountMessage.textContent = error.message;
         return;
-
       }
 
       currentUser = null;
@@ -578,12 +539,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     currentUser = session?.user || null;
 
     if (!currentUser) {
+
       currentProfile = null;
       updateAccountButton();
+
       return;
     }
 
-    // Defer profile requests until after the auth callback.
     setTimeout(() => {
       loadProfile(currentUser);
     }, 0);
@@ -613,7 +575,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       writeStorage("etherUsedFeatures", used);
 
     }
-
   }
 
   /* 13. OPEN FEATURE */
@@ -664,7 +625,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const used = getUsedFeatures();
 
-      // Signed-in users can explore all spaces.
       if (currentUser) {
 
         event.preventDefault();
@@ -677,12 +637,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       }
 
-      // Previously explored spaces remain accessible.
       if (used.includes(feature)) {
         return;
       }
 
-      // First three spaces are freely accessible.
       if (used.length < 3) {
 
         event.preventDefault();
@@ -695,7 +653,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       }
 
-      // Ask users to create an account after three spaces.
       event.preventDefault();
 
       pendingFeature = feature;
