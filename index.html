@@ -187,26 +187,58 @@
   <small>Made with care · 2026</small>
 </footer>
 
+
+
 <!-- ACCOUNT POP-UP -->
 <div class="modal" id="accountModal">
   <div class="modal-box">
-    <button class="modal-close" id="closeModal">×</button>
+    <button class="modal-close" id="closeModal" type="button">×</button>
+
     <p class="eyebrow">YOUR PERSONAL SPACE</p>
-    <h2>A little introduction.</h2>
-    <p>Create a local demo profile to continue exploring.</p>
+    <h2 id="accountHeading">A little introduction.</h2>
+    <p id="accountDescription">
+      Create your personal space at To the Ether.
+    </p>
 
     <form id="accountForm">
-      <label for="accountName">Your name</label>
-      <input id="accountName" type="text" placeholder="Enter your name" required>
 
-      <label for="accountEmail">Email (optional)</label>
-      <input id="accountEmail" type="email" placeholder="Enter your email">
+      <div id="signupFields">
+        <label for="accountName">Display name</label>
+        <input id="accountName" type="text"
+          placeholder="What should we call you?">
 
-      <button class="primary-btn" type="submit">Create demo profile ↗</button>
+        <label for="accountUsername">Username</label>
+        <input id="accountUsername" type="text"
+          placeholder="Choose a username">
+
+      </div>
+
+      <label for="accountEmail">Email</label>
+      <input id="accountEmail" type="email"
+        placeholder="Enter your email" required>
+
+      <label for="accountPassword">Password</label>
+      <input id="accountPassword" type="password"
+        placeholder="Enter your password"
+        minlength="8" required>
+
+      <button class="primary-btn" id="accountSubmit"
+        type="submit">Create account ↗</button>
     </form>
 
-    <p id="accountMessage" class="form-message"></p>
-    <small>This is a local demonstration profile, not a secure online account.</small>
+    <p id="accountMessage" class="form-message"
+      aria-live="polite"></p>
+
+    <p>
+      <span id="accountSwitchText">Already have an account?</span>
+      <button type="button" id="accountSwitch"
+        class="account-switch">Log in</button>
+    </p>
+
+    <button type="button" id="logoutButton"
+      hidden>Log out</button>
+
+    <small>Your personal account is protected by Supabase authentication.</small>
   </div>
 </div>
 
