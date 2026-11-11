@@ -1,141 +1,424 @@
-
-/* =====================================================
+/* =========================================================
    TO THE ETHER. — HOMEPAGE JAVASCRIPT
-   20 feature cards + filters + browser storage
-   ===================================================== */
+   Navigation | Account | Supabase Auth | Saved Pages
+   ========================================================= */
 
-"use strict";
+document.addEventListener("DOMContentLoaded", () => {
+  "use strict";
 
-const FEATURES = [
-  {id:"mood-journal",name:"Mood Journal",icon:"☾",category:"wellbeing",desc:"Give your feelings a little room. Notice patterns without judging them."},
-  {id:"breathing-space",name:"Breathing Space",icon:"◌",category:"wellbeing",desc:"A gentle pause with guided breathing, quiet sounds and reflection."},
-  {id:"gratitude-journal",name:"Gratitude Journal",icon:"✧",category:"wellbeing",desc:"Collect small things, kind moments and details worth remembering."},
-  {id:"fitness-wellness",name:"Fitness & Wellness",icon:"⌁",category:"wellbeing",desc:"Build a balanced relationship with movement, rest and everyday energy."},
-  {id:"daily-checkin",name:"Daily Check-in",icon:"♡",category:"wellbeing",desc:"A tiny check-in for little wins, hard moments and how today feels."},
-  {id:"study-focus",name:"Study & Focus",icon:"✎",category:"growth",desc:"Make room for focused study, breaks and learning at your own pace."},
-  {id:"self-care",name:"Self-care Corner",icon:"❀",category:"wellbeing",desc:"Explore practical ways to care for your mind, body and surroundings."},
-  {id:"stories-hope",name:"Stories & Hope",icon:"✦",category:"growth",desc:"Read thoughtful stories about courage, compassion and real-world change."},
-  {id:"career-exploration",name:"Career Exploration",icon:"⌘",category:"growth",desc:"Explore interests, career families, courses and paths beyond one job title."},
-  {id:"my-little-world",name:"My Little World",icon:"▧",category:"creative",desc:"A personal scrapbook for memories, photos, thoughts and milestones."},
-  {id:"movie-theatre",name:"Movie Theatre",icon:"▣",category:"community",desc:"Discover films and documentaries that make you think and discuss."},
-  {id:"the-commons",name:"The Commons",icon:"⌂",category:"community",desc:"A welcoming place for clubs, shared interests and student-led ideas."},
-  {id:"sports-events",name:"Sports & Events",icon:"◎",category:"growth",desc:"Explore running, cycling, swimming, athletics and community events."},
-  {id:"day-planner",name:"Day Planner",icon:"▦",category:"growth",desc:"Organise your day with realistic priorities, breaks and small steps."},
-  {id:"creative-studio",name:"The Creative Studio",icon:"✿",category:"creative",desc:"Make something with words, colour, ideas and imagination."},
-  {id:"kindness-project",name:"The Kindness Project",icon:"♡",category:"community",desc:"Turn empathy into small, practical acts of kindness."},
-  {id:"learning-library",name:"The Learning Library",icon:"▤",category:"growth",desc:"Explore useful skills, learning prompts and curiosity-led topics."},
-  {id:"sleep-sanctuary",name:"The Sleep Sanctuary",icon:"☽",category:"wellbeing",desc:"Create a calming wind-down routine and notice what helps you rest."},
-  {id:"money-matters",name:"Money Matters",icon:"◈",category:"growth",desc:"Learn budgeting, saving and thoughtful money habits."},
-  {id:"open-mic",name:"The Open Mic",icon:"♫",category:"creative",desc:"Explore poems, short writing, spoken-word ideas and original creations."}
-];
+  const STORAGE_KEYS = {
+    saved: "etherSavedPages",
+    used: "etherUsedFeatures"
+  };
 
-const grid = document.getElementById("featureGrid");
+  const FEATURE_LIMIT_FOR_GUESTS = 3;
 
-function renderCards(filter = "all") {
-  if (!grid) return;
+  /* ---------- SUPABASE ---------- */
 
-  const items = FEATURES.filter(feature =>
-    filter === "all" || feature.category === filter
-  );
+  const SUPABASE_URL = "https://sckcrrriiatfxcafabmh.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_dQ_yskeZUEm8rCEjbz_1Lw_ftYCDmdo";
 
-  grid.innerHTML = items.map(feature => `
-    <a class="feature-card"
-       href="feature.html?feature=${encodeURIComponent(feature.id)}"
-       aria-label="Open ${feature.name}">
+  let supabase = null;
+  let currentUser = null;
 
-      <div class="card-top">
-        <span class="card-icon">${feature.icon}</span>
-        <span class="card-number">
-          ${String(FEATURES.indexOf(feature) + 1).padStart(2,"0")}
-        </span>
-      </div>
-
-      <div>
-        <h3>${feature.name}</h3>
-        <p>${feature.desc}</p>
-      </div>
-
-      <div class="card-bottom">
-        <span class="card-category">${feature.category}</span>
-        <span class="card-arrow">↗</span>
-      </div>
-
-    </a>
-  `).join("");
-}
-
-renderCards();
-
-document.querySelectorAll(".filter-chip").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".filter-chip").forEach(item =>
-      item.classList.remove("active")
+  if (window.supabase?.createClient) {
+    supabase = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
     );
+  }
 
-    button.classList.add("active");
-    renderCards(button.dataset.filter);
-  });
-});
+  /* ---------- HELPERS ---------- */
 
-/* MOBILE NAVIGATION */
-
-const menuToggle = document.getElementById("menuToggle");
-const mainNav = document.getElementById("mainNav");
-
-menuToggle?.addEventListener("click", () => {
-  const open = mainNav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(open));
-});
-
-mainNav?.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    mainNav.classList.remove("open");
-    menuToggle?.setAttribute("aria-expanded","false");
-  });
-});
-
-/* FOOTER YEAR */
-
-const year = document.getElementById("year");
-if (year) year.textContent = new Date().getFullYear();
-
-/* SHARED LOCAL STORAGE */
-
-window.EtherStore = {
-  get(key, fallback = []) {
+  function readStorage(key, fallback = []) {
     try {
-      const value = localStorage.getItem("ether:" + key);
-      return value === null ? fallback : JSON.parse(value);
-    } catch (error) {
-      console.error("Storage read error:", error);
+      const value = JSON.parse(localStorage.getItem(key));
+      return value ?? fallback;
+    } catch {
       return fallback;
     }
-  },
+  }
 
-  set(key, value) {
+  function writeStorage(key, value) {
     try {
-      localStorage.setItem("ether:" + key, JSON.stringify(value));
+      localStorage.setItem(key, JSON.stringify(value));
       return true;
     } catch (error) {
-      console.error("Storage save error:", error);
-      alert("Your browser could not save this entry. Check your available storage.");
+      console.error("Could not save local data:", error);
       return false;
     }
-  },
-
-  add(key, value) {
-    const entries = this.get(key, []);
-    entries.unshift({
-      ...value,
-      id: Date.now() + Math.random(),
-      createdAt: new Date().toISOString()
-    });
-    this.set(key, entries);
-    return entries;
-  },
-
-  remove(key, id) {
-    const entries = this.get(key, []);
-    return this.set(key, entries.filter(entry => entry.id !== id));
   }
-};
+
+  function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, character => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[character]);
+  }
+
+  function showMessage(element, message, isError = false) {
+    if (!element) return;
+    element.textContent = message;
+    element.classList.toggle("error", isError);
+    element.classList.toggle("success", !isError);
+  }
+
+  /* ---------- MOBILE NAVIGATION ---------- */
+
+  const menuToggle = document.getElementById("menuToggle");
+  const mainNav = document.getElementById("mainNav");
+
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mainNav.classList.toggle("active");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    mainNav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        mainNav.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  /* ---------- ACCOUNT MODAL ---------- */
+
+  const accountButton = document.getElementById("accountButton");
+  const accountModal = document.getElementById("accountModal");
+  const closeModal = document.getElementById("closeModal");
+  const accountForm = document.getElementById("accountForm");
+  const accountSwitch = document.getElementById("accountSwitch");
+  const accountSwitchText = document.getElementById("accountSwitchText");
+  const accountMessage = document.getElementById("accountMessage");
+  const accountSubmit = document.getElementById("accountSubmit");
+  const signupFields = document.getElementById("signupFields");
+  const accountName = document.getElementById("accountName");
+  const accountUsername = document.getElementById("accountUsername");
+  const accountEmail = document.getElementById("accountEmail");
+  const accountPassword = document.getElementById("accountPassword");
+  const logoutButton = document.getElementById("logoutButton");
+
+  let isSignupMode = true;
+
+  function openAccountModal() {
+    if (!accountModal) return;
+    accountModal.classList.add("active");
+    accountModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    showMessage(accountMessage, "");
+  }
+
+  function hideAccountModal() {
+    if (!accountModal) return;
+    accountModal.classList.remove("active");
+    accountModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+  }
+
+  function updateAccountMode() {
+    if (signupFields) {
+      signupFields.style.display = isSignupMode ? "block" : "none";
+    }
+
+    if (accountSubmit) {
+      accountSubmit.textContent = isSignupMode ? "Create Account" : "Log In";
+    }
+
+    if (accountSwitchText) {
+      accountSwitchText.textContent = isSignupMode
+        ? "Already have an account?"
+        : "New to To the Ether?";
+    }
+
+    if (accountSwitch) {
+      accountSwitch.textContent = isSignupMode ? "Log in" : "Create an account";
+    }
+
+    showMessage(accountMessage, "");
+  }
+
+  accountButton?.addEventListener("click", openAccountModal);
+  closeModal?.addEventListener("click", hideAccountModal);
+
+  accountModal?.addEventListener("click", event => {
+    if (event.target === accountModal) hideAccountModal();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") hideAccountModal();
+  });
+
+  accountSwitch?.addEventListener("click", () => {
+    isSignupMode = !isSignupMode;
+    updateAccountMode();
+  });
+
+  /* ---------- ACCOUNT DISPLAY ---------- */
+
+  async function updateAccountDisplay(user) {
+    currentUser = user || null;
+
+    if (accountButton) {
+      if (currentUser) {
+        let displayName =
+          currentUser.user_metadata?.display_name ||
+          currentUser.user_metadata?.username ||
+          "My Account";
+
+        if (supabase) {
+          const { data } = await supabase
+            .from("profiles")
+            .select("username, display_name")
+            .eq("id", currentUser.id)
+            .maybeSingle();
+
+          if (data?.display_name) displayName = data.display_name;
+          else if (data?.username) displayName = data.username;
+        }
+
+        accountButton.textContent = `Hello, ${displayName}`;
+      } else {
+        accountButton.textContent = "My Space ↗";
+      }
+    }
+
+    if (logoutButton) {
+      logoutButton.style.display = currentUser ? "inline-flex" : "none";
+    }
+
+    document.body.classList.toggle("signed-in", Boolean(currentUser));
+  }
+
+  /* ---------- SIGN UP / LOG IN ---------- */
+
+  accountForm?.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!supabase) {
+      showMessage(
+        accountMessage,
+        "The account service could not load. Please refresh the page.",
+        true
+      );
+      return;
+    }
+
+    const email = accountEmail?.value.trim();
+    const password = accountPassword?.value || "";
+
+    if (!email || !password) {
+      showMessage(accountMessage, "Please enter your email and password.", true);
+      return;
+    }
+
+    if (password.length < 6) {
+      showMessage(accountMessage, "Your password must be at least 6 characters.", true);
+      return;
+    }
+
+    if (accountSubmit) {
+      accountSubmit.disabled = true;
+      accountSubmit.textContent = "Please wait...";
+    }
+
+    try {
+      if (isSignupMode) {
+        const displayName = accountName?.value.trim();
+        const username = accountUsername?.value.trim().toLowerCase();
+
+        if (!displayName || !username) {
+          throw new Error("Please enter your name and username.");
+        }
+
+        if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+          throw new Error(
+            "Username must be 3–20 characters and use only letters, numbers or underscores."
+          );
+        }
+
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              username,
+              display_name: displayName
+            }
+          }
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+          await updateAccountDisplay(data.user);
+          showMessage(accountMessage, "Your account has been created!");
+          setTimeout(hideAccountModal, 900);
+        } else {
+          showMessage(
+            accountMessage,
+            "Account created! Please check your email for the confirmation link."
+          );
+        }
+      } else {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (error) throw error;
+
+        await updateAccountDisplay(data.user);
+        showMessage(accountMessage, "Welcome back!");
+        setTimeout(hideAccountModal, 700);
+      }
+    } catch (error) {
+      showMessage(accountMessage, error.message || "Something went wrong.", true);
+    } finally {
+      if (accountSubmit) {
+        accountSubmit.disabled = false;
+        accountSubmit.textContent = isSignupMode ? "Create Account" : "Log In";
+      }
+    }
+  });
+
+  logoutButton?.addEventListener("click", async () => {
+    if (!supabase) return;
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    await updateAccountDisplay(null);
+    hideAccountModal();
+  });
+
+  if (supabase) {
+    supabase.auth.getSession().then(({ data }) => {
+      updateAccountDisplay(data.session?.user || null);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      updateAccountDisplay(session?.user || null);
+    });
+  }
+
+  /* ---------- FEATURE ACCESS ---------- */
+
+  const featureCards = document.querySelectorAll(".feature-card[data-feature]");
+
+  function getUsedFeatures() {
+    return readStorage(STORAGE_KEYS.used, []);
+  }
+
+  featureCards.forEach(card => {
+    card.addEventListener("click", event => {
+      const slug = card.dataset.feature;
+      if (!slug) return;
+
+      let used = getUsedFeatures();
+
+      if (!currentUser && !used.includes(slug)) {
+        if (used.length >= FEATURE_LIMIT_FOR_GUESTS) {
+          event.preventDefault();
+          openAccountModal();
+          showMessage(
+            accountMessage,
+            "You've explored three spaces. Create a free account to keep exploring!"
+          );
+          return;
+        }
+
+        used.push(slug);
+        writeStorage(STORAGE_KEYS.used, used);
+      }
+    });
+  });
+
+  /* ---------- HOMEPAGE SAVED PAGES ---------- */
+
+  const savedPagesContainer =
+    document.getElementById("savedPages") ||
+    document.getElementById("savedPagesContainer");
+
+  function renderHomepageSavedPages() {
+    if (!savedPagesContainer) return;
+
+    const pages = readStorage(STORAGE_KEYS.saved, []);
+
+    if (!pages.length) {
+      savedPagesContainer.innerHTML = `
+        <p class="empty-saved-message">
+          Your saved reflections and creations will appear here.
+          Visit a space and save something meaningful to begin.
+        </p>
+      `;
+      return;
+    }
+
+    savedPagesContainer.innerHTML = pages.map((page, index) => `
+      <article class="saved-page-card">
+        <div>
+          <span class="eyebrow">${escapeHTML(page.feature || "YOUR SPACE")}</span>
+          <h3>${escapeHTML(page.title || "A saved page")}</h3>
+          <p>${escapeHTML((page.content || "").slice(0, 150))}</p>
+          <small>${escapeHTML(page.date || "")}</small>
+        </div>
+        <button class="delete-saved-page" data-index="${index}" type="button">
+          Delete
+        </button>
+      </article>
+    `).join("");
+
+    savedPagesContainer.querySelectorAll(".delete-saved-page").forEach(button => {
+      button.addEventListener("click", () => {
+        const index = Number(button.dataset.index);
+        const updated = readStorage(STORAGE_KEYS.saved, []);
+        updated.splice(index, 1);
+        writeStorage(STORAGE_KEYS.saved, updated);
+        renderHomepageSavedPages();
+      });
+    });
+  }
+
+  renderHomepageSavedPages();
+
+  window.addEventListener("storage", event => {
+    if (event.key === STORAGE_KEYS.saved) {
+      renderHomepageSavedPages();
+    }
+  });
+
+  /* ---------- EXPLORE FILTERS ---------- */
+
+  const filterButtons = document.querySelectorAll("[data-filter]");
+  const filterableCards = document.querySelectorAll(".feature-card[data-category]");
+
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter;
+
+      filterButtons.forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
+
+      filterableCards.forEach(card => {
+        const category = card.dataset.category;
+        const matches = filter === "all" || category === filter;
+        card.hidden = !matches;
+      });
+    });
+  });
+
+  /* ---------- FOOTER YEAR ---------- */
+
+  const yearElement = document.getElementById("currentYear");
+  if (yearElement) yearElement.textContent = new Date().getFullYear();
+
+  updateAccountMode();
+});
