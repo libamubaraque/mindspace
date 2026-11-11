@@ -1,534 +1,415 @@
 
-// =========================================================
-// TO THE ETHER.
-// HOMEPAGE JAVASCRIPT
-//
-// JUDGE EXPLANATION:
-// JavaScript makes the homepage interactive.
-// It generates cards from structured data, filters categories,
-// opens feature pages and manages the saved-pages display.
-//
-// STORAGE NOTE:
-// This version uses browser localStorage for saved-page
-// prototypes. It is not a replacement for Supabase cloud sync.
-// =========================================================
+/* =========================================================
+   TO THE ETHER. — MAIN SCRIPT
+   Homepage | Supabase Authentication | Saved Pages
+   ========================================================= */
 
 
-// 01. FEATURE CATALOGUE
-// Every card has its own name, category, description and image.
+/* 1. SUPABASE CONNECTION */
 
-const FEATURES = [
+const SUPABASE_URL = "https://sckcrrriiatfxcafabmh.supabase.co";
 
-  {
-    id: "mood",
-    number: "01",
-    name: "Mood Journal",
-    category: "wellbeing",
-    description: "Understand your feelings and recognise emotional patterns.",
-    image: "images/cards/mood.jpg"
-  },
+const SUPABASE_KEY = "sb_publishable_dQ_yskeZUEm8rCEjbz_1Lw_ftYCDmdo";
 
-  {
-    id: "breathing",
-    number: "02",
-    name: "Breathing Space",
-    category: "wellbeing",
-    description: "Pause, breathe and explore calming exercises.",
-    image: "images/cards/breathing.jpg"
-  },
+let supabaseClient = null;
 
-  {
-    id: "gratitude",
-    number: "03",
-    name: "Gratitude Journal",
-    category: "wellbeing",
-    description: "Notice little things and practise appreciation.",
-    image: "images/cards/gratitude.jpg"
-  },
-
-  {
-    id: "fitness",
-    number: "04",
-    name: "Fitness & Wellness",
-    category: "wellbeing",
-    description: "Explore movement, running, yoga and healthy routines.",
-    image: "images/cards/fitness.jpg"
-  },
-
-  {
-    id: "checkin",
-    number: "05",
-    name: "Daily Check-in",
-    category: "wellbeing",
-    description: "Reflect on your day, little wins and experiences.",
-    image: "images/cards/checkin.jpg"
-  },
-
-  {
-    id: "study",
-    number: "06",
-    name: "Study & Focus",
-    category: "discovery",
-    description: "Build manageable study habits and discover learning methods.",
-    image: "images/cards/study.jpg"
-  },
-
-  {
-    id: "selfcare",
-    number: "07",
-    name: "Self-care Corner",
-    category: "wellbeing",
-    description: "Explore physical, emotional and everyday self-care.",
-    image: "images/cards/selfcare.jpg"
-  },
-
-  {
-    id: "stories",
-    number: "08",
-    name: "The World Beyond You",
-    category: "discovery",
-    description: "Discover real stories, global issues and human experiences.",
-    image: "images/cards/stories.jpg"
-  },
-
-  {
-    id: "career",
-    number: "09",
-    name: "Find Your Direction",
-    category: "discovery",
-    description: "Explore careers, education and possibilities beyond school.",
-    image: "images/cards/career.jpg"
-  },
-
-  {
-    id: "world",
-    number: "10",
-    name: "My Little World",
-    category: "creativity",
-    description: "Create a personal collection of memories and reflections.",
-    image: "images/cards/world.jpg"
-  },
-
-  {
-    id: "movies",
-    number: "11",
-    name: "Movie Theatre",
-    category: "creativity",
-    description: "Discover films, storytelling and meaningful cinema.",
-    image: "images/cards/movies.jpg"
-  },
-
-  {
-    id: "commons",
-    number: "12",
-    name: "The Commons",
-    category: "opportunities",
-    description: "Explore student communities, clubs and collaboration.",
-    image: "images/cards/commons.jpg"
-  },
-
-  {
-    id: "sports",
-    number: "13",
-    name: "Sports & Events",
-    category: "opportunities",
-    description: "Discover marathons, cycling, swimming and sporting competitions.",
-    image: "images/cards/sports.jpg"
-  },
-
-  {
-    id: "planner",
-    number: "14",
-    name: "Day Planner",
-    category: "discovery",
-    description: "Organise your time, goals, tasks and daily priorities.",
-    image: "images/cards/planner.jpg"
-  },
-
-  {
-    id: "creative",
-    number: "15",
-    name: "The Creative Studio",
-    category: "creativity",
-    description: "Explore writing, drawing, photography and creative ideas.",
-    image: "images/cards/creative.jpg"
-  },
-
-  {
-    id: "kindness",
-    number: "16",
-    name: "The Kindness Project",
-    category: "opportunities",
-    description: "Discover meaningful ways to contribute to your community.",
-    image: "images/cards/kindness.jpg"
-  },
-
-  {
-    id: "learning",
-    number: "17",
-    name: "The Learning Library",
-    category: "discovery",
-    description: "Explore knowledge, subjects, resources and learning challenges.",
-    image: "images/cards/learning.jpg"
-  },
-
-  {
-    id: "sleep",
-    number: "18",
-    name: "The Sleep Sanctuary",
-    category: "wellbeing",
-    description: "Learn about rest, sleep routines and healthy habits.",
-    image: "images/cards/sleep.jpg"
-  },
-
-  {
-    id: "money",
-    number: "19",
-    name: "Money Matters",
-    category: "discovery",
-    description: "Learn financial literacy, saving and responsible budgeting.",
-    image: "images/cards/money.jpg"
-  },
-
-  {
-    id: "openmic",
-    number: "20",
-    name: "The Open Mic",
-    category: "creativity",
-    description: "Discover spoken word, poetry, storytelling and expression.",
-    image: "images/cards/openmic.jpg"
-  }
-
-];
-
-
-// 02. HOMEPAGE CARD GENERATION
-
-const featureGrid = document.getElementById("featureGrid");
-
-function renderCards(category = "all") {
-
-  if (!featureGrid) return;
-
-  const selected = FEATURES.filter(feature =>
-    category === "all" || feature.category === category
+if (window.supabase && window.supabase.createClient) {
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
   );
-
-  featureGrid.innerHTML = selected.map(feature => `
-
-    <article class="feature-card"
-      style="--card-image: url('${feature.image}')">
-
-      <div class="feature-card-content">
-
-        <span class="card-number">
-          ${feature.number} / 20
-        </span>
-
-        <h3>${feature.name}</h3>
-
-        <p>${feature.description}</p>
-
-        <a class="card-open"
-          href="feature.html?card=${encodeURIComponent(feature.id)}">
-          Explore this space ↗
-        </a>
-
-      </div>
-
-    </article>
-
-  `).join("");
-
 }
 
-renderCards();
 
+/* 2. SHARED STORAGE */
 
-// 03. CARD FILTERING
-
-document.querySelectorAll(".filter-btn").forEach(button => {
-
-  button.addEventListener("click", () => {
-
-    document.querySelectorAll(".filter-btn").forEach(item => {
-      item.classList.remove("active");
-    });
-
-    button.classList.add("active");
-
-    renderCards(button.dataset.filter);
-
-  });
-
-});
-
-
-// 04. SAVED PAGES
-// Browser storage prototype.
-// The feature page uses the same storage key.
-
-const STORAGE_KEY = "toTheEtherSavedPages";
+const SAVED_PAGES_KEY = "etherSavedPages";
 
 function getSavedPages() {
-
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    return JSON.parse(localStorage.getItem(SAVED_PAGES_KEY)) || [];
   } catch (error) {
     console.error("Could not read saved pages:", error);
     return [];
   }
+}
 
+function savePagesToStorage(pages) {
+  localStorage.setItem(SAVED_PAGES_KEY, JSON.stringify(pages));
 }
 
 
-function renderSavedPages() {
+/* 3. MOBILE NAVIGATION */
 
-  const container = document.getElementById("savedPageList");
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
+
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener("click", () => {
+    mainNav.classList.toggle("active");
+  });
+
+  mainNav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      mainNav.classList.remove("active");
+    });
+  });
+}
+
+
+/* 4. ACCOUNT ELEMENTS */
+
+const accountButton = document.getElementById("accountButton");
+const accountModal = document.getElementById("accountModal");
+const closeModal = document.getElementById("closeModal");
+
+const accountForm = document.getElementById("accountForm");
+const accountName = document.getElementById("accountName");
+const accountUsername = document.getElementById("accountUsername");
+const accountEmail = document.getElementById("accountEmail");
+const accountPassword = document.getElementById("accountPassword");
+
+const accountHeading = document.getElementById("accountHeading");
+const accountDescription = document.getElementById("accountDescription");
+const accountSubmit = document.getElementById("accountSubmit");
+const accountSwitch = document.getElementById("accountSwitch");
+const accountSwitchText = document.getElementById("accountSwitchText");
+const accountMessage = document.getElementById("accountMessage");
+const signupFields = document.getElementById("signupFields");
+const logoutButton = document.getElementById("logoutButton");
+
+let isLoginMode = false;
+
+
+/* 5. OPEN AND CLOSE ACCOUNT POPUP */
+
+function openAccountModal() {
+  if (!accountModal) return;
+
+  accountModal.classList.add("active");
+  accountModal.style.display = "flex";
+  updateAccountInterface();
+}
+
+function closeAccountModal() {
+  if (!accountModal) return;
+
+  accountModal.classList.remove("active");
+  accountModal.style.display = "";
+}
+
+if (accountButton) {
+  accountButton.addEventListener("click", openAccountModal);
+}
+
+if (closeModal) {
+  closeModal.addEventListener("click", closeAccountModal);
+}
+
+if (accountModal) {
+  accountModal.addEventListener("click", event => {
+    if (event.target === accountModal) {
+      closeAccountModal();
+    }
+  });
+}
+
+
+/* 6. ACCOUNT MESSAGE */
+
+function showAccountMessage(message, type = "info") {
+  if (!accountMessage) return;
+
+  accountMessage.textContent = message;
+  accountMessage.className = "form-message " + type;
+}
+
+
+/* 7. LOGIN / SIGNUP INTERFACE */
+
+function updateAccountInterface() {
+  if (!accountHeading) return;
+
+  if (isLoginMode) {
+    accountHeading.textContent = "Welcome back.";
+    accountDescription.textContent =
+      "Log in to return to your personal space.";
+
+    if (signupFields) signupFields.hidden = true;
+
+    if (accountName) accountName.required = false;
+    if (accountUsername) accountUsername.required = false;
+
+    if (accountSubmit) {
+      accountSubmit.textContent = "Log in ↗";
+    }
+
+    if (accountSwitchText) {
+      accountSwitchText.textContent = "New here?";
+    }
+
+    if (accountSwitch) {
+      accountSwitch.textContent = "Create an account";
+    }
+
+  } else {
+    accountHeading.textContent = "A little introduction.";
+    accountDescription.textContent =
+      "Create your personal space at To the Ether.";
+
+    if (signupFields) signupFields.hidden = false;
+
+    if (accountName) accountName.required = true;
+    if (accountUsername) accountUsername.required = true;
+
+    if (accountSubmit) {
+      accountSubmit.textContent = "Create account ↗";
+    }
+
+    if (accountSwitchText) {
+      accountSwitchText.textContent = "Already have an account?";
+    }
+
+    if (accountSwitch) {
+      accountSwitch.textContent = "Log in";
+    }
+  }
+
+  showAccountMessage("");
+}
+
+if (accountSwitch) {
+  accountSwitch.addEventListener("click", () => {
+    isLoginMode = !isLoginMode;
+    if (accountForm) accountForm.reset();
+    updateAccountInterface();
+  });
+}
+
+
+/* 8. SHOW CURRENT USER */
+
+async function updateUserInterface() {
+  if (!supabaseClient) return;
+
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error) {
+    console.error("Could not check user:", error.message);
+    return;
+  }
+
+  const user = data.user;
+
+  if (accountButton) {
+    accountButton.textContent = user ? "My Space ↗" : "My Space ↗";
+  }
+
+  if (logoutButton) {
+    logoutButton.hidden = !user;
+  }
+
+  if (user && accountDescription) {
+    const displayName =
+      user.user_metadata?.display_name ||
+      user.user_metadata?.username ||
+      "Welcome";
+
+    accountDescription.textContent =
+      `Welcome to your personal space, ${displayName}.`;
+  }
+}
+
+
+/* 9. CREATE ACCOUNT AND LOG IN */
+
+if (accountForm) {
+  accountForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!supabaseClient) {
+      showAccountMessage(
+        "The account service could not load. Check your internet connection and refresh.",
+        "error"
+      );
+      return;
+    }
+
+    const email = accountEmail.value.trim();
+    const password = accountPassword.value;
+
+    accountSubmit.disabled = true;
+    accountSubmit.textContent = "Please wait...";
+    showAccountMessage("Connecting securely...", "info");
+
+    try {
+
+      if (isLoginMode) {
+
+        const { data, error } =
+          await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+
+        if (error) throw error;
+
+        showAccountMessage("You are logged in successfully!", "success");
+
+        await updateUserInterface();
+
+        setTimeout(closeAccountModal, 900);
+
+      } else {
+
+        const displayName = accountName.value.trim();
+        const username = accountUsername.value.trim();
+
+        if (!displayName || !username) {
+          throw new Error("Please enter your display name and username.");
+        }
+
+        const { data, error } =
+          await supabaseClient.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                display_name: displayName,
+                username: username
+              }
+            }
+          });
+
+        if (error) throw error;
+
+        if (data.session) {
+          showAccountMessage(
+            "Your account has been created successfully!",
+            "success"
+          );
+
+          await updateUserInterface();
+
+          setTimeout(closeAccountModal, 1200);
+
+        } else {
+          showAccountMessage(
+            "Account created! Check your email for the confirmation link before logging in.",
+            "success"
+          );
+        }
+      }
+
+    } catch (error) {
+      console.error("Account error:", error);
+
+      showAccountMessage(
+        error.message || "Something went wrong. Please try again.",
+        "error"
+      );
+
+    } finally {
+      accountSubmit.disabled = false;
+      updateAccountInterface();
+    }
+  });
+}
+
+
+/* 10. LOG OUT */
+
+if (logoutButton) {
+  logoutButton.addEventListener("click", async () => {
+    if (!supabaseClient) return;
+
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+      showAccountMessage(error.message, "error");
+      return;
+    }
+
+    showAccountMessage("You have logged out.", "success");
+
+    await updateUserInterface();
+
+    setTimeout(closeAccountModal, 900);
+  });
+}
+
+
+/* 11. AUTHENTICATION STATE */
+
+if (supabaseClient) {
+  supabaseClient.auth.onAuthStateChange(() => {
+    updateUserInterface();
+  });
+}
+
+
+/* 12. SAVED PAGES ON HOMEPAGE */
+
+function renderHomepageSavedPages() {
+  const container = document.getElementById("savedPagesContainer");
 
   if (!container) return;
 
   const pages = getSavedPages();
 
-  if (!pages.length) {
+  container.innerHTML = "";
 
-    container.innerHTML = `
-      <p class="empty-message">
-        Your saved pages will appear here when you save
-        activities, reflections or personal entries.
-      </p>
-    `;
-
+  if (pages.length === 0) {
+    container.innerHTML =
+      '<p class="empty-saved-message">Your saved creations will appear here.</p>';
     return;
-
   }
 
-  container.innerHTML = pages.map((page, index) => `
+  pages.slice().reverse().forEach(page => {
+    const card = document.createElement("article");
+    card.className = "saved-page-card";
 
-    <article class="saved-item">
+    const title = document.createElement("h3");
+    title.textContent = page.title || "Untitled page";
 
-      <span class="eyebrow">${page.feature || "Saved page"}</span>
+    const category = document.createElement("p");
+    category.textContent = page.category || "Your collection";
 
-      <h3>${escapeHTML(page.title || "Untitled")}</h3>
+    const content = document.createElement("p");
+    content.textContent = page.content || "";
 
-      <p>${escapeHTML(page.content || "")}</p>
+    const date = document.createElement("small");
+    date.textContent = page.date || "";
 
-      <small>${escapeHTML(page.date || "")}</small>
+    const openLink = document.createElement("a");
+    openLink.href =
+      "feature.html?feature=" +
+      encodeURIComponent(page.feature || "my-little-world");
 
-      <br>
+    openLink.textContent = "Open space ↗";
 
-      <button class="delete-saved" data-index="${index}">
-        Delete saved entry
-      </button>
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "Remove";
+    deleteButton.className = "saved-delete";
 
-    </article>
-
-  `).join("");
-
-
-  container.querySelectorAll(".delete-saved").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const updated = getSavedPages();
-
-      updated.splice(Number(button.dataset.index), 1);
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-
-      renderSavedPages();
-
-      showToast("Saved entry deleted.");
-
+    deleteButton.addEventListener("click", () => {
+      const updated = getSavedPages().filter(item => item.id !== page.id);
+      savePagesToStorage(updated);
+      renderHomepageSavedPages();
     });
 
+    card.append(title, category, content, date, openLink, deleteButton);
+    container.appendChild(card);
   });
-
 }
 
 
-// 05. SAFE TEXT DISPLAY
-
-function escapeHTML(value) {
-
-  return String(value ?? "").replace(/[&<>"']/g, character => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[character]);
-
-}
-
-
-// 06. NOTIFICATION
-
-let toastTimer;
-
-function showToast(message) {
-
-  const toast = document.getElementById("toast");
-
-  if (!toast) return;
-
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2800);
-
-}
-
-
-// 07. ACCOUNT DIALOG
-
-const accountDialog = document.getElementById("accountDialog");
-
-document.getElementById("accountBtn")?.addEventListener("click", () => {
-  accountDialog?.showModal();
-});
-
-
-// 08. SAVED PAGES NAVIGATION
-
-document.getElementById("savedNav")?.addEventListener("click", () => {
-
-  document.getElementById("savedPages")?.scrollIntoView({
-    behavior: "smooth"
-  });
-
-});
-
-
-// 09. SUPABASE AUTHENTICATION
-//
-// IMPORTANT:
-// Replace the placeholders with your actual Supabase
-// project URL and publishable key.
-//
-// This enables authentication only. It does not automatically
-// make saved entries cloud-based. That requires database tables
-// and matching Row Level Security policies.
-
-const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-
-const SUPABASE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
-
-let supabaseClient = null;
-
-const supabaseReady =
-  SUPABASE_URL.startsWith("https://") &&
-  SUPABASE_KEY !== "YOUR_SUPABASE_PUBLISHABLE_KEY" &&
-  typeof window.supabase !== "undefined";
-
-
-if (supabaseReady) {
-
-  supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-}
-
-
-// 10. SIGN IN / SIGN UP
-
-let isSignUp = false;
-
-const toggleAuth = document.getElementById("toggleAuth");
-
-const authForm = document.getElementById("authForm");
-
-const authMessage = document.getElementById("authMessage");
-
-
-toggleAuth?.addEventListener("click", () => {
-
-  isSignUp = !isSignUp;
-
-  document.getElementById("authSubmit").textContent =
-    isSignUp ? "Create account" : "Sign in";
-
-  toggleAuth.textContent =
-    isSignUp
-      ? "Already have an account? Sign in"
-      : "New here? Create an account";
-
-});
-
-
-authForm?.addEventListener("submit", async event => {
-
-  event.preventDefault();
-
-  if (!supabaseClient) {
-
-    authMessage.textContent =
-      "Supabase is not configured yet. Add your project URL and publishable key.";
-
-    return;
-
-  }
-
-  const email = document.getElementById("authEmail").value;
-
-  const password = document.getElementById("authPassword").value;
-
-  const button = document.getElementById("authSubmit");
-
-  button.disabled = true;
-
-  try {
-
-    const result = isSignUp
-      ? await supabaseClient.auth.signUp({ email, password })
-      : await supabaseClient.auth.signInWithPassword({ email, password });
-
-    if (result.error) throw result.error;
-
-    authMessage.textContent = isSignUp
-      ? "Account created. Check your email if confirmation is enabled."
-      : "Successfully signed in.";
-
-  } catch (error) {
-
-    authMessage.textContent = error.message;
-
-  } finally {
-
-    button.disabled = false;
-
-  }
-
-});
-
-
-// 11. INITIAL PAGE SETUP
+/* 13. STARTUP */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  renderCards();
-
-  renderSavedPages();
-
+  renderHomepageSavedPages();
+  updateUserInterface();
 });
 
-
-// 12. JUDGE EXPLANATION
-//
-// This JavaScript file demonstrates:
-// - Data-driven rendering.
-// - DOM manipulation.
-// - Event listeners.
-// - Category filtering.
-// - Browser storage.
-// - Basic authentication integration.
-// - Reusable functions.
-
-console.info("To the Ether homepage initialised.");
+renderHomepageSavedPages();
