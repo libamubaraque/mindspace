@@ -1,899 +1,364 @@
 
-/* =========================================================
-   TO THE ETHER. — FEATURE PAGE JAVASCRIPT
-   Feature tools + Saved Pages + Activities
-   ========================================================= */
+/* TO THE ETHER. — SHARED FEATURE PAGE ENGINE
+   Each card has its own guided content and usable frontend interactions.
+   Entries are stored locally in this browser. No Supabase connection yet. */
 
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
+ const data=[
+ ["mood-journal","Mood Journal","wellbeing","A gentle place to name what is going on inside. You do not need to explain everything perfectly.","Mood check-in","Choose the feeling that is closest to yours, then write as much or as little as you like.","mood"],
+ ["breathing-space","Breathing Space","wellbeing","Step away from the rush for a moment. Follow a simple breathing rhythm or choose quiet instead.","Guided breathing","Let the circle guide a comfortable rhythm. Stop whenever you want; never force or hold your breath.","breathing"],
+ ["gratitude-journal","Gratitude Journal","wellbeing","Notice the ordinary moments that bring comfort, meaning or connection.","Three little things","They do not have to be big. A kind message, a favourite song or a peaceful moment all count.","gratitude"],
+ ["fitness-wellness","Fitness & Wellness","wellbeing","Movement is not a punishment or a competition. Explore activities that feel enjoyable, accessible and balanced.","Movement & wellbeing log","Record a walk, a run, cycling, swimming, stretching or rest. Choose what feels right for your day.","fitness"],
+ ["daily-checkin","Daily Check-in","wellbeing","A quick pause to notice your day — the good, the difficult and everything between.","How is today going?","Check in without scoring yourself. Small wins and difficult moments can exist together.","checkin"],
+ ["study-focus","Study & Focus","growth","Create a realistic study session with a clear focus and a proper break.","Focus session","Try 10 minutes of focused work followed by a 5-minute screen-free rest. Adjust the plan to suit you.","study"],
+ ["self-care","Self-care Corner","wellbeing","Self-care can be practical and ordinary: rest, boundaries, asking for help and looking after your surroundings.","A small care plan","Choose one gentle action for your mind, body or environment. This is not medical advice.","selfcare"],
+ ["stories-hope","Stories & Hope","growth","Explore real stories of people and communities working towards a more compassionate world.","A thought to carry","Use this space to reflect on a story, a person or an act of courage that inspired you.","stories"],
+ ["career-exploration","Career Exploration","growth","Your interests can lead in many directions. Explore possibilities without needing to decide your whole future today.","Interests and possibilities","Write down what you enjoy, what matters to you and what you would like to learn more about.","career"],
+ ["my-little-world","My Little World","creative","A personal scrapbook for the memories, thoughts, photographs and milestones that make your world yours.","Add to your little world","Write a memory or a note to your future self. You can also attach an image from your device.","scrapbook"],
+ ["movie-theatre","Movie Theatre","community","A thoughtful watchlist for films, documentaries and stories you would like to explore or discuss.","Your watchlist","Save a title and a thought about why you want to watch it. This page does not stream copyrighted films.","movie"],
+ ["the-commons","The Commons","community","A shared-ideas corner for clubs, student interests, collaboration and community projects.","An idea for the commons","Suggest a club, activity, discussion topic or student-led project. Keep personal contact details private.","commons"],
+ ["sports-events","Sports & Events","growth","Celebrate participation, teamwork and movement — from local fun runs to cycling, swimming and athletics events.","Sports goals and event ideas","Add an event or personal goal. Check official organisers for dates, age rules, safety requirements and registration.","sports"],
+ ["day-planner","Day Planner","growth","Give your day a shape without filling every minute. Leave room for meals, rest and unexpected things.","Plan your day","Write one priority, a few manageable tasks and a break. A plan is a guide, not a test.","planner"],
+ ["creative-studio","The Creative Studio","creative","Make something just because you want to: a poem, a story seed, a colour idea or a tiny design concept.","Create a little something","Save your original writing, idea or creative prompt. Your work belongs to you.","creative"],
+ ["kindness-project","The Kindness Project","community","Kindness is not about grand gestures. It can be thoughtful, practical and respectful.","A small act of kindness","Plan one safe, realistic act of kindness. Respect boundaries and do not share another person's private story without permission.","kindness"],
+ ["learning-library","The Learning Library","growth","Follow your curiosity into useful skills, new subjects and questions worth exploring.","What would you like to learn?","Choose a topic and write one question you want to answer. Find reliable sources and compare information.","learning"],
+ ["sleep-sanctuary","The Sleep Sanctuary","wellbeing","Build a calm wind-down routine that supports rest. Everyone's sleep needs and circumstances are different.","Wind-down notes","Choose a relaxing activity and note what helps you feel settled. This is general wellbeing information, not medical advice.","sleep"],
+ ["money-matters","Money Matters","growth","Learn the basics of planning, saving and making thoughtful choices with money.","Simple budget practice","Use pretend amounts for this learning activity. Never enter bank details, passwords or private financial information.","money"],
+ ["open-mic","The Open Mic","creative","A stage for your original words: poetry, spoken-word pieces, short reflections and creative experiments.","Your open-mic page","Write something original. Share it only with people you trust and only when you feel comfortable.","openmic"]
+ ];
 
-  const params = new URLSearchParams(window.location.search);
-  const featureId = params.get("card") || "mood-journal";
+ const featureId=new URLSearchParams(location.search).get("feature")||"mood-journal";
+ const feature=data.find(item=>item[0]===featureId)||data[0];
+ const [id,title,category,description,panelTitle,instruction,type]=feature;
 
-  const features = {
-    "mood-journal": {
-      title: "Mood Journal",
-      category: "UNDERSTAND YOURSELF",
-      description: "A gentle space to understand your feelings."
-    },
-    "breathing-space": {
-      title: "Breathing Space",
-      category: "PAUSE AND RESET",
-      description: "Slow down and give yourself a peaceful moment."
-    },
-    "gratitude-journal": {
-      title: "Gratitude Journal",
-      category: "NOTICE THE LITTLE THINGS",
-      description: "Collect the moments that make life meaningful."
-    },
-    "fitness-wellness": {
-      title: "Fitness & Wellness",
-      category: "MOVE AND FEEL",
-      description: "Build healthy habits through movement and rest."
-    },
-    "daily-checkin": {
-      title: "Daily Check-in",
-      category: "A MOMENT FOR YOU",
-      description: "Celebrate little wins and acknowledge difficult days."
-    },
-    "study-focus": {
-      title: "Study & Focus",
-      category: "LEARN AT YOUR PACE",
-      description: "Create a study routine that works for you."
-    },
-    "self-care": {
-      title: "Self-care Corner",
-      category: "CARE FOR YOURSELF",
-      description: "Explore simple ways to care for yourself."
-    },
-    "health-support": {
-      title: "Health & Support",
-      category: "YOUR WELLBEING MATTERS",
-      description: "Find helpful information and support resources."
-    },
-    "stories-hope": {
-      title: "Stories & Hope",
-      category: "REAL PEOPLE. REAL STORIES.",
-      description: "Discover stories of courage, humanity and hope."
-    },
-    "career-exploration": {
-      title: "Career Exploration",
-      category: "DISCOVER YOUR DIRECTION",
-      description: "Explore possibilities beyond what you already know."
-    },
-    "my-little-world": {
-      title: "My Little World",
-      category: "YOUR PERSONAL COLLECTION",
-      description: "Keep your memories, ideas and personal moments."
-    },
-    "day-planner": {
-      title: "Day Planner",
-      category: "MAKE SPACE FOR YOUR DAY",
-      description: "Organise your priorities and give yourself room to breathe."
-    },
-    "sports-events": {
-      title: "Sports & Events",
-      category: "MOVE. COMPETE. CONNECT.",
-      description: "Discover sporting challenges, competitions and events."
-    }
+ const titleEl=document.getElementById("featureTitle");
+ const catEl=document.getElementById("featureCategory");
+ const descEl=document.getElementById("featureDescription");
+ const content=document.getElementById("featureContent");
+
+ document.title=title+" | To the Ether.";
+ titleEl.textContent=title;
+ catEl.textContent=category+" · YOUR SPACE";
+ descEl.textContent=description;
+
+ const store=window.EtherStore||{
+  get:(k,d=[])=>JSON.parse(localStorage.getItem("ether:"+k)||"null")??d,
+  add(k,v){
+   let a=this.get(k);
+   a.unshift({...v,id:Date.now(),createdAt:new Date().toISOString()});
+   localStorage.setItem("ether:"+k,JSON.stringify(a));
+   return a;
+  }
+ };
+
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+
+ function baseForm(){
+  return `
+  <section class="feature-panel">
+   <h2>${panelTitle}</h2>
+   <p>${instruction}</p>
+
+   <form id="entryForm">
+    <label for="entryTitle">A title or short note</label>
+    <input id="entryTitle" maxlength="100" placeholder="Give this entry a name...">
+
+    <label for="entryText">Your thoughts</label>
+    <textarea id="entryText" maxlength="5000" placeholder="Start wherever you are..."></textarea>
+
+    ${type==="mood"?`
+     <label for="moodSelect">Today's feeling</label>
+     <select id="moodSelect">
+      <option>Calm</option><option>Happy</option><option>Hopeful</option>
+      <option>Tired</option><option>Worried</option><option>Overwhelmed</option>
+      <option>Unsure</option><option>Other</option>
+     </select>`:""}
+
+    ${type==="fitness"?`
+     <label for="activitySelect">Activity</label>
+     <select id="activitySelect">
+      <option>Walking</option><option>Running</option><option>Cycling</option>
+      <option>Swimming</option><option>Stretching</option><option>Rest day</option>
+      <option>Other</option>
+     </select>`:""}
+
+    ${type==="scrapbook"?`
+     <label for="entryImage">Optional image</label>
+     <input id="entryImage" type="file" accept="image/*">`:""}
+
+    <button class="action-button" type="submit">Save this page</button>
+   </form>
+
+   <p id="saveMessage" role="status"></p>
+  </section>
+
+  <section class="feature-panel">
+   <h2>My Saved Pages</h2>
+   <p>Your entries stay in this browser on this device in this frontend version.</p>
+   <div class="saved-list" id="savedList"></div>
+  </section>`;
+ }
+
+ function renderSaved(){
+  const list=document.getElementById("savedList");
+  if(!list)return;
+
+  const entries=store.get(id,[]);
+
+  list.innerHTML=entries.length?entries.map(e=>`
+   <article class="saved-entry">
+    <small>${new Date(e.createdAt).toLocaleString()}${e.mood?" · "+esc(e.mood):""}${e.activity?" · "+esc(e.activity):""}</small>
+    <h3>${esc(e.title||"Untitled entry")}</h3>
+    <p>${esc(e.text||"")}</p>
+    ${e.image?`<img src="${e.image}" alt="Saved scrapbook image" style="max-width:100%;max-height:240px;margin-top:12px">`:""}
+   </article>`).join("")
+   :`<p>No saved pages yet. Your first entry can be small.</p>`;
+ }
+
+ function renderBreathing(){
+  return `
+  <section class="feature-panel">
+   <h2>A breathing pause</h2>
+   <p>Follow a comfortable rhythm: breathe in gently as the circle grows, then breathe out as it settles. Keep breathing naturally and stop if you feel uncomfortable.</p>
+   <div class="breath-orb" id="breathOrb"></div>
+   <div class="breath-label" id="breathLabel">Ready when you are</div>
+   <div style="text-align:center;margin-top:18px">
+    <button class="action-button" id="breathStart">Begin</button>
+    <button class="action-button secondary" id="breathStop">Pause</button>
+   </div>
+   <p style="text-align:center;margin-top:15px">You can also simply sit quietly. There is no right way to use this space.</p>
+  </section>
+  ${baseForm()}`;
+ }
+
+ function renderTimer(){
+  return `
+  <section class="feature-panel">
+   <h2>Focus timer</h2>
+   <p>Start with a short, manageable session. You can stop at any time.</p>
+   <div class="timer-display" id="timerDisplay">10:00</div>
+   <div style="text-align:center">
+    <button class="action-button" id="timerStart">Start 10 minutes</button>
+    <button class="action-button secondary" id="timerReset">Reset</button>
+   </div>
+   <p id="timerStatus" style="text-align:center"></p>
+  </section>
+  ${baseForm()}`;
+ }
+
+ function renderSports(){
+  return `
+  <section class="feature-panel">
+   <h2>Explore sporting events</h2>
+   <p>Use this as a place to note events you may want to learn about. Always check official event organisers for current dates, eligibility, registration, supervision and safety guidance.</p>
+   <ul>
+    <li>Running: community runs, fun runs and marathon events</li>
+    <li>Cycling: organised rides and cycling competitions</li>
+    <li>Swimming: school, club and community swimming meets</li>
+    <li>Athletics: track, field and multi-sport events</li>
+    <li>Other: inclusive sports days and local activity events</li>
+   </ul>
+   <p>For young participants, involve a parent, guardian or trusted adult when researching or registering.</p>
+   ${baseForm()}
+  </section>`;
+ }
+
+ function renderCareer(){
+  return `
+  <section class="feature-panel">
+   <h2>Start with what interests you</h2>
+   <p>Choose any interests that sound meaningful. This is a reflection activity, not a scientific career test.</p>
+
+   <label><input type="checkbox" class="interest" value="Health and helping people"> Health and helping people</label>
+   <label><input type="checkbox" class="interest" value="Science and discovery"> Science and discovery</label>
+   <label><input type="checkbox" class="interest" value="Art and communication"> Art and communication</label>
+   <label><input type="checkbox" class="interest" value="Environment and animals"> Environment and animals</label>
+   <label><input type="checkbox" class="interest" value="Law, society and public service"> Law, society and public service</label>
+   <label><input type="checkbox" class="interest" value="Technology and design"> Technology and design</label>
+   <label><input type="checkbox" class="interest" value="Business and entrepreneurship"> Business and entrepreneurship</label>
+
+   <button class="action-button" id="interestSave">Save my interests</button>
+   <p id="interestResult"></p>
+  </section>
+  ${baseForm()}`;
+ }
+
+ function renderPlanner(){
+  return `
+  <section class="feature-panel">
+   <h2>Today's plan</h2>
+   <p>Keep your plan kind and realistic. Add tasks one at a time.</p>
+   <form id="taskForm">
+    <input id="taskInput" placeholder="One thing to do..." maxlength="120" required>
+    <button class="action-button">Add task</button>
+   </form>
+   <div id="taskList" class="saved-list"></div>
+  </section>
+  ${baseForm()}`;
+ }
+
+ if(type==="breathing")content.innerHTML=renderBreathing();
+ else if(type==="study")content.innerHTML=renderTimer();
+ else if(type==="sports")content.innerHTML=renderSports();
+ else if(type==="career")content.innerHTML=renderCareer();
+ else if(type==="planner")content.innerHTML=renderPlanner();
+ else content.innerHTML=baseForm();
+
+ const form=document.getElementById("entryForm");
+
+ form?.addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const file=document.getElementById("entryImage")?.files?.[0];
+  let image="";
+
+  if(file){
+   if(file.size>1200000){
+    alert("Please choose an image smaller than 1.2 MB for this browser demo.");
+    return;
+   }
+
+   image=await new Promise(resolve=>{
+    const r=new FileReader();
+    r.onload=()=>resolve(r.result);
+    r.readAsDataURL(file);
+   });
+  }
+
+  const value={
+   title:document.getElementById("entryTitle").value.trim(),
+   text:document.getElementById("entryText").value.trim(),
+   mood:document.getElementById("moodSelect")?.value||"",
+   activity:document.getElementById("activitySelect")?.value||"",
+   image
   };
 
-  const feature = features[featureId] || {
-    title: "Your Personal Space",
-    category: "EXPLORE",
-    description: "Create, discover and grow at your own pace."
+  store.add(id,value);
+  document.getElementById("saveMessage").textContent="Saved in this browser. You can find it under My Saved Pages.";
+  form.reset();
+  renderSaved();
+ });
+
+ renderSaved();
+
+ /* Breathing guide */
+ let breathInterval=null,phase=0;
+ const orb=document.getElementById("breathOrb");
+ const label=document.getElementById("breathLabel");
+
+ document.getElementById("breathStart")?.addEventListener("click",()=>{
+  if(breathInterval)return;
+
+  const tick=()=>{
+   phase=1-phase;
+   orb.classList.toggle("inhale",phase===1);
+   label.textContent=phase?"Breathe in gently":"Breathe out gently";
   };
 
-  document.title = feature.title + " | To the Ether.";
+  tick();
+  breathInterval=setInterval(tick,4000);
+ });
 
-  document.getElementById("featureTitle").textContent =
-    feature.title;
+ document.getElementById("breathStop")?.addEventListener("click",()=>{
+  clearInterval(breathInterval);
+  breathInterval=null;
+  orb?.classList.remove("inhale");
+  if(label)label.textContent="Paused. Take your time.";
+ });
 
-  document.getElementById("featureCategory").textContent =
-    feature.category;
+ /* Study timer */
+ let timer=null,remaining=600;
+ const display=document.getElementById("timerDisplay");
+ const status=document.getElementById("timerStatus");
 
-  document.getElementById("featureDescription").textContent =
-    feature.description;
-
-  const content = document.getElementById("featureContent");
-
-  /* -------------------------------
-     SHARED SAVED PAGE SYSTEM
-  -------------------------------- */
-
-  const STORAGE_KEY = "etherSavedPages";
-
-  function getSavedPages() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch {
-      return [];
-    }
+ function paint(){
+  if(display){
+   display.textContent=
+    `${String(Math.floor(remaining/60)).padStart(2,"0")}:${String(remaining%60).padStart(2,"0")}`;
   }
+ }
 
-  function savePages(pages) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(pages));
-    renderSavedPages();
-  }
+ document.getElementById("timerStart")?.addEventListener("click",()=>{
+  if(timer)return;
+  status.textContent="Focus gently. A break is allowed.";
 
-  function savePage(title, text) {
-    if (!text.trim()) {
-      alert("Write something before saving your page.");
-      return;
-    }
+  timer=setInterval(()=>{
+   remaining--;
+   paint();
 
-    const pages = getSavedPages();
+   if(remaining<=0){
+    clearInterval(timer);
+    timer=null;
+    status.textContent="Session complete. Take a screen-free break.";
+   }
+  },1000);
+ });
 
-    pages.unshift({
-      id: Date.now(),
-      feature: feature.title,
-      title: title,
-      text: text,
-      date: new Date().toLocaleString()
-    });
+ document.getElementById("timerReset")?.addEventListener("click",()=>{
+  clearInterval(timer);
+  timer=null;
+  remaining=600;
+  paint();
+  status.textContent="Ready for a fresh session.";
+ });
 
-    savePages(pages);
-    alert("Your page has been saved!");
-  }
+ /* Career interests */
+ document.getElementById("interestSave")?.addEventListener("click",()=>{
+  const values=[...document.querySelectorAll(".interest:checked")].map(x=>x.value);
+  store.set("career-interests",values);
 
-  function renderSavedPages() {
-    const container =
-      document.getElementById("featureSavedPages");
+  document.getElementById("interestResult").textContent=
+   values.length
+    ?"Your interests have been saved: "+values.join(", ")
+    :"Choose any interests that feel right for you.";
+ });
 
-    if (!container) return;
+ /* Day planner */
+ const taskKey="planner-tasks";
 
-    const pages = getSavedPages()
-      .filter(page => page.feature === feature.title);
+ function paintTasks(){
+  const el=document.getElementById("taskList");
+  if(!el)return;
 
-    container.innerHTML = "";
+  const tasks=store.get(taskKey,[]);
 
-    if (!pages.length) {
-      container.innerHTML =
-        '<p class="empty-saved-message">Your saved pages will appear here.</p>';
-      return;
-    }
+  el.innerHTML=tasks.length
+   ?tasks.map(t=>`
+    <label class="saved-entry">
+     <input type="checkbox" data-task="${t.id}" ${t.done?"checked":""}>
+     ${esc(t.text)}
+    </label>`).join("")
+   :"<p>No tasks yet. Add one small step.</p>";
 
-    pages.slice(0, 5).forEach(page => {
-      const article = document.createElement("article");
-      article.className = "mini-saved-card";
-
-      const heading = document.createElement("h3");
-      heading.textContent = page.title;
-
-      const date = document.createElement("small");
-      date.textContent = page.date;
-
-      const text = document.createElement("p");
-      text.textContent = page.text;
-
-      article.append(heading, date, text);
-      container.appendChild(article);
-    });
-  }
-
-  /* -------------------------------
-     REUSABLE SECTION CREATOR
-  -------------------------------- */
-
-  function createSection(title, description = "") {
-    const section = document.createElement("section");
-    section.className = "tool-section";
-
-    const heading = document.createElement("h2");
-    heading.textContent = title;
-    section.appendChild(heading);
-
-    if (description) {
-      const paragraph = document.createElement("p");
-      paragraph.textContent = description;
-      section.appendChild(paragraph);
-    }
-
-    content.appendChild(section);
-    return section;
-  }
-
-  function createInput(section, labelText, placeholder = "") {
-    const group = document.createElement("div");
-    group.className = "field-group";
-
-    const label = document.createElement("label");
-    label.textContent = labelText;
-
-    const input = document.createElement("textarea");
-    input.placeholder = placeholder;
-
-    group.append(label, input);
-    section.appendChild(group);
-
-    return input;
-  }
-
-  function createButton(section, text, callback) {
-    const button = document.createElement("button");
-    button.className = "feature-action";
-    button.textContent = text;
-    button.type = "button";
-    button.addEventListener("click", callback);
-
-    section.appendChild(button);
-    return button;
-  }
-
-  /* -------------------------------
-     MOOD JOURNAL
-  -------------------------------- */
-
-  if (featureId === "mood-journal") {
-
-    const section = createSection(
-      "How are you feeling today?",
-      "There is no right or wrong answer."
+  el.querySelectorAll("[data-task]").forEach(box=>{
+   box.addEventListener("change",()=>{
+    const a=store.get(taskKey,[]).map(t=>
+     t.id===Number(box.dataset.task)?{...t,done:box.checked}:t
     );
-
-    const mood = document.createElement("select");
-
-    [
-      "Choose your mood",
-      "Happy",
-      "Calm",
-      "Excited",
-      "Grateful",
-      "Confused",
-      "Tired",
-      "Stressed",
-      "Sad",
-      "Not sure"
-    ].forEach(value => {
-      const option = document.createElement("option");
-      option.textContent = value;
-      mood.appendChild(option);
-    });
-
-    section.appendChild(mood);
-
-    const reflection = createInput(
-      section,
-      "What is on your mind?",
-      "Write freely. This space belongs to you..."
-    );
-
-    createButton(section, "Save My Reflection", () => {
-      if (mood.selectedIndex === 0) {
-        alert("Choose a mood first.");
-        return;
-      }
-
-      savePage(
-        "Mood: " + mood.value,
-        reflection.value
-      );
-    });
-  }
-
-  /* -------------------------------
-     GRATITUDE JOURNAL
-  -------------------------------- */
-
-  else if (featureId === "gratitude-journal") {
-
-    const section = createSection(
-      "Little Things Worth Remembering",
-      "You don't need a perfect day to find something meaningful."
-    );
-
-    const prompts = [
-      "Something that made me smile",
-      "Someone I appreciate",
-      "Something beautiful I noticed",
-      "Something I learned",
-      "Something I am looking forward to"
-    ];
-
-    const inputs = prompts.map(prompt =>
-      createInput(section, prompt, "Write here...")
-    );
-
-    createButton(section, "Save My Gratitude Page", () => {
-      const result = prompts.map((prompt, i) =>
-        prompt + ":\n" + inputs[i].value
-      ).join("\n\n");
-
-      savePage("My Gratitude Journal", result);
-    });
-  }
-
-  /* -------------------------------
-     BREATHING SPACE
-  -------------------------------- */
-
-  else if (featureId === "breathing-space") {
-
-    const section = createSection(
-      "Your Breathing Space",
-      "Follow a comfortable rhythm. You can stop whenever you wish."
-    );
-
-    const circle = document.createElement("div");
-    circle.className = "breathing-circle";
-    circle.textContent = "Ready?";
-
-    section.appendChild(circle);
-
-    const description = document.createElement("p");
-    description.className = "exercise-description";
-    description.textContent = "Choose start when you are ready.";
-
-    section.appendChild(description);
-
-    let running = false;
-    let timeout = null;
-    let phase = 0;
-
-    const phases = [
-      { name: "Breathe in", duration: 4000, class: "breathing-in" },
-      { name: "Breathe out", duration: 4000, class: "breathing-out" }
-    ];
-
-    function nextPhase() {
-      if (!running) return;
-
-      const current = phases[phase];
-
-      circle.textContent = current.name;
-      circle.className = "breathing-circle " + current.class;
-
-      description.textContent =
-        "Take it gently. Follow your own comfortable pace.";
-
-      timeout = setTimeout(() => {
-        phase = (phase + 1) % phases.length;
-        nextPhase();
-      }, current.duration);
-    }
-
-    createButton(section, "Start Breathing", () => {
-      if (running) return;
-      running = true;
-      phase = 0;
-      nextPhase();
-    });
-
-    createButton(section, "Pause", () => {
-      running = false;
-      clearTimeout(timeout);
-      circle.className = "breathing-circle";
-      circle.textContent = "Paused";
-      description.textContent = "Take your time.";
-    });
-  }
-
-  /* -------------------------------
-     DAILY CHECK-IN
-  -------------------------------- */
-
-  else if (featureId === "daily-checkin") {
-
-    const section = createSection(
-      "Today's Little Check-in",
-      "Small things count too."
-    );
-
-    const questions = [
-      "What was one good moment today?",
-      "What was challenging?",
-      "What is one thing you did for yourself?",
-      "What would make tomorrow a little easier?"
-    ];
-
-    const answers = questions.map(q =>
-      createInput(section, q, "Write your answer...")
-    );
-
-    createButton(section, "Save Today's Check-in", () => {
-      const result = questions.map((q, i) =>
-        q + "\n" + answers[i].value
-      ).join("\n\n");
-
-      savePage("Daily Check-in", result);
-    });
-  }
-
-  /* -------------------------------
-     STUDY & FOCUS
-  -------------------------------- */
-
-  else if (featureId === "study-focus") {
-
-    const section = createSection(
-      "Your Study Session",
-      "Try a short study period followed by a proper break."
-    );
-
-    const display = document.createElement("div");
-    display.className = "timer-display";
-    display.textContent = "10:00";
-
-    section.appendChild(display);
-
-    let seconds = 600;
-    let interval = null;
-
-    function updateTimer() {
-      const min = Math.floor(seconds / 60);
-      const sec = seconds % 60;
-
-      display.textContent =
-        String(min).padStart(2, "0") + ":" +
-        String(sec).padStart(2, "0");
-    }
-
-    createButton(section, "Start", () => {
-      if (interval) return;
-
-      interval = setInterval(() => {
-        if (seconds > 0) {
-          seconds--;
-          updateTimer();
-        } else {
-          clearInterval(interval);
-          interval = null;
-          alert("Study session complete. Take a break!");
-        }
-      }, 1000);
-    });
-
-    createButton(section, "Pause", () => {
-      clearInterval(interval);
-      interval = null;
-    });
-
-    createButton(section, "Reset", () => {
-      clearInterval(interval);
-      interval = null;
-      seconds = 600;
-      updateTimer();
-    });
-
-    const breakSection = createSection(
-      "Your Five-Minute Break",
-      "Stretch, drink water, rest your eyes or simply relax."
-    );
-
-    createButton(breakSection, "Start 5-Minute Break", () => {
-      seconds = 300;
-      updateTimer();
-    });
-
-    const music = createSection("Choose Your Study Atmosphere");
-
-    [
-      ["Nature Sounds", "https://www.youtube.com/results?search_query=nature+sounds"],
-      ["Instrumental Music", "https://www.youtube.com/results?search_query=instrumental+study+music"],
-      ["Quran Recitation", "https://www.youtube.com/results?search_query=quran+recitation"],
-      ["Silence", null]
-    ].forEach(([label, url]) => {
-      createButton(music, label, () => {
-        if (url) window.open(url, "_blank", "noopener,noreferrer");
-        else alert("Enjoy your quiet study time.");
-      });
-    });
-  }
-
-  /* -------------------------------
-     FITNESS & WELLNESS
-  -------------------------------- */
-
-  else if (featureId === "fitness-wellness") {
-
-    const section = createSection(
-      "Move in Your Own Way",
-      "Choose activities that feel enjoyable and comfortable."
-    );
-
-    const activities = [
-      "Walking",
-      "Running",
-      "Cycling",
-      "Swimming",
-      "Stretching",
-      "Yoga",
-      "Dancing",
-      "Rest and recovery"
-    ];
-
-    const checks = [];
-
-    activities.forEach(activity => {
-      const label = document.createElement("label");
-      label.className = "check-line";
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-
-      label.append(checkbox, document.createTextNode(activity));
-      section.appendChild(label);
-
-      checks.push(checkbox);
-    });
-
-    createButton(section, "Save My Activity Log", () => {
-      const selected = activities.filter((a, i) => checks[i].checked);
-
-      savePage(
-        "My Wellness Activities",
-        selected.join("\n") || "No activities selected."
-      );
-    });
-
-    const sports = createSection(
-      "Sports & Running Communities",
-      "Explore activities and discover events."
-    );
-
-    [
-      ["Strava", "https://www.strava.com/"],
-      ["World Athletics", "https://worldathletics.org/"],
-      ["Olympics", "https://olympics.com/"]
-    ].forEach(([name, url]) => {
-      createButton(sports, name, () =>
-        window.open(url, "_blank", "noopener,noreferrer")
-      );
-    });
-  }
-
-  /* -------------------------------
-     SELF-CARE CORNER
-  -------------------------------- */
-
-  else if (featureId === "self-care") {
-
-    const section = createSection(
-      "My Self-care List",
-      "Care can be simple. Choose what works for you."
-    );
-
-    const habits = [
-      "Drink enough water",
-      "Take a comfortable break",
-      "Spend time outdoors",
-      "Talk to someone I trust",
-      "Enjoy a hobby",
-      "Get enough rest",
-      "Organise my surroundings"
-    ];
-
-    const checks = [];
-
-    habits.forEach(habit => {
-      const label = document.createElement("label");
-      label.className = "check-line";
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-
-      label.append(checkbox, document.createTextNode(habit));
-      section.appendChild(label);
-      checks.push(checkbox);
-    });
-
-    createButton(section, "Save My Self-care List", () => {
-      const selected = habits.filter((h, i) => checks[i].checked);
-      savePage("My Self-care", selected.join("\n"));
-    });
-  }
-
-  /* -------------------------------
-     HEALTH & SUPPORT
-  -------------------------------- */
-
-  else if (featureId === "health-support") {
-
-    const section = createSection(
-      "Taking Care of Your Health",
-      "General wellbeing information, not a substitute for medical advice."
-    );
-
-    const topics = [
-      "Sleep and rest",
-      "Nutrition and hydration",
-      "Emotional wellbeing",
-      "Physical activity",
-      "Menstrual health",
-      "Finding trusted support"
-    ];
-
-    topics.forEach(topic => {
-      const article = document.createElement("article");
-      article.className = "story-card";
-
-      const heading = document.createElement("h3");
-      heading.textContent = topic;
-
-      const paragraph = document.createElement("p");
-      paragraph.textContent =
-        "Explore reliable health information and speak with a qualified professional when you need personal advice.";
-
-      article.append(heading, paragraph);
-      section.appendChild(article);
-    });
-
-    const note = createInput(
-      section,
-      "Questions I want to ask a health professional",
-      "Write your questions here..."
-    );
-
-    createButton(section, "Save My Questions", () =>
-      savePage("Health Questions", note.value)
-    );
-  }
-
-  /* -------------------------------
-     STORIES & HOPE
-  -------------------------------- */
-
-  else if (featureId === "stories-hope") {
-
-    const section = createSection(
-      "Stories That Matter",
-      "Explore real stories about humanity, courage and change."
-    );
-
-    const stories = [
-      {
-        title: "Humanitarian Action",
-        description: "Discover the work of people helping communities affected by crises.",
-        link: "https://www.un.org/"
-      },
-      {
-        title: "Children's Rights",
-        description: "Learn about education, protection and children's wellbeing.",
-        link: "https://www.unicef.org/"
-      },
-      {
-        title: "Global Health",
-        description: "Explore public health initiatives around the world.",
-        link: "https://www.who.int/"
-      }
-    ];
-
-    stories.forEach(story => {
-      const article = document.createElement("article");
-      article.className = "story-card";
-
-      const heading = document.createElement("h3");
-      heading.textContent = story.title;
-
-      const paragraph = document.createElement("p");
-      paragraph.textContent = story.description;
-
-      const link = document.createElement("a");
-      link.href = story.link;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = "Explore →";
-
-      article.append(heading, paragraph, link);
-      section.appendChild(article);
-    });
-  }
-
-  /* -------------------------------
-     CAREER EXPLORATION
-  -------------------------------- */
-
-  else if (featureId === "career-exploration") {
-
-    const section = createSection(
-      "Discover Your Interests",
-      "Choose what you enjoy. There is no single correct career."
-    );
-
-    const interests = [
-      "Medicine and healthcare",
-      "Science and research",
-      "Human rights and humanitarian work",
-      "Arts and creativity",
-      "Education",
-      "Environment and nature",
-      "Business and entrepreneurship",
-      "Technology"
-    ];
-
-    const checks = [];
-
-    interests.forEach(interest => {
-      const label = document.createElement("label");
-      label.className = "check-line";
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-
-      label.append(checkbox, document.createTextNode(interest));
-      section.appendChild(label);
-      checks.push(checkbox);
-    });
-
-    createButton(section, "Show My Interests", () => {
-      const selected = interests.filter((i, n) => checks[n].checked);
-
-      savePage(
-        "My Career Interests",
-        selected.join("\n") || "I am still exploring."
-      );
-    });
-
-    const dreams = createSection(
-      "Dreams Beyond Career",
-      "What would you like to experience or contribute to the world?"
-    );
-
-    const dream = createInput(
-      dreams,
-      "My dreams",
-      "Write about the life you hope to build..."
-    );
-
-    createButton(dreams, "Save My Dreams", () =>
-      savePage("Dreams Beyond Career", dream.value)
-    );
-  }
-
-  /* -------------------------------
-     MY LITTLE WORLD
-  -------------------------------- */
-
-  else if (featureId === "my-little-world") {
-
-    const section = createSection(
-      "My Personal Diary",
-      "A place for memories, thoughts and little moments."
-    );
-
-    const title = document.createElement("input");
-    title.placeholder = "Give this memory a title";
-
-    section.appendChild(title);
-
-    const memory = createInput(
-      section,
-      "Your memory",
-      "Write anything you want to remember..."
-    );
-
-    const photo = document.createElement("input");
-    photo.type = "file";
-    photo.accept = "image/*";
-
-    section.appendChild(photo);
-
-    createButton(section, "Save My Memory", () => {
-      if (photo.files.length) {
-        alert("Photo uploads require the cloud-storage integration. Save your text memory here for now.");
-      }
-
-      savePage(
-        title.value || "A Little Memory",
-        memory.value
-      );
-    });
-  }
-
-  /* -------------------------------
-     DAY PLANNER
-  -------------------------------- */
-
-  else if (featureId === "day-planner") {
-
-    const section = createSection(
-      "Plan Your Day",
-      "Make a realistic plan with room for breaks and unexpected moments."
-    );
-
-    const tasks = createInput(
-      section,
-      "Today's priorities",
-      "Write one task per line..."
-    );
-
-    const notes = createInput(
-      section,
-      "Notes and reminders",
-      "Anything else to remember..."
-    );
-
-    createButton(section, "Save My Day Plan", () => {
-      savePage(
-        "My Day Plan",
-        "Priorities:\n" + tasks.value +
-        "\n\nNotes:\n" + notes.value
-      );
-    });
-  }
-
-  /* -------------------------------
-     SPORTS & EVENTS
-  -------------------------------- */
-
-  else if (featureId === "sports-events") {
-
-    const section = createSection(
-      "Discover Your Next Challenge",
-      "Explore different sports and activities."
-    );
-
-    const sports = [
-      "Marathon and running races",
-      "Cycling competitions",
-      "Swimming competitions",
-      "Athletics",
-      "School sports events",
-      "Community sports festivals"
-    ];
-
-    sports.forEach(sport => {
-      const article = document.createElement("article");
-      article.className = "story-card";
-
-      const heading = document.createElement("h3");
-      heading.textContent = sport;
-
-      const paragraph = document.createElement("p");
-      paragraph.textContent =
-        "Explore opportunities, learn about events and check eligibility and safety requirements.";
-
-      article.append(heading, paragraph);
-      section.appendChild(article);
-    });
-
-    const event = createInput(
-      section,
-      "My Event Wishlist",
-      "Write the competitions or sporting events you would love to explore..."
-    );
-
-    createButton(section, "Save My Event Wishlist", () =>
-      savePage("Sports Event Wishlist", event.value)
-    );
-  }
-
-  /* -------------------------------
-     GENERAL FEATURE FALLBACK
-  -------------------------------- */
-
-  else {
-
-    const section = createSection(
-      "Make This Space Yours",
-      "Use this space to collect your thoughts and ideas."
-    );
-
-    const notes = createInput(
-      section,
-      "My Notes",
-      "Start writing..."
-    );
-
-    createButton(section, "Save My Page", () =>
-      savePage("My Notes", notes.value)
-    );
-  }
-
-  /* -------------------------------
-     MOBILE NAVIGATION
-  -------------------------------- */
-
-  const menuToggle = document.getElementById("menuToggle");
-  const mainNav = document.getElementById("mainNav");
-
-  if (menuToggle && mainNav) {
-    menuToggle.addEventListener("click", () => {
-      mainNav.classList.toggle("active");
-    });
-  }
-
-  /* INITIALISE */
-
-  renderSavedPages();
-
-});
+    store.set(taskKey,a);
+   });
+  });
+ }
+
+ document.getElementById("taskForm")?.addEventListener("submit",e=>{
+  e.preventDefault();
+
+  const input=document.getElementById("taskInput");
+  const tasks=store.get(taskKey,[]);
+
+  tasks.push({
+   id:Date.now(),
+   text:input.value.trim(),
+   done:false
+  });
+
+  store.set(taskKey,tasks);
+  input.value="";
+  paintTasks();
+ });
+
+ paintTasks();
+
+})();
