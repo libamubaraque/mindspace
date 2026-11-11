@@ -1,83 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#414B2D">
-
-  <title>Explore | To the Ether.</title>
+  <meta name="theme-color" content="#20271D">
+  <meta name="description" content="Your own space to learn, reflect, create and grow.">
+  <title>Your Space | To the Ether.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
-  <script src="feature.js" defer></script>
 </head>
 
 <body class="feature-page">
 
-  <header class="feature-header">
-    <a class="brand" href="index.html#home">
-      <span class="brand-mark">✳</span>
-      <span>To the <em>Ether.</em></span>
-    </a>
+  <header class="header">
+    <a href="index.html" class="logo">To the ether<span>.</span></a>
 
-    <a class="back-link" href="index.html#explore">← BACK TO EXPLORE</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#explore">Explore</a>
+      <a href="index.html#resources">Resources</a>
+    </nav>
+
+    <a href="index.html" class="account-btn">Back Home ↗</a>
   </header>
 
   <main class="feature-main">
 
-    <p class="feature-kicker" id="featureCategory">YOUR SPACE</p>
-
-    <h1 class="feature-title" id="featureTitle">
-      Welcome to your space.
-    </h1>
-
-    <p class="feature-lead" id="featureDescription">
-      A little room to explore, create and grow at your own pace.
-    </p>
-
-    <div id="featureContent">
-      <section class="feature-panel">
-        <p>Loading your space...</p>
-      </section>
-    </div>
-
-    <section class="feature-panel">
-      <h2>Make this space yours.</h2>
-      <p>You can choose a background colour for this feature.</p>
-
-      <div class="custom-background">
-        <label for="backgroundColour">Choose your background:</label>
-        <input type="color" id="backgroundColour" value="#414B2D">
-        <button class="action-button" id="saveBackground">Save background</button>
-        <button class="action-button secondary" id="resetBackground">Restore original</button>
+    <section class="feature-hero">
+      <p class="eyebrow" id="featureCategory">YOUR PERSONAL SPACE</p>
+      <h1 id="featureTitle">Welcome to your space.</h1>
+      <p id="featureDescription">
+        Take your time. Explore at your own pace.
+      </p>
+      <div class="feature-hero-meta">
+        <span>✦ A space to explore</span>
+        <span>✦ Grow in your own time</span>
       </div>
     </section>
 
-    <p class="disclaimer">
-      Your entries in this version are saved locally in this browser.
-      They are not uploaded to a cloud account. Use a private device
-      and avoid entering passwords or sensitive personal information.
-    </p>
+    <section class="feature-workspace">
+
+      <div class="feature-content" id="featureContent">
+        <p>Loading your space...</p>
+      </div>
+
+      <aside class="saved-sidebar">
+        <p class="eyebrow">YOUR COLLECTION</p>
+        <h2>My Saved Pages</h2>
+        <p>
+          Keep your reflections, notes and creations together.
+        </p>
+
+        <div id="featureSavedPages">
+          <p class="empty-saved-message">Your saved pages will appear here.</p>
+        </div>
+      </aside>
+
+    </section>
 
   </main>
 
-  <footer class="site-footer">
-    <a class="brand" href="index.html#home">
-      <span class="brand-mark">✳</span>
-      <span>To the <em>Ether.</em></span>
-    </a>
-
-    <p>Grow gently. At your own pace.</p>
-
-    <a href="index.html#explore">Explore more ↑</a>
-
-    <small>© <span id="year"></span> To the Ether. Made with care.</small>
+  <footer>
+    <a href="index.html" class="logo">To the ether<span>.</span></a>
+    <p>Grow in your own time.</p>
+    <a href="index.html#explore">Explore the other spaces ↗</a>
   </footer>
 
+  <script src="feature.js"></script>
 </body>
 </html>
