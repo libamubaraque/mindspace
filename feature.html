@@ -1,48 +1,252 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
+  <!-- =====================================================
+       TO THE ETHER.
+       INDIVIDUAL FEATURE PAGE
+
+       JUDGE EXPLANATION:
+       This is a reusable page template.
+       Instead of creating twenty separate HTML files,
+       one template dynamically loads twenty experiences.
+
+       This makes the project easier to maintain and expand.
+  ====================================================== -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#414B2D">
-  <title>Your Space | To the Ether.</title>
+
+  <meta name="theme-color" content="#20271D">
+
+  <title>Explore | To the Ether.</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="feature.js" defer></script>
+
 </head>
+
+
 <body class="feature-page">
-  <header class="feature-top">
-    <a class="logo" href="index.html">To the ether<span>.</span></a>
-    <a class="button button-outline" href="index.html#explore">← All spaces</a>
+
+  <!-- 01. FEATURE NAVIGATION -->
+
+  <header class="navbar">
+
+    <a href="index.html" class="logo">
+      To the ether<span>.</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#explore">Explore</a>
+      <a href="index.html#events">Events</a>
+    </nav>
+
+    <a href="index.html#savedPages" class="outline-btn">
+      My Saved Pages
+    </a>
+
   </header>
 
-  <main class="feature-main">
-    <p class="eyebrow">Your personal space</p>
-    <h1 id="featureTitle">Welcome to your space.</h1>
-    <p class="feature-description" id="featureDescription"></p>
 
-    <section class="feature-panel" id="featureContent">
-      <p class="muted">Loading your space...</p>
-    </section>
+  <!-- 02. DYNAMIC FEATURE HERO -->
 
-    <section class="feature-panel">
-      <h2>Make it yours.</h2>
-      <p class="muted">You can choose a background colour for this space. Your choice is saved on this device.</p>
-      <label class="field-label" for="cardBackground">Choose a background colour</label>
-      <input class="feature-input" type="color" id="cardBackground" value="#414B2D">
-      <div class="feature-actions">
-        <button class="button button-outline" id="resetBackground">Restore original</button>
+  <main id="featureMain">
+
+    <section class="feature-hero" id="featureHero">
+
+      <div class="feature-hero-content">
+
+        <a href="index.html#explore" class="back-link">
+          ← Back to all spaces
+        </a>
+
+        <span class="eyebrow" id="featureNumber">
+          YOUR PERSONAL SPACE
+        </span>
+
+        <h1 id="featureTitle">
+          Loading your space...
+        </h1>
+
+        <p id="featureDescription"></p>
+
       </div>
+
     </section>
 
-    <section class="feature-panel">
-      <h2>Your saved pages.</h2>
-      <p class="muted">Entries you save in this space will appear below and on the homepage.</p>
-      <div id="featureSavedPages" class="saved-grid"></div>
-    </section>
+
+    <!-- 03. FEATURE CONTENT -->
+
+    <div class="feature-body">
+
+      <!-- Purpose and educational introduction -->
+
+      <section class="feature-section" id="introduction">
+
+        <span class="eyebrow">01 — UNDERSTANDING</span>
+
+        <h2>Discover this space.</h2>
+
+        <div id="featureIntroduction"></div>
+
+      </section>
+
+
+      <!-- Detailed learning content -->
+
+      <section class="feature-section" id="learn">
+
+        <span class="eyebrow">02 — LEARN SOMETHING NEW</span>
+
+        <h2>Explore and understand.</h2>
+
+        <div id="learningContent"></div>
+
+      </section>
+
+
+      <!-- Facts and useful information -->
+
+      <section class="feature-section" id="facts">
+
+        <span class="eyebrow">03 — DID YOU KNOW?</span>
+
+        <h2>Interesting facts.</h2>
+
+        <div id="factContent"></div>
+
+      </section>
+
+
+      <!-- Practical activities -->
+
+      <section class="feature-section" id="activities">
+
+        <span class="eyebrow">04 — YOUR EXPERIENCE</span>
+
+        <h2>Put it into practice.</h2>
+
+        <div id="activityContent"></div>
+
+      </section>
+
+
+      <!-- Interactive tools -->
+
+      <section class="feature-section" id="interactiveTools">
+
+        <span class="eyebrow">05 — INTERACTIVE SPACE</span>
+
+        <h2>Try something yourself.</h2>
+
+        <div id="toolsContent"></div>
+
+      </section>
+
+
+      <!-- Tutorials -->
+
+      <section class="feature-section" id="tutorials">
+
+        <span class="eyebrow">06 — WATCH AND LEARN</span>
+
+        <h2>Guided tutorials.</h2>
+
+        <p>
+          Explore external video lessons and practical
+          demonstrations relevant to this feature.
+        </p>
+
+        <div id="videoContent" class="video-grid"></div>
+
+      </section>
+
+
+      <!-- Useful links -->
+
+      <section class="feature-section" id="resources">
+
+        <span class="eyebrow">07 — FURTHER DISCOVERY</span>
+
+        <h2>Useful resources.</h2>
+
+        <div id="resourceContent"></div>
+
+      </section>
+
+
+      <!-- Saved content -->
+
+      <section class="feature-section" id="savedContent">
+
+        <span class="eyebrow">08 — YOUR PERSONAL COLLECTION</span>
+
+        <h2>My saved pages.</h2>
+
+        <div id="featureSavedPages"></div>
+
+      </section>
+
+
+      <!-- Progress -->
+
+      <section class="feature-section" id="progress">
+
+        <span class="eyebrow">09 — YOUR JOURNEY</span>
+
+        <h2>Your progress.</h2>
+
+        <div id="progressContent"></div>
+
+      </section>
+
+    </div>
+
   </main>
 
-  <script src="feature.js"></script>
+
+  <!-- 04. FOOTER -->
+
+  <footer class="footer">
+
+    <a href="index.html" class="logo">
+      To the ether<span>.</span>
+    </a>
+
+    <p>
+      Every small step counts.
+    </p>
+
+    <div class="footer-links">
+      <a href="index.html">Homepage</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#explore">Explore more</a>
+    </div>
+
+    <p class="copyright">
+      © 2026 To the Ether.
+    </p>
+
+  </footer>
+
+
+  <!-- Status notification -->
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
 </body>
+
 </html>
