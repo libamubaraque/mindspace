@@ -10,20 +10,20 @@
 :root {
   --olive-bg: #A5AA83;
   --olive-light: #BEC19F;
-  --olive: #626D45;
+  --olive: #8A9A5B;
   --olive-dark: #414B2D;
 
   --beige: #51443A;
-  --beige-dark: #40352F;
+  --beige-dark: #4B3621;
   --brown: #29231F;
   --brown-light: #66564A;
 
-  --champagne: #D5C5A3;
-  --cream: #F0EBDD;
+  --champagne: #D2B48C;
+  --cream: #F3EBDD;
   --muted: #D0C7B5;
 
   --white: #FFFFFF;
-  --border: rgba(240, 235, 221, 0.15);
+  --border: rgba(243, 235, 221, 0.15);
 
   --font-heading: "Cormorant Garamond", Georgia, serif;
   --font-body: "DM Sans", Arial, sans-serif;
@@ -436,9 +436,7 @@ button:disabled {
 }
 
 
-/* 09. FEATURE CARDS
-   Solid colours only — no card photographs.
-*/
+/* 09. FEATURE CARDS */
 
 .feature-card {
   min-width: 0;
@@ -461,10 +459,8 @@ button:disabled {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Different solid card colours */
-
 .feature-card:nth-child(4n+1) {
-  background: #40352F;
+  background: #4B3621;
 }
 
 .feature-card:nth-child(4n+2) {
@@ -738,7 +734,7 @@ footer p {
 .modal-box input {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid rgba(213,197,163,0.35);
+  border: 1px solid rgba(210,180,140,0.35);
   border-radius: var(--radius-small);
   outline: none;
   background: var(--brown);
@@ -912,7 +908,7 @@ footer p {
   background: var(--brown);
   color: var(--cream);
 
-  border: 1px solid rgba(213,197,163,0.3);
+  border: 1px solid rgba(210,180,140,0.3);
   border-radius: var(--radius-small);
   outline: none;
 }
@@ -969,7 +965,7 @@ footer p {
   background: var(--olive);
   color: var(--cream);
 
-  border: 1px solid rgba(213,197,163,0.2);
+  border: 1px solid rgba(210,180,140,0.2);
   border-radius: 25px;
 
   font-size: 0.82rem;
@@ -1005,7 +1001,7 @@ footer p {
   padding: 12px 14px;
   border-radius: var(--radius-small);
 
-  background: rgba(213,197,163,0.08);
+  background: rgba(210,180,140,0.08);
   color: var(--muted);
   font-size: 0.87rem;
 }
@@ -1155,7 +1151,7 @@ footer p {
   font-family: var(--font-heading);
   font-size: 1.35rem;
 
-  box-shadow: 0 0 0 12px rgba(213,197,163,0.1);
+  box-shadow: 0 0 0 12px rgba(210,180,140,0.1);
 }
 
 .breathing-orb.active {
@@ -1269,7 +1265,7 @@ footer p {
   display: block;
   padding: 11px;
   margin: 8px 0;
-  background: rgba(213,197,163,0.08);
+  background: rgba(210,180,140,0.08);
   border-radius: var(--radius-small);
   color: var(--cream);
 }
@@ -1330,7 +1326,7 @@ footer p {
 .tool-section th,
 .tool-section td {
   padding: 12px;
-  border: 1px solid rgba(213,197,163,0.2);
+  border: 1px solid rgba(210,180,140,0.2);
   text-align: left;
 }
 
@@ -1350,7 +1346,7 @@ footer p {
 
 .success-message {
   color: #D5E6B4;
-  background: rgba(98,109,69,0.25);
+  background: rgba(138,154,91,0.25);
   border-radius: var(--radius-small);
   padding: 12px;
   margin: 12px 0;
@@ -1366,7 +1362,7 @@ footer p {
 
 .info-message {
   color: var(--champagne);
-  background: rgba(213,197,163,0.1);
+  background: rgba(210,180,140,0.1);
   border-radius: var(--radius-small);
   padding: 12px;
   margin: 12px 0;
@@ -1377,7 +1373,7 @@ footer p {
 
 hr {
   border: none;
-  border-top: 1px solid rgba(213,197,163,0.25);
+  border-top: 1px solid rgba(210,180,140,0.25);
   margin: 22px 0;
 }
 
