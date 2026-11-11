@@ -1,364 +1,812 @@
 
-/* TO THE ETHER. — SHARED FEATURE PAGE ENGINE
-   Each card has its own guided content and usable frontend interactions.
-   Entries are stored locally in this browser. No Supabase connection yet. */
+/* =========================================================
+   TO THE ETHER. — FEATURE PAGE ENGINE
+   20 individual spaces | Local browser storage
+   ========================================================= */
 
-(() => {
- const data=[
- ["mood-journal","Mood Journal","wellbeing","A gentle place to name what is going on inside. You do not need to explain everything perfectly.","Mood check-in","Choose the feeling that is closest to yours, then write as much or as little as you like.","mood"],
- ["breathing-space","Breathing Space","wellbeing","Step away from the rush for a moment. Follow a simple breathing rhythm or choose quiet instead.","Guided breathing","Let the circle guide a comfortable rhythm. Stop whenever you want; never force or hold your breath.","breathing"],
- ["gratitude-journal","Gratitude Journal","wellbeing","Notice the ordinary moments that bring comfort, meaning or connection.","Three little things","They do not have to be big. A kind message, a favourite song or a peaceful moment all count.","gratitude"],
- ["fitness-wellness","Fitness & Wellness","wellbeing","Movement is not a punishment or a competition. Explore activities that feel enjoyable, accessible and balanced.","Movement & wellbeing log","Record a walk, a run, cycling, swimming, stretching or rest. Choose what feels right for your day.","fitness"],
- ["daily-checkin","Daily Check-in","wellbeing","A quick pause to notice your day — the good, the difficult and everything between.","How is today going?","Check in without scoring yourself. Small wins and difficult moments can exist together.","checkin"],
- ["study-focus","Study & Focus","growth","Create a realistic study session with a clear focus and a proper break.","Focus session","Try 10 minutes of focused work followed by a 5-minute screen-free rest. Adjust the plan to suit you.","study"],
- ["self-care","Self-care Corner","wellbeing","Self-care can be practical and ordinary: rest, boundaries, asking for help and looking after your surroundings.","A small care plan","Choose one gentle action for your mind, body or environment. This is not medical advice.","selfcare"],
- ["stories-hope","Stories & Hope","growth","Explore real stories of people and communities working towards a more compassionate world.","A thought to carry","Use this space to reflect on a story, a person or an act of courage that inspired you.","stories"],
- ["career-exploration","Career Exploration","growth","Your interests can lead in many directions. Explore possibilities without needing to decide your whole future today.","Interests and possibilities","Write down what you enjoy, what matters to you and what you would like to learn more about.","career"],
- ["my-little-world","My Little World","creative","A personal scrapbook for the memories, thoughts, photographs and milestones that make your world yours.","Add to your little world","Write a memory or a note to your future self. You can also attach an image from your device.","scrapbook"],
- ["movie-theatre","Movie Theatre","community","A thoughtful watchlist for films, documentaries and stories you would like to explore or discuss.","Your watchlist","Save a title and a thought about why you want to watch it. This page does not stream copyrighted films.","movie"],
- ["the-commons","The Commons","community","A shared-ideas corner for clubs, student interests, collaboration and community projects.","An idea for the commons","Suggest a club, activity, discussion topic or student-led project. Keep personal contact details private.","commons"],
- ["sports-events","Sports & Events","growth","Celebrate participation, teamwork and movement — from local fun runs to cycling, swimming and athletics events.","Sports goals and event ideas","Add an event or personal goal. Check official organisers for dates, age rules, safety requirements and registration.","sports"],
- ["day-planner","Day Planner","growth","Give your day a shape without filling every minute. Leave room for meals, rest and unexpected things.","Plan your day","Write one priority, a few manageable tasks and a break. A plan is a guide, not a test.","planner"],
- ["creative-studio","The Creative Studio","creative","Make something just because you want to: a poem, a story seed, a colour idea or a tiny design concept.","Create a little something","Save your original writing, idea or creative prompt. Your work belongs to you.","creative"],
- ["kindness-project","The Kindness Project","community","Kindness is not about grand gestures. It can be thoughtful, practical and respectful.","A small act of kindness","Plan one safe, realistic act of kindness. Respect boundaries and do not share another person's private story without permission.","kindness"],
- ["learning-library","The Learning Library","growth","Follow your curiosity into useful skills, new subjects and questions worth exploring.","What would you like to learn?","Choose a topic and write one question you want to answer. Find reliable sources and compare information.","learning"],
- ["sleep-sanctuary","The Sleep Sanctuary","wellbeing","Build a calm wind-down routine that supports rest. Everyone's sleep needs and circumstances are different.","Wind-down notes","Choose a relaxing activity and note what helps you feel settled. This is general wellbeing information, not medical advice.","sleep"],
- ["money-matters","Money Matters","growth","Learn the basics of planning, saving and making thoughtful choices with money.","Simple budget practice","Use pretend amounts for this learning activity. Never enter bank details, passwords or private financial information.","money"],
- ["open-mic","The Open Mic","creative","A stage for your original words: poetry, spoken-word pieces, short reflections and creative experiments.","Your open-mic page","Write something original. Share it only with people you trust and only when you feel comfortable.","openmic"]
- ];
+"use strict";
 
- const featureId=new URLSearchParams(location.search).get("feature")||"mood-journal";
- const feature=data.find(item=>item[0]===featureId)||data[0];
- const [id,title,category,description,panelTitle,instruction,type]=feature;
+const $ = id => document.getElementById(id);
 
- const titleEl=document.getElementById("featureTitle");
- const catEl=document.getElementById("featureCategory");
- const descEl=document.getElementById("featureDescription");
- const content=document.getElementById("featureContent");
+const featureData = {
+  "mood-journal": {
+    title:"Mood Journal", category:"WELLBEING",
+    description:"Your feelings deserve space. Write without judging yourself.",
+    heading:"A page for how you feel",
+    prompt:"What's on your mind today?",
+    placeholder:"Write whatever comes to you. There is no right or wrong way...",
+    fields:[["Feeling","select",["Happy","Calm","Hopeful","Tired","Worried","Frustrated","Confused","Other"]],["Something that affected my day","text"]],
+    extra:"Your journal is yours. You don't have to explain every feeling."
+  },
 
- document.title=title+" | To the Ether.";
- titleEl.textContent=title;
- catEl.textContent=category+" · YOUR SPACE";
- descEl.textContent=description;
+  "breathing-space": {
+    title:"Breathing Space",category:"WELLBEING",
+    description:"A gentle pause with guided breathing, quiet sounds and reflection.",
+    heading:"Take a little pause",
+    prompt:"How would you like to feel?",
+    placeholder:"What would help you feel more settled?",
+    fields:[["Before the session","select",["Busy","Tired","Restless","Overwhelmed","Just exploring"]],["After the session","text"]],
+    extra:"Try a comfortable, natural breathing rhythm. Stop if you feel dizzy or uncomfortable."
+  },
 
- const store=window.EtherStore||{
-  get:(k,d=[])=>JSON.parse(localStorage.getItem("ether:"+k)||"null")??d,
-  add(k,v){
-   let a=this.get(k);
-   a.unshift({...v,id:Date.now(),createdAt:new Date().toISOString()});
-   localStorage.setItem("ether:"+k,JSON.stringify(a));
-   return a;
+  "gratitude-journal": {
+    title:"Gratitude Journal",category:"WELLBEING",
+    description:"Collect little things, kind moments and details worth remembering.",
+    heading:"Three little things",
+    prompt:"What are three things you appreciated today?",
+    placeholder:"1. A kind conversation...\n2. A peaceful moment...\n3. Something I learned...",
+    fields:[["Today's date","date"]]
+  },
+
+  "fitness-wellness": {
+    title:"Fitness & Wellness",category:"WELLBEING",
+    description:"Explore movement, rest, everyday energy and activities you enjoy.",
+    heading:"Movement and wellbeing log",
+    prompt:"What activity did you enjoy?",
+    placeholder:"Write about your experience...",
+    fields:[["Activity","select",["Walking","Running","Cycling","Swimming","Stretching","Sports","Rest day","Other"]],["Duration in minutes","number"],["How did it feel?","select",["Enjoyable","Refreshing","Challenging","Relaxing","I need more rest"]]],
+    extra:"Movement should support your wellbeing, not become a competition. Rest days matter too."
+  },
+
+  "daily-checkin": {
+    title:"Daily Check-in",category:"WELLBEING",
+    description:"A little check-in for small wins, hard moments and today's feelings.",
+    heading:"How was today?",
+    prompt:"Tell us about your day.",
+    placeholder:"One thing that happened today...",
+    fields:[["Today's highlight","text"],["Something I learned","text"],["One thing I need tomorrow","text"]]
+  },
+
+  "study-focus": {
+    title:"Study & Focus",category:"GROWTH",
+    description:"Make room for focused study, breaks and learning at your own pace.",
+    heading:"Your focus corner",
+    prompt:"What would you like to work on?",
+    placeholder:"Subject or task...",
+    fields:[["Study duration in minutes","number"],["My next small step","text"]],
+    extra:"Try 10 minutes of study followed by a 5-minute screen-free break."
+  },
+
+  "self-care": {
+    title:"Self-care Corner",category:"WELLBEING",
+    description:"Explore practical ways to care for your mind, body and surroundings.",
+    heading:"A little care for yourself",
+    prompt:"What would you like to do?",
+    placeholder:"Write a small self-care intention...",
+    fields:[["Area","select",["Rest","Skincare","Hygiene","Emotional wellbeing","Family and friendships","Outdoor time","Organisation","Other"]],["My small action","text"]],
+    extra:"Self-care is not about looking a certain way. It is about caring for yourself."
+  },
+
+  "stories-hope": {
+    title:"Stories & Hope",category:"GROWTH",
+    description:"Discover stories about courage, compassion, human rights and change.",
+    heading:"Stories worth exploring",
+    prompt:"A story or issue I want to understand",
+    placeholder:"Write about a person, event or issue...",
+    fields:[["Topic","select",["Human rights","Children's rights","Environment","Healthcare","Education","Community action","Science","Other"]],["What I learned","text"]],
+    extra:"Look for reliable reporting, first-hand accounts and credible organisations."
+  },
+
+  "career-exploration": {
+    title:"Career Exploration",category:"GROWTH",
+    description:"Explore interests, careers, degrees and possibilities beyond one job title.",
+    heading:"Discover your direction",
+    prompt:"What subjects or activities interest you?",
+    placeholder:"For example: medicine, art, science, writing, helping people...",
+    fields:[["What matters most?","select",["Helping people","Creativity","Research","Travel","Leadership","Stability","Discovery","A combination"]],["My questions about careers","text"]],
+    extra:"Career paths can change. Explore job roles, qualifications, entrance exams and realistic pathways before making decisions."
+  },
+
+  "my-little-world": {
+    title:"My Little World",category:"CREATIVE",
+    description:"A personal scrapbook for memories, photographs, thoughts and milestones.",
+    heading:"Your personal scrapbook",
+    prompt:"Give this memory a title",
+    placeholder:"A day I want to remember...",
+    fields:[["Memory type","select",["Happy memory","Achievement","Adventure","Friendship","A difficult day","A lesson","A dream","Other"]],["Your memory","text"]]
+  },
+
+  "movie-theatre": {
+    title:"Movie Theatre",category:"COMMUNITY",
+    description:"Discover films and documentaries that make you think, feel and discuss.",
+    heading:"Your watchlist",
+    prompt:"Which film or documentary?",
+    placeholder:"Enter a title...",
+    fields:[["Type","select",["Film","Documentary","Short film","Educational video"]],["Why I want to watch it","text"],["My thoughts after watching","text"]]
+  },
+
+  "the-commons": {
+    title:"The Commons",category:"COMMUNITY",
+    description:"A welcoming place for clubs, shared interests and student-led ideas.",
+    heading:"Find your community",
+    prompt:"What kind of club would you create?",
+    placeholder:"Describe your club idea...",
+    fields:[["Interest","select",["Books","Environment","Sports","Science","Art","Volunteering","Debate","Music","Other"]],["What could members do?","text"]]
+  },
+
+  "sports-events": {
+    title:"Sports & Events",category:"GROWTH",
+    description:"Explore running, cycling, swimming, athletics and community events.",
+    heading:"Your activity and event log",
+    prompt:"Record an activity or event",
+    placeholder:"Name of event or activity...",
+    fields:[["Activity","select",["Running","Marathon","Cycling","Cycling marathon","Swimming","Swimming competition","Athletics","Other"]],["Date","date"],["Location","text"],["Notes","text"]],
+    extra:"For organised events, check age eligibility, safety rules and guardian permission. Progress at a comfortable pace."
+  },
+
+  "day-planner": {
+    title:"Day Planner",category:"GROWTH",
+    description:"Organise your day with realistic priorities, breaks and small steps.",
+    heading:"Plan your day",
+    prompt:"What needs your attention?",
+    placeholder:"Your task...",
+    fields:[["Date","date"],["Priority","select",["Important","Normal","Whenever possible"]],["Time or reminder","text"]]
+  },
+
+  "creative-studio": {
+    title:"The Creative Studio",category:"CREATIVE",
+    description:"Make something with words, colour, ideas and imagination.",
+    heading:"Your creative canvas",
+    prompt:"What are you creating?",
+    placeholder:"Start writing, sketching ideas or collecting inspiration...",
+    fields:[["Creative form","select",["Poetry","Story","Drawing idea","Photography","Design","Other"]],["Title","text"]]
+  },
+
+  "kindness-project": {
+    title:"The Kindness Project",category:"COMMUNITY",
+    description:"Turn empathy into small, practical acts of kindness.",
+    heading:"Small actions matter",
+    prompt:"What kind thing would you like to do?",
+    placeholder:"An idea for helping someone or your community...",
+    fields:[["Kindness area","select",["Family","Friendship","School","Environment","Community","Animals","Other"]],["My reflection","text"]],
+    extra:"Kindness can be simple. Respect other people's boundaries and never put yourself at risk."
+  },
+
+  "learning-library": {
+    title:"The Learning Library",category:"GROWTH",
+    description:"A collection of learning prompts, useful skills and curiosity-led topics.",
+    heading:"Something new to learn",
+    prompt:"What would you like to explore?",
+    placeholder:"Write your topic or question...",
+    fields:[["Subject","select",["Science","History","Geography","Technology","Languages","Literature","Finance","Human rights","Other"]],["What I discovered","text"]]
+  },
+
+  "sleep-sanctuary": {
+    title:"The Sleep Sanctuary",category:"WELLBEING",
+    description:"Create a calming wind-down routine and notice what helps you rest.",
+    heading:"Your wind-down routine",
+    prompt:"What helps you relax before bedtime?",
+    placeholder:"Write a comfortable evening routine...",
+    fields:[["One thing to prepare","text"],["Something I can put aside","text"]],
+    extra:"Rest looks different for everyone. Focus on habits that help you feel comfortable."
+  },
+
+  "money-matters": {
+    title:"Money Matters",category:"GROWTH",
+    description:"Learn budgeting, saving and thoughtful money habits.",
+    heading:"Learn to manage money",
+    prompt:"What would you like to understand?",
+    placeholder:"Write your question about saving or budgeting...",
+    fields:[["Topic","select",["Budgeting","Saving","Needs and wants","Planning a purchase","Understanding banks","Financial literacy"]],["My learning notes","text"]],
+    extra:"This is an educational space, not financial advice. Ask a trusted adult before making financial decisions."
+  },
+
+  "open-mic": {
+    title:"The Open Mic",category:"CREATIVE",
+    description:"Explore poems, short writing, spoken-word ideas and original creations.",
+    heading:"Your words belong here",
+    prompt:"Give your creation a title",
+    placeholder:"Write your original poem, story or spoken-word piece...",
+    fields:[["Form","select",["Poem","Short story","Spoken word","Reflection","Other"]],["Title","text"]]
   }
- };
+};
 
- const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+const params = new URLSearchParams(window.location.search);
+const featureId = params.get("feature");
+const feature = featureData[featureId];
 
- function baseForm(){
-  return `
-  <section class="feature-panel">
-   <h2>${panelTitle}</h2>
-   <p>${instruction}</p>
+const content = $("featureContent");
+const title = $("featureTitle");
+const category = $("featureCategory");
+const description = $("featureDescription");
 
-   <form id="entryForm">
-    <label for="entryTitle">A title or short note</label>
-    <input id="entryTitle" maxlength="100" placeholder="Give this entry a name...">
+const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, char => ({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+}[char]));
 
-    <label for="entryText">Your thoughts</label>
-    <textarea id="entryText" maxlength="5000" placeholder="Start wherever you are..."></textarea>
+if (!feature || !content) {
+  if (title) title.textContent = "Space not found";
+  if (category) category.textContent = "EXPLORE";
+  if (description) description.textContent = "This space could not be found. Return to Explore to choose another.";
+  if (content) content.innerHTML = `
+    <section class="feature-panel">
+      <a class="action-button" href="index.html#explore">Back to Explore</a>
+    </section>`;
+} else {
+  title.textContent = feature.title;
+  category.textContent = feature.category;
+  description.textContent = feature.description;
+  document.title = feature.title + " | To the Ether.";
+  renderFeature();
+}
 
-    ${type==="mood"?`
-     <label for="moodSelect">Today's feeling</label>
-     <select id="moodSelect">
-      <option>Calm</option><option>Happy</option><option>Hopeful</option>
-      <option>Tired</option><option>Worried</option><option>Overwhelmed</option>
-      <option>Unsure</option><option>Other</option>
-     </select>`:""}
+/* FORM GENERATOR */
 
-    ${type==="fitness"?`
-     <label for="activitySelect">Activity</label>
-     <select id="activitySelect">
-      <option>Walking</option><option>Running</option><option>Cycling</option>
-      <option>Swimming</option><option>Stretching</option><option>Rest day</option>
-      <option>Other</option>
-     </select>`:""}
+function createField(field, index) {
+  const [label, type, options] = field;
+  const id = "field" + index;
 
-    ${type==="scrapbook"?`
-     <label for="entryImage">Optional image</label>
-     <input id="entryImage" type="file" accept="image/*">`:""}
+  let control = "";
 
-    <button class="action-button" type="submit">Save this page</button>
-   </form>
-
-   <p id="saveMessage" role="status"></p>
-  </section>
-
-  <section class="feature-panel">
-   <h2>My Saved Pages</h2>
-   <p>Your entries stay in this browser on this device in this frontend version.</p>
-   <div class="saved-list" id="savedList"></div>
-  </section>`;
- }
-
- function renderSaved(){
-  const list=document.getElementById("savedList");
-  if(!list)return;
-
-  const entries=store.get(id,[]);
-
-  list.innerHTML=entries.length?entries.map(e=>`
-   <article class="saved-entry">
-    <small>${new Date(e.createdAt).toLocaleString()}${e.mood?" · "+esc(e.mood):""}${e.activity?" · "+esc(e.activity):""}</small>
-    <h3>${esc(e.title||"Untitled entry")}</h3>
-    <p>${esc(e.text||"")}</p>
-    ${e.image?`<img src="${e.image}" alt="Saved scrapbook image" style="max-width:100%;max-height:240px;margin-top:12px">`:""}
-   </article>`).join("")
-   :`<p>No saved pages yet. Your first entry can be small.</p>`;
- }
-
- function renderBreathing(){
-  return `
-  <section class="feature-panel">
-   <h2>A breathing pause</h2>
-   <p>Follow a comfortable rhythm: breathe in gently as the circle grows, then breathe out as it settles. Keep breathing naturally and stop if you feel uncomfortable.</p>
-   <div class="breath-orb" id="breathOrb"></div>
-   <div class="breath-label" id="breathLabel">Ready when you are</div>
-   <div style="text-align:center;margin-top:18px">
-    <button class="action-button" id="breathStart">Begin</button>
-    <button class="action-button secondary" id="breathStop">Pause</button>
-   </div>
-   <p style="text-align:center;margin-top:15px">You can also simply sit quietly. There is no right way to use this space.</p>
-  </section>
-  ${baseForm()}`;
- }
-
- function renderTimer(){
-  return `
-  <section class="feature-panel">
-   <h2>Focus timer</h2>
-   <p>Start with a short, manageable session. You can stop at any time.</p>
-   <div class="timer-display" id="timerDisplay">10:00</div>
-   <div style="text-align:center">
-    <button class="action-button" id="timerStart">Start 10 minutes</button>
-    <button class="action-button secondary" id="timerReset">Reset</button>
-   </div>
-   <p id="timerStatus" style="text-align:center"></p>
-  </section>
-  ${baseForm()}`;
- }
-
- function renderSports(){
-  return `
-  <section class="feature-panel">
-   <h2>Explore sporting events</h2>
-   <p>Use this as a place to note events you may want to learn about. Always check official event organisers for current dates, eligibility, registration, supervision and safety guidance.</p>
-   <ul>
-    <li>Running: community runs, fun runs and marathon events</li>
-    <li>Cycling: organised rides and cycling competitions</li>
-    <li>Swimming: school, club and community swimming meets</li>
-    <li>Athletics: track, field and multi-sport events</li>
-    <li>Other: inclusive sports days and local activity events</li>
-   </ul>
-   <p>For young participants, involve a parent, guardian or trusted adult when researching or registering.</p>
-   ${baseForm()}
-  </section>`;
- }
-
- function renderCareer(){
-  return `
-  <section class="feature-panel">
-   <h2>Start with what interests you</h2>
-   <p>Choose any interests that sound meaningful. This is a reflection activity, not a scientific career test.</p>
-
-   <label><input type="checkbox" class="interest" value="Health and helping people"> Health and helping people</label>
-   <label><input type="checkbox" class="interest" value="Science and discovery"> Science and discovery</label>
-   <label><input type="checkbox" class="interest" value="Art and communication"> Art and communication</label>
-   <label><input type="checkbox" class="interest" value="Environment and animals"> Environment and animals</label>
-   <label><input type="checkbox" class="interest" value="Law, society and public service"> Law, society and public service</label>
-   <label><input type="checkbox" class="interest" value="Technology and design"> Technology and design</label>
-   <label><input type="checkbox" class="interest" value="Business and entrepreneurship"> Business and entrepreneurship</label>
-
-   <button class="action-button" id="interestSave">Save my interests</button>
-   <p id="interestResult"></p>
-  </section>
-  ${baseForm()}`;
- }
-
- function renderPlanner(){
-  return `
-  <section class="feature-panel">
-   <h2>Today's plan</h2>
-   <p>Keep your plan kind and realistic. Add tasks one at a time.</p>
-   <form id="taskForm">
-    <input id="taskInput" placeholder="One thing to do..." maxlength="120" required>
-    <button class="action-button">Add task</button>
-   </form>
-   <div id="taskList" class="saved-list"></div>
-  </section>
-  ${baseForm()}`;
- }
-
- if(type==="breathing")content.innerHTML=renderBreathing();
- else if(type==="study")content.innerHTML=renderTimer();
- else if(type==="sports")content.innerHTML=renderSports();
- else if(type==="career")content.innerHTML=renderCareer();
- else if(type==="planner")content.innerHTML=renderPlanner();
- else content.innerHTML=baseForm();
-
- const form=document.getElementById("entryForm");
-
- form?.addEventListener("submit",async e=>{
-  e.preventDefault();
-
-  const file=document.getElementById("entryImage")?.files?.[0];
-  let image="";
-
-  if(file){
-   if(file.size>1200000){
-    alert("Please choose an image smaller than 1.2 MB for this browser demo.");
-    return;
-   }
-
-   image=await new Promise(resolve=>{
-    const r=new FileReader();
-    r.onload=()=>resolve(r.result);
-    r.readAsDataURL(file);
-   });
+  if (type === "select") {
+    control = `
+      <select id="${id}">
+        <option value="">Choose one</option>
+        ${options.map(option => `<option value="${escapeHTML(option)}">${escapeHTML(option)}</option>`).join("")}
+      </select>`;
+  } else if (type === "text" && label.toLowerCase().includes("memory")) {
+    control = `<textarea id="${id}" placeholder="Write here..."></textarea>`;
+  } else {
+    control = `<input id="${id}" type="${type}" placeholder="${type === "number" ? "Enter a number" : ""}" ${type === "number" ? 'min="0"' : ""}>`;
   }
 
-  const value={
-   title:document.getElementById("entryTitle").value.trim(),
-   text:document.getElementById("entryText").value.trim(),
-   mood:document.getElementById("moodSelect")?.value||"",
-   activity:document.getElementById("activitySelect")?.value||"",
-   image
-  };
+  return `
+    <label for="${id}">${escapeHTML(label)}</label>
+    ${control}`;
+}
 
-  store.add(id,value);
-  document.getElementById("saveMessage").textContent="Saved in this browser. You can find it under My Saved Pages.";
-  form.reset();
+/* FEATURE CONTENT */
+
+function renderFeature() {
+  const fields = feature.fields || [];
+
+  content.innerHTML = `
+    <section class="feature-panel">
+      <h2>${escapeHTML(feature.heading)}</h2>
+
+      ${feature.extra ? `<p>${escapeHTML(feature.extra)}</p>` : ""}
+
+      <form id="entryForm">
+        <label for="entryTitle">${escapeHTML(feature.prompt)}</label>
+        <input id="entryTitle" type="text" placeholder="${escapeHTML(feature.placeholder)}" required>
+
+        ${fields.map(createField).join("")}
+
+        <button class="action-button" type="submit">Save my entry ✧</button>
+        <button class="action-button secondary" type="reset">Clear form</button>
+      </form>
+
+      <p id="saveMessage" aria-live="polite"></p>
+    </section>
+
+    ${featureId === "breathing-space" ? breathingHTML() : ""}
+    ${featureId === "study-focus" ? studyHTML() : ""}
+    ${featureId === "fitness-wellness" ? fitnessHTML() : ""}
+    ${featureId === "career-exploration" ? careerHTML() : ""}
+    ${featureId === "my-little-world" ? scrapbookHTML() : ""}
+    ${featureId === "sports-events" ? sportsHTML() : ""}
+    ${featureId === "movie-theatre" ? movieHTML() : ""}
+    ${featureId === "the-commons" ? communityHTML() : ""}
+    ${featureId === "self-care" ? selfCareHTML() : ""}
+    ${featureId === "learning-library" ? learningHTML() : ""}
+    ${featureId === "sleep-sanctuary" ? sleepHTML() : ""}
+
+    <section class="feature-panel">
+      <h2>My Saved Pages</h2>
+      <p>Your saved entries appear here on this device.</p>
+      <div class="saved-list" id="savedEntries"></div>
+    </section>
+  `;
+
+  $("entryForm")?.addEventListener("submit", saveEntry);
   renderSaved();
- });
+  attachSpecialFeatures();
+}
 
- renderSaved();
+/* SAVE AND DISPLAY ENTRIES */
 
- /* Breathing guide */
- let breathInterval=null,phase=0;
- const orb=document.getElementById("breathOrb");
- const label=document.getElementById("breathLabel");
+function saveEntry(event) {
+  event.preventDefault();
 
- document.getElementById("breathStart")?.addEventListener("click",()=>{
-  if(breathInterval)return;
+  const values = {};
+  feature.fields.forEach((field, index) => {
+    const control = $("field" + index);
+    if (control) values[field[0]] = control.value;
+  });
 
-  const tick=()=>{
-   phase=1-phase;
-   orb.classList.toggle("inhale",phase===1);
-   label.textContent=phase?"Breathe in gently":"Breathe out gently";
+  const entry = {
+    title: $("entryTitle").value.trim(),
+    values,
+    date: new Date().toLocaleString()
   };
 
-  tick();
-  breathInterval=setInterval(tick,4000);
- });
+  if (!entry.title) return;
 
- document.getElementById("breathStop")?.addEventListener("click",()=>{
-  clearInterval(breathInterval);
-  breathInterval=null;
-  orb?.classList.remove("inhale");
-  if(label)label.textContent="Paused. Take your time.";
- });
+  const entries = window.EtherStore.add(featureId, entry);
 
- /* Study timer */
- let timer=null,remaining=600;
- const display=document.getElementById("timerDisplay");
- const status=document.getElementById("timerStatus");
-
- function paint(){
-  if(display){
-   display.textContent=
-    `${String(Math.floor(remaining/60)).padStart(2,"0")}:${String(remaining%60).padStart(2,"0")}`;
+  if (entries) {
+    $("saveMessage").textContent = "Your entry has been saved ✧";
+    $("entryForm").reset();
+    renderSaved();
   }
- }
+}
 
- document.getElementById("timerStart")?.addEventListener("click",()=>{
-  if(timer)return;
-  status.textContent="Focus gently. A break is allowed.";
+function renderSaved() {
+  const target = $("savedEntries");
+  if (!target) return;
 
-  timer=setInterval(()=>{
-   remaining--;
-   paint();
+  const entries = window.EtherStore.get(featureId, []);
 
-   if(remaining<=0){
-    clearInterval(timer);
-    timer=null;
-    status.textContent="Session complete. Take a screen-free break.";
-   }
-  },1000);
- });
+  if (!entries.length) {
+    target.innerHTML = `<p>No saved entries yet. Your first one can start here.</p>`;
+    return;
+  }
 
- document.getElementById("timerReset")?.addEventListener("click",()=>{
-  clearInterval(timer);
-  timer=null;
-  remaining=600;
-  paint();
-  status.textContent="Ready for a fresh session.";
- });
+  target.innerHTML = entries.map(entry => `
+    <article class="saved-entry">
+      <small>${escapeHTML(entry.date || "")}</small>
+      <h3>${escapeHTML(entry.title)}</h3>
+      ${Object.entries(entry.values || {}).map(([key,value]) => `
+        <p><strong>${escapeHTML(key)}:</strong> ${escapeHTML(value)}</p>
+      `).join("")}
+      <button class="action-button secondary delete-entry" data-id="${escapeHTML(entry.id)}">
+        Delete entry
+      </button>
+    </article>
+  `).join("");
 
- /* Career interests */
- document.getElementById("interestSave")?.addEventListener("click",()=>{
-  const values=[...document.querySelectorAll(".interest:checked")].map(x=>x.value);
-  store.set("career-interests",values);
-
-  document.getElementById("interestResult").textContent=
-   values.length
-    ?"Your interests have been saved: "+values.join(", ")
-    :"Choose any interests that feel right for you.";
- });
-
- /* Day planner */
- const taskKey="planner-tasks";
-
- function paintTasks(){
-  const el=document.getElementById("taskList");
-  if(!el)return;
-
-  const tasks=store.get(taskKey,[]);
-
-  el.innerHTML=tasks.length
-   ?tasks.map(t=>`
-    <label class="saved-entry">
-     <input type="checkbox" data-task="${t.id}" ${t.done?"checked":""}>
-     ${esc(t.text)}
-    </label>`).join("")
-   :"<p>No tasks yet. Add one small step.</p>";
-
-  el.querySelectorAll("[data-task]").forEach(box=>{
-   box.addEventListener("change",()=>{
-    const a=store.get(taskKey,[]).map(t=>
-     t.id===Number(box.dataset.task)?{...t,done:box.checked}:t
-    );
-    store.set(taskKey,a);
-   });
+  target.querySelectorAll(".delete-entry").forEach(button => {
+    button.addEventListener("click", () => {
+      if (confirm("Delete this saved entry?")) {
+        window.EtherStore.remove(featureId, Number(button.dataset.id));
+        renderSaved();
+      }
+    });
   });
- }
+}
 
- document.getElementById("taskForm")?.addEventListener("submit",e=>{
-  e.preventDefault();
+/* BREATHING SPACE */
 
-  const input=document.getElementById("taskInput");
-  const tasks=store.get(taskKey,[]);
+function breathingHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Guided breathing</h2>
+      <p>Follow a gentle rhythm if it feels comfortable. You can stop at any time.</p>
+      <div class="breath-orb" id="breathOrb"></div>
+      <div class="breath-label" id="breathLabel">Ready?</div>
+      <div class="timer-display" id="breathTimer">01:00</div>
+      <div style="text-align:center">
+        <button class="action-button" id="startBreathing">Start</button>
+        <button class="action-button secondary" id="stopBreathing">Stop</button>
+      </div>
+      <p>Optional: <a href="https://www.youtube.com/results?search_query=calm+nature+sounds" target="_blank" rel="noopener">Nature sounds ↗</a></p>
+    </section>`;
+}
 
-  tasks.push({
-   id:Date.now(),
-   text:input.value.trim(),
-   done:false
+/* STUDY TIMER */
+
+function studyHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Focus timer</h2>
+      <p>Choose a comfortable focus session. Remember to take breaks.</p>
+      <div class="timer-display" id="studyTimer">10:00</div>
+      <div style="text-align:center">
+        <button class="action-button" id="startStudy">Start 10 minutes</button>
+        <button class="action-button secondary" id="stopStudy">Pause</button>
+        <button class="action-button secondary" id="resetStudy">Reset</button>
+      </div>
+      <h3>Music and quiet</h3>
+      <div class="feature-tools">
+        <a href="https://www.youtube.com/results?search_query=study+music" target="_blank" rel="noopener">YouTube study music ↗</a>
+        <a href="https://open.spotify.com/search/focus" target="_blank" rel="noopener">Spotify ↗</a>
+        <a href="https://music.youtube.com/" target="_blank" rel="noopener">YouTube Music ↗</a>
+        <a href="https://www.apple.com/apple-music/" target="_blank" rel="noopener">Apple Music ↗</a>
+        <a href="https://www.youtube.com/results?search_query=Quran+recitation" target="_blank" rel="noopener">Quran recitation ↗</a>
+      </div>
+    </section>`;
+}
+
+/* FITNESS */
+
+function fitnessHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Movement ideas</h2>
+      <ul>
+        <li>Take a comfortable walk outdoors.</li>
+        <li>Try a beginner-friendly stretching session.</li>
+        <li>Explore a swimming session with appropriate supervision.</li>
+        <li>Enjoy cycling in a safe, permitted place.</li>
+        <li>Try an easy run or walk-run session if suitable for you.</li>
+      </ul>
+      <h3>Find movement inspiration</h3>
+      <div class="feature-tools">
+        <a href="https://www.youtube.com/results?search_query=beginner+yoga+for+students" target="_blank" rel="noopener">Beginner yoga ↗</a>
+        <a href="https://www.youtube.com/results?search_query=gentle+stretching" target="_blank" rel="noopener">Gentle stretching ↗</a>
+        <a href="https://www.strava.com/" target="_blank" rel="noopener">Strava ↗</a>
+      </div>
+      <p>Strava is an external link, not an account integration in this demo.</p>
+    </section>`;
+}
+
+/* CAREER EXPLORATION */
+
+function careerHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Explore career families</h2>
+      <p>Start with broad interests, then research specific roles and qualifications.</p>
+      <div class="feature-tools">
+        <a href="https://www.ncs.gov.in/" target="_blank" rel="noopener">India National Career Service ↗</a>
+        <a href="https://www.careeronestop.org/" target="_blank" rel="noopener">Career exploration ↗</a>
+        <a href="https://www.coursera.org/" target="_blank" rel="noopener">Explore courses ↗</a>
+      </div>
+      <h3>Questions to consider</h3>
+      <ul>
+        <li>What problems would I enjoy helping solve?</li>
+        <li>Which subjects make me curious?</li>
+        <li>What qualifications and entrance exams are needed?</li>
+        <li>What does a normal working day look like?</li>
+        <li>What are the opportunities in India and internationally?</li>
+      </ul>
+      <p>There is more to your future than one job title.</p>
+    </section>`;
+}
+
+/* SCRAPBOOK */
+
+function scrapbookHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Add a photograph</h2>
+      <p>Choose a picture from your device for your personal scrapbook.</p>
+      <input type="file" id="scrapbookPhoto" accept="image/*">
+      <div class="photo-preview" id="photoPreview"></div>
+      <p>Photos are stored in this browser only. Avoid uploading private photographs on shared devices.</p>
+    </section>`;
+}
+
+/* SPORTS */
+
+function sportsHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Sports and event discovery</h2>
+      <div class="feature-tools">
+        <a href="https://worldathletics.org/" target="_blank" rel="noopener">World Athletics ↗</a>
+        <a href="https://www.worldathletics.org/competitions" target="_blank" rel="noopener">Athletics competitions ↗</a>
+        <a href="https://www.olympics.com/" target="_blank" rel="noopener">Olympics ↗</a>
+        <a href="https://www.swimming.org/" target="_blank" rel="noopener">Swimming information ↗</a>
+      </div>
+      <h3>Explore different activities</h3>
+      <ul>
+        <li>Community running events</li>
+        <li>Junior athletics opportunities</li>
+        <li>Swimming competitions</li>
+        <li>Community cycling events</li>
+        <li>School sports festivals</li>
+      </ul>
+      <p>Always check age categories, event rules, supervision and registration requirements.</p>
+    </section>`;
+}
+
+/* MOVIE THEATRE */
+
+function movieHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Explore films and documentaries</h2>
+      <div class="feature-tools">
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube ↗</a>
+        <a href="https://www.bbc.com/reel" target="_blank" rel="noopener">BBC Reel ↗</a>
+        <a href="https://www.ted.com/talks" target="_blank" rel="noopener">TED Talks ↗</a>
+      </div>
+      <p>Check age ratings and content descriptions before watching.</p>
+    </section>`;
+}
+
+/* COMMONS */
+
+function communityHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Student club ideas</h2>
+      <ul>
+        <li>Book and reading club</li>
+        <li>Environment and sustainability club</li>
+        <li>Science and discovery club</li>
+        <li>Creative writing circle</li>
+        <li>Sports and outdoor activities club</li>
+        <li>Volunteering and kindness group</li>
+        <li>Debate and MUN club</li>
+      </ul>
+      <p>Use this space to develop an idea. Real clubs need appropriate adult supervision and school permission.</p>
+    </section>`;
+}
+
+/* SELF CARE */
+
+function selfCareHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Everyday care checklist</h2>
+      <p>Choose small, comfortable actions. There is no requirement to complete everything.</p>
+      <div id="careChecklist">
+        ${["Drink water","Take a comfortable break","Spend time outdoors if possible","Organise one small area","Connect with someone I trust","Make time for something enjoyable"].map((item,i) => `
+          <p><label><input type="checkbox" class="care-check" data-index="${i}"> ${item}</label></p>
+        `).join("")}
+      </div>
+      <p id="careProgress">Your progress: 0 / 6</p>
+    </section>`;
+}
+
+/* LEARNING LIBRARY */
+
+function learningHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>Curiosity prompts</h2>
+      <ul>
+        <li>How do satellites communicate?</li>
+        <li>How do ecosystems recover?</li>
+        <li>What makes a human right universal?</li>
+        <li>How does the brain learn?</li>
+        <li>How do communities respond to disasters?</li>
+        <li>How do languages change over time?</li>
+      </ul>
+      <p>Choose a question, research it using reliable sources, and save what you discover.</p>
+    </section>`;
+}
+
+/* SLEEP */
+
+function sleepHTML() {
+  return `
+    <section class="feature-panel">
+      <h2>A gentle wind-down</h2>
+      <ul>
+        <li>Put away unnecessary distractions.</li>
+        <li>Prepare your things for tomorrow.</li>
+        <li>Choose a quiet activity such as reading.</li>
+        <li>Make your room comfortable.</li>
+        <li>Give yourself time to rest.</li>
+      </ul>
+      <div class="feature-tools">
+        <a href="https://www.youtube.com/results?search_query=calm+rain+nature+sounds" target="_blank" rel="noopener">Rain and nature sounds ↗</a>
+      </div>
+    </section>`;
+}
+
+/* TIMER ENGINE */
+
+function makeTimer(display, seconds, onFinish) {
+  let remaining = seconds;
+  let interval = null;
+
+  function update() {
+    const mins = Math.floor(remaining / 60);
+    const secs = remaining % 60;
+    display.textContent =
+      String(mins).padStart(2,"0") + ":" +
+      String(secs).padStart(2,"0");
+  }
+
+  function stop() {
+    clearInterval(interval);
+    interval = null;
+  }
+
+  function start() {
+    if (interval) return;
+
+    interval = setInterval(() => {
+      remaining--;
+      update();
+
+      if (remaining <= 0) {
+        stop();
+        if (onFinish) onFinish();
+      }
+    },1000);
+  }
+
+  function reset(value) {
+    stop();
+    remaining = value;
+    update();
+  }
+
+  update();
+  return {start,stop,reset};
+}
+
+/* CONNECT SPECIAL ACTIVITIES */
+
+function attachSpecialFeatures() {
+
+  /* BREATHING */
+
+  if (featureId === "breathing-space") {
+    const orb = $("breathOrb");
+    const label = $("breathLabel");
+    const display = $("breathTimer");
+    let timer = null;
+    let phase = null;
+    let seconds = 60;
+
+    function stopBreathing() {
+      clearInterval(timer);
+      clearTimeout(phase);
+      timer = null;
+      orb.classList.remove("inhale");
+      label.textContent = "Paused. Take your time.";
+    }
+
+    $("startBreathing").addEventListener("click", () => {
+      if (timer) return;
+
+      let inhale = true;
+      label.textContent = "Breathe in gently";
+      orb.classList.add("inhale");
+
+      phase = setInterval(() => {
+        inhale = !inhale;
+        orb.classList.toggle("inhale", inhale);
+        label.textContent = inhale ? "Breathe in gently" : "Breathe out gently";
+      },4000);
+
+      timer = setInterval(() => {
+        seconds--;
+        display.textContent = "00:" + String(seconds).padStart(2,"0");
+
+        if (seconds <= 0) {
+          stopBreathing();
+          label.textContent = "Session complete ✧";
+        }
+      },1000);
+    });
+
+    $("stopBreathing").addEventListener("click", () => {
+      stopBreathing();
+      seconds = 60;
+      display.textContent = "01:00";
+    });
+  }
+
+  /* STUDY TIMER */
+
+  if (featureId === "study-focus") {
+    const display = $("studyTimer");
+    const timer = makeTimer(display,600,() => {
+      alert("Your focus session is complete. Enjoy a break!");
+    });
+
+    $("startStudy").addEventListener("click",() => timer.start());
+    $("stopStudy").addEventListener("click",() => timer.stop());
+    $("resetStudy").addEventListener("click",() => timer.reset(600));
+  }
+
+  /* SCRAPBOOK PHOTO */
+
+  if (featureId === "my-little-world") {
+    const input = $("scrapbookPhoto");
+    const preview = $("photoPreview");
+
+    const photos = window.EtherStore.get("scrapbook-photos",[]);
+
+    function showPhotos() {
+      preview.innerHTML = photos.map((photo,index) => `
+        <div>
+          <img src="${photo}" alt="Scrapbook photograph">
+          <button class="action-button secondary remove-photo" data-index="${index}">Remove</button>
+        </div>
+      `).join("");
+
+      preview.querySelectorAll(".remove-photo").forEach(button => {
+        button.addEventListener("click",() => {
+          const index = Number(button.dataset.index);
+          photos.splice(index,1);
+          window.EtherStore.set("scrapbook-photos",photos);
+          showPhotos();
+        });
+      });
+    }
+
+    showPhotos();
+
+    input.addEventListener("change",() => {
+      const file = input.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("Please choose an image.");
+        return;
+      }
+
+      if (file.size > 1200000) {
+        alert("Please choose an image smaller than 1.2 MB.");
+        input.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (photos.length >= 15) {
+          alert("This demo allows up to 15 scrapbook photos.");
+          return;
+        }
+
+        photos.push(reader.result);
+        if (window.EtherStore.set("scrapbook-photos",photos)) {
+          showPhotos();
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* SELF CARE CHECKLIST */
+
+  if (featureId === "self-care") {
+    const checks = [...document.querySelectorAll(".care-check")];
+    const saved = window.EtherStore.get("care-checks",[]);
+
+    checks.forEach((check,index) => {
+      check.checked = saved.includes(index);
+
+      check.addEventListener("change",() => {
+        const current = checks
+          .filter(item => item.checked)
+          .map(item => Number(item.dataset.index));
+
+        window.EtherStore.set("care-checks",current);
+        $("careProgress").textContent =
+          "Your progress: " + current.length + " / " + checks.length;
+      });
+    });
+
+    $("careProgress").textContent =
+      "Your progress: " + saved.length + " / " + checks.length;
+  }
+}
+
+/* PERSONAL BACKGROUND COLOUR */
+
+const backgroundInput = $("backgroundColour");
+const saveBackground = $("saveBackground");
+const resetBackground = $("resetBackground");
+
+if (backgroundInput && featureId) {
+  const savedColour = window.EtherStore.get("background-" + featureId,null);
+
+  if (savedColour) {
+    document.body.style.background = savedColour;
+    backgroundInput.value = savedColour;
+  }
+
+  saveBackground.addEventListener("click",() => {
+    const colour = backgroundInput.value;
+    window.EtherStore.set("background-" + featureId,colour);
+    document.body.style.background = colour;
   });
 
-  store.set(taskKey,tasks);
-  input.value="";
-  paintTasks();
- });
+  resetBackground.addEventListener("click",() => {
+    window.EtherStore.remove("background-" + featureId,"");
+    localStorage.removeItem("ether:background-" + featureId);
+    document.body.style.background = "#414B2D";
+    backgroundInput.value = "#414B2D";
+  });
+}
 
- paintTasks();
+/* FOOTER YEAR */
 
-})();
+if ($("year")) {
+  $("year").textContent = new Date().getFullYear();
+}
