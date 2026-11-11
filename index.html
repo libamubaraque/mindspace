@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#20271d">
+  <meta name="theme-color" content="#414B2D">
   <meta name="description" content="To the Ether — a thoughtful space for student wellbeing, creativity, learning and growth.">
   <title>To the Ether. | Your Space to Grow</title>
 
@@ -15,20 +15,18 @@
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
-
 <body>
 
 <div class="ambient ambient-one"></div>
 <div class="ambient ambient-two"></div>
 
 <header class="site-header">
-
   <a class="brand" href="#home">
     <span class="brand-mark">✳</span>
     <span>To the <em>Ether.</em></span>
   </a>
 
-  <button class="menu-toggle" id="menuToggle">☰</button>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
 
   <nav class="main-nav" id="mainNav">
     <a href="#home">Home</a>
@@ -37,29 +35,16 @@
     <a href="#resources">Resources</a>
   </nav>
 
-  <a class="header-cta" href="#explore">
-    Explore now <span>↗</span>
-  </a>
-
+  <a class="header-cta" href="#explore">Explore now <span>↗</span></a>
 </header>
 
 <main>
 
-  <!-- HERO SECTION -->
-
   <section class="hero section-wrap" id="home">
-
     <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-line"></span>A LITTLE SPACE TO BECOME</p>
 
-      <p class="eyebrow">
-        <span class="eyebrow-line"></span>
-        A LITTLE SPACE TO BECOME
-      </p>
-
-      <h1>
-        You don't have to<br>
-        have it all <i>figured out.</i>
-      </h1>
+      <h1>You don't have to<br>have it all <i>figured out.</i></h1>
 
       <p class="hero-description">
         A thoughtful corner of the internet for the days you feel everything,
@@ -67,43 +52,26 @@
       </p>
 
       <div class="hero-actions">
-
-        <a class="button button-primary" href="#explore">
-          Find your space <span>↗</span>
-        </a>
-
-        <a class="text-link" href="#about">
-          Get to know us <span>→</span>
-        </a>
-
+        <a class="button button-primary" href="#explore">Find your space ↗</a>
+        <a class="text-link" href="#about">Get to know us →</a>
       </div>
 
       <div class="hero-note">
         <span class="note-star">✦</span>
-        <span>Grow gently. At your own pace.</span>
+        Grow gently. At your own pace.
       </div>
-
     </div>
 
     <div class="hero-art" role="img" aria-label="Fern leaves and a quiet botanical atmosphere">
-
       <div class="hero-art-shade"></div>
-
       <div class="hero-quote">
         <span>“</span>
         <p>There is room<br>for you here.</p>
         <small>— TO THE ETHER</small>
       </div>
-
-      <div class="hero-art-caption">
-        A space to pause, explore & grow
-      </div>
-
+      <div class="hero-art-caption">A space to pause, explore & grow</div>
     </div>
-
   </section>
-
-  <!-- WELCOME STRIP -->
 
   <section class="welcome-strip section-wrap">
     <span class="strip-star">✳</span>
@@ -111,62 +79,45 @@
     <span class="strip-star">✳</span>
   </section>
 
-  <!-- EXPLORE SECTION -->
-
   <section class="section-wrap section-block" id="explore">
-
     <div class="section-heading">
-
       <div>
         <p class="eyebrow">YOUR SPACE, YOUR PACE</p>
         <h2>Find what you <i>need today.</i></h2>
       </div>
-
       <p class="section-intro">
         Twenty little doors. No pressure to open them all.
         Start wherever you are.
       </p>
-
     </div>
 
     <div class="filter-row">
-
       <button class="filter-chip active" data-filter="all">All spaces</button>
       <button class="filter-chip" data-filter="wellbeing">Wellbeing</button>
       <button class="filter-chip" data-filter="growth">Growth</button>
       <button class="filter-chip" data-filter="community">Community</button>
       <button class="filter-chip" data-filter="creative">Creative</button>
-
     </div>
 
-    <div class="feature-grid" id="featureGrid"></div>
-
+    <div class="feature-grid" id="featureGrid">
+      <p class="empty-state">Loading your spaces...</p>
+    </div>
   </section>
 
-  <!-- ABOUT US -->
-
   <section class="about-section" id="about">
-
     <div class="section-wrap about-grid">
 
       <div class="about-art">
-
         <div class="about-art-inner">
           <span>✳</span>
           <p>made for<br>the in-between</p>
           <small>TO THE ETHER.</small>
         </div>
-
       </div>
 
       <div class="about-copy">
-
         <p class="eyebrow">A LITTLE ABOUT US</p>
-
-        <h2>
-          Not another place<br>
-          to be <i>perfect.</i>
-        </h2>
+        <h2>Not another place<br>to be <i>perfect.</i></h2>
 
         <p>
           To the Ether began with a simple thought:
@@ -205,89 +156,64 @@
           With care,
           <span>the To the Ether team</span>
         </div>
-
       </div>
-
     </div>
-
   </section>
 
-  <!-- RESOURCES -->
-
   <section class="section-wrap section-block resource-section" id="resources">
-
     <div class="section-heading">
-
       <div>
         <p class="eyebrow">BEYOND THIS WEBSITE</p>
         <h2>Real support. <i>Real life.</i></h2>
       </div>
-
       <p class="section-intro">
         A website can be a starting point, but you deserve support
         from trusted people too.
       </p>
-
     </div>
 
     <div class="resource-grid">
-
       <article class="resource-card">
         <span class="resource-icon">♡</span>
         <h3>Talk to someone</h3>
-        <p>
-          If something feels heavy, consider speaking with a trusted
-          adult, school counsellor, teacher or healthcare professional.
-        </p>
+        <p>Consider speaking with a trusted adult, school counsellor,
+        teacher or healthcare professional.</p>
       </article>
 
       <article class="resource-card">
         <span class="resource-icon">✦</span>
         <h3>Take a small pause</h3>
-        <p>
-          Drink some water, step away from a screen, stretch gently
-          or spend a moment somewhere you feel comfortable.
-        </p>
+        <p>Drink some water, step away from a screen, stretch gently
+        or spend a moment somewhere comfortable.</p>
       </article>
 
       <article class="resource-card">
         <span class="resource-icon">⌂</span>
         <h3>Find local support</h3>
-        <p>
-          For urgent concerns, reach out to a trusted adult
-          or local emergency and child-support services.
-        </p>
+        <p>For urgent concerns, reach out to a trusted adult
+        or local emergency and child-support services.</p>
       </article>
-
     </div>
 
     <p class="disclaimer">
       To the Ether is a student wellbeing and creativity project,
       not a medical service or a substitute for professional care.
-      Your entries in this demo are stored in this browser only.
+      This frontend demo saves entries in this browser only.
     </p>
-
   </section>
 
 </main>
 
-<!-- FOOTER -->
-
 <footer class="site-footer">
-
   <a class="brand" href="#home">
     <span class="brand-mark">✳</span>
     <span>To the <em>Ether.</em></span>
   </a>
 
   <p>Grow gently. At your own pace.</p>
-
   <a href="#home">Back to top ↑</a>
 
-  <small>
-    © <span id="year"></span> To the Ether. Made with care.
-  </small>
-
+  <small>© <span id="year"></span> To the Ether. Made with care.</small>
 </footer>
 
 </body>
