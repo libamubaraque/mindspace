@@ -2,359 +2,1070 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- =====================================================
-       TO THE ETHER.
-       MAIN HOMEPAGE
-
-       PROJECT PURPOSE:
-       A digital wellbeing, discovery and personal-growth
-       platform designed especially for students.
-
-       JUDGE EXPLANATION:
-       This page is the main entry point. It introduces the
-       platform, its purpose, and the 20 interactive sections.
-  ====================================================== -->
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#20271D">
 
+  <meta name="description" content="To the Ether is a student-friendly space to learn, grow, reflect, discover and explore life at your own pace.">
+
   <title>To the Ether. | Your Space to Grow</title>
 
+  <!-- GOOGLE FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
 
-  <!-- Main stylesheet -->
+  <!-- MAIN STYLESHEET -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- Supabase JavaScript library.
-       Authentication can be enabled after adding project credentials. -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script src="script.js" defer></script>
 </head>
 
 <body>
 
-  <!-- 01. NAVIGATION -->
-  <header class="navbar">
-    <a href="index.html" class="logo">To the ether<span>.</span></a>
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-    <nav class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#explore">Explore</a>
-      <a href="#events">Events</a>
-      <a href="#resources">Resources</a>
-    </nav>
+<header class="header">
 
-    <div class="nav-actions">
-      <button class="outline-btn" id="savedNav">My Saved Pages</button>
-      <button class="primary-btn" id="accountBtn">My Account ↗</button>
+  <a href="index.html" class="logo">
+    To the ether<span>.</span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Toggle navigation"
+    aria-expanded="false">
+    ☰
+  </button>
+
+  <nav id="mainNav">
+    <a href="#home">Home</a>
+    <a href="#about">About Us</a>
+    <a href="#explore">Explore</a>
+    <a href="#saved">My Collection</a>
+    <a href="#resources">Resources</a>
+  </nav>
+
+  <button class="account-btn" id="accountButton">
+    My Space ↗
+  </button>
+
+</header>
+
+
+<main>
+
+<!-- =====================================================
+     01. HOMEPAGE HERO
+===================================================== -->
+
+<section class="hero" id="home">
+
+  <div class="hero-content">
+
+    <p class="eyebrow">
+      A LITTLE SPACE THAT BELONGS TO YOU
+    </p>
+
+    <h1>
+      Find your way.<br>
+      <em>At your own pace.</em>
+    </h1>
+
+    <p class="hero-description">
+      A place to pause, discover yourself, find direction
+      and appreciate the little things along the way.
+
+      Explore your interests, learn something new,
+      express yourself and make room for growth.
+    </p>
+
+    <a href="#explore" class="primary-btn">
+      Explore your space ↗
+    </a>
+
+    <p class="hero-note">
+      No pressure. No expectations. Just you.
+    </p>
+
+  </div>
+
+
+  <!-- ORIGINAL FERN IMAGE: DO NOT REMOVE -->
+
+  <div class="hero-image">
+
+    <img
+      src="images/fern.jpg"
+      alt="Fern leaves in soft natural light">
+
+    <span class="image-caption">
+      Grow in your own time.
+    </span>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     02. ABOUT US
+===================================================== -->
+
+<section class="about-section" id="about">
+
+  <p class="eyebrow">
+    A NOTE FROM US
+  </p>
+
+  <h2>
+    You don't have to have<br>
+    everything figured out.
+  </h2>
+
+  <p>
+    Growing up comes with questions, unexpected changes,
+    little victories and difficult days.
+
+    To the Ether is a student-friendly space created
+    to make room for all of them.
+  </p>
+
+
+  <div class="about-details">
+
+    <article class="about-block">
+
+      <span class="eyebrow">01 / OUR STORY</span>
+
+      <h3>Why we started.</h3>
+
+      <p>
+        Student life is often described through grades,
+        examinations, achievements and expectations.
+
+        But there is another side to growing up.
+
+        There are interests we have not explored,
+        dreams we are still discovering, feelings we
+        struggle to explain, and questions we do not
+        always know where to ask.
+
+        We wanted to create something that recognised
+        these parts of student life too.
+
+        That idea became To the Ether.
+      </p>
+
+    </article>
+
+
+    <article class="about-block">
+
+      <span class="eyebrow">02 / OUR PURPOSE</span>
+
+      <h3>More than a website.</h3>
+
+      <p>
+        We wanted a place where students could explore
+        their wellbeing, creativity, education,
+        interests and future possibilities.
+
+        Somewhere they could learn about themselves,
+        discover useful opportunities, express their
+        thoughts and develop healthy everyday habits.
+
+        Not another place demanding perfection,
+        but a space encouraging curiosity and growth.
+      </p>
+
+    </article>
+
+
+    <article class="about-block">
+
+      <span class="eyebrow">03 / OUR MISSION</span>
+
+      <h3>Making room for every part of you.</h3>
+
+      <p>
+        Our mission is to bring different aspects of
+        student life together in one accessible space.
+
+        From emotional wellbeing and physical activity
+        to learning, career exploration, volunteering,
+        creativity and personal expression.
+
+        We want useful information and opportunities
+        to feel easier to discover and explore.
+      </p>
+
+    </article>
+
+
+    <article class="about-block">
+
+      <span class="eyebrow">04 / OUR VISION</span>
+
+      <h3>A world where students feel heard.</h3>
+
+      <p>
+        We imagine a world where young people are
+        encouraged to explore different interests,
+        ask questions, make mistakes, learn new things
+        and develop their own sense of direction.
+
+        A world where personal growth is not measured
+        only by achievements or comparisons.
+      </p>
+
+    </article>
+
+  </div>
+
+
+  <div class="about-values">
+
+    <p class="eyebrow">WHAT WE BELIEVE IN</p>
+
+    <h3>A few things that matter to us.</h3>
+
+    <div class="values-grid">
+
+      <article>
+        <span>01</span>
+        <h4>Compassion</h4>
+        <p>Understanding without judgement.</p>
+      </article>
+
+      <article>
+        <span>02</span>
+        <h4>Curiosity</h4>
+        <p>There is always something new to discover.</p>
+      </article>
+
+      <article>
+        <span>03</span>
+        <h4>Inclusivity</h4>
+        <p>Every student deserves room to belong.</p>
+      </article>
+
+      <article>
+        <span>04</span>
+        <h4>Growth</h4>
+        <p>Progress does not have to look the same for everyone.</p>
+      </article>
+
     </div>
-  </header>
 
+  </div>
 
-  <!-- 02. HERO SECTION -->
-  <!-- Original fern photograph is deliberately preserved. -->
 
-  <main>
-
-    <section class="hero" id="home">
-
-      <div class="hero-overlay"></div>
-
-      <div class="hero-content">
-
-        <span class="eyebrow">A SPACE THAT BELONGS TO YOU</span>
-
-        <h1>
-          Grow in your<br>
-          own <span>time.</span>
-        </h1>
-
-        <p class="hero-description">
-          A little corner of the internet where you can
-          discover yourself, find inspiration, explore
-          opportunities and grow without pressure.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="#explore" class="primary-btn">
-            Explore your space ↗
-          </a>
-
-          <a href="#about" class="text-btn">
-            Discover our purpose
-          </a>
-        </div>
-
-        <p class="hero-note">
-          No pressure. No expectations. Just you.
-        </p>
-
-      </div>
-
-      <div class="hero-bottom">
-        <span>01 — YOUR JOURNEY</span>
-        <span>Scroll to discover ↓</span>
-      </div>
-
-    </section>
-
-
-    <!-- 03. INTRODUCTION -->
-
-    <section class="intro section-padding" id="about">
-
-      <div class="section-heading">
-        <span class="eyebrow">A LITTLE ABOUT US</span>
-
-        <h2>
-          You are more than<br>
-          <span>what you achieve.</span>
-        </h2>
-      </div>
-
-      <div class="intro-content">
-        <p>
-          Students experience academic expectations,
-          uncertainty about the future, emotional challenges
-          and the pressure to constantly achieve.
-        </p>
-
-        <p>
-          To the Ether was created as a student-centred
-          digital space that brings together wellbeing,
-          learning, creativity, self-discovery and real-world
-          opportunities.
-        </p>
-
-        <p>
-          We believe growth is not a competition.
-          Every individual deserves the freedom to explore
-          their interests, understand themselves and discover
-          possibilities beyond academics.
-        </p>
-      </div>
-
-      <div class="values-grid">
-        <div class="value-item">
-          <span>01</span>
-          <h3>Wellbeing</h3>
-          <p>Make space for your emotional and physical wellbeing.</p>
-        </div>
-
-        <div class="value-item">
-          <span>02</span>
-          <h3>Discovery</h3>
-          <p>Explore interests, abilities and future possibilities.</p>
-        </div>
-
-        <div class="value-item">
-          <span>03</span>
-          <h3>Connection</h3>
-          <p>Discover opportunities and meaningful experiences.</p>
-        </div>
-
-        <div class="value-item">
-          <span>04</span>
-          <h3>Growth</h3>
-          <p>Celebrate progress without comparing yourself to others.</p>
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- 04. EXPLORE THE 20 CARDS -->
-
-    <section class="explore-section section-padding" id="explore">
-
-      <div class="section-heading">
-        <span class="eyebrow">FIND YOUR OWN PATH</span>
-
-        <h2>Explore your <span>world.</span></h2>
-
-        <p>
-          Twenty different spaces. Different experiences.
-          One place to discover what matters to you.
-        </p>
-      </div>
-
-      <div class="card-filter">
-        <button class="filter-btn active" data-filter="all">All spaces</button>
-        <button class="filter-btn" data-filter="wellbeing">Wellbeing</button>
-        <button class="filter-btn" data-filter="discovery">Discovery</button>
-        <button class="filter-btn" data-filter="creativity">Creativity</button>
-        <button class="filter-btn" data-filter="opportunities">Opportunities</button>
-      </div>
-
-      <!-- JavaScript generates all 20 cards from the
-           central feature catalogue. This avoids duplicate HTML. -->
-
-      <div class="feature-grid" id="featureGrid"></div>
-
-    </section>
-
-
-    <!-- 05. SPORTS AND EVENTS PROMOTION -->
-
-    <section class="events-section section-padding" id="events">
-
-      <div class="events-content">
-        <span class="eyebrow">BEYOND THE CLASSROOM</span>
-
-        <h2>
-          Find your next<br>
-          <span>adventure.</span>
-        </h2>
-
-        <p>
-          Discover marathon races, cycling events,
-          swimming competitions, athletics, school
-          tournaments and other sporting opportunities.
-        </p>
-
-        <p>
-          Explore events in Kerala, across India and
-          internationally. Learn about preparation,
-          eligibility, registration and participation.
-        </p>
-
-        <a href="feature.html?card=sports" class="primary-btn">
-          Discover sporting events ↗
-        </a>
-      </div>
-
-    </section>
-
-
-    <!-- 06. RESOURCES -->
-
-    <section class="resources-section section-padding" id="resources">
-
-      <div class="section-heading">
-        <span class="eyebrow">USEFUL PLACES TO START</span>
-        <h2>Resources for <span>your journey.</span></h2>
-      </div>
-
-      <div class="resource-grid">
-
-        <a href="https://www.who.int/" target="_blank" rel="noopener">
-          <span>01</span>
-          <h3>World Health Organization</h3>
-          <p>Reliable international health information.</p>
-        </a>
-
-        <a href="https://www.unicef.org/" target="_blank" rel="noopener">
-          <span>02</span>
-          <h3>UNICEF</h3>
-          <p>Children's rights, education and wellbeing.</p>
-        </a>
-
-        <a href="https://www.un.org/en/" target="_blank" rel="noopener">
-          <span>03</span>
-          <h3>United Nations</h3>
-          <p>Global issues and international initiatives.</p>
-        </a>
-
-        <a href="https://www.cbse.gov.in/" target="_blank" rel="noopener">
-          <span>04</span>
-          <h3>CBSE</h3>
-          <p>Official academic information and resources.</p>
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- 07. SAVED PAGES AREA -->
-
-    <section class="saved-section section-padding" id="savedPages">
-
-      <div class="section-heading">
-        <span class="eyebrow">YOUR PERSONAL COLLECTION</span>
-        <h2>My saved <span>pages.</span></h2>
-        <p>Your saved activities and reflections appear here.</p>
-      </div>
-
-      <div id="savedPageList" class="saved-grid"></div>
-
-    </section>
-
-  </main>
-
-
-  <!-- 08. FOOTER -->
-
-  <footer class="footer">
-
-    <a href="index.html" class="logo">To the ether<span>.</span></a>
+  <div class="about-closing">
 
     <p>
-      You are allowed to grow at your own pace.
+      We are not here to tell you who to become.
+      We are here to help you explore who you might be.
     </p>
 
-    <div class="footer-links">
-      <a href="#about">About</a>
-      <a href="#explore">Explore</a>
-      <a href="#events">Events</a>
+    <span>
+      Take your time. There is room for you here.
+    </span>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     03. EXPLORE ALL 20 SPACES
+===================================================== -->
+
+<section class="explore-section" id="explore">
+
+  <div class="section-heading">
+
+    <div>
+
+      <p class="eyebrow">
+        YOUR PERSONAL COLLECTION
+      </p>
+
+      <h2>Explore your spaces.</h2>
+
     </div>
 
-    <p class="copyright">
-      © 2026 To the Ether. Created with purpose.
+    <p>
+      Twenty little corners.<br>
+      Endless possibilities.
     </p>
 
-  </footer>
+  </div>
 
 
-  <!-- 09. ACCOUNT DIALOG -->
+  <div class="feature-grid">
 
-  <dialog id="accountDialog" class="account-dialog">
 
-    <form method="dialog" class="dialog-close-form">
-      <button class="close-dialog" aria-label="Close">×</button>
-    </form>
+    <!-- 01 MOOD JOURNAL -->
 
-    <span class="eyebrow">YOUR PERSONAL SPACE</span>
+    <a href="feature.html?feature=mood-journal"
+       class="feature-card"
+       data-feature="mood-journal">
 
-    <h2>Welcome to <span>your space.</span></h2>
+      <div class="card-content">
 
-    <p>Sign in or create an account to access your personal space.</p>
+        <span>01 / REFLECT</span>
 
-    <form id="authForm">
+        <h3>Mood Journal</h3>
 
-      <label for="authEmail">Email address</label>
-      <input id="authEmail" type="email" required placeholder="you@example.com">
+        <p>
+          Understand your feelings, explore emotions
+          and discover patterns without judgement.
+        </p>
 
-      <label for="authPassword">Password</label>
-      <input id="authPassword" type="password" required minlength="6">
+        <b>Enter space ↗</b>
 
-      <button class="primary-btn" type="submit" id="authSubmit">
-        Sign in
+      </div>
+
+    </a>
+
+
+    <!-- 02 BREATHING SPACE -->
+
+    <a href="feature.html?feature=breathing-space"
+       class="feature-card"
+       data-feature="breathing-space">
+
+      <div class="card-content">
+
+        <span>02 / PAUSE</span>
+
+        <h3>Breathing Space</h3>
+
+        <p>
+          Explore guided breathing, relaxation,
+          nature sounds and mindful pauses.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 03 GRATITUDE JOURNAL -->
+
+    <a href="feature.html?feature=gratitude-journal"
+       class="feature-card"
+       data-feature="gratitude-journal">
+
+      <div class="card-content">
+
+        <span>03 / APPRECIATE</span>
+
+        <h3>Gratitude Journal</h3>
+
+        <p>
+          Discover gratitude practices, creative
+          journaling and moments worth remembering.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 04 FITNESS AND WELLNESS -->
+
+    <a href="feature.html?feature=fitness-wellness"
+       class="feature-card"
+       data-feature="fitness-wellness">
+
+      <div class="card-content">
+
+        <span>04 / MOVE</span>
+
+        <h3>Fitness & Wellness</h3>
+
+        <p>
+          Running, cycling, sports, yoga, movement
+          challenges and everyday wellbeing.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 05 DAILY CHECK-IN -->
+
+    <a href="feature.html?feature=daily-check-in"
+       class="feature-card"
+       data-feature="daily-check-in">
+
+      <div class="card-content">
+
+        <span>05 / CONNECT</span>
+
+        <h3>Daily Check-in</h3>
+
+        <p>
+          Celebrate little wins, explore daily prompts
+          and make space for small conversations.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 06 STUDY AND FOCUS -->
+
+    <a href="feature.html?feature=study-focus"
+       class="feature-card"
+       data-feature="study-focus">
+
+      <div class="card-content">
+
+        <span>06 / LEARN</span>
+
+        <h3>Study & Focus</h3>
+
+        <p>
+          Discover study techniques, focus sessions,
+          learning methods and peaceful breaks.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 07 SELF CARE -->
+
+    <a href="feature.html?feature=self-care"
+       class="feature-card"
+       data-feature="self-care">
+
+      <div class="card-content">
+
+        <span>07 / CARE</span>
+
+        <h3>Self-care Corner</h3>
+
+        <p>
+          Explore physical wellbeing, personal care,
+          health education and everyday habits.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 08 STORIES AND HOPE -->
+
+    <a href="feature.html?feature=stories-hope"
+       class="feature-card"
+       data-feature="stories-hope">
+
+      <div class="card-content">
+
+        <span>08 / DISCOVER</span>
+
+        <h3>Stories & Hope</h3>
+
+        <p>
+          Real-world challenges, human stories,
+          important facts and meaningful change.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 09 CAREER EXPLORATION -->
+
+    <a href="feature.html?feature=career-exploration"
+       class="feature-card"
+       data-feature="career-exploration">
+
+      <div class="card-content">
+
+        <span>09 / DREAM</span>
+
+        <h3>Career Exploration</h3>
+
+        <p>
+          Discover careers, qualifications,
+          entrance examinations and new possibilities.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 10 MY LITTLE WORLD -->
+
+    <a href="feature.html?feature=my-little-world"
+       class="feature-card"
+       data-feature="my-little-world">
+
+      <div class="card-content">
+
+        <span>10 / REMEMBER</span>
+
+        <h3>My Little World</h3>
+
+        <p>
+          Create a personal collection of memories,
+          photographs, letters and experiences.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 11 MOVIE THEATRE -->
+
+    <a href="feature.html?feature=movie-theatre"
+       class="feature-card"
+       data-feature="movie-theatre">
+
+      <div class="card-content">
+
+        <span>11 / WATCH</span>
+
+        <h3>Movie Theatre</h3>
+
+        <p>
+          Discover films, build watchlists,
+          write reviews and explore cinema.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 12 THE COMMONS -->
+
+    <a href="feature.html?feature=the-commons"
+       class="feature-card"
+       data-feature="the-commons">
+
+      <div class="card-content">
+
+        <span>12 / BELONG</span>
+
+        <h3>The Commons</h3>
+
+        <p>
+          Explore clubs, shared interests,
+          communities and collaborative ideas.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 13 SPORTS AND EVENTS -->
+
+    <a href="feature.html?feature=sports-events"
+       class="feature-card"
+       data-feature="sports-events">
+
+      <div class="card-content">
+
+        <span>13 / PARTICIPATE</span>
+
+        <h3>Sports & Events</h3>
+
+        <p>
+          Explore competitions, sports events,
+          challenges and participation opportunities.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 14 DAY PLANNER -->
+
+    <a href="feature.html?feature=day-planner"
+       class="feature-card"
+       data-feature="day-planner">
+
+      <div class="card-content">
+
+        <span>14 / ORGANISE</span>
+
+        <h3>Day Planner</h3>
+
+        <p>
+          Organise your day, set priorities,
+          manage activities and celebrate progress.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 15 CREATIVE STUDIO -->
+
+    <a href="feature.html?feature=creative-studio"
+       class="feature-card"
+       data-feature="creative-studio">
+
+      <div class="card-content">
+
+        <span>15 / CREATE</span>
+
+        <h3>The Creative Studio</h3>
+
+        <p>
+          Explore art, photography, crafts,
+          design and creative expression.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 16 KINDNESS PROJECT -->
+
+    <a href="feature.html?feature=kindness-project"
+       class="feature-card"
+       data-feature="kindness-project">
+
+      <div class="card-content">
+
+        <span>16 / GIVE</span>
+
+        <h3>The Kindness Project</h3>
+
+        <p>
+          Discover volunteering, community service,
+          thoughtful actions and social initiatives.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 17 LEARNING LIBRARY -->
+
+    <a href="feature.html?feature=learning-library"
+       class="feature-card"
+       data-feature="learning-library">
+
+      <div class="card-content">
+
+        <span>17 / EXPLORE</span>
+
+        <h3>The Learning Library</h3>
+
+        <p>
+          Find educational resources, useful lessons,
+          new subjects and learning opportunities.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 18 SLEEP SANCTUARY -->
+
+    <a href="feature.html?feature=sleep-sanctuary"
+       class="feature-card"
+       data-feature="sleep-sanctuary">
+
+      <div class="card-content">
+
+        <span>18 / REST</span>
+
+        <h3>The Sleep Sanctuary</h3>
+
+        <p>
+          Learn about sleep, healthy routines,
+          relaxation and restful habits.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 19 MONEY MATTERS -->
+
+    <a href="feature.html?feature=money-matters"
+       class="feature-card"
+       data-feature="money-matters">
+
+      <div class="card-content">
+
+        <span>19 / UNDERSTAND</span>
+
+        <h3>Money Matters</h3>
+
+        <p>
+          Discover financial literacy, budgeting,
+          saving and responsible money management.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+    <!-- 20 THE OPEN MIC -->
+
+    <a href="feature.html?feature=open-mic"
+       class="feature-card"
+       data-feature="open-mic">
+
+      <div class="card-content">
+
+        <span>20 / EXPRESS</span>
+
+        <h3>The Open Mic</h3>
+
+        <p>
+          Explore poetry, writing, storytelling,
+          spoken word and creative expression.
+        </p>
+
+        <b>Enter space ↗</b>
+
+      </div>
+
+    </a>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     04. MY SAVED PAGES
+===================================================== -->
+
+<section class="saved-section" id="saved">
+
+  <p class="eyebrow">
+    YOUR COLLECTION
+  </p>
+
+  <h2>My Saved Pages.</h2>
+
+  <p>
+    Your journals, reflections, creative projects
+    and personal collections live here.
+  </p>
+
+  <div id="savedPages" class="saved-grid">
+
+    <p class="empty-saved-message">
+      Your saved creations will appear here.
+    </p>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     05. RESOURCES
+===================================================== -->
+
+<section class="resources-section" id="resources">
+
+  <p class="eyebrow">
+    A LITTLE HELP WHEN YOU NEED IT
+  </p>
+
+  <h2>Useful resources.</h2>
+
+  <p>
+    Learning and support should be accessible.
+    Here are some places to begin.
+  </p>
+
+
+  <div class="resource-links">
+
+    <a href="https://www.who.int/health-topics/mental-health"
+       target="_blank"
+       rel="noopener noreferrer">
+      WHO — Mental Health ↗
+    </a>
+
+    <a href="https://www.unicef.org/parenting/mental-health"
+       target="_blank"
+       rel="noopener noreferrer">
+      UNICEF — Mental Wellbeing ↗
+    </a>
+
+    <a href="https://www.mohfw.gov.in/"
+       target="_blank"
+       rel="noopener noreferrer">
+      India — Ministry of Health ↗
+    </a>
+
+    <a href="https://www.education.gov.in/"
+       target="_blank"
+       rel="noopener noreferrer">
+      Ministry of Education ↗
+    </a>
+
+    <a href="https://www.un.org/en/"
+       target="_blank"
+       rel="noopener noreferrer">
+      United Nations ↗
+    </a>
+
+    <a href="https://www.unicef.org/"
+       target="_blank"
+       rel="noopener noreferrer">
+      UNICEF ↗
+    </a>
+
+  </div>
+
+
+  <p class="small-note">
+    To the Ether is a student wellbeing and educational
+    project. Its activities are not a substitute for
+    professional healthcare or counselling.
+
+    If you need personal support, consider speaking
+    with a trusted adult or qualified professional.
+  </p>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     06. FOOTER
+===================================================== -->
+
+<footer>
+
+  <a href="#home" class="logo">
+    To the ether<span>.</span>
+  </a>
+
+  <p>
+    Take your time. You're allowed to grow slowly.
+  </p>
+
+  <small>
+    Made with care · 2026
+  </small>
+
+  <div class="footer-links">
+    <a href="#about">About Us</a>
+    <a href="#explore">Explore</a>
+    <a href="#resources">Resources</a>
+    <a href="#home">Back to top ↑</a>
+  </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     07. ACCOUNT POP-UP
+===================================================== -->
+
+<div class="modal" id="accountModal">
+
+  <div class="modal-box">
+
+    <button
+      class="modal-close"
+      id="closeModal"
+      type="button"
+      aria-label="Close account window">
+      ×
+    </button>
+
+    <p class="eyebrow">
+      YOUR PERSONAL SPACE
+    </p>
+
+    <h2 id="accountHeading">
+      A little introduction.
+    </h2>
+
+    <p id="accountDescription">
+      Create your personal space at To the Ether.
+    </p>
+
+
+    <form id="accountForm">
+
+      <div id="signupFields">
+
+        <label for="accountName">
+          Display name
+        </label>
+
+        <input
+          id="accountName"
+          type="text"
+          placeholder="What should we call you?">
+
+
+        <label for="accountUsername">
+          Username
+        </label>
+
+        <input
+          id="accountUsername"
+          type="text"
+          placeholder="Choose a username">
+
+      </div>
+
+
+      <label for="accountEmail">
+        Email
+      </label>
+
+      <input
+        id="accountEmail"
+        type="email"
+        placeholder="Enter your email"
+        required>
+
+
+      <label for="accountPassword">
+        Password
+      </label>
+
+      <input
+        id="accountPassword"
+        type="password"
+        placeholder="Enter your password"
+        minlength="8"
+        required>
+
+
+      <button
+        class="primary-btn"
+        id="accountSubmit"
+        type="submit">
+        Create account ↗
       </button>
 
     </form>
 
-    <button id="toggleAuth" class="text-btn">
-      New here? Create an account
-    </button>
 
-    <p id="authMessage" role="status"></p>
-
-    <p class="small-note">
-      Cloud authentication requires your Supabase project settings.
+    <p
+      id="accountMessage"
+      class="form-message"
+      aria-live="polite">
     </p>
 
-  </dialog>
+
+    <p>
+
+      <span id="accountSwitchText">
+        Already have an account?
+      </span>
+
+      <button
+        type="button"
+        id="accountSwitch"
+        class="account-switch">
+        Log in
+      </button>
+
+    </p>
 
 
-  <!-- Accessibility and status messages -->
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <button
+      type="button"
+      id="logoutButton"
+      hidden>
+      Log out
+    </button>
+
+
+    <small>
+      Your personal account is protected by
+      Supabase authentication.
+    </small>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     08. SCRIPTS
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
 
 </body>
 </html>
