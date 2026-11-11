@@ -2,92 +2,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- =====================================================
+       TO THE ETHER.
+       MAIN HOMEPAGE
+
+       PROJECT PURPOSE:
+       A digital wellbeing, discovery and personal-growth
+       platform designed especially for students.
+
+       JUDGE EXPLANATION:
+       This page is the main entry point. It introduces the
+       platform, its purpose, and the 20 interactive sections.
+  ====================================================== -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#414B2D">
+  <meta name="theme-color" content="#20271D">
+
   <title>To the Ether. | Your Space to Grow</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase JavaScript library.
+       Authentication can be enabled after adding project credentials. -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="script.js" defer></script>
 </head>
+
 <body>
-  <header class="site-header">
-    <a class="logo" href="index.html">To the ether<span>.</span></a>
-    <nav>
+
+  <!-- 01. NAVIGATION -->
+  <header class="navbar">
+    <a href="index.html" class="logo">To the ether<span>.</span></a>
+
+    <nav class="nav-links">
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#explore">Explore</a>
-      <a href="#saved">My Saved Pages</a>
+      <a href="#events">Events</a>
+      <a href="#resources">Resources</a>
     </nav>
-    <div class="header-actions">
-      <button class="button button-outline" id="loginButton">Log in</button>
-      <button class="button" id="signupButton">Sign up</button>
+
+    <div class="nav-actions">
+      <button class="outline-btn" id="savedNav">My Saved Pages</button>
+      <button class="primary-btn" id="accountBtn">My Account ↗</button>
     </div>
   </header>
 
+
+  <!-- 02. HERO SECTION -->
+  <!-- Original fern photograph is deliberately preserved. -->
+
   <main>
+
     <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow">A little space that belongs to you</p>
-        <h1>Grow at your own pace.<br><em>Find your own ether.</em></h1>
-        <p class="hero-description">A student space for your thoughts, goals, creativity, wellbeing and everything in between.</p>
-        <a class="button" href="#explore">Explore your space ↗</a>
-      </div>
-      <div class="hero-note">
-        <span class="script">A gentle reminder</span>
-        <p>You don't have to have everything figured out today.</p>
-      </div>
-    </section>
 
-    <section class="intro section" id="about">
-      <p class="eyebrow">Welcome to your space</p>
-      <h2>More than a website.<br><em>A space to become.</em></h2>
-      <p>To the Ether. brings together small tools for everyday life: reflecting, learning, moving, creating, planning and discovering the world around you.</p>
-    </section>
+      <div class="hero-overlay"></div>
 
-    <section class="section explore-section" id="explore">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Your personal space</p>
-          <h2>Explore <em>your world.</em></h2>
+      <div class="hero-content">
+
+        <span class="eyebrow">A SPACE THAT BELONGS TO YOU</span>
+
+        <h1>
+          Grow in your<br>
+          own <span>time.</span>
+        </h1>
+
+        <p class="hero-description">
+          A little corner of the internet where you can
+          discover yourself, find inspiration, explore
+          opportunities and grow without pressure.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#explore" class="primary-btn">
+            Explore your space ↗
+          </a>
+
+          <a href="#about" class="text-btn">
+            Discover our purpose
+          </a>
         </div>
-        <p>Choose a space. Start wherever you are.</p>
+
+        <p class="hero-note">
+          No pressure. No expectations. Just you.
+        </p>
+
       </div>
-      <div class="card-grid" id="cardGrid"></div>
+
+      <div class="hero-bottom">
+        <span>01 — YOUR JOURNEY</span>
+        <span>Scroll to discover ↓</span>
+      </div>
+
     </section>
 
-    <section class="section saved-section" id="saved">
-      <p class="eyebrow">Your little collection</p>
-      <h2>My Saved <em>Pages.</em></h2>
-      <p class="muted">Your saved journal entries, plans, reflections and creations appear here on this device.</p>
-      <div id="savedPages" class="saved-grid"></div>
+
+    <!-- 03. INTRODUCTION -->
+
+    <section class="intro section-padding" id="about">
+
+      <div class="section-heading">
+        <span class="eyebrow">A LITTLE ABOUT US</span>
+
+        <h2>
+          You are more than<br>
+          <span>what you achieve.</span>
+        </h2>
+      </div>
+
+      <div class="intro-content">
+        <p>
+          Students experience academic expectations,
+          uncertainty about the future, emotional challenges
+          and the pressure to constantly achieve.
+        </p>
+
+        <p>
+          To the Ether was created as a student-centred
+          digital space that brings together wellbeing,
+          learning, creativity, self-discovery and real-world
+          opportunities.
+        </p>
+
+        <p>
+          We believe growth is not a competition.
+          Every individual deserves the freedom to explore
+          their interests, understand themselves and discover
+          possibilities beyond academics.
+        </p>
+      </div>
+
+      <div class="values-grid">
+        <div class="value-item">
+          <span>01</span>
+          <h3>Wellbeing</h3>
+          <p>Make space for your emotional and physical wellbeing.</p>
+        </div>
+
+        <div class="value-item">
+          <span>02</span>
+          <h3>Discovery</h3>
+          <p>Explore interests, abilities and future possibilities.</p>
+        </div>
+
+        <div class="value-item">
+          <span>03</span>
+          <h3>Connection</h3>
+          <p>Discover opportunities and meaningful experiences.</p>
+        </div>
+
+        <div class="value-item">
+          <span>04</span>
+          <h3>Growth</h3>
+          <p>Celebrate progress without comparing yourself to others.</p>
+        </div>
+      </div>
+
     </section>
 
-    <section class="closing section">
-      <p class="script">Take your time.</p>
-      <h2>Every small step<br>is still a step.</h2>
-      <a class="button button-outline" href="#home">Back to the beginning ↑</a>
+
+    <!-- 04. EXPLORE THE 20 CARDS -->
+
+    <section class="explore-section section-padding" id="explore">
+
+      <div class="section-heading">
+        <span class="eyebrow">FIND YOUR OWN PATH</span>
+
+        <h2>Explore your <span>world.</span></h2>
+
+        <p>
+          Twenty different spaces. Different experiences.
+          One place to discover what matters to you.
+        </p>
+      </div>
+
+      <div class="card-filter">
+        <button class="filter-btn active" data-filter="all">All spaces</button>
+        <button class="filter-btn" data-filter="wellbeing">Wellbeing</button>
+        <button class="filter-btn" data-filter="discovery">Discovery</button>
+        <button class="filter-btn" data-filter="creativity">Creativity</button>
+        <button class="filter-btn" data-filter="opportunities">Opportunities</button>
+      </div>
+
+      <!-- JavaScript generates all 20 cards from the
+           central feature catalogue. This avoids duplicate HTML. -->
+
+      <div class="feature-grid" id="featureGrid"></div>
+
     </section>
+
+
+    <!-- 05. SPORTS AND EVENTS PROMOTION -->
+
+    <section class="events-section section-padding" id="events">
+
+      <div class="events-content">
+        <span class="eyebrow">BEYOND THE CLASSROOM</span>
+
+        <h2>
+          Find your next<br>
+          <span>adventure.</span>
+        </h2>
+
+        <p>
+          Discover marathon races, cycling events,
+          swimming competitions, athletics, school
+          tournaments and other sporting opportunities.
+        </p>
+
+        <p>
+          Explore events in Kerala, across India and
+          internationally. Learn about preparation,
+          eligibility, registration and participation.
+        </p>
+
+        <a href="feature.html?card=sports" class="primary-btn">
+          Discover sporting events ↗
+        </a>
+      </div>
+
+    </section>
+
+
+    <!-- 06. RESOURCES -->
+
+    <section class="resources-section section-padding" id="resources">
+
+      <div class="section-heading">
+        <span class="eyebrow">USEFUL PLACES TO START</span>
+        <h2>Resources for <span>your journey.</span></h2>
+      </div>
+
+      <div class="resource-grid">
+
+        <a href="https://www.who.int/" target="_blank" rel="noopener">
+          <span>01</span>
+          <h3>World Health Organization</h3>
+          <p>Reliable international health information.</p>
+        </a>
+
+        <a href="https://www.unicef.org/" target="_blank" rel="noopener">
+          <span>02</span>
+          <h3>UNICEF</h3>
+          <p>Children's rights, education and wellbeing.</p>
+        </a>
+
+        <a href="https://www.un.org/en/" target="_blank" rel="noopener">
+          <span>03</span>
+          <h3>United Nations</h3>
+          <p>Global issues and international initiatives.</p>
+        </a>
+
+        <a href="https://www.cbse.gov.in/" target="_blank" rel="noopener">
+          <span>04</span>
+          <h3>CBSE</h3>
+          <p>Official academic information and resources.</p>
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- 07. SAVED PAGES AREA -->
+
+    <section class="saved-section section-padding" id="savedPages">
+
+      <div class="section-heading">
+        <span class="eyebrow">YOUR PERSONAL COLLECTION</span>
+        <h2>My saved <span>pages.</span></h2>
+        <p>Your saved activities and reflections appear here.</p>
+      </div>
+
+      <div id="savedPageList" class="saved-grid"></div>
+
+    </section>
+
   </main>
 
-  <footer>
-    <a class="logo" href="#home">To the ether<span>.</span></a>
-    <p>Made for the days when you need a little space.</p>
+
+  <!-- 08. FOOTER -->
+
+  <footer class="footer">
+
+    <a href="index.html" class="logo">To the ether<span>.</span></a>
+
+    <p>
+      You are allowed to grow at your own pace.
+    </p>
+
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#explore">Explore</a>
+      <a href="#events">Events</a>
+    </div>
+
+    <p class="copyright">
+      © 2026 To the Ether. Created with purpose.
+    </p>
+
   </footer>
 
-  <dialog id="authDialog" class="modal">
-    <form id="authForm" class="modal-content">
-      <button type="button" class="modal-close" id="closeAuth">×</button>
-      <p class="eyebrow" id="authEyebrow">Welcome back</p>
-      <h2 id="authTitle">Log in</h2>
-      <label>Email<input type="email" id="authEmail" required autocomplete="email"></label>
-      <label>Password<input type="password" id="authPassword" required minlength="6" autocomplete="current-password"></label>
-      <button class="button full-width" id="authSubmit" type="submit">Continue</button>
-      <p id="authMessage" class="form-message" aria-live="polite"></p>
+
+  <!-- 09. ACCOUNT DIALOG -->
+
+  <dialog id="accountDialog" class="account-dialog">
+
+    <form method="dialog" class="dialog-close-form">
+      <button class="close-dialog" aria-label="Close">×</button>
     </form>
+
+    <span class="eyebrow">YOUR PERSONAL SPACE</span>
+
+    <h2>Welcome to <span>your space.</span></h2>
+
+    <p>Sign in or create an account to access your personal space.</p>
+
+    <form id="authForm">
+
+      <label for="authEmail">Email address</label>
+      <input id="authEmail" type="email" required placeholder="you@example.com">
+
+      <label for="authPassword">Password</label>
+      <input id="authPassword" type="password" required minlength="6">
+
+      <button class="primary-btn" type="submit" id="authSubmit">
+        Sign in
+      </button>
+
+    </form>
+
+    <button id="toggleAuth" class="text-btn">
+      New here? Create an account
+    </button>
+
+    <p id="authMessage" role="status"></p>
+
+    <p class="small-note">
+      Cloud authentication requires your Supabase project settings.
+    </p>
+
   </dialog>
 
-  <script src="script.js"></script>
+
+  <!-- Accessibility and status messages -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
 </body>
 </html>
