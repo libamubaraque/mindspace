@@ -9,240 +9,85 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-
-<header class="header">
-  <a href="index.html" class="logo">To the ether<span>.</span></a>
-
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
-
-  <nav id="mainNav">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#explore">Explore</a>
-    <a href="#resources">Resources</a>
-  </nav>
-
-  <button class="account-btn" id="accountButton">My Space ↗</button>
-</header>
-
-<main>
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <p class="eyebrow">A LITTLE SPACE THAT BELONGS TO YOU</p>
-      <h1>Find your way.<br><em>At your own pace.</em></h1>
-      <p class="hero-description">
-        A place to pause, discover yourself, find direction
-        and appreciate the little things along the way.
-      </p>
-      <a href="#explore" class="primary-btn">Explore your space ↗</a>
-      <p class="hero-note">No pressure. No expectations. Just you.</p>
+  <header class="site-header">
+    <a class="logo" href="index.html">To the ether<span>.</span></a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#explore">Explore</a>
+      <a href="#saved">My Saved Pages</a>
+    </nav>
+    <div class="header-actions">
+      <button class="button button-outline" id="loginButton">Log in</button>
+      <button class="button" id="signupButton">Sign up</button>
     </div>
+  </header>
 
-    <div class="hero-image">
-      <img src="images/fern.jpg" alt="Fern leaves in soft natural light">
-      <span class="image-caption">Grow in your own time.</span>
-    </div>
-  </section>
-
-  <section class="about-section" id="about">
-    <p class="eyebrow">A NOTE FROM US</p>
-    <h2>You don't have to have<br>everything figured out.</h2>
-    <p>
-      Growing up comes with questions, unexpected changes,
-      little victories and difficult days. To the Ether is a
-      student-friendly space to explore all of them.
-    </p>
-  </section>
-
-  <section class="explore-section" id="explore">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">YOUR PERSONAL COLLECTION</p>
-        <h2>Explore your spaces.</h2>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">A little space that belongs to you</p>
+        <h1>Grow at your own pace.<br><em>Find your own ether.</em></h1>
+        <p class="hero-description">A student space for your thoughts, goals, creativity, wellbeing and everything in between.</p>
+        <a class="button" href="#explore">Explore your space ↗</a>
       </div>
-      <p>Ten little corners. Endless possibilities.</p>
-    </div>
-
-    <div class="feature-grid">
-
-      <a href="feature.html?feature=mood-journal" class="feature-card" data-feature="mood-journal">
-        <div class="card-content">
-          <span>01 / REFLECT</span>
-          <h3>Mood Journal</h3>
-          <p>Understand your feelings, one day at a time.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=breathing-space" class="feature-card" data-feature="breathing-space">
-        <div class="card-content">
-          <span>02 / PAUSE</span>
-          <h3>Breathing Space</h3>
-          <p>Slow down and take a moment for yourself.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=gratitude-journal" class="feature-card" data-feature="gratitude-journal">
-        <div class="card-content">
-          <span>03 / APPRECIATE</span>
-          <h3>Gratitude Journal</h3>
-          <p>Collect the little things worth remembering.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=fitness-wellness" class="feature-card" data-feature="fitness-wellness">
-        <div class="card-content">
-          <span>04 / MOVE</span>
-          <h3>Fitness & Wellness</h3>
-          <p>Make room for movement, rest and healthy habits.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=daily-check-in" class="feature-card" data-feature="daily-check-in">
-        <div class="card-content">
-          <span>05 / CONNECT</span>
-          <h3>Daily Check-in</h3>
-          <p>Little wins, small talks and first steps.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=study-focus" class="feature-card" data-feature="study-focus">
-        <div class="card-content">
-          <span>06 / LEARN</span>
-          <h3>Study & Focus</h3>
-          <p>Make studying feel a little more manageable.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=self-care" class="feature-card" data-feature="self-care">
-        <div class="card-content">
-          <span>07 / CARE</span>
-          <h3>Self-care Corner</h3>
-          <p>Care for yourself beyond appearances.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=stories-hope" class="feature-card" data-feature="stories-hope">
-        <div class="card-content">
-          <span>08 / DISCOVER</span>
-          <h3>Stories & Hope</h3>
-          <p>Real-world challenges, courage and change.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=career-exploration" class="feature-card" data-feature="career-exploration">
-        <div class="card-content">
-          <span>09 / DREAM</span>
-          <h3>Career Exploration</h3>
-          <p>Discover possibilities beyond the classroom.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-      <a href="feature.html?feature=my-little-world" class="feature-card" data-feature="my-little-world">
-        <div class="card-content">
-          <span>10 / REMEMBER</span>
-          <h3>My Little World</h3>
-          <p>A personal collection of memories and moments.</p>
-          <b>Enter space ↗</b>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-  <section class="saved-section">
-    <p class="eyebrow">YOUR COLLECTION</p>
-    <h2>My Saved Pages.</h2>
-    <p>Your saved journals, reflections and creations live here.</p>
-    <div id="savedPages" class="saved-grid">
-      <p class="empty-saved-message">Your saved creations will appear here.</p>
-    </div>
-  </section>
-
-  <section class="resources-section" id="resources">
-    <p class="eyebrow">A LITTLE HELP WHEN YOU NEED IT</p>
-    <h2>Useful resources.</h2>
-    <div class="resource-links">
-      <a href="https://www.who.int/health-topics/mental-health" target="_blank" rel="noopener">WHO — Mental Health ↗</a>
-      <a href="https://www.unicef.org/parenting/mental-health" target="_blank" rel="noopener">UNICEF — Mental Wellbeing ↗</a>
-      <a href="https://www.mohfw.gov.in/" target="_blank" rel="noopener">India — Ministry of Health ↗</a>
-    </div>
-    <p class="small-note">This website is a student wellbeing project, not a substitute for professional care. If you need support, speak with a trusted adult or qualified professional.</p>
-  </section>
-</main>
-
-<footer>
-  <a href="#home" class="logo">To the ether<span>.</span></a>
-  <p>Take your time. You're allowed to grow slowly.</p>
-  <small>Made with care · 2026</small>
-</footer>
-
-
-
-<!-- ACCOUNT POP-UP -->
-<div class="modal" id="accountModal">
-  <div class="modal-box">
-    <button class="modal-close" id="closeModal" type="button">×</button>
-
-    <p class="eyebrow">YOUR PERSONAL SPACE</p>
-    <h2 id="accountHeading">A little introduction.</h2>
-    <p id="accountDescription">
-      Create your personal space at To the Ether.
-    </p>
-
-    <form id="accountForm">
-
-      <div id="signupFields">
-        <label for="accountName">Display name</label>
-        <input id="accountName" type="text"
-          placeholder="What should we call you?">
-
-        <label for="accountUsername">Username</label>
-        <input id="accountUsername" type="text"
-          placeholder="Choose a username">
-
+      <div class="hero-note">
+        <span class="script">A gentle reminder</span>
+        <p>You don't have to have everything figured out today.</p>
       </div>
+    </section>
 
-      <label for="accountEmail">Email</label>
-      <input id="accountEmail" type="email"
-        placeholder="Enter your email" required>
+    <section class="intro section" id="about">
+      <p class="eyebrow">Welcome to your space</p>
+      <h2>More than a website.<br><em>A space to become.</em></h2>
+      <p>To the Ether. brings together small tools for everyday life: reflecting, learning, moving, creating, planning and discovering the world around you.</p>
+    </section>
 
-      <label for="accountPassword">Password</label>
-      <input id="accountPassword" type="password"
-        placeholder="Enter your password"
-        minlength="8" required>
+    <section class="section explore-section" id="explore">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Your personal space</p>
+          <h2>Explore <em>your world.</em></h2>
+        </div>
+        <p>Choose a space. Start wherever you are.</p>
+      </div>
+      <div class="card-grid" id="cardGrid"></div>
+    </section>
 
-      <button class="primary-btn" id="accountSubmit"
-        type="submit">Create account ↗</button>
+    <section class="section saved-section" id="saved">
+      <p class="eyebrow">Your little collection</p>
+      <h2>My Saved <em>Pages.</em></h2>
+      <p class="muted">Your saved journal entries, plans, reflections and creations appear here on this device.</p>
+      <div id="savedPages" class="saved-grid"></div>
+    </section>
+
+    <section class="closing section">
+      <p class="script">Take your time.</p>
+      <h2>Every small step<br>is still a step.</h2>
+      <a class="button button-outline" href="#home">Back to the beginning ↑</a>
+    </section>
+  </main>
+
+  <footer>
+    <a class="logo" href="#home">To the ether<span>.</span></a>
+    <p>Made for the days when you need a little space.</p>
+  </footer>
+
+  <dialog id="authDialog" class="modal">
+    <form id="authForm" class="modal-content">
+      <button type="button" class="modal-close" id="closeAuth">×</button>
+      <p class="eyebrow" id="authEyebrow">Welcome back</p>
+      <h2 id="authTitle">Log in</h2>
+      <label>Email<input type="email" id="authEmail" required autocomplete="email"></label>
+      <label>Password<input type="password" id="authPassword" required minlength="6" autocomplete="current-password"></label>
+      <button class="button full-width" id="authSubmit" type="submit">Continue</button>
+      <p id="authMessage" class="form-message" aria-live="polite"></p>
     </form>
+  </dialog>
 
-    <p id="accountMessage" class="form-message"
-      aria-live="polite"></p>
-
-    <p>
-      <span id="accountSwitchText">Already have an account?</span>
-      <button type="button" id="accountSwitch"
-        class="account-switch">Log in</button>
-    </p>
-
-    <button type="button" id="logoutButton"
-      hidden>Log out</button>
-
-    <small>Your personal account is protected by Supabase authentication.</small>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
