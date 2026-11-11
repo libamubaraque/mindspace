@@ -1,24 +1,9 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <!-- =====================================================
-       TO THE ETHER.
-       INDIVIDUAL FEATURE PAGE
-
-       JUDGE EXPLANATION:
-       This is a reusable page template.
-       Instead of creating twenty separate HTML files,
-       one template dynamically loads twenty experiences.
-
-       This makes the project easier to maintain and expand.
-  ====================================================== -->
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="theme-color" content="#20271D">
 
   <title>Explore | To the Ether.</title>
@@ -26,227 +11,96 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script src="feature.js" defer></script>
-
 </head>
 
+<body>
 
-<body class="feature-page">
-
-  <!-- 01. FEATURE NAVIGATION -->
-
-  <header class="navbar">
-
+  <header class="header">
     <a href="index.html" class="logo">
-      To the ether<span>.</span>
+      To the <span>ether.</span>
     </a>
 
-    <nav class="nav-links">
+    <button class="menu-toggle" id="menuToggle"
+      aria-label="Toggle navigation">☰</button>
+
+    <nav id="mainNav">
       <a href="index.html">Home</a>
       <a href="index.html#about">About</a>
       <a href="index.html#explore">Explore</a>
-      <a href="index.html#events">Events</a>
+      <a href="index.html#resources">Resources</a>
     </nav>
 
-    <a href="index.html#savedPages" class="outline-btn">
-      My Saved Pages
-    </a>
-
+    <button class="account-btn" id="accountButton">
+      My Account
+    </button>
   </header>
 
+  <main class="feature-main">
 
-  <!-- 02. DYNAMIC FEATURE HERO -->
+    <section class="feature-hero">
+      <p class="eyebrow" id="featureCategory">
+        YOUR PERSONAL SPACE
+      </p>
 
-  <main id="featureMain">
+      <h1 id="featureTitle">
+        Welcome to your space.
+      </h1>
 
-    <section class="feature-hero" id="featureHero">
+      <p id="featureDescription">
+        Take your time. Explore, create and grow at your own pace.
+      </p>
+    </section>
 
-      <div class="feature-hero-content">
+    <div class="feature-workspace">
 
-        <a href="index.html#explore" class="back-link">
-          ← Back to all spaces
-        </a>
+      <div class="feature-content" id="featureContent">
 
-        <span class="eyebrow" id="featureNumber">
-          YOUR PERSONAL SPACE
-        </span>
-
-        <h1 id="featureTitle">
-          Loading your space...
-        </h1>
-
-        <p id="featureDescription"></p>
+        <section class="tool-section">
+          <h2>Welcome</h2>
+          <p>
+            This is your space. There is no pressure to finish
+            everything. Start wherever you feel comfortable.
+          </p>
+        </section>
 
       </div>
 
-    </section>
+      <aside class="saved-sidebar">
 
+        <p class="eyebrow">YOUR COLLECTION</p>
 
-    <!-- 03. FEATURE CONTENT -->
-
-    <div class="feature-body">
-
-      <!-- Purpose and educational introduction -->
-
-      <section class="feature-section" id="introduction">
-
-        <span class="eyebrow">01 — UNDERSTANDING</span>
-
-        <h2>Discover this space.</h2>
-
-        <div id="featureIntroduction"></div>
-
-      </section>
-
-
-      <!-- Detailed learning content -->
-
-      <section class="feature-section" id="learn">
-
-        <span class="eyebrow">02 — LEARN SOMETHING NEW</span>
-
-        <h2>Explore and understand.</h2>
-
-        <div id="learningContent"></div>
-
-      </section>
-
-
-      <!-- Facts and useful information -->
-
-      <section class="feature-section" id="facts">
-
-        <span class="eyebrow">03 — DID YOU KNOW?</span>
-
-        <h2>Interesting facts.</h2>
-
-        <div id="factContent"></div>
-
-      </section>
-
-
-      <!-- Practical activities -->
-
-      <section class="feature-section" id="activities">
-
-        <span class="eyebrow">04 — YOUR EXPERIENCE</span>
-
-        <h2>Put it into practice.</h2>
-
-        <div id="activityContent"></div>
-
-      </section>
-
-
-      <!-- Interactive tools -->
-
-      <section class="feature-section" id="interactiveTools">
-
-        <span class="eyebrow">05 — INTERACTIVE SPACE</span>
-
-        <h2>Try something yourself.</h2>
-
-        <div id="toolsContent"></div>
-
-      </section>
-
-
-      <!-- Tutorials -->
-
-      <section class="feature-section" id="tutorials">
-
-        <span class="eyebrow">06 — WATCH AND LEARN</span>
-
-        <h2>Guided tutorials.</h2>
+        <h2>My Saved Pages</h2>
 
         <p>
-          Explore external video lessons and practical
-          demonstrations relevant to this feature.
+          Your saved journals, ideas and memories, all in one place.
         </p>
 
-        <div id="videoContent" class="video-grid"></div>
+        <div id="featureSavedPages">
+          <p class="empty-saved-message">
+            Your saved pages will appear here.
+          </p>
+        </div>
 
-      </section>
+        <a href="index.html#savedPages" class="feature-action">
+          View All Saved Pages
+        </a>
 
-
-      <!-- Useful links -->
-
-      <section class="feature-section" id="resources">
-
-        <span class="eyebrow">07 — FURTHER DISCOVERY</span>
-
-        <h2>Useful resources.</h2>
-
-        <div id="resourceContent"></div>
-
-      </section>
-
-
-      <!-- Saved content -->
-
-      <section class="feature-section" id="savedContent">
-
-        <span class="eyebrow">08 — YOUR PERSONAL COLLECTION</span>
-
-        <h2>My saved pages.</h2>
-
-        <div id="featureSavedPages"></div>
-
-      </section>
-
-
-      <!-- Progress -->
-
-      <section class="feature-section" id="progress">
-
-        <span class="eyebrow">09 — YOUR JOURNEY</span>
-
-        <h2>Your progress.</h2>
-
-        <div id="progressContent"></div>
-
-      </section>
+      </aside>
 
     </div>
 
   </main>
 
-
-  <!-- 04. FOOTER -->
-
-  <footer class="footer">
-
-    <a href="index.html" class="logo">
-      To the ether<span>.</span>
-    </a>
-
-    <p>
-      Every small step counts.
-    </p>
-
-    <div class="footer-links">
-      <a href="index.html">Homepage</a>
-      <a href="index.html#about">About</a>
-      <a href="index.html#explore">Explore more</a>
-    </div>
-
-    <p class="copyright">
-      © 2026 To the Ether.
-    </p>
-
+  <footer>
+    <h2>To the ether.</h2>
+    <p>A little space to breathe, become and belong.</p>
+    <small>Made with care. You matter.</small>
   </footer>
 
-
-  <!-- Status notification -->
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="feature.js"></script>
 
 </body>
-
 </html>
