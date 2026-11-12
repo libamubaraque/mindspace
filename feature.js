@@ -1,1310 +1,810 @@
-/* =========================================================
-   TO THE ETHER. — ALL 20 FEATURE SPACES
-   Activities | Learning | Tutorials | Saved Pages | Progress
-   Browser-storage prototype. Supabase sync comes later.
-   ========================================================= */
+/* =====================================================
+   TO THE ETHER — INDIVIDUAL FEATURE PAGES
+   ===================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-  "use strict";
+const data = {
+  mood: {
+    title:"Mood Journal", category:"WELLBEING", image:"images/mood.jpg",
+    description:"Understand your feelings, make space for your thoughts and reflect without judgement.",
+    type:"journal",
+    sections:[
+      ["Understanding your emotions","Emotions are information about how you experience the world. Happiness, frustration, sadness, excitement and uncertainty are all part of being human. You do not need to label a feeling as good or bad before you can understand it."],
+      ["Name what you feel","Sometimes it is difficult to explain exactly how you feel. Try using a few words: calm, disappointed, nervous, hopeful, confused, lonely, excited or overwhelmed. More than one feeling can exist at the same time."],
+      ["Five journal ideas","Write about one moment you want to remember; something that challenged you; a person who made your day better; something you wish people understood; or one thing you want to try tomorrow."],
+      ["When a day feels difficult","You do not have to turn every difficult experience into a lesson immediately. Describe what happened, what you needed at that moment and whether there is someone you would feel comfortable talking to."],
+      ["Notice patterns gently","Looking back at entries may help you notice what activities, situations or routines affect your mood. Patterns are clues, not rules. A journal cannot diagnose a health condition."],
+      ["A small reflection habit","Try writing for three minutes. You can use a sentence, a list or a few words. You do not have to write every day for journaling to be meaningful."],
+      ["Privacy and support","Your entries in this version are stored in this browser on this device. They are not a confidential counselling service. If something feels too difficult to manage alone, speak to a trusted adult or qualified professional."],
+      ["Try this today","Complete the sentence: 'Right now, I wish I had a little more…' Then write one small, realistic thing that might help."]
+    ]
+  },
 
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("feature");
+  breathing: {
+    title:"Breathing Space", category:"WELLBEING", image:"images/breathing.jpg",
+    description:"Take a comfortable pause. Explore breathing, quiet reflection and gentle mindfulness.",
+    type:"breathing",
+    sections:[
+      ["What is mindful breathing?","Mindful breathing means paying attention to the natural movement of your breath. It is not about forcing yourself to breathe in a particular way or trying to make every thought disappear."],
+      ["A comfortable breathing pause","Sit somewhere comfortable. Let your breathing remain natural. Notice the air moving in and out. If your attention wanders, gently bring it back. Stop if you feel dizzy or uncomfortable."],
+      ["Four ways to pause","Try natural breathing, a slow gentle exhale, counting a comfortable number of breaths or simply sitting quietly. Choose the option that feels comfortable; you never need to hold your breath."],
+      ["Mindfulness beyond breathing","You can notice five things around you, listen carefully to nearby sounds, feel your feet resting on the floor or observe the movement of leaves outside."],
+      ["When to take a break","A short pause can be useful between study sessions, after a busy day or when you want to change activities. It is not a replacement for help with ongoing distress."],
+      ["Nature and quiet","Some people enjoy soft rain, wind or forest sounds. Others prefer silence. Choose a calm environment that suits you and keep the volume comfortable."],
+      ["Reflect afterwards","Ask yourself whether the pause felt comfortable, whether you would change anything and whether you would prefer another activity next time."],
+      ["A no-pressure reminder","You do not have to complete a session or reach a particular result. You can stop whenever you want. If breathing exercises make you uncomfortable, simply rest or choose another activity."]
+    ]
+  },
 
-  const titleElement = document.getElementById("featureTitle");
-  const categoryElement = document.getElementById("featureCategory");
-  const descriptionElement = document.getElementById("featureDescription");
-  const contentElement = document.getElementById("featureContent");
-  const savedElement = document.getElementById("featureSavedPages");
+  gratitude: {
+    title:"Gratitude Journal", category:"WELLBEING", image:"images/gratitude.jpg",
+    description:"Notice meaningful moments, appreciate people and collect memories worth keeping.",
+    type:"journal",
+    sections:[
+      ["What gratitude means","Gratitude is noticing something you appreciate. It can be a person, an opportunity, a kind gesture or an ordinary moment. It does not mean pretending that difficult experiences do not exist."],
+      ["Small things count","A comfortable place to sit, a good conversation, a favourite song or a moment outdoors can be worth remembering. Your examples do not need to sound impressive."],
+      ["People who matter","Think about someone who has helped you, encouraged you or made an ordinary day better. You could write a letter of appreciation even if you decide not to send it."],
+      ["Five gratitude prompts","What made me smile? What did I learn? Who supported me? What place makes me feel comfortable? What ordinary thing would I miss if it disappeared?"],
+      ["Gratitude and difficult days","You can appreciate one thing while still being upset about something else. Gratitude should never be used to silence your feelings or make you feel guilty."],
+      ["Create a memory collection","Save short notes about events, conversations, achievements and experiences. Over time, they can become a record of things you want to remember."],
+      ["Make it a gentle habit","Try writing one or two observations when you feel like it. There is no need to force a daily routine or compare your entries with anyone else's."],
+      ["Try this today","Write about one person, place or experience that has made a positive difference in your life."]
+    ]
+  },
 
-  const SAVED_KEY = "etherSavedPages";
-  const PROGRESS_KEY = "etherFeatureProgress";
+  fitness: {
+    title:"Fitness & Wellness", category:"WELLBEING", image:"images/fitness.jpg",
+    description:"Explore movement, rest, healthy routines and ways to care for your everyday wellbeing.",
+    type:"fitness",
+    sections:[
+      ["Movement is for wellbeing","Physical activity supports many aspects of health, including heart and muscle function, mobility and general wellbeing. Movement can include walking, cycling, dancing, games or organised sport."],
+      ["Find an activity you enjoy","The best activity is one that is suitable, enjoyable and accessible to you. You do not need expensive equipment or a competitive goal to enjoy being active."],
+      ["Running and walking","Walking and running can be ways to explore your surroundings and build a movement habit. Start at a comfortable level, take breaks and involve a trusted adult when planning outdoor activities."],
+      ["Rest is part of wellness","Rest days, enough sleep, hydration and recovery matter. You do not have to exercise every day, and movement should never be used as punishment for eating or for how your body looks."],
+      ["Screen-time breaks","Long periods sitting at a screen can make you feel tired or uncomfortable. Try changing position, looking away from the screen and taking a short movement break."],
+      ["Explore different activities","Try a beginner-friendly yoga session, a walk, a dance routine, a cycle ride with appropriate supervision or a sport you have always wanted to learn."],
+      ["Track experiences, not appearance","You can record activities you enjoyed, how they felt and what you learned. Avoid using measurements or comparisons as a judgement of your worth."],
+      ["Try this today","Choose one comfortable activity you enjoy. Record what you did and whether you would like to do it again."]
+    ]
+  },
 
-  if (!contentElement) return;
+  checkin: {
+    title:"Daily Check-in", category:"WELLBEING", image:"images/checkin.jpg",
+    description:"Pause for a moment and notice how your day is going.",
+    type:"journal",
+    sections:[
+      ["A moment for yourself","A check-in is a short opportunity to notice what is happening in your day. It is not a test and there are no correct answers."],
+      ["Notice your energy","Ask whether you feel ready for an activity, need a break or are unsure what you need. Your energy can change during the day."],
+      ["Celebrate small wins","A small win could be asking a question, finishing a task, helping someone or trying again after something did not work."],
+      ["The power of reflection","Looking back at an experience can help you understand what went well, what was difficult and what you might do differently next time."],
+      ["Ask yourself something new","What surprised you today? What would you like to learn? What made you laugh? What would make tomorrow a little easier?"],
+      ["Connection matters","A short conversation with someone you trust can make a difference. You do not have to explain everything perfectly to ask for company or support."],
+      ["A fresh start","If your day did not go as planned, choose one manageable next step. You can begin again without needing to fix everything at once."],
+      ["Try this today","Write one thing you noticed, one thing you appreciated and one thing you want to do next."]
+    ]
+  },
 
-  /* ---------- HELPERS ---------- */
+  study: {
+    title:"Study & Focus", category:"GROWTH", image:"images/study.jpg",
+    description:"Make studying manageable with small goals, focused sessions and proper breaks.",
+    type:"study",
+    sections:[
+      ["Understand your learning style","People learn in different ways and often benefit from combining reading, practice, discussion, diagrams and explanations. Experiment to find what helps you understand a topic."],
+      ["Break down big tasks","A large assignment can feel difficult to begin. Divide it into smaller actions, such as reading one page, solving three questions or writing one paragraph."],
+      ["The 10-minute start","Choose one task and work on it for ten minutes. When the timer ends, take a short break or continue if you feel ready. The purpose is to make starting easier."],
+      ["Active recall","Instead of only rereading notes, close the book and try to explain the idea from memory. Then check what you missed and practise again."],
+      ["Spaced practice","Returning to information over several study sessions can support long-term learning. A short review on different days is often more useful than leaving everything until the last minute."],
+      ["A useful study environment","Keep the materials you need nearby, reduce unnecessary distractions and choose a comfortable place. Music or silence is a personal preference."],
+      ["Breaks are important","A break gives you time to move, drink water and rest your attention. A study plan should include breaks rather than treating rest as failure."],
+      ["Try this today","Write down one topic, one small task and one time you will take a break. Begin with the first ten minutes."]
+    ]
+  },
 
-  function escapeHTML(value = "") {
-    return String(value).replace(/[&<>"']/g, character => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    })[character]);
+  selfcare: {
+    title:"Self-care Corner", category:"WELLBEING", image:"images/selfcare.jpg",
+    description:"Explore practical routines for personal care, rest, relationships and wellbeing.",
+    type:"journal",
+    sections:[
+      ["Self-care is everyday care","Self-care is not limited to products or special routines. It can include sleep, hygiene, nutrition, movement, boundaries, asking for help and spending time with people who support you."],
+      ["Basic personal care","Regular bathing, dental care, clean clothes and handwashing are everyday habits that support health. Routines should be practical and suitable for your needs."],
+      ["Skin care basics","A simple routine may include gentle cleansing, moisturising and sun protection when appropriate. Skin differs from person to person, and online trends are not medical advice."],
+      ["Mental and social wellbeing","Rest, enjoyable activities, supportive friendships and honest conversations can all be part of looking after yourself. It is okay to ask for help when something feels difficult."],
+      ["Understanding periods","Menstruation is a normal part of many people's lives. Recording dates and symptoms may help someone understand their own cycle. Severe pain or worrying symptoms should be discussed with a healthcare professional."],
+      ["Healthy boundaries","You can say no to something that makes you uncomfortable. You can ask for privacy, take a break from a conversation or speak to a trusted adult about a situation."],
+      ["Care is not perfection","You do not need an elaborate routine. A few realistic habits that work for your life are more useful than trying to copy someone else's routine."],
+      ["Try this today","Choose one small act of care that would make your day more comfortable. It could be organising your space, resting or talking to someone."]
+    ]
+  },
+
+  stories: {
+    title:"Stories & Hope", category:"COMMUNITY", image:"images/stories.jpg",
+    description:"Explore real-world stories, human rights, humanitarian work and meaningful change.",
+    type:"journal",
+    sections:[
+      ["Why stories matter","Stories can help us understand experiences beyond our own communities. They should be approached with respect for the people involved and care about accuracy."],
+      ["Children's rights","Children have rights to protection, education, healthcare, identity and participation. The UN Convention on the Rights of the Child sets out important principles for these rights."],
+      ["Education in emergencies","Conflict and disasters can interrupt schooling. Humanitarian organisations work with communities to support safe learning opportunities and access to education."],
+      ["Displacement and refugees","People may be forced to leave their homes because of conflict, persecution or serious danger. Refugees and displaced people are individuals with rights, experiences and hopes."],
+      ["Humanitarian work","Humanitarian assistance can include food, clean water, shelter, healthcare, education and protection. Effective support should respect the dignity and needs of affected communities."],
+      ["Environmental challenges","Climate change, pollution and biodiversity loss affect communities differently. Learning about local and global responses helps us understand both challenges and possible solutions."],
+      ["Check information carefully","Look for original reports, publication dates, named organisations and evidence. Be cautious with dramatic claims, edited images and posts that do not identify their sources."],
+      ["Learn and contribute","You can learn about an issue, share reliable educational resources, support age-appropriate school initiatives or take part in supervised community activities."]
+    ]
+  },
+
+  career: {
+    title:"Career Exploration", category:"GROWTH", image:"images/career.jpg",
+    description:"Discover interests, explore occupations and learn about different education pathways.",
+    type:"career",
+    sections:[
+      ["You do not need one fixed dream","Interests can change as you learn more about yourself and the world. Exploring different possibilities is a normal part of making future plans."],
+      ["Start with curiosity","Think about the subjects, problems and activities that hold your attention. Do you enjoy helping people, understanding science, communicating ideas, designing things or organising projects?"],
+      ["Explore career families","Career areas include health, education, science, engineering, environment, law, public service, business, communication, design and creative work."],
+      ["Look beyond job titles","Research what people actually do in a role, the environment they work in, the skills they use and the challenges they face."],
+      ["Understand education pathways","Different careers require different qualifications. Check official university, college and professional-body information before making decisions about courses or entrance examinations."],
+      ["Compare pathways thoughtfully","Consider course duration, fees, location, admission requirements, training, work opportunities and whether the everyday work suits your interests."],
+      ["Dreams beyond a career","Your future can include relationships, hobbies, service, travel, learning and personal goals. A job is one part of a life, not the whole of it."],
+      ["Try this today","Choose three areas that interest you. Write one question you want answered about each and research them using reliable sources."]
+    ]
+  },
+
+  scrapbook: {
+    title:"My Little World", category:"CREATIVE", image:"images/scrapbook.jpg",
+    description:"Collect memories, photographs, personal letters and moments you want to remember.",
+    type:"scrapbook",
+    sections:[
+      ["A personal collection","A scrapbook can hold photographs, short notes, meaningful dates, drawings and memories. It does not need to look perfect or follow a particular style."],
+      ["Remember ordinary moments","A favourite meal, a day with friends, a school event or a quiet afternoon can become a meaningful memory later."],
+      ["Letters to yourself","Write a letter about what matters to you today. You might revisit it in a few months and notice how your thoughts have changed."],
+      ["Make room for every feeling","Personal reflection can include difficult days as well as happy ones. You do not have to turn every experience into something positive."],
+      ["Create a timeline","Collect memories by month, year, school term or important event. A timeline can help you see experiences in context."],
+      ["Photographs and consent","Think about other people's privacy before saving or sharing their photographs. Ask permission before posting images that include someone else."],
+      ["Keep your collection safe","This version saves entries in your browser on this device. Clearing browser data or changing devices may remove access to them."],
+      ["Try this today","Save one photograph or write one paragraph about a moment you do not want to forget."]
+    ]
+  },
+
+  movies: {
+    title:"Movie Theatre", category:"CREATIVE", image:"images/movies.jpg",
+    description:"Explore films, discover genres and build your own movie collection.",
+    type:"journal",
+    sections:[
+      ["Explore different genres","Films can include comedy, animation, drama, documentary, mystery, adventure, science fiction and historical storytelling."],
+      ["Watch with curiosity","Notice how a film uses music, lighting, dialogue, editing and camera angles to create a mood or communicate an idea."],
+      ["Build a watchlist","Keep a list of films you want to explore and note why they caught your attention."],
+      ["Documentary and real life","Documentaries can introduce historical events, scientific questions and social issues. Check their sources and remember that a documentary still reflects choices made by its creators."],
+      ["Film discussions","Ask what the main character learned, what the film wanted the audience to consider and whether the story represented different perspectives fairly."],
+      ["Explore film history","Cinema has changed through silent films, sound, colour, animation, digital effects and new ways of distributing films."],
+      ["Respectful recommendations","Consider age ratings, content guidance and the preferences of the people watching with you."],
+      ["Try this today","Write a short review of a film you have watched: what worked, what surprised you and who might enjoy it."]
+    ]
+  },
+
+  commons: {
+    title:"The Commons", category:"COMMUNITY", image:"images/commons.jpg",
+    description:"Find shared interests, discover clubs and explore collaboration.",
+    type:"journal",
+    sections:[
+      ["Why communities matter","Communities bring people together around shared interests, goals, identities or experiences. They can create opportunities to learn and contribute."],
+      ["Find your interests","Clubs can focus on books, science, art, debate, environment, sport, technology, volunteering or cultural activities."],
+      ["Starting a club","Begin with a clear purpose, a few interested people, an adult supervisor where required and a realistic plan for meetings."],
+      ["Working together","Good collaboration involves listening, sharing responsibilities, respecting different opinions and communicating clearly."],
+      ["Make participation welcoming","People have different confidence levels and abilities. Offer different ways to take part rather than expecting everyone to contribute in the same way."],
+      ["Plan a small project","A club might organise a book exchange, a learning session, a school garden activity or a supervised awareness event."],
+      ["Online community safety","Protect personal information, use respectful communication and involve trusted adults when an online interaction feels unsafe."],
+      ["Try this today","Write down one club you would join and one idea you would like that club to try."]
+    ]
+  },
+
+  sports: {
+    title:"Sports & Events", category:"COMMUNITY", image:"images/sports.jpg",
+    description:"Discover sports, learn about events and explore participation.",
+    type:"sports",
+    sections:[
+      ["Sport has many forms","Sport includes team games, individual activities, athletics, swimming, cycling, martial arts and recreational movement."],
+      ["Participation matters","Sport can provide opportunities to practise cooperation, communication, persistence and respect for others."],
+      ["Explore a new sport","Learn the basic rules, equipment, accessibility needs and safety guidance before trying an unfamiliar activity."],
+      ["Events and calendars","School competitions, community events and international tournaments have different schedules. Always check the official organiser for current dates."],
+      ["Respect and fair play","Fair play includes following rules, respecting opponents, accepting decisions and recognising effort."],
+      ["Athletes and inspiration","Athlete stories can show different journeys, challenges and achievements. Remember that professional sport is not the only meaningful way to participate."],
+      ["Safe participation","Use suitable equipment, follow qualified guidance and involve a parent or trusted adult when researching or registering for events."],
+      ["Try this today","Choose one sport you want to understand better and write down three questions about it."]
+    ]
+  },
+
+  planner: {
+    title:"Day Planner", category:"GROWTH", image:"images/planner.jpg",
+    description:"Plan your day with realistic tasks, useful breaks and room for change.",
+    type:"planner",
+    sections:[
+      ["Plan around real life","A useful plan reflects your actual commitments, available time and energy. It should guide you, not make you feel guilty."],
+      ["Choose priorities","Identify what needs attention first. Separate important tasks from activities that can wait."],
+      ["Break tasks into steps","Instead of writing 'study science', write 'read the section', 'make five notes' or 'answer three questions'."],
+      ["Include breaks","Plan time to eat, rest, move around and enjoy activities. A schedule without breaks is difficult to maintain."],
+      ["Allow flexibility","Unexpected events happen. Leave some open time and adjust your plan when something changes."],
+      ["My day did not go as planned","Choose the next useful step rather than trying to recover every missed task. You can move unfinished work to another day."],
+      ["Reflect without judgement","At the end of the day, notice what worked and what made things difficult. Use that information to make tomorrow's plan more realistic."],
+      ["Try this today","Add three manageable tasks to the planner below and tick them off as you complete them."]
+    ]
+  },
+
+  creative: {
+    title:"The Creative Studio", category:"CREATIVE", image:"images/creative.jpg",
+    description:"Make room for imagination, writing, ideas and creative experiments.",
+    type:"journal",
+    sections:[
+      ["Creativity is a process","Creative work can begin with curiosity, observation, experimentation and practice. It does not need to be perfect to be worthwhile."],
+      ["Collect ideas","Keep notes about interesting conversations, images, questions, places and experiences that inspire you."],
+      ["Writing experiments","Try poetry, short stories, personal essays, dialogue, descriptions or a fictional diary entry."],
+      ["Visual expression","Drawing, collage, photography, design and crafts can communicate ideas in ways that words sometimes cannot."],
+      ["Creative challenges","Try describing a place using five senses, writing a story from an unusual perspective or creating something using only a few materials."],
+      ["Learn from feedback","Feedback can help you improve, but it should be specific and respectful. Keep your own goals in mind when deciding what to change."],
+      ["Save your projects","Collect drafts and finished work. Looking back can help you notice how your skills and interests develop."],
+      ["Try this today","Write for five minutes about something you noticed today. Do not edit while you are getting your first ideas down."]
+    ]
+  },
+
+  kindness: {
+    title:"The Kindness Project", category:"COMMUNITY", image:"images/kindness.jpg",
+    description:"Explore everyday kindness, community contribution and thoughtful action.",
+    type:"journal",
+    sections:[
+      ["What kindness looks like","Kindness can include listening, including someone, sharing knowledge, offering help or respecting another person's boundaries."],
+      ["Small actions matter","A thoughtful message, helping with a task or thanking someone can make everyday interactions more positive."],
+      ["Kindness and boundaries","Being kind does not mean agreeing to everything or ignoring your own needs. Respect and safety matter for everyone."],
+      ["Community contribution","Communities benefit from people sharing skills, supporting local initiatives and taking part in supervised volunteering."],
+      ["Make an idea practical","Choose an action that is safe, realistic and genuinely useful to the people involved. Ask what support is needed rather than assuming."],
+      ["Notice the impact","Reflect on what you learned, what the other person wanted and whether the activity was helpful."],
+      ["Work together","Group projects can include a school book exchange, a clean-up with adult supervision or a collection organised through a trusted organisation."],
+      ["Try this today","Think of one respectful, manageable way to make someone's day a little easier."]
+    ]
+  },
+
+  library: {
+    title:"The Learning Library", category:"GROWTH", image:"images/library.jpg",
+    description:"Follow your curiosity through learning resources, explainers and new ideas.",
+    type:"journal",
+    sections:[
+      ["Learning beyond the classroom","Learning can happen through books, experiments, conversations, documentaries, museums, observation and practical projects."],
+      ["Ask better questions","Start with what you already know, what you are unsure about and what evidence could help answer your question."],
+      ["Check your sources","Look for the author, organisation, publication date, references and original evidence. Compare important claims with reliable sources."],
+      ["Science and discovery","Scientific knowledge develops through observation, testing, evidence, peer review and revision when better information becomes available."],
+      ["History and perspective","Historical events are understood through sources, context and different perspectives. Check who created a source and when."],
+      ["Build a learning habit","Choose one topic, read a short explanation and write down what you learned in your own words."],
+      ["Use tutorials thoughtfully","Follow reliable educational tutorials and practise the skills yourself. Pause, repeat and check your understanding."],
+      ["Try this today","Choose a question you have always wondered about and write down what you would need to research it."]
+    ]
+  },
+
+  sleep: {
+    title:"The Sleep Sanctuary", category:"WELLBEING", image:"images/sleep.jpg",
+    description:"Learn about rest, bedtime routines and making space to unwind.",
+    type:"journal",
+    sections:[
+      ["Why sleep matters","Sleep supports learning, memory, mood, growth and general health. Sleep needs vary with age and individual circumstances."],
+      ["A regular routine","A consistent wind-down routine may help your body prepare for rest. It can include reading, quiet music or preparing for the next day."],
+      ["Create a comfortable space","A calm, comfortable and suitably dark environment may make it easier to rest. Adjust your space where possible."],
+      ["Screens and rest","Bright screens and stimulating content can make it harder for some people to settle. Try a quieter activity before bedtime if that helps you."],
+      ["Notice your habits","A sleep journal can record bedtime, wake time and how rested you feel. It is a way to notice patterns, not a medical diagnosis."],
+      ["Rest is not a reward","You do not need to earn sleep by finishing every task. Rest is a basic part of looking after yourself."],
+      ["When to ask for help","If sleep difficulties continue or affect everyday life, speak with a parent, trusted adult or healthcare professional."],
+      ["Try this today","Choose one calming activity to include in your evening routine."]
+    ]
+  },
+
+  money: {
+    title:"Money Matters", category:"GROWTH", image:"images/money.jpg",
+    description:"Learn the basics of budgeting, saving, spending and financial decisions.",
+    type:"money",
+    sections:[
+      ["Understanding money","Money is used to exchange goods and services, save for future needs and plan for expenses. Learning basic money concepts can support informed decisions."],
+      ["Needs and wants","Needs are essentials such as food and basic supplies. Wants are things people would like to have. The difference can depend on a person's circumstances."],
+      ["What is a budget?","A budget is a plan for money coming in and money going out. It can help people understand spending and plan for future costs."],
+      ["Saving goals","A savings goal identifies what you are setting money aside for and how much you may need. Small amounts can help you practise planning."],
+      ["Compare before buying","Consider quality, usefulness, price and whether you really need an item. Advertisements and trends are not always reliable guides."],
+      ["Basic money terms","Income is money received. Expenses are money spent. Savings are money kept for future use. A balance is what remains after money in and money out are considered."],
+      ["Online money safety","Never share passwords, one-time codes, bank details or personal financial information. Ask a trusted adult before using financial services."],
+      ["Try this today","Use the calculator below to practise a simple budget with imaginary amounts."]
+    ]
+  },
+
+  openmic: {
+    title:"The Open Mic", category:"CREATIVE", image:"images/openmic.jpg",
+    description:"Explore poetry, personal writing, spoken word and the power of expression.",
+    type:"journal",
+    sections:[
+      ["Every voice has a story","Writing can help people communicate ideas, experiences, imagination and questions. You do not need to publish your work for it to matter."],
+      ["Poetry and rhythm","Poetry can use rhythm, repetition, imagery, sound and line breaks to create meaning. There is no single correct way to write a poem."],
+      ["Spoken word","Spoken-word writing is created to be performed aloud. The writer may use pacing, pauses, emphasis and repetition to shape the experience."],
+      ["Find your subject","Begin with a place, memory, question, feeling, person or everyday object. A small observation can become the start of a larger piece."],
+      ["Experiment with form","Try free verse, a short monologue, a letter, a dialogue or a poem with repeated opening lines."],
+      ["Edit with care","Read your work aloud. Notice unclear phrases, repeated ideas and lines that sound especially meaningful to you."],
+      ["Share safely","Choose carefully where and with whom you share personal writing. You can keep drafts private or use a pen name where appropriate."],
+      ["Try this today","Write six lines beginning with the words 'I remember…'"]
+    ]
   }
+};
 
-  function readData(key, fallback = []) {
+/* ---------- STORAGE ---------- */
+
+const Store = {
+  get(key, fallback = []) {
     try {
-      return JSON.parse(localStorage.getItem(key)) ?? fallback;
+      return JSON.parse(localStorage.getItem("ether:" + key)) ?? fallback;
     } catch {
       return fallback;
     }
-  }
+  },
 
-  function writeData(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
-    } catch (error) {
-      console.error("Storage error:", error);
-      alert("Your browser could not save this item. Try using a smaller photo or clearing some browser storage.");
-      return false;
-    }
-  }
+  set(key, value) {
+    localStorage.setItem("ether:" + key, JSON.stringify(value));
+  },
 
-  function today() {
-    return new Date().toLocaleDateString(undefined, {
-      day: "numeric",
-      month: "short",
-      year: "numeric"
-    });
-  }
-
-  function youtubeSearch(query) {
-    return "https://www.youtube.com/results?search_query=" +
-      encodeURIComponent(query);
-  }
-
-  function section(heading, body, extraClass = "") {
-    return `
-      <section class="tool-section ${extraClass}">
-        <h2>${heading}</h2>
-        ${body}
-      </section>
-    `;
-  }
-
-  function textField(id, label, placeholder = "", rows = 4) {
-    return `
-      <label class="field-label" for="${id}">${label}</label>
-      <textarea
-        id="${id}"
-        class="feature-textarea"
-        rows="${rows}"
-        placeholder="${placeholder}"
-      ></textarea>
-    `;
-  }
-
-  function inputField(id, label, placeholder = "", type = "text") {
-    return `
-      <label class="field-label" for="${id}">${label}</label>
-      <input
-        id="${id}"
-        class="feature-input"
-        type="${type}"
-        placeholder="${placeholder}"
-      >
-    `;
-  }
-
-  function selectField(id, label, options) {
-    return `
-      <label class="field-label" for="${id}">${label}</label>
-      <select id="${id}" class="feature-select">
-        ${options.map(option => `
-          <option value="${escapeHTML(option)}">${escapeHTML(option)}</option>
-        `).join("")}
-      </select>
-    `;
-  }
-
-  function button(label, action, className = "primary-button") {
-    return `
-      <button type="button" class="${className}" data-action="${action}">
-        ${label}
-      </button>
-    `;
-  }
-
-  function checklist(items, group = "task") {
-    return `
-      <div class="feature-checklist">
-        ${items.map((item, index) => `
-          <label class="check-item">
-            <input type="checkbox" data-progress="${group}" value="${index}">
-            <span>${item}</span>
-          </label>
-        `).join("")}
-      </div>
-    `;
-  }
-
-  function linkCard(title, description, url, label = "Explore ↗") {
-    return `
-      <a class="resource-card" href="${url}" target="_blank" rel="noopener noreferrer">
-        <h3>${title}</h3>
-        <p>${description}</p>
-        <span>${label}</span>
-      </a>
-    `;
-  }
-
-  function tutorialBlock(query, description) {
-    return `
-      <div class="tutorial-card">
-        <div>
-          <p class="eyebrow">LEARN SOMETHING NEW</p>
-          <h3>Watch and learn</h3>
-          <p>${description}</p>
-        </div>
-        <a href="${youtubeSearch(query)}" target="_blank" rel="noopener noreferrer">
-          Find tutorials on YouTube ↗
-        </a>
-      </div>
-    `;
-  }
-
-  function saveButton() {
-    return `
-      <button type="button" class="primary-button" data-action="save-entry">
-        Save to My Saved Pages
-      </button>
-    `;
-  }
-
-  function savedPages() {
-    return readData(SAVED_KEY, []);
-  }
-
-  function saveEntry(title, content, extra = {}) {
-    if (!String(content || "").trim()) {
-      alert("Write something first, then save your page.");
-      return;
-    }
-
-    const pages = savedPages();
-
-    pages.unshift({
+  add(key, value) {
+    const entries = this.get(key);
+    entries.unshift({
+      ...value,
       id: Date.now(),
-      feature: feature.title,
-      slug,
-      title: title || feature.title,
-      content: String(content).trim(),
-      date: today(),
-      ...extra
+      createdAt: new Date().toISOString()
     });
-
-    if (writeData(SAVED_KEY, pages)) {
-      renderSavedPages();
-      alert("Saved! You can find it in My Saved Pages.");
-    }
+    this.set(key, entries);
   }
+};
 
-  function renderSavedPages() {
-    if (!savedElement) return;
+const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, char => ({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+}[char]));
 
-    const pages = savedPages().filter(page => page.slug === slug);
+/* ---------- PAGE SETUP ---------- */
 
-    if (!pages.length) {
-      savedElement.innerHTML = `
-        <p class="empty-saved-message">
-          Nothing saved here yet. Your saved work will appear in this collection.
-        </p>
-      `;
+const params = new URLSearchParams(location.search);
+const id = params.get("id");
+const space = data[id] || data.mood;
+
+document.title = space.title + " | To the Ether.";
+
+document.getElementById("featureTitle").textContent = space.title;
+document.getElementById("featureCategory").textContent = space.category;
+document.getElementById("featureDescription").textContent = space.description;
+
+const featureImage = document.getElementById("featureImage");
+featureImage.src = space.image;
+featureImage.alt = space.title;
+
+/* ---------- EDUCATIONAL SECTIONS ---------- */
+
+const content = document.getElementById("featureContent");
+
+content.innerHTML = space.sections.map((section, index) => `
+  <section class="feature-section">
+    <p class="eyebrow">0${index + 1} / DISCOVER</p>
+    <h2>${escapeHTML(section[0])}</h2>
+    <p>${escapeHTML(section[1])}</p>
+  </section>
+`).join("");
+
+/* ---------- ACTIVITIES ---------- */
+
+function journalForm() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">YOUR PERSONAL SPACE</p>
+      <h2>Write a little.</h2>
+      <p>Use this space for a thought, reflection, idea or memory.</p>
+
+      <form id="entryForm">
+        <label for="entryTitle">Give your entry a title</label>
+        <input id="entryTitle" maxlength="100" placeholder="A little note..." required>
+
+        <label for="entryText">Your entry</label>
+        <textarea id="entryText" maxlength="5000" placeholder="Start wherever you are..." required></textarea>
+
+        ${id === "mood" ? `
+          <label for="moodSelect">How are you feeling?</label>
+          <select id="moodSelect">
+            <option>Calm</option>
+            <option>Happy</option>
+            <option>Hopeful</option>
+            <option>Tired</option>
+            <option>Worried</option>
+            <option>Overwhelmed</option>
+            <option>Unsure</option>
+            <option>Other</option>
+          </select>` : ""}
+
+        ${id === "fitness" ? `
+          <label for="activitySelect">Activity</label>
+          <select id="activitySelect">
+            <option>Walking</option>
+            <option>Running</option>
+            <option>Cycling</option>
+            <option>Swimming</option>
+            <option>Stretching</option>
+            <option>Rest day</option>
+            <option>Other</option>
+          </select>` : ""}
+
+        ${id === "scrapbook" ? `
+          <label for="entryImage">Add a photograph</label>
+          <input id="entryImage" type="file" accept="image/*">` : ""}
+
+        <button class="action-button" type="submit">Save my entry</button>
+      </form>
+
+      <p id="saveMessage" role="status"></p>
+    </section>
+  `;
+}
+
+function savedPages() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">YOUR COLLECTION</p>
+      <h2>My Saved Pages</h2>
+      <p>Your saved entries appear here on this device and browser.</p>
+      <div id="savedList" class="saved-list"></div>
+    </section>
+  `;
+}
+
+function breathingActivity() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">TAKE A PAUSE</p>
+      <h2>A breathing moment</h2>
+      <p>Let your breathing stay comfortable and natural. Follow the circle only if it feels helpful. Stop if you feel uncomfortable.</p>
+      <div class="breath-orb" id="breathOrb"></div>
+      <div class="breath-label" id="breathLabel">Ready when you are</div>
+      <div style="text-align:center;margin-top:20px">
+        <button class="action-button" id="breathStart">Begin</button>
+        <button class="action-button secondary" id="breathStop">Pause</button>
+      </div>
+    </section>
+  `;
+}
+
+function studyActivity() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">FOCUS SESSION</p>
+      <h2>Ten-minute study timer</h2>
+      <p>Choose one manageable task. Take a break when the session finishes.</p>
+      <div class="timer-display" id="timerDisplay">10:00</div>
+      <div style="text-align:center">
+        <button class="action-button" id="timerStart">Start</button>
+        <button class="action-button secondary" id="timerReset">Reset</button>
+      </div>
+      <p id="timerStatus" style="text-align:center"></p>
+    </section>
+  `;
+}
+
+function plannerActivity() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">MAKE A REALISTIC PLAN</p>
+      <h2>My tasks today</h2>
+      <form id="taskForm">
+        <label for="taskInput">One task at a time</label>
+        <input id="taskInput" maxlength="120" placeholder="What would you like to do?" required>
+        <button class="action-button">Add task</button>
+      </form>
+      <div id="taskList" class="saved-list"></div>
+    </section>
+  `;
+}
+
+function careerActivity() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">DISCOVER YOUR INTERESTS</p>
+      <h2>What interests you?</h2>
+      <p>This is a reflection activity, not a scientific career test.</p>
+      ${[
+        "Health and helping people",
+        "Science and discovery",
+        "Art and communication",
+        "Environment and animals",
+        "Law and public service",
+        "Technology and design",
+        "Business and entrepreneurship",
+        "Education and research",
+        "Writing and creative work",
+        "Sports and physical activity"
+      ].map(item => `
+        <label>
+          <input type="checkbox" class="interest" value="${item}">
+          ${item}
+        </label>
+      `).join("")}
+      <button class="action-button" id="interestSave">Save my interests</button>
+      <p id="interestResult"></p>
+    </section>
+  `;
+}
+
+function moneyActivity() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">PRACTISE WITH IMAGINARY AMOUNTS</p>
+      <h2>Simple budget calculator</h2>
+      <label for="budgetAmount">Starting amount (₹)</label>
+      <input id="budgetAmount" type="number" min="0" placeholder="1000">
+      <label for="spendAmount">Planned spending (₹)</label>
+      <input id="spendAmount" type="number" min="0" placeholder="300">
+      <button class="action-button" id="budgetCalculate">Calculate balance</button>
+      <p id="budgetResult" role="status"></p>
+    </section>
+  `;
+}
+
+function sportsActivity() {
+  return `
+    <section class="feature-panel">
+      <p class="eyebrow">EXPLORE AND LEARN</p>
+      <h2>Sports to discover</h2>
+      <p>Choose a sport you would like to learn about. Check official organisers for current event dates and registration details.</p>
+      <ul>
+        <li>Athletics and track events</li>
+        <li>Football, basketball and volleyball</li>
+        <li>Swimming and aquatic sports</li>
+        <li>Cycling and recreational rides</li>
+        <li>Badminton, tennis and table tennis</li>
+      </ul>
+      <p>For young participants, involve a parent, guardian or trusted adult when researching or registering for events.</p>
+    </section>
+  `;
+}
+
+function activityForSpace() {
+  if (space.type === "breathing") return breathingActivity();
+  if (space.type === "study") return studyActivity();
+  if (space.type === "planner") return plannerActivity();
+  if (space.type === "career") return careerActivity();
+  if (space.type === "money") return moneyActivity();
+  if (space.type === "sports") return sportsActivity();
+  return "";
+}
+
+content.insertAdjacentHTML("beforeend", activityForSpace());
+content.insertAdjacentHTML("beforeend", journalForm());
+content.insertAdjacentHTML("beforeend", savedPages());
+
+/* ---------- SAVE AND DISPLAY ENTRIES ---------- */
+
+function renderSaved() {
+  const list = document.getElementById("savedList");
+  if (!list) return;
+
+  const entries = Store.get(id, []);
+
+  list.innerHTML = entries.length
+    ? entries.map(entry => `
+      <article class="saved-entry">
+        <small>${new Date(entry.createdAt).toLocaleString()} ${entry.mood ? " · " + escapeHTML(entry.mood) : ""}</small>
+        <h3>${escapeHTML(entry.title)}</h3>
+        <p>${escapeHTML(entry.text)}</p>
+        ${entry.image ? `<img src="${entry.image}" alt="Saved memory" style="max-height:240px;margin-top:12px">` : ""}
+        <button class="action-button secondary" data-delete="${entry.id}">Delete entry</button>
+      </article>
+    `).join("")
+    : "<p>No saved entries yet. Your first entry can be small.</p>";
+
+  list.querySelectorAll("[data-delete]").forEach(button => {
+    button.addEventListener("click", () => {
+      const updated = Store.get(id, []).filter(
+        entry => entry.id !== Number(button.dataset.delete)
+      );
+      Store.set(id, updated);
+      renderSaved();
+    });
+  });
+}
+
+document.getElementById("entryForm")?.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const imageFile = document.getElementById("entryImage")?.files?.[0];
+  let image = "";
+
+  if (imageFile) {
+    if (imageFile.size > 1200000) {
+      alert("Choose an image smaller than 1.2 MB for this demo.");
       return;
     }
 
-    savedElement.innerHTML = pages.map(page => `
-      <article class="saved-page-card">
-        <p class="eyebrow">${escapeHTML(page.date || "")}</p>
-        <h3>${escapeHTML(page.title || "Saved page")}</h3>
-        <p>${escapeHTML((page.content || "").slice(0, 110))}${page.content?.length > 110 ? "..." : ""}</p>
-        <button type="button" class="text-button" data-action="view-saved" data-id="${page.id}">
-          Read saved page
-        </button>
-        <button type="button" class="text-button delete-saved-page" data-action="delete-saved" data-id="${page.id}">
-          Delete
-        </button>
-      </article>
-    `).join("");
+    image = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(imageFile);
+    });
   }
 
-  function markProgress(name) {
-    const progress = readData(PROGRESS_KEY, {});
-    progress[slug] = progress[slug] || [];
-    if (!progress[slug].includes(name)) {
-      progress[slug].push(name);
-    }
-    writeData(PROGRESS_KEY, progress);
-    renderProgress();
-  }
+  Store.add(id, {
+    title: document.getElementById("entryTitle").value.trim(),
+    text: document.getElementById("entryText").value.trim(),
+    mood: document.getElementById("moodSelect")?.value || "",
+    activity: document.getElementById("activitySelect")?.value || "",
+    image
+  });
 
-  function renderProgress() {
-    const progress = readData(PROGRESS_KEY, {});
-    const completed = progress[slug] || [];
-    const progressElement = document.getElementById("featureProgress");
+  document.getElementById("saveMessage").textContent =
+    "Your entry has been saved in this browser.";
 
-    if (!progressElement) return;
+  event.target.reset();
+  renderSaved();
+});
 
-    progressElement.innerHTML = `
-      <p>${completed.length} activities completed in this space.</p>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:${Math.min(completed.length * 20, 100)}%"></div>
-      </div>
-    `;
-  }
+renderSaved();
 
-  function getText(id) {
-    return document.getElementById(id)?.value?.trim() || "";
-  }
+/* ---------- BREATHING ACTIVITY ---------- */
 
-  function getValue(id) {
-    return document.getElementById(id)?.value || "";
-  }
+let breathInterval = null;
+let breathPhase = false;
 
-  /* ---------- ALL 20 SPACES ---------- */
+document.getElementById("breathStart")?.addEventListener("click", () => {
+  if (breathInterval) return;
 
-  const features = {
+  const orb = document.getElementById("breathOrb");
+  const label = document.getElementById("breathLabel");
 
-    "mood-journal": {
-      title: "Mood Journal",
-      category: "REFLECTION & EMOTIONAL WELLBEING",
-      description: "A gentle place to notice how you feel, without judging yourself.",
-      image: "journal",
-      intro: "Your feelings deserve space. You do not need to explain everything perfectly or have the right words. This journal is a place to pause, notice what is happening inside, and understand yourself a little better.",
-      sections: [
-        ["Understanding your mood", "A mood is an emotional state that can change throughout the day. It can be influenced by sleep, school, friendships, family, physical health and things that happen around you. One difficult moment does not define your whole day."],
-        ["There is no wrong feeling", "Happiness, anger, sadness, excitement, confusion and even feeling nothing are all experiences people can have. You do not have to force yourself to feel positive. Try naming what you notice instead of criticising yourself for it."],
-        ["Writing can help you reflect", "A journal does not have to be beautiful or lengthy. A few honest sentences can help you recognise patterns, identify what matters to you, and think about what support might be useful."],
-        ["When you need support", "A journal is not a replacement for help. If a feeling is overwhelming, lasts a long time, or affects everyday life, consider speaking with a trusted adult, school counsellor or qualified health professional."]
-      ],
-      fact: "Emotions are information, not instructions. You can notice a feeling and still choose how you respond.",
-      advice: "Try describing your feeling as a passing experience: “I am noticing that I feel worried today.”",
-      tutorial: "guided journaling for students",
-      tool: `
-        ${selectField("moodChoice", "How are you feeling today?", ["Choose a feeling", "Calm", "Happy", "Excited", "Hopeful", "Tired", "Worried", "Sad", "Frustrated", "Confused", "Overwhelmed", "Not sure"]) }
-        ${textField("moodReason", "What might have influenced this feeling?", "You can write as much or as little as you want.")}
-        ${textField("moodNeed", "What would help you right now?", "Rest, talking, a break, support, or something else?")}
-        ${textField("moodExtra", "Anything else on your mind?", "This space belongs to you.")}
-        ${saveButton()}
-      `
-    },
-
-    "breathing-space": {
-      title: "Breathing Space",
-      category: "PAUSE & RESET",
-      description: "Take a small pause. Find a comfortable rhythm and give yourself a moment.",
-      intro: "Sometimes a short pause can make a busy day feel more manageable. This space offers simple breathing activities, quiet moments and reflections. You can stop whenever you want. Never force your breathing or continue if you feel uncomfortable.",
-      sections: [
-        ["Why pause?", "When schoolwork, notifications and everyday responsibilities build up, it can be useful to step away for a moment. A pause gives you a chance to notice your surroundings and decide what you need next."],
-        ["Breathing at your own pace", "Slow, comfortable breathing may help some people feel settled. There is no perfect rhythm. Choose a pattern that feels natural, breathe normally if you prefer, and stop if you feel dizzy or uncomfortable."],
-        ["Silence is an option", "You do not need music, instructions or a perfect environment. You can sit quietly, notice sounds around you, look outside or simply take a break from your screen."],
-        ["A gentle reminder", "Breathing activities are general wellbeing exercises, not medical treatment. If you are having persistent anxiety or breathing difficulties, talk to a trusted adult or health professional."]
-      ],
-      fact: "A wellbeing break does not need to be long or perfectly organised to be worthwhile.",
-      advice: "Keep your shoulders comfortable. Do not hold your breath or try to breathe more deeply than feels natural.",
-      tutorial: "beginner guided breathing exercise",
-      tool: `
-        ${selectField("breathNeed", "What kind of pause would you like?", ["Choose a pathway", "I want a quiet moment", "I feel overwhelmed", "I need a study break", "I want to relax before sleep", "I want to reset my attention"])}
-        ${selectField("breathLength", "Choose a short session", ["1 minute", "2 minutes", "3 minutes"])}
-        <div class="breathing-orb" id="breathingOrb"><span id="breathingInstruction">Ready?</span></div>
-        <p id="breathingStatus" class="activity-status">Choose a session and begin when comfortable.</p>
-        <div class="button-row">
-          ${button("Begin breathing guide", "start-breathing")}
-          ${button("Stop", "stop-breathing", "secondary-button")}
-        </div>
-        <p class="small-note">Follow only a comfortable rhythm. You can stop at any time.</p>
-        ${textField("breathReflection", "After your pause, how do you feel?", "No right or wrong answer.")}
-        ${saveButton()}
-      `
-    },
-
-    "gratitude-journal": {
-      title: "Gratitude Journal",
-      category: "NOTICE THE LITTLE THINGS",
-      description: "Collect small moments, people and experiences that matter to you.",
-      intro: "Gratitude is not pretending that everything is perfect. It is noticing something meaningful even when life is complicated. It might be a kind message, a safe place, a meal, a funny moment or someone who listened.",
-      sections: [
-        ["What gratitude means", "Gratitude means recognising something you appreciate. It can be directed towards people, experiences, opportunities, nature or small everyday comforts."],
-        ["It is not toxic positivity", "You can appreciate something and still admit that another part of life is difficult. You never have to write something positive just to make a difficult situation sound better."],
-        ["Small moments count", "A peaceful walk, a helpful teacher, a favourite song or a good conversation can be worth remembering. Meaning does not have to come from expensive experiences or major achievements."],
-        ["Make it personal", "Your journal can be messy, creative, short or detailed. Add a memory, a sentence, a list or a letter. The important part is that it feels honest to you."]
-      ],
-      fact: "Gratitude can include ordinary moments. It does not need to be a list of major achievements.",
-      advice: "Try to describe why a moment mattered instead of simply listing it.",
-      tutorial: "gratitude journaling ideas",
-      tool: `
-        ${inputField("gratitudeTitle", "Give this page a title", "A little moment I want to remember")}
-        ${textField("gratitudeOne", "One thing I appreciated today", "It could be something very small.")}
-        ${textField("gratitudeTwo", "Someone I am thankful for", "What would you like to appreciate about them?")}
-        ${textField("gratitudeThree", "A moment I want to keep", "Describe a memory, place or experience.")}
-        ${textField("gratitudeLetter", "A little thank-you letter", "Write a few words to someone or something.")}
-        ${saveButton()}
-      `
-    },
-
-    "fitness-wellness": {
-      title: "Fitness & Wellness",
-      category: "MOVEMENT & EVERYDAY HEALTH",
-      description: "Explore enjoyable movement, everyday wellbeing and habits that support you.",
-      intro: "Movement is not a punishment and it is not a competition. It can be walking, dancing, cycling, swimming, playing a sport or simply stretching after sitting for a long time. The aim is to find activities that feel enjoyable and fit your life.",
-      sections: [
-        ["Movement for everyday life", "Regular movement supports general health, energy, mobility and wellbeing. Different activities suit different people. You do not need expensive equipment or a complicated routine to begin."],
-        ["Running, cycling and swimming", "Running and walking can help you explore your surroundings. Cycling can be a practical way to travel and enjoy the outdoors. Swimming offers a different kind of movement. Learn safely, use suitable supervision and build skills gradually."],
-        ["Screen breaks matter", "Long periods looking at a screen can leave you feeling tired or distracted. Try changing position, looking away from the screen, drinking water and taking a comfortable movement break."],
-        ["Rest is part of wellness", "Sleep, recovery, enjoyable food, hydration and time with other people all matter. You do not need to exercise when you are ill, injured or exhausted. Listen to your body and ask a qualified professional about health concerns."]
-      ],
-      fact: "Walking, cycling, dancing, games and sports can all count as enjoyable movement.",
-      advice: "Choose an activity you enjoy. Start gently, take breaks and avoid comparing your routine with someone else's.",
-      tutorial: "beginner stretching and mobility routine",
-      tool: `
-        ${selectField("fitnessActivity", "What would you like to try?", ["Choose an activity", "Walking", "Running", "Cycling", "Swimming", "Yoga or stretching", "Dancing", "Team sport", "Outdoor exploration"])}
-        ${selectField("fitnessTime", "How much time do you have?", ["5 minutes", "10 minutes", "15 minutes", "20 minutes", "30 minutes", "Just exploring"])}
-        ${selectField("fitnessFeeling", "How are you feeling today?", ["Comfortable and ready", "A little tired", "Need a gentle activity", "Prefer a rest day"])}
-        ${textField("fitnessNotes", "Movement notes", "What did you enjoy? What would you like to try another day?")}
-        <h3>Everyday wellbeing reminders</h3>
-        ${checklist(["Take a screen break", "Drink water when thirsty", "Change position after sitting", "Spend a little time outdoors if possible", "Make time for rest"], "wellness")}
-        <div class="resource-grid">
-          ${linkCard("Strava", "Explore activity tracking and community features.", "https://www.strava.com/")}
-          ${linkCard("NHS movement guide", "Read general guidance about physical activity.", "https://www.nhs.uk/live-well/exercise/")}
-          ${linkCard("Yoga for beginners", "Find gentle beginner yoga tutorials.", youtubeSearch("beginner gentle yoga"))}
-        </div>
-        <p class="small-note">This is a wellbeing space, not a weight-loss or performance programme. Strava is an external service; this prototype does not connect to your account.</p>
-        ${saveButton()}
-      `
-    },
-
-    "daily-check-in": {
-      title: "Daily Check-in",
-      category: "A MOMENT FOR YOURSELF",
-      description: "Notice your little wins, your energy and what you might need today.",
-      intro: "A check-in is a small moment to notice how your day is going. You do not need to have achieved something impressive. Getting through a difficult morning, asking a question or taking a break can all matter.",
-      sections: [
-        ["Little wins are still wins", "A little win might be finishing one task, helping someone, trying something unfamiliar or getting out of bed on a difficult morning. You get to decide what counts."],
-        ["Notice your energy", "Energy changes for many reasons. Sleep, food, stress, activity and the demands of the day can all influence how you feel. A low-energy day is not a personal failure."],
-        ["Make room for honest answers", "You can say that today was difficult. You can say that you are unsure. This check-in is not a test and there is no score."],
-        ["Choose one next step", "A next step can be very small: organising your desk, asking for help, taking a break or preparing for tomorrow. It is okay if your next step is rest."]
-      ],
-      fact: "Progress can be quiet. It is not always visible to other people.",
-      advice: "Choose one realistic next step rather than making a long list of things you must do.",
-      tutorial: "daily reflection journal for students",
-      tool: `
-        ${selectField("checkMood", "How is your day going?", ["Choose one", "Good", "Okay", "Difficult", "Mixed", "Not sure"])}
-        ${selectField("checkEnergy", "How is your energy?", ["Choose one", "High", "Medium", "Low", "Changing"])}
-        ${textField("checkWin", "One little win today", "It can be something simple.")}
-        ${textField("checkThought", "Something on my mind", "What would you like to acknowledge?")}
-        ${textField("checkNext", "One small next step", "Keep it realistic and kind.")}
-        ${button("Give me a gentle reminder", "random-reminder", "secondary-button")}
-        <p id="randomReminder" class="activity-status"></p>
-        ${saveButton()}
-      `
-    },
-
-    "study-focus": {
-      title: "Study & Focus",
-      category: "LEARNING WITHOUT BURNOUT",
-      description: "Organise your study time, try focus sessions and make space for breaks.",
-      intro: "Studying is not about sitting at a desk for as many hours as possible. It is about understanding, practising, reviewing and allowing your mind time to rest. Find a method that suits the task and your energy.",
-      sections: [
-        ["Start with one clear task", "A vague plan such as “study science” can feel overwhelming. A smaller task such as “revise two diagrams” or “solve five questions” gives you a clearer starting point."],
-        ["Use active learning", "Try explaining a topic in your own words, answering questions without looking at the book, drawing a diagram or teaching the idea to someone else. Re-reading alone may not show what you truly understand."],
-        ["Breaks support learning", "A short break can help you reset your attention. Stand up, stretch gently, drink water or look away from your screen. You can adjust the length of your study session to the task."],
-        ["Mistakes are useful information", "When an answer is wrong, identify which step caused the problem. Correct it, try a similar question and revisit it later. Understanding grows through practice."]
-      ],
-      fact: "Retrieval practice means trying to remember information before checking your notes.",
-      advice: "Choose a small target for this session. Put away distractions where possible, and take a break when you need one.",
-      tutorial: "active recall and spaced repetition study techniques",
-      tool: `
-        ${inputField("studyTask", "What are you studying?", "Example: Class 9 Mathematics — Coordinate Geometry")}
-        ${selectField("studyLevel", "Choose a session", ["10-minute starter", "20-minute study session", "25-minute focus session"])}
-        <div class="timer-display" id="studyTimer">10:00</div>
-        <p id="studyTimerStatus" class="activity-status">Your timer is ready.</p>
-        <div class="button-row">
-          ${button("Start timer", "start-study")}
-          ${button("Pause", "pause-study", "secondary-button")}
-          ${button("Reset", "reset-study", "secondary-button")}
-        </div>
-        <h3>After studying</h3>
-        ${textField("studyLearned", "What did you understand?", "Write the main idea in your own words.")}
-        ${textField("studyDifficult", "What needs more practice?", "Write down one question or doubt.")}
-        <h3>Choose your background sound</h3>
-        <div class="resource-grid">
-          ${linkCard("Nature sounds", "Find gentle nature sounds.", youtubeSearch("nature sounds study background"))}
-          ${linkCard("Instrumental music", "Explore music without lyrics.", youtubeSearch("instrumental study music"))}
-          ${linkCard("Silence", "No sound is also a good choice.", "https://www.google.com/search?q=study+focus+tips")}
-          ${linkCard("Qur'an recitation", "Find recitations from trusted channels.", youtubeSearch("Quran recitation"))}
-        </div>
-        <p class="small-note">The timer runs in this browser tab. Music and video links open external websites.</p>
-        ${saveButton()}
-      `
-    },
-
-    "self-care": {
-      title: "Self-care Corner",
-      category: "CARE FOR YOURSELF",
-      description: "Explore simple ways to care for your physical, emotional and everyday needs.",
-      intro: "Self-care is not only skincare, shopping or expensive routines. It can mean sleeping enough, asking for help, taking a break, keeping your surroundings comfortable or setting a boundary. It looks different for every person.",
-      sections: [
-        ["Physical care", "Everyday care includes rest, hygiene, hydration, balanced meals, movement you enjoy and seeking medical advice when needed. Small routines can make daily life easier."],
-        ["Emotional care", "You might need quiet time, a conversation, creative expression, prayer, time outdoors or support from someone you trust. There is no single routine that works for everyone."],
-        ["Your surroundings matter", "A tidy corner, a comfortable study area or a little fresh air can make a space feel more manageable. You do not have to organise everything at once."],
-        ["Personal care is personal", "Different people have different needs. Menstrual health, skin care, accessibility, culture and personal preferences can all influence what care looks like. Seek reliable health information rather than relying on online myths."]
-      ],
-      fact: "Rest and asking for support are valid parts of self-care.",
-      advice: "Choose one small action that meets a real need instead of trying to follow a perfect routine.",
-      tutorial: "simple self care routine for students",
-      tool: `
-        <h3>My gentle self-care checklist</h3>
-        ${checklist(["Take a comfortable break", "Freshen up or brush my teeth", "Drink water when thirsty", "Eat a regular meal or snack", "Talk to someone I trust", "Spend time on something I enjoy", "Prepare a comfortable space", "Allow myself to rest"], "selfcare")}
-        ${selectField("selfCareType", "What do you need most today?", ["Choose one", "Physical rest", "Emotional support", "A little organisation", "Time away from screens", "A health question", "Time with someone"])}
-        ${textField("selfCareNote", "My care note", "What is one kind thing you can do for yourself?")}
-        <div class="resource-grid">
-          ${linkCard("WHO — Mental health", "Reliable general information about mental wellbeing.", "https://www.who.int/health-topics/mental-health")}
-          ${linkCard("UNICEF — Adolescent health", "Information about young people's wellbeing.", "https://www.unicef.org/health/adolescent-health-and-well-being")}
-        </div>
-        <p class="small-note">If you have a health concern, speak with a trusted adult and a qualified health professional. This page is not a medical tracker or diagnosis tool.</p>
-        ${saveButton()}
-      `
-    },
-
-    "stories-hope": {
-      title: "Stories & Hope",
-      category: "REAL STORIES. REAL PEOPLE.",
-      description: "Learn about the world, humanitarian work, challenges and meaningful progress.",
-      intro: "The world contains difficult realities as well as courage, solidarity and change. Learning about humanitarian issues should help us understand people with dignity, not reduce them to headlines or statistics.",
-      sections: [
-        ["Look beyond the headline", "A headline rarely explains the full history of a crisis. Look for context, reliable reporting, dates and multiple credible sources before forming an opinion."],
-        ["Remember the people", "Behind every statistic are individuals, families and communities with their own experiences, choices and hopes. Use respectful language and avoid sharing images that violate someone's dignity."],
-        ["Understand humanitarian work", "Humanitarian organisations may provide emergency healthcare, food, shelter, education, protection and support for displaced communities. Their work can be difficult and long-term."],
-        ["Hope does not erase reality", "A positive outcome does not mean that a crisis is over or that everyone is safe. Hope can mean recognising progress while continuing to pay attention to people who still need support."]
-      ],
-      fact: "Reliable humanitarian information should identify its source, date and the people or communities it describes.",
-      advice: "When reading a story, ask: Who published it? When? What evidence supports it? Whose voices are missing?",
-      tutorial: "how to identify reliable news and misinformation",
-      tool: `
-        <h3>Explore reliable organisations</h3>
-        <div class="resource-grid">
-          ${linkCard("UNICEF", "Children's rights, education, health and protection.", "https://www.unicef.org/")}
-          ${linkCard("UNHCR", "Refugees, displacement and protection.", "https://www.unhcr.org/")}
-          ${linkCard("World Food Programme", "Food assistance and food security.", "https://www.wfp.org/")}
-          ${linkCard("World Health Organization", "Global health and emergency response.", "https://www.who.int/")}
-          ${linkCard("International Committee of the Red Cross", "Humanitarian protection in armed conflict.", "https://www.icrc.org/")}
-          ${linkCard("United Nations", "International cooperation and global issues.", "https://www.un.org/")}
-        </div>
-        ${selectField("storyTopic", "Choose a topic to learn about", ["Children's rights", "Refugees and displacement", "Food security", "Global health", "Education in emergencies", "Humanitarian action"])}
-        ${textField("storyReflection", "What did you learn?", "Write about the issue, the people affected and what reliable sources say.")}
-        ${textField("storyQuestion", "What would you like to understand better?", "Write a question for further research.")}
-        ${saveButton()}
-      `
-    },
-
-    "career-exploration": {
-      title: "Career Exploration",
-      category: "DREAMS, OPTIONS & DIRECTION",
-      description: "Explore different paths, discover what matters to you and learn how careers work.",
-      intro: "You do not need to decide your entire future while you are still in school. Career exploration is about learning what different people do, what skills they use and what education or training may be needed.",
-      sections: [
-        ["Interests can change", "You might enjoy science today and art tomorrow. Having several interests is not a problem. They can help you discover combinations of subjects, skills and careers."],
-        ["Look at the actual work", "A job title does not tell you everything. Learn about everyday responsibilities, working conditions, challenges, training and the people a role serves."],
-        ["Understand the pathway", "Some careers require a university degree, professional training, licensing or competitive entrance exams. Requirements differ by country and can change, so check official institutions."],
-        ["A life is bigger than a job", "Family, health, friendships, creativity, service, travel and rest can all matter. Your future should include the kind of life and contribution that feel meaningful to you."]
-      ],
-      fact: "Career decisions are easier when you compare real responsibilities and pathways, not just job titles or salaries.",
-      advice: "Choose a subject or career you are curious about and research one real person's workday.",
-      tutorial: "how to explore careers as a student",
-      tool: `
-        <h3>Quick direction quiz</h3>
-        <p>Choose the answer that feels closest to your interests. This is a reflection activity, not a scientific career test.</p>
-        <form id="careerQuiz">
-          <label class="field-label">1. Which activity sounds interesting?</label>
-          <select class="feature-select" name="q1">
-            <option value="people">Helping people directly</option>
-            <option value="science">Understanding science and health</option>
-            <option value="creative">Making or designing things</option>
-            <option value="ideas">Researching ideas and problems</option>
-          </select>
-
-          <label class="field-label">2. What kind of challenge do you enjoy?</label>
-          <select class="feature-select" name="q2">
-            <option value="people">Listening and supporting others</option>
-            <option value="science">Solving technical questions</option>
-            <option value="creative">Expressing ideas creatively</option>
-            <option value="ideas">Understanding complex issues</option>
-          </select>
-
-          <label class="field-label">3. Which environment interests you?</label>
-          <select class="feature-select" name="q3">
-            <option value="people">Community or care settings</option>
-            <option value="science">Laboratories or clinical settings</option>
-            <option value="creative">Studios or creative teams</option>
-            <option value="ideas">Research or learning environments</option>
-          </select>
-
-          <button class="primary-button" type="submit">Explore my interests</button>
-        </form>
-        <div id="careerResult" class="activity-status" aria-live="polite"></div>
-        <h3>Useful official starting points</h3>
-        <div class="resource-grid">
-          ${linkCard("National Career Service", "Explore career information in India.", "https://www.ncs.gov.in/")}
-          ${linkCard("National Testing Agency", "Check official entrance examination information.", "https://nta.ac.in/")}
-          ${linkCard("University Grants Commission", "Find higher education information in India.", "https://www.ugc.gov.in/")}
-        </div>
-        ${textField("careerDream", "Dreams beyond a career", "What kind of life, contribution or experiences matter to you?")}
-        ${textField("careerNotes", "Careers I want to research", "Write down job titles, degrees or questions.")}
-        ${saveButton()}
-      `
-    },
-
-    "my-little-world": {
-      title: "My Little World",
-      category: "MEMORIES & PERSONAL EXPRESSION",
-      description: "A scrapbook-style space for memories, ideas, photographs and letters to yourself.",
-      intro: "Your life is made of many moments: exciting days, ordinary routines, new friendships, difficult experiences and things you are still figuring out. This space lets you collect memories in your own words.",
-      sections: [
-        ["Keep the moments that matter", "A memory can be a photograph, a sentence, a ticket, a place or a small detail you do not want to forget. It does not need to look perfect."],
-        ["Make space for every kind of day", "Not every memory is happy. You can record a difficult day honestly without making yourself relive anything you are not ready to write about. You can also choose not to save something."],
-        ["Letters to your future self", "Writing to your future self can help you notice what you care about now, what you are learning and what you hope to remember later."],
-        ["Think about digital safety", "This prototype stores entries and photos in this browser. It is not a secure private cloud diary. Avoid saving sensitive information or photographs you would not want someone with access to this device to see."]
-      ],
-      fact: "A scrapbook can be made from words and memories. It does not need expensive materials.",
-      advice: "Give each memory a date and a title so it is easier to find later.",
-      tutorial: "digital scrapbook ideas for beginners",
-      tool: `
-        ${inputField("memoryTitle", "Memory title", "A day I want to remember")}
-        ${selectField("memoryType", "What kind of memory is this?", ["Everyday moment", "A happy memory", "A challenge I learned from", "A friendship", "A place", "A personal achievement", "A random thought"])}
-        ${textField("memoryText", "Write your memory", "Describe what happened and why it matters to you.")}
-        <label class="field-label" for="memoryPhoto">Add a photograph (optional)</label>
-        <input class="feature-input" id="memoryPhoto" type="file" accept="image/*">
-        <div id="memoryPreview" class="memory-preview"></div>
-        ${textField("futureLetter", "A letter to my future self", "What do you hope you remember?")}
-        ${saveButton()}
-        <p class="small-note">Photo entries are stored in this browser only. Avoid uploading private or sensitive photographs on a shared device.</p>
-      `
-    },
-
-    "movie-theatre": {
-      title: "Movie Theatre",
-      category: "STORIES ON SCREEN",
-      description: "Discover films, reflect on stories and make room for thoughtful entertainment.",
-      intro: "Films can entertain, introduce unfamiliar places, explore human experiences and raise questions. A good movie night does not have to be expensive or complicated. Choose content that is appropriate for your age and comfortable for you.",
-      sections: [
-        ["Stories help us explore ideas", "A film can show different perspectives, relationships, cultures and historical events. Remember that fictional stories may simplify or change real events."],
-        ["Watch critically", "Notice whose perspective the story follows, what assumptions it makes and whether the events are represented fairly. For historical films, compare the story with reliable sources."],
-        ["Choose thoughtfully", "Check age ratings, content descriptions and reviews before watching. You can stop watching something that makes you uncomfortable."],
-        ["Share the experience", "Discussing a film can be as enjoyable as watching it. Talk about a character's choices, the message, the soundtrack or the ending."]
-      ],
-      fact: "A film inspired by real events is not automatically a fully accurate historical account.",
-      advice: "Before watching, check its age rating and content information.",
-      tutorial: "how to write a film review for students",
-      tool: `
-        ${inputField("movieName", "Film title", "What did you watch?")}
-        ${selectField("movieGenre", "Genre", ["Drama", "Documentary", "Animation", "Adventure", "Comedy", "History", "Science fiction", "Other"])}
-        ${selectField("movieRating", "How did you find it?", ["Loved it", "Interesting", "It was okay", "Not for me"])}
-        ${textField("movieThought", "What stood out to you?", "A scene, character, idea or question.")}
-        ${textField("movieReview", "Write a short review", "Would you recommend it? Why or why not?")}
-        <div class="resource-grid">
-          ${linkCard("Common Sense Media", "Check age guidance and content reviews.", "https://www.commonsensemedia.org/")}
-          ${linkCard("IMDb", "Look up film information and credits.", "https://www.imdb.com/")}
-        </div>
-        ${saveButton()}
-      `
-    },
-
-    "the-commons": {
-      title: "The Commons",
-      category: "COMMUNITY & CONVERSATION",
-      description: "A place to explore ideas, thoughtful questions and respectful conversations.",
-      intro: "A community becomes stronger when people can ask questions, listen and disagree respectfully. The Commons is a guided space for thinking about everyday issues and learning from different perspectives.",
-      sections: [
-        ["Listen before responding", "People may have experiences that are different from yours. Listening carefully can help you understand why someone sees an issue differently."],
-        ["Disagreement can be respectful", "You can challenge an idea without insulting the person who shared it. Explain your reasons, use evidence and be willing to reconsider."],
-        ["Protect personal information", "Do not share your address, phone number, passwords, school timetable or private details in public spaces. Be careful about sharing photographs and identifying information."],
-        ["Make room for everyone", "A thoughtful discussion does not need to be loud or competitive. Give others time to speak and avoid jokes that target someone's identity or circumstances."]
-      ],
-      fact: "A strong argument explains its reasons and evidence rather than attacking the person who disagrees.",
-      advice: "Try beginning with: “I see it differently because…” or “Can you explain what you mean?”",
-      tutorial: "how to have respectful discussions and debates",
-      tool: `
-        ${selectField("commonsTopic", "Choose a discussion topic", ["Education and learning", "Environment", "Technology and society", "Books and ideas", "Community wellbeing", "Human rights", "Everyday life"])}
-        ${textField("commonsQuestion", "A question worth discussing", "What would you like people to think about?")}
-        ${textField("commonsView", "Your point of view", "Explain your idea and why you think this.")}
-        ${textField("commonsOther", "Another perspective to consider", "What might someone with a different view say?")}
-        <p class="small-note">This is a private reflection activity, not a public discussion board. Do not enter personal contact details.</p>
-        ${saveButton()}
-      `
-    },
-
-    "sports-events": {
-      title: "Sports & Events",
-      category: "MOVEMENT, TEAMWORK & PARTICIPATION",
-      description: "Explore sports, local activities, running, cycling, swimming and event planning.",
-      intro: "Sport can bring people together, build skills and create a sense of belonging. You do not have to be a professional athlete to enjoy it. Participation, teamwork, curiosity and safe practice all matter.",
-      sections: [
-        ["Find your kind of movement", "Some people enjoy team sports, while others prefer running, cycling, swimming, dance or individual activities. Try different options when it is safe and accessible."],
-        ["Train with patience", "Skills develop through practice and recovery. Avoid sudden increases in activity and take breaks when you need them. Ask a qualified coach or health professional for guidance if you have concerns."],
-        ["Events bring communities together", "A school sports day, charity walk, local tournament or cycling event can create shared experiences. Check event rules, age requirements, supervision and safety arrangements."],
-        ["Celebrate participation", "Personal progress is not measured only by winning. Learning a skill, encouraging a teammate and completing an activity can all be meaningful."]
-      ],
-      fact: "Teamwork includes communication, encouragement and respect, not only performance.",
-      advice: "Before joining an event, check the organiser, route, age rules, safety arrangements and whether an adult needs to accompany you.",
-      tutorial: "beginner running technique and warm up",
-      tool: `
-        ${selectField("sportType", "Choose an activity", ["Running", "Cycling", "Swimming", "Football", "Basketball", "Badminton", "Athletics", "Walking event", "Other"])}
-        ${inputField("sportEvent", "Event or activity name", "Example: School sports day")}
-        ${inputField("sportDate", "Date", "", "date")}
-        ${selectField("sportRole", "Your role", ["Participant", "Volunteer with permission", "Spectator", "Organiser with adult support", "Still exploring"])}
-        ${textField("sportPlan", "Preparation and safety notes", "What do you need to check before taking part?")}
-        <div class="resource-grid">
-          ${linkCard("World Athletics", "Explore athletics and running information.", "https://worldathletics.org/")}
-          ${linkCard("Strava", "External activity tracking service.", "https://www.strava.com/")}
-          ${linkCard("Beginner cycling skills", "Find beginner cycling tutorials.", youtubeSearch("beginner cycling safety skills"))}
-          ${linkCard("Swimming basics", "Find swimming guidance and lessons.", youtubeSearch("beginner swimming lessons safety"))}
-        </div>
-        <p class="small-note">This page does not register you for events or connect to Strava. Ask a parent or trusted adult before attending events or sharing location information.</p>
-        ${saveButton()}
-      `
-    },
-
-    "day-planner": {
-      title: "Day Planner",
-      category: "A LITTLE STRUCTURE",
-      description: "Make a flexible plan for your day, with space for rest and unexpected things.",
-      intro: "A planner should support your day, not control it. You can use it to organise schoolwork, activities, family responsibilities and time for yourself. A plan can change when life changes.",
-      sections: [
-        ["Choose priorities", "Start by identifying what genuinely needs attention. A short list of priorities can be more useful than writing down every possible task."],
-        ["Make tasks manageable", "Break larger tasks into smaller actions. “Complete the introduction” is easier to begin than “finish the whole project”."],
-        ["Leave room for breaks", "Rest, meals, movement and sleep are not wasted time. A realistic plan includes space for them."],
-        ["Adjust without guilt", "If something takes longer than expected, move tasks around. A planner is a tool, not a measure of your worth."]
-      ],
-      fact: "A flexible plan can be more useful than a perfect timetable that leaves no room for change.",
-      advice: "Choose three priorities at most for a busy day, then add smaller tasks if you have time.",
-      tutorial: "simple daily planning for students",
-      tool: `
-        ${inputField("planDate", "Plan date", "", "date")}
-        ${inputField("planPriority1", "Priority one", "The most important task")}
-        ${inputField("planPriority2", "Priority two", "Another useful task")}
-        ${inputField("planPriority3", "Priority three", "A smaller task")}
-        ${textField("planSchedule", "My flexible timetable", "Morning:\nAfternoon:\nEvening:")}
-        ${textField("planBreaks", "Breaks and personal time", "When can you rest, eat, move or enjoy something?")}
-        ${textField("planTomorrow", "Something for tomorrow", "What can wait until another day?")}
-        ${saveButton()}
-      `
-    },
-
-    "creative-studio": {
-      title: "The Creative Studio",
-      category: "MAKE SOMETHING YOURS",
-      description: "Experiment with writing, art, design, photography and creative ideas.",
-      intro: "Creativity is not limited to people who draw perfectly or write beautifully. It can be a sketch, a story, a collage, a melody, a photograph, a design or an unusual question.",
-      sections: [
-        ["Start before you feel ready", "You do not need a perfect idea to begin. Try making a rough version, collecting references or writing down a few possibilities."],
-        ["Experiment with materials", "Use what you have: paper, a phone camera, colours, words, shapes or recycled materials. Creative work can be simple and still meaningful."],
-        ["Inspiration is everywhere", "Nature, architecture, music, conversations and everyday objects can inspire ideas. Keep a small collection of things that make you curious."],
-        ["Your work can change", "A first draft is allowed to be imperfect. Edit, rearrange, try a different approach or decide that the experiment taught you something."]
-      ],
-      fact: "Creative practice grows through experimenting, observing and trying again.",
-      advice: "Set a small creative challenge and give yourself permission to make a rough first version.",
-      tutorial: "beginner creative journaling and art ideas",
-      tool: `
-        ${selectField("creativeType", "Choose your creative medium", ["Writing", "Poetry", "Drawing", "Photography", "Graphic design", "Crafts", "Storytelling", "Other"])}
-        ${inputField("creativeTitle", "Project title", "Give your idea a name")}
-        ${textField("creativeIdea", "Your idea", "What would you like to create?")}
-        ${textField("creativeDraft", "First draft or sketch notes", "Describe it or write your first version.")}
-        ${textField("creativeNext", "What will you try next?", "One small improvement or experiment.")}
-        <div class="resource-grid">
-          ${linkCard("Canva Design School", "Explore design lessons and creative ideas.", "https://www.canva.com/designschool/")}
-          ${linkCard("Khan Academy Art", "Explore art history and visual arts.", "https://www.khanacademy.org/humanities/art-history")}
-        </div>
-        ${saveButton()}
-      `
-    },
-
-    "kindness-project": {
-      title: "The Kindness Project",
-      category: "SMALL ACTIONS, REAL CARE",
-      description: "Explore thoughtful ways to support people and make your community kinder.",
-      intro: "Kindness is not always a grand gesture. It can mean including someone, listening without interrupting, helping with a task or treating people with dignity. Small actions can make shared spaces more welcoming.",
-      sections: [
-        ["Notice what people need", "Kindness begins with paying attention. Someone may need practical help, a listening ear, inclusion or simply respect for their space."],
-        ["Respect boundaries", "Helping does not mean deciding what is best for someone without asking. Offer support and respect their answer."],
-        ["Make kindness practical", "You could help a classmate understand a lesson, thank a school worker, share useful information or take part in a supervised community activity."],
-        ["Keep yourself safe too", "Do not meet strangers, share private information or organise donations alone. Involve a trusted adult and use established organisations for volunteering or fundraising."]
-      ],
-      fact: "Respecting someone's boundaries is also an act of kindness.",
-      advice: "Choose an action that is safe, realistic and genuinely useful to the person receiving it.",
-      tutorial: "simple kindness project ideas for students",
-      tool: `
-        ${selectField("kindnessArea", "Where would you like to make a difference?", ["At school", "At home", "With friends", "In my neighbourhood", "Online", "Environment and animals"])}
-        ${textField("kindnessIdea", "Your kindness idea", "What small action could help?")}
-        ${textField("kindnessSteps", "How will you do it safely?", "Who needs to be involved? What permission might you need?")}
-        ${textField("kindnessReflection", "Afterwards", "What did you learn from the experience?")}
-        <h3>Small ideas to consider</h3>
-        ${checklist(["Include someone in a group activity", "Thank someone for their work", "Help with a school task", "Share a useful learning resource", "Take part in an adult-supervised community activity", "Care for a shared space"], "kindness")}
-        ${saveButton()}
-      `
-    },
-
-    "learning-library": {
-      title: "The Learning Library",
-      category: "CURIOSITY & KNOWLEDGE",
-      description: "Find reliable learning resources, explore new subjects and build useful skills.",
-      intro: "Learning does not stop when a class ends. You can explore science, history, languages, mathematics, art, technology and the world around you. The best resource is one that helps you understand, not just memorise.",
-      sections: [
-        ["Follow your curiosity", "Start with a question you genuinely want answered. It can lead you to a book, lesson, documentary, experiment or conversation."],
-        ["Check your sources", "Look for the author, organisation, date and evidence behind information. Be cautious with anonymous posts and claims that sound too dramatic to be true."],
-        ["Learn actively", "Take notes in your own words, test yourself, solve examples and explain what you learned. Try connecting new information to something you already know."],
-        ["Build a learning habit", "You do not need to study everything at once. A short, regular session can help you explore a topic over time."]
-      ],
-      fact: "Explaining a topic in your own words is a useful way to check your understanding.",
-      advice: "Write one question before opening a resource. Look for an answer, then summarise it in your own words.",
-      tutorial: "how to research a topic and take effective notes",
-      tool: `
-        ${selectField("learningSubject", "Choose a subject", ["Science", "Mathematics", "History", "Geography", "Languages", "Literature", "Environment", "Health", "Arts", "Other"])}
-        ${inputField("learningQuestion", "What do you want to learn?", "Write one question")}
-        ${textField("learningNotes", "Learning notes", "Write what you discovered in your own words.")}
-        ${textField("learningSources", "Sources used", "List the websites, books or videos you checked.")}
-        <h3>Free learning resources</h3>
-        <div class="resource-grid">
-          ${linkCard("Khan Academy", "Lessons and practice across many subjects.", "https://www.khanacademy.org/")}
-          ${linkCard("NCERT", "Official school textbooks and resources.", "https://ncert.nic.in/")}
-          ${linkCard("SWAYAM", "Online courses and learning resources in India.", "https://swayam.gov.in/")}
-          ${linkCard("National Digital Library", "Explore digital learning resources.", "https://ndl.iitkgp.ac.in/")}
-          ${linkCard("NASA", "Space, science and exploration resources.", "https://www.nasa.gov/")}
-          ${linkCard("UNESCO", "Education, culture and science resources.", "https://www.unesco.org/")}
-        </div>
-        ${saveButton()}
-      `
-    },
-
-    "sleep-sanctuary": {
-      title: "The Sleep Sanctuary",
-      category: "REST & ROUTINE",
-      description: "Understand sleep and create a comfortable routine that supports rest.",
-      intro: "Sleep is an important part of everyday health, learning and wellbeing. A good routine is not about being perfect. It is about making it easier for yourself to wind down and get enough rest for your needs.",
-      sections: [
-        ["Why sleep matters", "Sleep supports attention, memory, mood and physical health. When you are regularly tired, school and everyday activities can feel more difficult."],
-        ["Build a wind-down routine", "A calm activity before bed may help you transition away from a busy day. You could read, prepare for tomorrow, listen to quiet audio or spend time away from bright screens."],
-        ["Make your environment comfortable", "A comfortable, quiet and suitably dark sleeping space can help. Not everyone controls their home environment, so focus on changes that are realistic for you."],
-        ["When sleep is difficult", "If sleep problems continue or affect your daily life, speak with a trusted adult and a qualified health professional. Avoid taking sleep medicines or supplements without appropriate medical advice."]
-      ],
-      fact: "A regular, relaxing routine can help signal that the day is winding down.",
-      advice: "Try choosing one calm activity to repeat before bedtime. Keep the routine flexible.",
-      tutorial: "relaxing bedtime routine for students",
-      tool: `
-        <h3>My wind-down checklist</h3>
-        ${checklist(["Prepare what I need for tomorrow", "Put away school materials", "Choose a calm activity", "Reduce unnecessary screen use", "Make my sleeping space comfortable", "Give myself time to wind down"], "sleep")}
-        ${selectField("sleepRoutine", "What helps you relax?", ["Reading", "Quiet music", "Prayer or reflection", "Gentle stretching", "Writing in a journal", "A calm conversation", "Something else"])}
-        ${textField("sleepNote", "My evening routine", "What would make evenings feel calmer?")}
-        <div class="resource-grid">
-          ${linkCard("NHS — Sleep tips", "General information about sleep.", "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/how-to-fall-asleep-faster-and-sleep-better/")}
-          ${linkCard("National Sleep Foundation", "Explore sleep education resources.", "https://www.thensf.org/")}
-        </div>
-        ${saveButton()}
-      `
-    },
-
-    "money-matters": {
-      title: "Money Matters",
-      category: "EVERYDAY FINANCIAL LITERACY",
-      description: "Learn about budgeting, saving, needs, wants and responsible money decisions.",
-      intro: "Understanding money is a useful life skill. You can begin with simple ideas such as planning how to use pocket money, comparing prices, setting a savings goal and recognising unsafe financial offers.",
-      sections: [
-        ["Needs and wants", "Needs are things required for everyday life, while wants are things you would like to have. The difference can depend on circumstances, so think carefully rather than judging yourself or others."],
-        ["A simple budget", "A budget is a plan for money coming in and money going out. Even a small plan can help you understand spending and decide what you want to save."],
-        ["Saving takes time", "A savings goal can be something small and realistic. You do not need to save every rupee or feel guilty about reasonable spending."],
-        ["Stay safe online", "Be cautious of promises of quick money, suspicious links, requests for passwords and offers that require you to pay first. Never share banking details or one-time passwords."]
-      ],
-      fact: "A budget is a plan, not a judgement about how much money someone has.",
-      advice: "Start by recording a few purchases and noticing where your money goes.",
-      tutorial: "budgeting and saving money for teenagers",
-      tool: `
-        ${inputField("moneyAmount", "Money available (₹)", "Example: 500", "number")}
-        ${inputField("moneySaving", "Savings goal (₹)", "Example: 200", "number")}
-        ${inputField("moneySpent", "Money spent so far (₹)", "Example: 100", "number")}
-        ${textField("moneyNeeds", "Needs and planned expenses", "What do you need to pay for?")}
-        ${textField("moneyWants", "Wants and optional spending", "What would you like to save for?")}
-        <div id="moneyResult" class="activity-status"></div>
-        ${button("Calculate my remaining amount", "money-calculate")}
-        <p class="small-note">This is a learning exercise, not financial advice. Ask a trusted adult before making financial decisions or using financial services.</p>
-        ${saveButton()}
-      `
-    },
-
-    "open-mic": {
-      title: "The Open Mic",
-      category: "WORDS, VOICES & EXPRESSION",
-      description: "A quiet stage for poetry, stories, speeches, reflections and ideas.",
-      intro: "Your voice does not have to sound like anyone else's. You can write a poem, practise a speech, tell a story or express an idea. You can keep your work private or share it with people you trust.",
-      sections: [
-        ["Find your own voice", "Writing and speaking are ways to organise thoughts and communicate experiences. You do not need complicated vocabulary to say something meaningful."],
-        ["Try different forms", "A poem, a short story, a speech, a letter and a spoken-word piece each have different possibilities. Experiment and see what feels natural."],
-        ["Edit without losing your meaning", "Read your work aloud, notice where the rhythm changes and remove words that do not help. Keep the parts that sound honest to you."],
-        ["Share safely", "You do not have to publish personal writing online. If you perform or share something publicly, think about privacy, audience, permission and whether you are comfortable with it."]
-      ],
-      fact: "A clear, honest sentence can be more powerful than complicated language.",
-      advice: "Write a first draft without editing every line. You can improve it afterwards.",
-      tutorial: "spoken word poetry and public speaking for beginners",
-      tool: `
-        ${selectField("micType", "Choose your form", ["Poetry", "Spoken word", "Short story", "Speech", "Personal reflection", "Letter", "Other"])}
-        ${inputField("micTitle", "Title", "Give your piece a title")}
-        ${textField("micDraft", "Your writing space", "Begin wherever you like...", 9)}
-        ${textField("micEdit", "What would you like to improve?", "Think about rhythm, clarity, emotion or structure.")}
-        <h3>Before sharing</h3>
-        ${checklist(["I am comfortable with the audience", "I have checked for private details", "I have permission if someone else's work or image is included", "I know I can choose not to share"], "openmic")}
-        ${saveButton()}
-      `
-    }
-
+  const tick = () => {
+    breathPhase = !breathPhase;
+    orb.classList.toggle("inhale", breathPhase);
+    label.textContent = breathPhase
+      ? "Breathe in gently"
+      : "Breathe out gently";
   };
 
-  const feature = features[slug];
+  tick();
+  breathInterval = setInterval(tick, 4000);
+});
 
-  if (!feature) {
-    document.title = "Space not found | To the Ether.";
-    titleElement && (titleElement.textContent = "We couldn't find that space.");
-    descriptionElement && (descriptionElement.textContent = "Return to the homepage and choose one of the 20 spaces.");
-    contentElement.innerHTML = `
-      <section class="tool-section">
-        <h2>This space does not exist yet.</h2>
-        <p>Please return to the homepage and choose a feature card.</p>
-        <a class="primary-button" href="index.html#explore">Back to Explore</a>
-      </section>
-    `;
+document.getElementById("breathStop")?.addEventListener("click", () => {
+  clearInterval(breathInterval);
+  breathInterval = null;
+
+  document.getElementById("breathOrb")?.classList.remove("inhale");
+  const label = document.getElementById("breathLabel");
+  if (label) label.textContent = "Paused. Take your time.";
+});
+
+/* ---------- STUDY TIMER ---------- */
+
+let timer = null;
+let remaining = 600;
+
+function updateTimer() {
+  const display = document.getElementById("timerDisplay");
+  if (display) {
+    display.textContent =
+      String(Math.floor(remaining / 60)).padStart(2, "0") + ":" +
+      String(remaining % 60).padStart(2, "0");
+  }
+}
+
+document.getElementById("timerStart")?.addEventListener("click", () => {
+  if (timer) return;
+
+  const status = document.getElementById("timerStatus");
+  status.textContent = "Your session has started. Focus gently.";
+
+  timer = setInterval(() => {
+    remaining--;
+    updateTimer();
+
+    if (remaining <= 0) {
+      clearInterval(timer);
+      timer = null;
+      status.textContent = "Session complete. Take a short break.";
+    }
+  }, 1000);
+});
+
+document.getElementById("timerReset")?.addEventListener("click", () => {
+  clearInterval(timer);
+  timer = null;
+  remaining = 600;
+  updateTimer();
+  document.getElementById("timerStatus").textContent = "Ready for a fresh session.";
+});
+
+/* ---------- DAY PLANNER ---------- */
+
+const taskKey = "planner-tasks";
+
+function renderTasks() {
+  const list = document.getElementById("taskList");
+  if (!list) return;
+
+  const tasks = Store.get(taskKey, []);
+
+  list.innerHTML = tasks.length
+    ? tasks.map(task => `
+      <label class="saved-entry">
+        <input type="checkbox" data-task="${task.id}" ${task.done ? "checked" : ""}>
+        ${escapeHTML(task.text)}
+      </label>
+    `).join("")
+    : "<p>No tasks yet. Add one small step.</p>";
+
+  list.querySelectorAll("[data-task]").forEach(box => {
+    box.addEventListener("change", () => {
+      const updated = Store.get(taskKey, []).map(task =>
+        task.id === Number(box.dataset.task)
+          ? { ...task, done: box.checked }
+          : task
+      );
+      Store.set(taskKey, updated);
+    });
+  });
+}
+
+document.getElementById("taskForm")?.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const input = document.getElementById("taskInput");
+  const tasks = Store.get(taskKey, []);
+
+  tasks.push({
+    id: Date.now(),
+    text: input.value.trim(),
+    done: false
+  });
+
+  Store.set(taskKey, tasks);
+  input.value = "";
+  renderTasks();
+});
+
+renderTasks();
+
+/* ---------- CAREER INTERESTS ---------- */
+
+document.getElementById("interestSave")?.addEventListener("click", () => {
+  const selected = [...document.querySelectorAll(".interest:checked")]
+    .map(input => input.value);
+
+  Store.set("career-interests", selected);
+
+  document.getElementById("interestResult").textContent =
+    selected.length
+      ? "Your interests have been saved: " + selected.join(", ")
+      : "Choose at least one interest to save.";
+});
+
+/* ---------- MONEY CALCULATOR ---------- */
+
+document.getElementById("budgetCalculate")?.addEventListener("click", () => {
+  const amount = Number(document.getElementById("budgetAmount").value);
+  const spending = Number(document.getElementById("spendAmount").value);
+  const result = document.getElementById("budgetResult");
+
+  if (amount < 0 || spending < 0 ||
+      !Number.isFinite(amount) || !Number.isFinite(spending)) {
+    result.textContent = "Enter valid amounts.";
     return;
   }
 
-  /* ---------- PAGE HEADER ---------- */
-
-  document.title = `${feature.title} | To the Ether.`;
-
-  if (titleElement) titleElement.textContent = feature.title;
-  if (categoryElement) categoryElement.textContent = feature.category;
-  if (descriptionElement) descriptionElement.textContent = feature.description;
-
-  document.body.classList.add(`feature-${slug}`);
-
-  /* ---------- PAGE CONTENT ---------- */
-
-  contentElement.innerHTML = `
-    <section class="feature-introduction">
-      <p class="eyebrow">WELCOME TO YOUR SPACE</p>
-      <p class="feature-lead">${feature.intro}</p>
-    </section>
-
-    ${feature.sections.map((item, index) => `
-      <section class="feature-reading-block">
-        <span class="reading-number">0${index + 1}</span>
-        <div>
-          <h2>${item[0]}</h2>
-          <p>${item[1]}</p>
-        </div>
-      </section>
-    `).join("")}
-
-    <section class="feature-insight">
-      <p class="eyebrow">A LITTLE SOMETHING TO REMEMBER</p>
-      <h2>${feature.fact}</h2>
-      <p>${feature.advice}</p>
-    </section>
-
-    ${section("Explore and try", `
-      <p>Use this activity space at your own pace. You can save your work when you are ready.</p>
-      ${feature.tool}
-    `)}
-
-    ${section("Learn a little more", `
-      <p>Explore a tutorial related to this space. External videos and websites open in a new tab.</p>
-      ${tutorialBlock(feature.tutorial, "Find a beginner-friendly explanation or demonstration. Choose content that is suitable for you.")}
-    `)}
-
-    ${section("Your progress", `
-      <p>Keep track of activities you have completed in this browser.</p>
-      <div id="featureProgress"></div>
-    `)}
-
-    <section class="feature-closing">
-      <p class="script-note">A gentle reminder</p>
-      <h2>You do not have to do everything today.</h2>
-      <p>Take what is useful, leave what is not, and return whenever you feel ready.</p>
-    </section>
-  `;
-
-  /* ---------- SAVE CURRENT PAGE ---------- */
-
-  function collectCurrentContent() {
-    const fields = contentElement.querySelectorAll(
-      "input:not([type='checkbox']):not([type='file']), textarea, select"
-    );
-
-    const values = [];
-
-    fields.forEach(field => {
-      if (field.value?.trim()) {
-        const label = contentElement.querySelector(`label[for="${field.id}"]`);
-        values.push(`${label?.textContent || field.id || "Answer"}: ${field.value.trim()}`);
-      }
-    });
-
-    const checked = contentElement.querySelectorAll("input[type='checkbox']:checked");
-    checked.forEach(item => {
-      const label = item.closest("label");
-      if (label) values.push(`Completed: ${label.textContent.trim()}`);
-    });
-
-    return values.join("\n\n");
-  }
-
-  contentElement.addEventListener("click", event => {
-    const actionButton = event.target.closest("[data-action]");
-    if (!actionButton) return;
-
-    const action = actionButton.dataset.action;
-
-    if (action === "save-entry") {
-      const title =
-        getText("memoryTitle") ||
-        getText("gratitudeTitle") ||
-        getText("movieName") ||
-        getText("creativeTitle") ||
-        getText("micTitle") ||
-        getText("studyTask") ||
-        getText("sportEvent") ||
-        getText("planDate") ||
-        feature.title;
-
-      const content = collectCurrentContent();
-
-      let photoData = null;
-      if (slug === "my-little-world") {
-        photoData = window.currentMemoryPhoto || null;
-      }
-
-      saveEntry(title, content, photoData ? { photo: photoData } : {});
-    }
-
-    if (action === "view-saved") {
-      const page = savedPages().find(item => String(item.id) === actionButton.dataset.id);
-      if (!page) return;
-
-      const viewer = document.getElementById("savedPageViewer");
-      if (viewer) viewer.remove();
-
-      const panel = document.createElement("section");
-      panel.id = "savedPageViewer";
-      panel.className = "tool-section saved-page-viewer";
-      panel.innerHTML = `
-        <h2>${escapeHTML(page.title)}</h2>
-        <p class="eyebrow">${escapeHTML(page.date || "")}</p>
-        <p class="saved-page-content">${escapeHTML(page.content || "").replace(/\n/g, "<br>")}</p>
-        ${page.photo ? `<img src="${page.photo}" alt="Saved scrapbook memory" class="saved-memory-photo">` : ""}
-        <button type="button" class="secondary-button" data-action="close-viewer">Close</button>
-      `;
-      contentElement.prepend(panel);
-      panel.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    if (action === "close-viewer") {
-      document.getElementById("savedPageViewer")?.remove();
-    }
-
-    if (action === "delete-saved") {
-      const id = actionButton.dataset.id;
-      const updated = savedPages().filter(item => String(item.id) !== id);
-      writeData(SAVED_KEY, updated);
-      renderSavedPages();
-    }
-
-    if (action === "random-reminder") {
-      const reminders = [
-        "You are allowed to take things one step at a time.",
-        "A small beginning is still a beginning.",
-        "You do not have to compare your day with someone else's.",
-        "Rest is a useful part of a full day.",
-        "It is okay to ask someone for help.",
-        "Your worth is not measured by your productivity."
-      ];
-      const target = document.getElementById("randomReminder");
-      if (target) target.textContent = reminders[Math.floor(Math.random() * reminders.length)];
-      markProgress("reminder");
-    }
-
-    if (action === "start-breathing") startBreathing();
-    if (action === "stop-breathing") stopBreathing();
-
-    if (action === "start-study") startStudyTimer();
-    if (action === "pause-study") pauseStudyTimer();
-    if (action === "reset-study") resetStudyTimer();
-
-    if (action === "money-calculate") calculateMoney();
-  });
-
-  /* ---------- CHECKLIST PROGRESS ---------- */
-
-  contentElement.addEventListener("change", event => {
-    if (event.target.matches("[data-progress]")) {
-      const group = event.target.dataset.progress;
-      const checked = contentElement.querySelectorAll(
-        `[data-progress="${group}"]:checked`
-      ).length;
-
-      if (checked > 0) markProgress(`${group}-${checked}`);
-    }
-
-    if (event.target.id === "studyLevel") {
-      const minutes = event.target.value.includes("10") ? 10 :
-        event.target.value.includes("20") ? 20 : 25;
-
-      const display = document.getElementById("studyTimer");
-      if (display && !studyInterval) {
-        display.textContent = `${String(minutes).padStart(2, "0")}:00`;
-        studySeconds = minutes * 60;
-      }
-    }
-
-    if (event.target.id === "memoryPhoto") {
-      handleMemoryPhoto(event.target.files?.[0]);
-    }
-  });
-
-  /* ---------- BREATHING GUIDE ---------- */
-
-  let breathingInterval = null;
-  let breathingCount = 0;
-
-  function startBreathing() {
-    stopBreathing();
-
-    const orb = document.getElementById("breathingOrb");
-    const instruction = document.getElementById("breathingInstruction");
-    const status = document.getElementById("breathingStatus");
-
-    if (!orb || !instruction) return;
-
-    const phases = [
-      { label: "Breathe in gently", className: "inhale", seconds: 4 },
-      { label: "Breathe out gently", className: "exhale", seconds: 4 }
-    ];
-
-    breathingCount = 0;
-    let phase = 0;
-    let elapsed = 0;
-
-    function updatePhase() {
-      const current = phases[phase];
-      instruction.textContent = current.label;
-      orb.classList.remove("inhale", "exhale");
-      orb.classList.add(current.className);
-      if (status) status.textContent = "Follow only if this rhythm feels comfortable.";
-    }
-
-    updatePhase();
-
-    breathingInterval = setInterval(() => {
-      elapsed++;
-
-      if (elapsed >= phases[phase].seconds) {
-        elapsed = 0;
-        phase = (phase + 1) % phases.length;
-        breathingCount++;
-        updatePhase();
-
-        if (breathingCount >= 12) {
-          stopBreathing();
-          if (instruction) instruction.textContent = "Well done";
-          if (status) status.textContent = "Your short breathing session is complete. Take your time.";
-          markProgress("breathing-session");
-        }
-      }
-    }, 1000);
-  }
-
-  function stopBreathing() {
-    if (breathingInterval) clearInterval(breathingInterval);
-    breathingInterval = null;
-
-    const orb = document.getElementById("breathingOrb");
-    const instruction = document.getElementById("breathingInstruction");
-    const status = document.getElementById("breathingStatus");
-
-    orb?.classList.remove("inhale", "exhale");
-
-    if (instruction) instruction.textContent = "Ready?";
-    if (status) status.textContent = "Session stopped. You can begin again whenever you like.";
-  }
-
-  /* ---------- STUDY TIMER ---------- */
-
-  let studySeconds = 600;
-  let studyInterval = null;
-
-  function updateStudyDisplay() {
-    const display = document.getElementById("studyTimer");
-    if (!display) return;
-
-    const minutes = Math.floor(studySeconds / 60);
-    const seconds = studySeconds % 60;
-
-    display.textContent =
-      `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  }
-
-  function startStudyTimer() {
-    if (studyInterval) return;
-
-    const status = document.getElementById("studyTimerStatus");
-    if (status) status.textContent = "Focus session in progress. Remember to take a break afterwards.";
-
-    studyInterval = setInterval(() => {
-      if (studySeconds <= 0) {
-        pauseStudyTimer();
-        if (status) status.textContent = "Session complete. Take a comfortable break.";
-        markProgress("study-timer");
-        alert("Your study session is complete. Time for a break!");
-        return;
-      }
-
-      studySeconds--;
-      updateStudyDisplay();
-    }, 1000);
-  }
-
-  function pauseStudyTimer() {
-    if (studyInterval) clearInterval(studyInterval);
-    studyInterval = null;
-
-    const status = document.getElementById("studyTimerStatus");
-    if (status) status.textContent = "Timer paused.";
-  }
-
-  function resetStudyTimer() {
-    pauseStudyTimer();
-
-    const selected = getValue("studyLevel");
-    const minutes = selected.includes("10") ? 10 :
-      selected.includes("20") ? 20 : 25;
-
-    studySeconds = minutes * 60;
-    updateStudyDisplay();
-
-    const status = document.getElementById("studyTimerStatus");
-    if (status) status.textContent = "Timer reset. Ready when you are.";
-  }
-
-  /* ---------- SCRAPBOOK PHOTO ---------- */
-
-  window.currentMemoryPhoto = null;
-
-  function handleMemoryPhoto(file) {
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      alert("Please choose an image file.");
-      return;
-    }
-
-    if (file.size > 3 * 1024 * 1024) {
-      alert("Please choose an image smaller than 3 MB.");
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = event => {
-      const image = new Image();
-
-      image.onload = () => {
-        const maxDimension = 1000;
-        const scale = Math.min(
-          1,
-          maxDimension / Math.max(image.width, image.height)
-        );
-
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.round(image.width * scale);
-        canvas.height = Math.round(image.height * scale);
-
-        const context = canvas.getContext("2d");
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-        window.currentMemoryPhoto = canvas.toDataURL("image/jpeg", 0.78);
-
-        const preview = document.getElementById("memoryPreview");
-        if (preview) {
-          preview.innerHTML = `
-            <img src="${window.currentMemoryPhoto}" alt="Scrapbook photo preview">
-            <button type="button" class="text-button" id="removeMemoryPhoto">Remove photo</button>
-          `;
-
-          document.getElementById("removeMemoryPhoto")?.addEventListener("click", () => {
-            window.currentMemoryPhoto = null;
-            preview.innerHTML = "";
-            const input = document.getElementById("memoryPhoto");
-            if (input) input.value = "";
-          });
-        }
-      };
-
-      image.src = event.target.result;
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-  /* ---------- CAREER QUIZ ---------- */
-
-  contentElement.addEventListener("submit", event => {
-    if (event.target.id !== "careerQuiz") return;
-
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const counts = {};
-
-    ["q1", "q2", "q3"].forEach(key => {
-      const answer = formData.get(key);
-      counts[answer] = (counts[answer] || 0) + 1;
-    });
-
-    const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
-
-    const results = {
-      people: "You may enjoy exploring people-focused fields such as medicine, teaching, counselling, social work, community development or humanitarian support.",
-      science: "You may enjoy exploring science-focused fields such as medicine, research, engineering, laboratory science or environmental science.",
-      creative: "You may enjoy exploring creative fields such as design, writing, architecture, media, animation or the performing arts.",
-      ideas: "You may enjoy exploring research and ideas-focused fields such as law, history, policy, economics, journalism or academic research."
-    };
-
-    const result = document.getElementById("careerResult");
-
-    if (result) {
-      result.innerHTML = `
-        <h3>Your starting point</h3>
-        <p>${results[winner] || "Explore different fields and see what interests you."}</p>
-        <p><strong>Remember:</strong> This is only a reflection activity. It does not predict your future or limit your options.</p>
-      `;
-    }
-
-    markProgress("career-quiz");
-  });
-
-  /* ---------- MONEY CALCULATOR ---------- */
-
-  function calculateMoney() {
-    const available = Number(getValue("moneyAmount"));
-    const spent = Number(getValue("moneySpent"));
-    const target = document.getElementById("moneyResult");
-
-    if (!target) return;
-
-    if (!Number.isFinite(available) || !Number.isFinite(spent) ||
-        available < 0 || spent < 0 || !getValue("moneyAmount")) {
-      target.textContent = "Enter a valid amount and spending figure.";
-      return;
-    }
-
-    const remaining = available - spent;
-
-    target.textContent = remaining >= 0
-      ? `You have ₹${remaining.toFixed(2)} remaining from your planned amount.`
-      : `You have spent ₹${Math.abs(remaining).toFixed(2)} more than the amount entered.`;
-
-    markProgress("money-calculation");
-  }
-
-  /* ---------- INITIALISE ---------- */
-
-  renderSavedPages();
-  renderProgress();
-
+  result.textContent = spending > amount
+    ? "Your planned spending is higher than your starting amount."
+    : "Remaining balance: ₹" + (amount - spending).toFixed(2);
 });
+
+/* ---------- MOBILE NAVIGATION ---------- */
+
+document.getElementById("menuToggle")?.addEventListener("click", () => {
+  document.getElementById("mainNav")?.classList.toggle("open");
+});
+
+document.querySelectorAll(".main-nav a").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("mainNav")?.classList.remove("open");
+  });
+});
+
+const year = document.getElementById("year");
+if (year) year.textContent = new Date().getFullYear();
