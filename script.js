@@ -179,8 +179,11 @@ const authTitle = document.getElementById("authTitle");
 const authDescription = document.getElementById("authDescription");
 const authSubmit = document.getElementById("authSubmit");
 
-const loginTab = document.getElementById("loginTab");
-const signupTab = document.getElementById("signupTab");
+const authSwitch = document.getElementById("authSwitch");
+const loginButton = document.getElementById("loginButton");
+const signupButton = document.getElementById("signupButton");
+const authClose = document.getElementById("authClose");
+const authBackdrop = document.getElementById("authBackdrop");
 
 let authMode = "login";
 
@@ -268,6 +271,8 @@ function renderSpaces(filter = "all") {
 
     const card = document.createElement("a");
     card.className = "feature-card";
+    card.dataset.space = space.id;
+    card.setAttribute("aria-label", `Open ${space.name}`);
     card.href = `feature.html?id=${encodeURIComponent(space.id)}`;
 
     card.innerHTML = `
@@ -302,9 +307,9 @@ function renderSpaces(filter = "all") {
 
 /* ---------------- CATEGORY FILTERS ---------------- */
 
-document.querySelectorAll(".filter-chip").forEach(button => {
+document.querySelectorAll(".filter-button").forEach(button => {
   button.addEventListener("click", () => {
-    document.querySelectorAll(".filter-chip").forEach(item => {
+    document.querySelectorAll(".filter-button").forEach(item => {
       item.classList.remove("active");
     });
 
@@ -333,6 +338,7 @@ function showAuthModal(
   }
 
   authModal.hidden = false;
+  authModal.classList.add("open");
   authModal.setAttribute("aria-hidden", "false");
 
   document.body.classList.add("modal-open");
@@ -343,6 +349,7 @@ function closeAuthModal() {
   if (!authModal) return;
 
   authModal.hidden = true;
+  authModal.classList.remove("open");
   authModal.setAttribute("aria-hidden", "true");
 
   document.body.classList.remove("modal-open");
@@ -351,12 +358,10 @@ function closeAuthModal() {
 function setAuthMode(mode) {
   authMode = mode;
 
-  if (loginTab) {
-    loginTab.classList.toggle("active", mode === "login");
-  }
-
-  if (signupTab) {
-    signupTab.classList.toggle("active", mode === "signup");
+  if (authSwitch) {
+    authSwitch.textContent = mode === "login"
+      ? "New here? Create an account"
+      : "Already have an account? Log in";
   }
 
   if (authSubmit) {
@@ -374,26 +379,13 @@ function setAuthMode(mode) {
   if (authMessage) authMessage.textContent = "";
 }
 
-document.getElementById("openAuth")?.addEventListener("click", () => {
-  showAuthModal();
-});
+loginButton?.addEventListener("click", () => showAuthModal("login"));
+signupButton?.addEventListener("click", () => showAuthModal("signup"));
+authClose?.addEventListener("click", closeAuthModal);
+authBackdrop?.addEventListener("click", closeAuthModal);
 
-document.getElementById("closeAuth")?.addEventListener("click", () => {
-  closeAuthModal();
-});
-
-loginTab?.addEventListener("click", () => {
-  setAuthMode("login");
-});
-
-signupTab?.addEventListener("click", () => {
-  setAuthMode("signup");
-});
-
-authModal?.addEventListener("click", event => {
-  if (event.target === authModal) {
-    closeAuthModal();
-  }
+authSwitch?.addEventListener("click", () => {
+  setAuthMode(authMode === "login" ? "signup" : "login");
 });
 
 document.addEventListener("keydown", event => {
@@ -545,5 +537,6 @@ if (yearElement) {
 
 /* ---------------- STARTUP ---------------- */
 
-renderSpaces();
-initialiseAuth();
+initialiseAuth().finally(() => {
+  renderSpaces();
+});
