@@ -1,120 +1,154 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#151C05">
-
-  <meta name="description" content="Explore your personal space at To the Ether.">
+  <meta name="description" content="Your personal space to reflect, learn, create and grow at your own pace.">
 
   <title>Your Space | To the Ether.</title>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
-
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css">
 
+  <!-- Supabase authentication -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Feature controller -->
   <script src="feature.js" defer></script>
 </head>
 
-<body>
+<body class="feature-page">
 
+  <!-- HEADER -->
   <header class="site-header">
-
-    <a class="brand" href="index.html">
-      <span class="brand-symbol">✳</span>
-      To the <i>Ether.</i>
+    <a href="index.html" class="brand">
+      <span>To the <em>Ether.</em></span>
     </a>
 
     <button
       class="menu-toggle"
       id="menuToggle"
-      aria-label="Open navigation"
+      type="button"
+      aria-label="Toggle navigation"
       aria-expanded="false"
-    >☰</button>
+    >
+      ☰
+    </button>
 
-    <nav class="main-nav" id="mainNav">
-      <a href="index.html#home">Home</a>
-      <a href="index.html#about">About Us</a>
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
       <a href="index.html#explore">Explore</a>
+      <a href="index.html#saved">My Saved Pages</a>
       <a href="index.html#resources">Resources</a>
     </nav>
 
     <div class="header-actions">
-      <a class="header-cta" href="index.html#explore">
-        All spaces ↗
+      <a href="index.html" class="button button-primary">
+        Back Home ↗
       </a>
     </div>
-
   </header>
 
-  <main>
+  <!-- MAIN FEATURE PAGE -->
+  <main class="feature-main">
 
-    <div class="feature-breadcrumb section-wrap">
-      <a href="index.html">Home</a>
-      <span> / </span>
-      <a href="index.html#explore">Explore</a>
-      <span> / </span>
-      <span id="breadcrumbCurrent">Your space</span>
-    </div>
+    <!-- FEATURE INTRODUCTION -->
+    <section class="feature-hero">
 
-    <section class="feature-hero" id="featureHero">
-
-      <img
-        id="featureImage"
-        src="images/mood.jpg"
-        alt="Feature photograph"
-      >
-
-      <div class="feature-hero-content">
-
+      <div class="feature-hero-text">
         <p class="eyebrow" id="featureCategory">
-          YOUR SPACE
+          YOUR PERSONAL SPACE
         </p>
 
         <h1 id="featureTitle">
-          A little space for you.
+          Welcome to your space.
         </h1>
 
-        <p id="featureDescription"></p>
+        <p id="featureDescription">
+          Take your time. Explore at your own pace.
+        </p>
 
-        <a class="button button-primary" href="#featureContent">
-          Explore this space ↓
+        <a href="index.html#explore" class="text-link">
+          ← Explore all twenty spaces
         </a>
 
+        <p class="feature-breadcrumb">
+          You are here / <span id="breadcrumbCurrent">Your space</span>
+        </p>
+      </div>
+
+      <div class="feature-image-wrap">
+        <img
+          id="featureImage"
+          class="feature-image"
+          src="images/hero.jpg"
+          alt="A peaceful natural landscape"
+        >
       </div>
 
     </section>
 
-    <div class="feature-content">
+    <!-- FEATURE CONTENT -->
+    <section class="feature-workspace">
 
-      <div id="featureContent">
+      <div
+        id="featureContent"
+        class="feature-content"
+        aria-live="polite"
+      >
         <p>Loading your space...</p>
       </div>
 
-    </div>
+      <!-- SAVED PAGES SIDEBAR -->
+      <aside class="saved-sidebar">
+
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <h2>My Saved Pages</h2>
+
+        <p>
+          Keep your favourite thoughts, reflections and creations
+          together in one place.
+        </p>
+
+        <div id="featureSavedPages">
+          <p>Your saved work will appear in the main collection below.</p>
+        </div>
+
+        <a href="index.html#saved" class="text-link">
+          View all saved pages ↗
+        </a>
+
+      </aside>
+
+    </section>
 
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
 
-    <a class="brand" href="index.html">
-      To the <i>Ether.</i>
+    <a href="index.html" class="brand">
+      To the <em>Ether.</em>
     </a>
 
     <p>Grow gently. At your own pace.</p>
 
-    <a href="index.html#explore">
-      Explore other spaces ↑
-    </a>
+    <div class="footer-bottom">
+      <small>
+        © <span id="year"></span> To the Ether. Made with care.
+      </small>
 
-    <small>
-      © <span id="year"></span> To the Ether.
-    </small>
+      <a href="index.html#explore">
+        Back to Explore ↑
+      </a>
+    </div>
 
   </footer>
 
