@@ -1,14 +1,17 @@
 
 /* =========================================================
-   TO THE ETHER — HOMEPAGE CONTROLLER
-   20 spaces • filters • guest access • Supabase Auth
+   TO THE ETHER — HOMEPAGE JAVASCRIPT
+   20 spaces • clickable cards • filters • guest access
+   Supabase authentication • mobile navigation
    ========================================================= */
 
 "use strict";
 
-/* ---------------- SUPABASE CONFIGURATION ---------------- */
+/* 01. SUPABASE CONFIGURATION
+========================================================= */
 
 const SUPABASE_URL = "https://sckcrrriiatfxcafabmh.supabase.co";
+
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_dQ_yskeZUEm8rCEjb_1Lw_ftYCDmdo";
 
@@ -22,7 +25,8 @@ if (window.supabase?.createClient) {
   );
 }
 
-/* ---------------- WEBSITE SPACES ---------------- */
+/* 02. WEBSITE SPACES — ALL 20
+========================================================= */
 
 const spaces = [
   {
@@ -167,27 +171,34 @@ const spaces = [
   }
 ];
 
-/* ---------------- ELEMENTS ---------------- */
+/* 03. ELEMENT REFERENCES
+========================================================= */
 
 const grid = document.getElementById("featureGrid");
-const guestCounter = document.getElementById("guestCounter");
 
 const authModal = document.getElementById("authModal");
+const authBackdrop = document.getElementById("authBackdrop");
+const authClose = document.getElementById("authClose");
+
 const authForm = document.getElementById("authForm");
+const authEmail = document.getElementById("authEmail");
+const authPassword = document.getElementById("authPassword");
 const authMessage = document.getElementById("authMessage");
 const authTitle = document.getElementById("authTitle");
 const authDescription = document.getElementById("authDescription");
 const authSubmit = document.getElementById("authSubmit");
-
 const authSwitch = document.getElementById("authSwitch");
+
 const loginButton = document.getElementById("loginButton");
 const signupButton = document.getElementById("signupButton");
-const authClose = document.getElementById("authClose");
-const authBackdrop = document.getElementById("authBackdrop");
+
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
 
 let authMode = "login";
 
-/* ---------------- GUEST ACCESS ---------------- */
+/* 04. GUEST ACCESS
+========================================================= */
 
 const GUEST_STORAGE_KEY = "ether_guest_spaces_v1";
 const GUEST_SPACE_LIMIT = 3;
@@ -198,24 +209,36 @@ function getGuestSpaces() {
       localStorage.getItem(GUEST_STORAGE_KEY) || "[]"
     );
 
-    return Array.isArray(stored)
-      ? [...new Set(stored.filter(id =>
-          spaces.some(space => space.id === id)
-        ))]
-      : [];
-  } catch {
+    if (!Array.isArray(stored)) {
+      return [];
+    }
+
+    return [...new Set(
+      stored.filter(id =>
+        spaces.some(space => space.id === id)
+      )
+    )];
+
+  } catch (error) {
+    console.warn("Could not read guest access data:", error);
     return [];
   }
 }
 
 function saveGuestSpaces(ids) {
-  localStorage.setItem(
-    GUEST_STORAGE_KEY,
-    JSON.stringify(ids)
-  );
+  try {
+    localStorage.setItem(
+      GUEST_STORAGE_KEY,
+      JSON.stringify(ids)
+    );
+  } catch (error) {
+    console.warn("Could not save guest access data:", error);
+  }
 }
 
 function updateGuestCounter() {
+  const guestCounter = document.getElementById("guestCounter");
+
   if (!guestCounter) return;
 
   if (currentSession) {
@@ -237,7 +260,9 @@ function canOpenSpace(spaceId) {
 
   const accessed = getGuestSpaces();
 
-  if (accessed.includes(spaceId)) return true;
+  if (accessed.includes(spaceId)) {
+    return true;
+  }
 
   if (accessed.length >= GUEST_SPACE_LIMIT) {
     showAuthModal(
@@ -245,6 +270,7 @@ function canOpenSpace(spaceId) {
       "Your next chapter starts here.",
       "You've explored three guest spaces. Log in or create an account to continue exploring all twenty."
     );
+
     return false;
   }
 
@@ -255,45 +281,76 @@ function canOpenSpace(spaceId) {
   return true;
 }
 
-/* ---------------- RENDER SPACE CARDS ---------------- */
+/* 05. CREATE AND DISPLAY SPACE CARDS
+========================================================= */
 
 function renderSpaces(filter = "all") {
   if (!grid) return;
 
-  const filtered = filter === "all"
+  const filteredSpaces = filter === "all"
     ? spaces
     : spaces.filter(space => space.category === filter);
 
   grid.innerHTML = "";
 
-  filtered.forEach(space => {
+  filteredSpaces.forEach(space => {
     const originalIndex = spaces.indexOf(space) + 1;
 
     const card = document.createElement("a");
+
     card.className = "feature-card";
-    card.dataset.space = space.id;
-    card.setAttribute("aria-label", `Open ${space.name}`);
     card.href = `feature.html?id=${encodeURIComponent(space.id)}`;
+    card.dataset.space = space.id;
+    card.setAttribute(
+      "aria-label",
+      `Explore ${space.name}`
+    );
 
-    card.innerHTML = `
-      <img
-        src="${space.image}"
-        alt="${space.name}"
-        loading="lazy"
-      >
+    const image = document.createElement("img");
+    image.src = space.image;
+    image.alt = "";
+    image.loading = "lazy";
 
-      <div class="card-content">
-        <span class="card-number">
-          ${String(originalIndex).padStart(2, "0")} / 20
-        </span>
+    image.addEventListener("error", () => {
+      image.style.display = "none";
+    });
 
-        <div class="card-bottom">
-          <h3>${space.name}</h3>
-          <p>${space.desc}</p>
-          <span class="card-link">Explore this space ↗</span>
-        </div>
-      </div>
-    `;
+    const cardContent = document.createElement("div");
+    cardContent.className = "card-content";
+
+    const cardNumber = document.createElement("span");
+    cardNumber.className = "card-number";
+    cardNumber.textContent =
+      `${String(originalIndex).padStart(2, "0")} / 20`;
+
+    const cardBottom = document.createElement("div");
+    cardBottom.className = "card-bottom";
+
+    const heading = document.createElement("h3");
+    heading.textContent = space.name;
+
+    const description = document.createElement("p");
+    description.textContent = space.desc;
+
+    const cardLink = document.createElement("span");
+    cardLink.className = "card-link";
+    cardLink.textContent = "Explore this space ↗";
+
+    cardBottom.append(
+      heading,
+      description,
+      cardLink
+    );
+
+    cardContent.append(
+      cardNumber,
+      cardBottom
+    );
+
+    card.append(
+      image,
+      cardContent
+    );
 
     card.addEventListener("click", event => {
       if (!canOpenSpace(space.id)) {
@@ -305,20 +362,27 @@ function renderSpaces(filter = "all") {
   });
 }
 
-/* ---------------- CATEGORY FILTERS ---------------- */
+/* 06. CATEGORY FILTERS
+========================================================= */
 
-document.querySelectorAll(".filter-button").forEach(button => {
+const filterButtons = document.querySelectorAll(".filter-button");
+
+filterButtons.forEach(button => {
   button.addEventListener("click", () => {
-    document.querySelectorAll(".filter-button").forEach(item => {
+    filterButtons.forEach(item => {
       item.classList.remove("active");
+      item.setAttribute("aria-pressed", "false");
     });
 
     button.classList.add("active");
+    button.setAttribute("aria-pressed", "true");
+
     renderSpaces(button.dataset.filter || "all");
   });
 });
 
-/* ---------------- AUTH MODAL ---------------- */
+/* 07. AUTHENTICATION MODAL
+========================================================= */
 
 function showAuthModal(
   mode = "login",
@@ -329,63 +393,96 @@ function showAuthModal(
 
   setAuthMode(mode);
 
-  if (title && authTitle) {
-    authTitle.textContent = title;
+  if (authTitle) {
+    authTitle.textContent =
+      title || (mode === "login" ? "Come on in." : "Join our space.");
   }
 
-  if (description && authDescription) {
-    authDescription.textContent = description;
+  if (authDescription) {
+    authDescription.textContent =
+      description || "Log in or create an account to continue your journey.";
   }
 
   authModal.hidden = false;
-  authModal.classList.add("open");
   authModal.setAttribute("aria-hidden", "false");
 
   document.body.classList.add("modal-open");
-  authMessage && (authMessage.textContent = "");
+
+  if (authMessage) {
+    authMessage.textContent = "";
+    authMessage.className = "";
+  }
+
+  window.setTimeout(() => {
+    authEmail?.focus();
+  }, 100);
 }
 
 function closeAuthModal() {
   if (!authModal) return;
 
   authModal.hidden = true;
-  authModal.classList.remove("open");
   authModal.setAttribute("aria-hidden", "true");
 
   document.body.classList.remove("modal-open");
 }
 
 function setAuthMode(mode) {
-  authMode = mode;
-
-  if (authSwitch) {
-    authSwitch.textContent = mode === "login"
-      ? "New here? Create an account"
-      : "Already have an account? Log in";
-  }
+  authMode = mode === "signup" ? "signup" : "login";
 
   if (authSubmit) {
     authSubmit.textContent =
-      mode === "login" ? "Log in" : "Create account";
+      authMode === "login" ? "Log in" : "Create account";
   }
 
-  const passwordInput = document.getElementById("authPassword");
-
-  if (passwordInput) {
-    passwordInput.autocomplete =
-      mode === "login" ? "current-password" : "new-password";
+  if (authPassword) {
+    authPassword.autocomplete =
+      authMode === "login"
+        ? "current-password"
+        : "new-password";
   }
 
-  if (authMessage) authMessage.textContent = "";
+  if (authSwitch) {
+    authSwitch.textContent =
+      authMode === "login"
+        ? "New here? Create an account"
+        : "Already have an account? Log in";
+  }
+
+  if (authTitle) {
+    authTitle.textContent =
+      authMode === "login" ? "Come on in." : "Join our space.";
+  }
+
+  if (authDescription) {
+    authDescription.textContent =
+      authMode === "login"
+        ? "Log in to continue your journey."
+        : "Create an account to explore all twenty spaces.";
+  }
+
+  if (authMessage) {
+    authMessage.textContent = "";
+    authMessage.className = "";
+  }
 }
 
-loginButton?.addEventListener("click", () => showAuthModal("login"));
-signupButton?.addEventListener("click", () => showAuthModal("signup"));
+loginButton?.addEventListener("click", () => {
+  showAuthModal("login");
+});
+
+signupButton?.addEventListener("click", () => {
+  showAuthModal("signup");
+});
+
 authClose?.addEventListener("click", closeAuthModal);
+
 authBackdrop?.addEventListener("click", closeAuthModal);
 
 authSwitch?.addEventListener("click", () => {
-  setAuthMode(authMode === "login" ? "signup" : "login");
+  setAuthMode(
+    authMode === "login" ? "signup" : "login"
+  );
 });
 
 document.addEventListener("keydown", event => {
@@ -394,7 +491,8 @@ document.addEventListener("keydown", event => {
   }
 });
 
-/* ---------------- SUPABASE AUTHENTICATION ---------------- */
+/* 08. AUTHENTICATION MESSAGES
+========================================================= */
 
 function showAuthMessage(message, isError = false) {
   if (!authMessage) return;
@@ -404,27 +502,36 @@ function showAuthMessage(message, isError = false) {
   authMessage.classList.toggle("success", !isError);
 }
 
+/* 09. SUPABASE LOGIN AND SIGNUP
+========================================================= */
+
 authForm?.addEventListener("submit", async event => {
   event.preventDefault();
 
   if (!supabaseClient) {
     showAuthMessage(
-      "Authentication could not load. Check your internet connection and Supabase script.",
+      "Authentication could not load. Check your internet connection and Supabase setup.",
       true
     );
     return;
   }
 
-  const email = document.getElementById("authEmail")?.value.trim();
-  const password = document.getElementById("authPassword")?.value;
+  const email = authEmail?.value.trim();
+  const password = authPassword?.value;
 
   if (!email || !password) {
-    showAuthMessage("Please enter your email and password.", true);
+    showAuthMessage(
+      "Please enter your email address and password.",
+      true
+    );
     return;
   }
 
   if (password.length < 8) {
-    showAuthMessage("Your password must contain at least 8 characters.", true);
+    showAuthMessage(
+      "Your password must contain at least 8 characters.",
+      true
+    );
     return;
   }
 
@@ -448,20 +555,24 @@ authForm?.addEventListener("submit", async event => {
       });
     }
 
-    if (result.error) throw result.error;
+    if (result.error) {
+      throw result.error;
+    }
 
     if (authMode === "signup" && !result.data.session) {
       showAuthMessage(
-        "Account created. Check your email for the confirmation link before logging in."
+        "Your account has been created. Check your email for the confirmation link before logging in."
       );
       return;
     }
 
     currentSession = result.data.session;
 
-    showAuthMessage("You're signed in. Welcome to To the Ether.");
-
     updateGuestCounter();
+
+    showAuthMessage(
+      "You're signed in. Welcome to To the Ether."
+    );
 
     window.setTimeout(() => {
       closeAuthModal();
@@ -473,6 +584,7 @@ authForm?.addEventListener("submit", async event => {
       error.message || "Something went wrong. Please try again.",
       true
     );
+
   } finally {
     if (authSubmit) {
       authSubmit.disabled = false;
@@ -482,7 +594,8 @@ authForm?.addEventListener("submit", async event => {
   }
 });
 
-/* ---------------- SESSION RESTORATION ---------------- */
+/* 10. RESTORE SIGN-IN SESSION
+========================================================= */
 
 async function initialiseAuth() {
   if (!supabaseClient) {
@@ -491,43 +604,61 @@ async function initialiseAuth() {
   }
 
   try {
-    const { data, error } = await supabaseClient.auth.getSession();
+    const { data, error } =
+      await supabaseClient.auth.getSession();
 
     if (error) throw error;
 
     currentSession = data.session;
 
-    supabaseClient.auth.onAuthStateChange((_event, session) => {
-      currentSession = session;
-      updateGuestCounter();
-    });
+    supabaseClient.auth.onAuthStateChange(
+      (_event, session) => {
+        currentSession = session;
+        updateGuestCounter();
+      }
+    );
 
   } catch (error) {
-    console.error("Supabase session error:", error);
+    console.error(
+      "Could not restore Supabase session:",
+      error
+    );
   }
 
   updateGuestCounter();
 }
 
-/* ---------------- MOBILE NAVIGATION ---------------- */
-
-const menuToggle = document.getElementById("menuToggle");
-const mainNav = document.getElementById("mainNav");
+/* 11. MOBILE NAVIGATION
+========================================================= */
 
 menuToggle?.addEventListener("click", () => {
   const isOpen = mainNav?.classList.toggle("open") || false;
 
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+
+  menuToggle.textContent = isOpen ? "×" : "☰";
 });
 
 mainNav?.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
     mainNav.classList.remove("open");
-    menuToggle?.setAttribute("aria-expanded", "false");
+
+    menuToggle?.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    if (menuToggle) {
+      menuToggle.textContent = "☰";
+    }
   });
 });
 
-/* ---------------- FOOTER YEAR ---------------- */
+/* 12. FOOTER YEAR
+========================================================= */
 
 const yearElement = document.getElementById("year");
 
@@ -535,8 +666,35 @@ if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
 
-/* ---------------- STARTUP ---------------- */
+/* 13. STARTUP
+========================================================= */
 
-initialiseAuth().finally(() => {
-  renderSpaces();
-});
+function startWebsite() {
+  // Keep the authentication modal closed on page load.
+  if (authModal) {
+    authModal.hidden = true;
+    authModal.setAttribute("aria-hidden", "true");
+  }
+
+  document.body.classList.remove("modal-open");
+
+  // Display all twenty spaces.
+  renderSpaces("all");
+
+  // Set the default filter button.
+  filterButtons.forEach(button => {
+    const isAll = button.dataset.filter === "all";
+
+    button.classList.toggle("active", isAll);
+    button.setAttribute("aria-pressed", String(isAll));
+  });
+
+  // Restore any existing login session.
+  initialiseAuth();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", startWebsite);
+} else {
+  startWebsite();
+}
