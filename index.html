@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,20 +35,16 @@
 
   <div class="header-actions">
     <button class="header-login" id="loginButton" type="button">Log in</button>
-    <button class="header-cta" id="signupButton" type="button">Join us ↗</button>
+    <button class="header-cta" id="signupButton" type="button">Create account ↗</button>
   </div>
 </header>
 
 <main>
 
-  <!-- HERO -->
+  <!-- CINEMATIC SPLIT-SCREEN HERO -->
   <section class="hero" id="home">
-    <div class="hero-image">
-      <img src="images/hero.jpg" alt="A peaceful natural landscape">
-    </div>
-    <div class="hero-overlay"></div>
 
-    <div class="hero-content">
+    <div class="hero-text-panel">
       <p class="eyebrow">A SPACE TO PAUSE · REFLECT · GROW</p>
 
       <h1>
@@ -72,7 +67,15 @@
       <p class="hero-note">YOUR JOURNEY. YOUR PACE. YOUR SPACE.</p>
     </div>
 
-    <div class="hero-side-note">GROW GENTLY · GROW FREELY</div>
+    <div class="hero-image">
+      <img src="images/hero.jpg" alt="A peaceful natural forest landscape">
+      <div class="hero-image-caption">
+        <span>GROW GENTLY</span>
+        <span>✳</span>
+        <span>GROW FREELY</span>
+      </div>
+    </div>
+
   </section>
 
   <!-- TICKER -->
@@ -350,16 +353,16 @@
 
 </main>
 
-<!-- AUTHENTICATION MODAL -->
-<div class="auth-modal" id="authModal" aria-hidden="true">
+<!-- OPTIONAL AUTHENTICATION MODAL -->
+<div class="auth-modal" id="authModal" aria-hidden="true" hidden>
   <div class="auth-modal-backdrop" id="authBackdrop"></div>
 
   <div class="auth-modal-content" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <button class="auth-close" id="authClose" type="button" aria-label="Close login window">×</button>
 
-    <p class="eyebrow">WELCOME TO YOUR SPACE</p>
+    <p class="eyebrow">YOUR PERSONAL COLLECTION</p>
     <h2 id="authTitle">Come on in.</h2>
-    <p id="authDescription">Log in or create an account to continue your journey.</p>
+    <p id="authDescription">Create an optional account to keep your personal collection associated with your account.</p>
 
     <form id="authForm">
       <label for="authEmail">Email address</label>
