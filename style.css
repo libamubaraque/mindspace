@@ -4399,3 +4399,144 @@ body:not(.feature-page) .ether-note-card {
     font-size: .48rem;
   }
 }
+
+
+/* HOMEPAGE POLISH — deeper olive, richer contrast, layered editorial detail.
+   Existing image sources and all card-front photographs remain untouched. */
+body:not(.feature-page) .site-header {
+  background: rgba(70, 83, 52, .98) !important;
+  border-bottom-color: rgba(241,238,223,.24);
+  box-shadow: 0 10px 32px rgba(28,35,22,.2);
+}
+body:not(.feature-page) .poster-hero {
+  background: #536443 !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  background-color: #536443 !important;
+  background-image:
+    radial-gradient(ellipse at 12% 10%, rgba(208,216,184,.15), transparent 36%),
+    radial-gradient(ellipse at 92% 88%, rgba(48,39,29,.22), transparent 42%),
+    repeating-linear-gradient(125deg, rgba(241,238,223,.035) 0 1px, transparent 1px 6px),
+    linear-gradient(145deg, rgba(83,100,64,.98), rgba(59,73,47,.98)) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel::before {
+  inset: 18px !important;
+  border: 1px solid rgba(241,238,223,.17);
+  background:
+    linear-gradient(135deg, rgba(241,238,223,.045), transparent 42%),
+    radial-gradient(ellipse at 80% 15%, rgba(208,216,184,.1), transparent 50%) !important;
+}
+body:not(.feature-page) .poster-hero .hero h1 {
+  text-shadow: 0 5px 24px rgba(30,38,23,.16);
+}
+body:not(.feature-page) .poster-hero .hero-image img {
+  filter: saturate(.78) contrast(1.1) brightness(.82) !important;
+}
+body:not(.feature-page) .poster-hero .hero-image::after {
+  background:
+    linear-gradient(90deg, rgba(33,43,27,.26), transparent 34%),
+    linear-gradient(0deg, rgba(28,36,22,.56), transparent 43%),
+    linear-gradient(180deg, rgba(36,46,28,.12), transparent 35%) !important;
+}
+body:not(.feature-page) .poster-hero .poster-word {
+  color: #F1EEDF !important;
+  opacity: .055 !important;
+}
+body:not(.feature-page) .ticker {
+  background: #49392F !important;
+  color: #F1EEDF !important;
+  border-top: 1px solid rgba(241,238,223,.12);
+  border-bottom: 1px solid rgba(241,238,223,.12);
+}
+body:not(.feature-page) .intro-section,
+body:not(.feature-page) .explore-section,
+body:not(.feature-page) .ether-editorial-section,
+body:not(.feature-page) .stories-section,
+body:not(.feature-page) .resources-section,
+body:not(.feature-page) .saved-library-section {
+  position: relative;
+  isolation: isolate;
+  background-color: #C3CBAE !important;
+  background-image:
+    linear-gradient(135deg, rgba(195,203,174,.94), rgba(171,184,145,.95)),
+    url("images/olive-texture.jpg") !important;
+  color: #35412D !important;
+}
+body:not(.feature-page) .intro-section:nth-of-type(even),
+body:not(.feature-page) .stories-section,
+body:not(.feature-page) .saved-library-section {
+  background-image:
+    linear-gradient(135deg, rgba(177,190,151,.95), rgba(151,167,125,.94)),
+    url("images/olive-texture.jpg") !important;
+}
+body:not(.feature-page) .intro-content h2,
+body:not(.feature-page) .section-heading h2,
+body:not(.feature-page) .ether-editorial-heading h2,
+body:not(.feature-page) .about-content h2,
+body:not(.feature-page) .saved-library-content h2 {
+  color: #303B29 !important;
+  text-shadow: 0 1px rgba(255,255,255,.18);
+}
+body:not(.feature-page) .intro-content h2 i,
+body:not(.feature-page) .section-heading h2 i,
+body:not(.feature-page) .ether-editorial-heading h2 i,
+body:not(.feature-page) .about-content h2 i {
+  color: #596B43 !important;
+}
+body:not(.feature-page) .intro-copy p,
+body:not(.feature-page) .section-heading > div > p:last-child,
+body:not(.feature-page) .ether-editorial-heading > p:last-child,
+body:not(.feature-page) .ether-editorial-foot > p:last-child,
+body:not(.feature-page) .about-content > p:not(.eyebrow) {
+  color: #414B36 !important;
+}
+body:not(.feature-page) .intro-label,
+body:not(.feature-page) .section-heading,
+body:not(.feature-page) .ether-editorial-foot {
+  border-color: rgba(57,70,43,.3) !important;
+}
+body:not(.feature-page) .ether-note-card {
+  background:
+    linear-gradient(145deg, rgba(241,238,223,.88), rgba(210,216,190,.9)),
+    url("images/olive-texture.jpg") center / cover !important;
+  border: 1px solid rgba(70,84,51,.28) !important;
+  box-shadow: 0 18px 42px rgba(45,55,34,.15), inset 0 1px rgba(255,255,255,.45) !important;
+}
+body:not(.feature-page) .ether-note-card h3 { color: #303B29 !important; }
+body:not(.feature-page) .ether-note-card p { color: #4A5140 !important; }
+body:not(.feature-page) .about-section {
+  background: #87966C !important;
+}
+body:not(.feature-page) .about-content {
+  background:
+    linear-gradient(145deg, rgba(214,220,194,.94), rgba(181,193,155,.96)),
+    url("images/olive-texture.jpg") center / cover !important;
+  box-shadow: 0 18px 48px rgba(39,49,30,.14);
+}
+body:not(.feature-page) .image-break::after,
+body:not(.feature-page) .closing-overlay,
+body:not(.feature-page) .story-feature-overlay {
+  background: linear-gradient(90deg, rgba(27,36,22,.72), rgba(35,45,27,.25)) !important;
+}
+body:not(.feature-page) .image-break img,
+body:not(.feature-page) .closing-section > img,
+body:not(.feature-page) .story-feature > img {
+  filter: saturate(.82) brightness(.78) contrast(1.08);
+}
+body:not(.feature-page) .story-small,
+body:not(.feature-page) .resource-card {
+  background:
+    linear-gradient(145deg, rgba(69,84,52,.94), rgba(51,64,40,.96)),
+    url("images/olive-texture.jpg") center / cover !important;
+  border: 1px solid rgba(241,238,223,.2);
+  box-shadow: 0 16px 36px rgba(35,44,27,.14);
+}
+body:not(.feature-page) .story-small h3,
+body:not(.feature-page) .resource-card h3 { color: #F1EEDF !important; }
+body:not(.feature-page) .story-small p,
+body:not(.feature-page) .resource-card p { color: rgba(241,238,223,.82) !important; }
+body:not(.feature-page) .site-footer {
+  background:
+    linear-gradient(135deg, rgba(57,70,43,.98), rgba(43,54,34,.99)),
+    url("images/olive-texture.jpg") center / cover !important;
+}
