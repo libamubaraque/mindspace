@@ -4901,3 +4901,148 @@ body:not(.feature-page) .resources-section .section-heading > div::after {
   content: none !important;
   display: none !important;
 }
+
+
+/* FINAL HOMEPAGE HERO PALETTE + SPLIT LAYOUT
+   Keep the existing forest photograph; remove the dark full-image wash
+   and bring the text side into the same light olive/pistachio palette. */
+body:not(.feature-page) .poster-hero {
+  display: grid !important;
+  grid-template-columns: minmax(0, 44%) minmax(0, 56%) !important;
+  align-items: stretch !important;
+  min-height: 820px !important;
+  height: min(900px, 100svh) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: linear-gradient(135deg, #e7ebd9 0%, #d9e1c7 55%, #cbd6b5 100%) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  position: relative !important;
+  z-index: 3 !important;
+  display: flex !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 820px !important;
+  height: 100% !important;
+  padding: 145px clamp(28px, 5vw, 78px) 75px !important;
+  justify-content: center !important;
+  color: #35452f !important;
+  background: linear-gradient(145deg, #e8ecd9 0%, #dce4cb 52%, #d2ddbd 100%) !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(83, 101, 62, .16) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel::before,
+body:not(.feature-page) .poster-hero .hero-text-panel::after {
+  content: none !important;
+  display: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .eyebrow,
+body:not(.feature-page) .poster-hero .hero-text-panel h1,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-description,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-note,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  color: #35452f !important;
+  text-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel h1 i {
+  color: #718354 !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .eyebrow,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-note {
+  color: #68794f !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-description {
+  color: #505e43 !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  color: #435438 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding-left: 0 !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .button-primary,
+body:not(.feature-page) .poster-hero .hero-text-panel .button-outline {
+  color: #f5f3e9 !important;
+  background: #586b43 !important;
+  border: 1px solid #586b43 !important;
+  box-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .button-outline {
+  color: #405236 !important;
+  background: rgba(248, 246, 237, .48) !important;
+  border-color: rgba(64, 82, 54, .42) !important;
+}
+body:not(.feature-page) .poster-hero .hero-image {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  position: relative !important;
+  inset: auto !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 820px !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #aab78a !important;
+}
+body:not(.feature-page) .poster-hero .hero-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 820px !important;
+  object-fit: cover !important;
+  object-position: center 52% !important;
+  filter: brightness(1.04) saturate(.78) sepia(.10) hue-rotate(7deg) !important;
+}
+body:not(.feature-page) .poster-hero .hero-image::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background: linear-gradient(135deg, rgba(198, 211, 169, .12), rgba(61, 78, 47, .08)) !important;
+}
+body:not(.feature-page) .poster-hero .poster-meta {
+  color: #526344 !important;
+  text-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .poster-word {
+  color: #87996a !important;
+  opacity: .12 !important;
+}
+body:not(.feature-page) .poster-hero .hero-image-caption {
+  color: rgba(248, 246, 237, .9) !important;
+  text-shadow: 0 1px 12px rgba(30, 43, 25, .35) !important;
+}
+@media (max-width: 760px) {
+  body:not(.feature-page) .poster-hero {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-text-panel {
+    width: 100% !important;
+    min-height: 760px !important;
+    height: auto !important;
+    padding: 135px 26px 65px !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-image {
+    width: 100% !important;
+    min-height: 440px !important;
+    height: 440px !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-image img {
+    min-height: 440px !important;
+  }
+}
