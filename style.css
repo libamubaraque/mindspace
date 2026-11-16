@@ -4699,3 +4699,108 @@ body:not(.feature-page) .poster-hero .hero-image-caption {
     background: linear-gradient(90deg, rgba(13,22,14,.68), rgba(13,22,14,.28)), linear-gradient(0deg, rgba(13,22,14,.42), transparent 75%) !important;
   }
 }
+
+
+/* FINAL HERO FIX — ONE FULL IMAGE, NO TEXT PANEL OR BOX */
+body:not(.feature-page) .poster-hero {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: min(940px, 100svh) !important;
+  height: min(940px, 100svh) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+body:not(.feature-page) .poster-hero .hero-image {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  filter: brightness(.76) saturate(.88) !important;
+}
+/* A single gentle tint across the photograph — not a darker patch behind the words. */
+body:not(.feature-page) .poster-hero .hero-image::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background: rgba(28, 43, 29, .16) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  position: relative !important;
+  z-index: 3 !important;
+  display: flex !important;
+  width: min(1000px, 100%) !important;
+  min-height: min(940px, 100svh) !important;
+  height: auto !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 145px clamp(28px, 9vw, 150px) 90px !important;
+  color: #f5f3e9 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel::before,
+body:not(.feature-page) .poster-hero .hero-text-panel::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .eyebrow,
+body:not(.feature-page) .poster-hero .hero-text-panel h1,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-description,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-note,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  color: #f5f3e9 !important;
+  text-shadow: 0 2px 18px rgba(20, 30, 20, .38) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel h1 i {
+  color: #d5dfbd !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding-left: 0 !important;
+}
+body:not(.feature-page) .poster-hero .hero-image-caption {
+  z-index: 4 !important;
+}
+@media (max-width: 700px) {
+  body:not(.feature-page) .poster-hero {
+    min-height: 850px !important;
+    height: auto !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-text-panel {
+    min-height: 850px !important;
+    padding: 145px 25px 90px !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-image img {
+    object-position: 58% center !important;
+  }
+}
