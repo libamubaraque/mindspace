@@ -513,6 +513,213 @@ const data = {
   }
 };
 
+/* 03A. ADDITIONAL READING — TWO EXTRA CHAPTERS FOR EACH SPACE */
+const additionalChapters = {
+  "mood": [
+    [
+      "Feelings, needs and boundaries",
+      "Sometimes a feeling points towards something you need: rest, reassurance, space, connection or help with a problem. You can ask yourself what might be underneath the feeling without assuming there is one simple explanation. If a situation involves pressure or makes you feel unsafe, consider speaking with a trusted adult."
+    ],
+    [
+      "A journal that grows with you",
+      "Your entries may change as your experiences change. You might write in full paragraphs one day and make a short list the next. There is no required schedule, word count or perfect way to use this journal."
+    ]
+  ],
+  "breathing": [
+    [
+      "Choose comfort over perfection",
+      "Breathing exercises are optional. Keep your breathing natural and comfortable, and stop if you feel dizzy, uncomfortable or more anxious. You can simply notice the room around you, listen to a familiar sound or take a quiet break instead."
+    ],
+    [
+      "Build a pause into an ordinary day",
+      "A pause can happen before homework, after a busy conversation or when you move from one task to another. You do not need special equipment or a perfect setting. The point is to give yourself a little space."
+    ]
+  ],
+  "gratitude": [
+    [
+      "Appreciation without comparison",
+      "Your list does not need to resemble anyone else's. A moment that matters to you may seem ordinary to another person, and that is completely fine. Keep your attention on your own experience rather than comparing lives."
+    ],
+    [
+      "Make room for mixed feelings",
+      "You can be grateful for a person and still disagree with them. You can appreciate a good moment while wishing something had gone differently. Honest reflection makes room for more than one feeling."
+    ]
+  ],
+  "fitness": [
+    [
+      "Make movement accessible",
+      "Consider your surroundings, energy, health needs and available support when choosing an activity. You can adapt movement, take breaks or choose a different activity. If you have a health concern, ask a trusted adult or healthcare professional for advice."
+    ],
+    [
+      "Notice what supports your wellbeing",
+      "After an activity, reflect on enjoyment, comfort, confidence, connection and rest. Numbers and records are optional; they are not a measure of your value or a requirement for taking part."
+    ]
+  ],
+  "checkin": [
+    [
+      "A check-in is not a score",
+      "There is no grade for having a good day or a difficult one. You can skip questions, write a few words or simply notice that you are unsure. The activity is here to help you pause, not to judge your answers."
+    ],
+    [
+      "Carry one kind thought forward",
+      "Choose a small, realistic intention for the next part of your day. It might be asking a question, taking a break, preparing something you need or spending time on an interest. Let it be flexible."
+    ]
+  ],
+  "study": [
+    [
+      "Make a plan that can bend",
+      "Unexpected tasks, family responsibilities, tiredness and changing priorities are part of life. A useful plan can be adjusted. Choose what matters most, leave some breathing room and ask for help when a subject feels confusing."
+    ],
+    [
+      "Learning is more than finishing",
+      "Understanding a concept, correcting a mistake, asking a question and returning to a difficult topic are all meaningful parts of learning. Progress is not always visible as a completed checklist."
+    ]
+  ],
+  "selfcare": [
+    [
+      "Care can be small and practical",
+      "Self-care does not need to look like a perfect morning routine. It may mean eating when you are hungry, preparing for tomorrow, taking a screen break, talking to someone or making time for an activity you enjoy."
+    ],
+    [
+      "Know when to ask for support",
+      "Online information can be useful, but it cannot understand your full circumstances or replace individual care. If a health or emotional concern is affecting daily life, speak with a trusted adult and an appropriately qualified professional."
+    ]
+  ],
+  "stories": [
+    [
+      "Read with context and care",
+      "Look for the original source, publication date, evidence and voices directly affected by an issue. Be cautious with dramatic headlines, edited images and posts that do not explain where their information came from."
+    ],
+    [
+      "From awareness to thoughtful action",
+      "Learning can lead to respectful conversations, school projects, volunteering through trusted organisations and supporting community initiatives with adult guidance. You do not have to put yourself at risk to care about an issue."
+    ]
+  ],
+  "career": [
+    [
+      "Talk to people who know the field",
+      "Teachers, career counsellors, professionals and people studying a subject can help you understand what a pathway is really like. Prepare questions about daily work, training, costs, opportunities and challenges."
+    ],
+    [
+      "Let your interests keep developing",
+      "You may discover new subjects and change your mind as you learn more. Keep notes about what you enjoy and what you want to investigate. Exploration is useful even when it does not lead immediately to a decision."
+    ]
+  ],
+  "scrapbook": [
+    [
+      "Remember the details that matter",
+      "A date, a place, a song, a small conversation or a sentence someone said can help bring a memory back later. You do not need to document everything; choose the details you want to keep."
+    ],
+    [
+      "Keep digital memories thoughtfully",
+      "Use images you have permission to keep, avoid uploading private information about others and remember that this prototype stores entries in your browser. Save a separate backup of anything important."
+    ]
+  ],
+  "movies": [
+    [
+      "Notice the choices behind a film",
+      "Think about music, editing, colour, dialogue and point of view. These choices shape how a story feels and what the audience notices. You can explore them without needing technical film knowledge."
+    ],
+    [
+      "Build a watchlist with intention",
+      "Choose films that suit your interests and age guidance, and take breaks when you need them. A watchlist is a personal collection, not a challenge to finish as many titles as possible."
+    ]
+  ],
+  "commons": [
+    [
+      "Shared spaces need respect",
+      "A welcoming community makes room for different experiences, communication styles and interests. Listen, give others a chance to contribute and avoid sharing someone's personal information without permission."
+    ],
+    [
+      "Start with one shared idea",
+      "A club or group project can begin with a simple interest: reading, art, science, environment, sport or community service. Agree on a clear purpose and involve a responsible adult when organising activities."
+    ]
+  ],
+  "sports": [
+    [
+      "Teamwork is part of sport",
+      "Sport can involve communication, patience, practice and learning how to support teammates. People participate at different levels, and every role can contribute to a shared experience."
+    ],
+    [
+      "Safety and enjoyment come first",
+      "Choose age-appropriate activities, use suitable supervision and equipment, follow local safety guidance and rest when needed. The goal is a positive experience, not pushing through discomfort."
+    ]
+  ],
+  "planner": [
+    [
+      "Separate priorities from pressure",
+      "A planner should help you see what matters, not make every hour feel occupied. Choose a small number of priorities, include breaks and allow tasks to move when plans change."
+    ],
+    [
+      "Review and adjust",
+      "At the end of the day, notice what worked and what needs a different approach. Move unfinished tasks thoughtfully rather than treating them as a personal failure."
+    ]
+  ],
+  "creative": [
+    [
+      "Experiment before judging the result",
+      "Try a rough draft, a quick sketch, a few lines of poetry or an unusual combination of ideas. Early attempts are allowed to be unfinished. Experimenting helps you discover what you want to make."
+    ],
+    [
+      "Create in your own voice",
+      "You can learn from artists and writers while still developing your own perspective. Give credit when you use someone else's work, respect copyright and treat your first ideas as a starting point."
+    ]
+  ],
+  "kindness": [
+    [
+      "Kindness includes boundaries",
+      "Being kind does not mean agreeing to everything or accepting treatment that makes you uncomfortable. Respectful boundaries help people care for themselves and others."
+    ],
+    [
+      "Notice the needs around you",
+      "A thoughtful action might be listening, including someone in a conversation, sharing useful information or helping with an agreed task. Choose actions that are safe, appropriate and welcomed."
+    ]
+  ],
+  "library": [
+    [
+      "Follow a question beyond the first answer",
+      "When something interests you, look for a second reliable source and compare how each explains it. Check dates and distinguish evidence from opinion. Curiosity becomes stronger when it is paired with careful thinking."
+    ],
+    [
+      "Keep a record of what you learn",
+      "Write down the question, the most useful idea and one thing you still want to understand. Your notes can become a personal map of interests that grows over time."
+    ]
+  ],
+  "sleep": [
+    [
+      "Create a gentle wind-down",
+      "A calmer evening may include preparing school materials, dimming bright screens, reading or doing a quiet activity. Choose what is realistic for your home and routine; there is no single perfect bedtime ritual."
+    ],
+    [
+      "When rest is difficult",
+      "If sleep problems continue or affect your everyday life, speak with a trusted adult and a healthcare professional. This page offers general information, not a diagnosis or treatment plan."
+    ]
+  ],
+  "money": [
+    [
+      "Understand needs, wants and choices",
+      "A budget is a way to understand choices, not a reason to feel guilty. Needs and priorities differ between people and households. Start with simple examples and ask a trusted adult before making financial decisions."
+    ],
+    [
+      "Be careful with online money claims",
+      "Promises of quick income, guaranteed returns or easy rewards can be misleading or unsafe. Do not share passwords, one-time codes, bank details or personal documents with strangers. Ask a trusted adult before using a financial service."
+    ]
+  ],
+  "openmic": [
+    [
+      "Find the form that fits your voice",
+      "Expression can take the form of poetry, spoken word, a short story, a letter, a song you wrote or a small reflection. You can create privately without performing or sharing it."
+    ],
+    [
+      "Share with care and permission",
+      "If you choose to present your work, consider the audience and the privacy of anyone mentioned. You can use fictional details, change identifying information or keep a piece entirely to yourself."
+    ]
+  ]
+};
+Object.entries(additionalChapters).forEach(([spaceId, chapters]) => {
+  if (data[spaceId]) data[spaceId].sections.push(...chapters);
+});
+
 /* 04. PAGE ELEMENTS
 ========================================================= */
 
@@ -572,6 +779,7 @@ function renderNestedCards(item) {
     <section class="nested-topics-section">
       <p class="eyebrow">GO A LITTLE DEEPER</p>
       <h2>Explore inside this space.</h2>
+      <p class="topic-intro">Each part of this space has its own little world. Choose a photograph and follow the subject that interests you.</p>
 
       <div class="nested-grid">
         ${item.topics.map(([id, title, description]) => `
@@ -579,8 +787,11 @@ function renderNestedCards(item) {
             class="nested-card"
             href="feature.html?id=${encodeURIComponent(featureId)}&page=${encodeURIComponent(id)}"
           >
-            <span class="card-number">DISCOVER ↗</span>
-            <h3>${escapeHTML(title)}</h3>
+            <img class="topic-image" src="images/${escapeHTML(id)}.jpg" alt="${escapeHTML(title)}" loading="lazy">
+            <div class="topic-card-copy">
+              <span class="card-number">DISCOVER ↗</span>
+              <h3>${escapeHTML(title)}</h3>
+            </div>
             <p>${escapeHTML(description)}</p>
           </a>
         `).join("")}
@@ -1581,6 +1792,12 @@ function renderPage() {
     </section>
 
     ${renderSections(feature.sections)}
+
+    <section class="feature-photo-strip" aria-label="Photographs from this space">
+      <figure><img src="images/${encodeURIComponent(featureId)}-detail-1.jpg" alt="${escapeHTML(feature.title)} — photograph one" loading="lazy"><figcaption>${escapeHTML(feature.title)}</figcaption></figure>
+      <figure><img src="images/${encodeURIComponent(featureId)}-detail-2.jpg" alt="${escapeHTML(feature.title)} — photograph two" loading="lazy"><figcaption>${escapeHTML(feature.title)}</figcaption></figure>
+      <figure><img src="images/${encodeURIComponent(featureId)}-detail-3.jpg" alt="${escapeHTML(feature.title)} — photograph three" loading="lazy"><figcaption>${escapeHTML(feature.title)}</figcaption></figure>
+    </section>
 
     ${renderNestedCards(feature)}
 
