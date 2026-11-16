@@ -6535,3 +6535,66 @@ body:not(.feature-page) #explore #featureGrid > .feature-card .card-link {
     min-height: 190px;
   }
 }
+
+
+/* HERO BUTTON VISIBILITY FIX — HOMEPAGE */
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  position: relative !important;
+  z-index: 20 !important;
+  isolation: isolate !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions {
+  position: relative !important;
+  z-index: 25 !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  overflow: visible !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions .button,
+body:not(.feature-page) .poster-hero .hero-actions a.button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 52px !important;
+  padding: 14px 25px !important;
+  position: relative !important;
+  z-index: 30 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  border-width: 1.5px !important;
+  border-style: solid !important;
+  border-radius: 999px !important;
+  cursor: pointer !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions .button-primary {
+  color: #263322 !important;
+  background: #e4ebd1 !important;
+  border-color: #e4ebd1 !important;
+  box-shadow: 0 7px 22px rgba(15, 25, 12, .24) !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions .button-outline {
+  color: #fffdf2 !important;
+  background: #354a32 !important;
+  border-color: #f1f0e4 !important;
+  box-shadow: 0 7px 22px rgba(15, 25, 12, .2) !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions .button-primary:hover,
+body:not(.feature-page) .poster-hero .hero-actions .button-outline:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.08) !important;
+}
+@media (max-width: 600px) {
+  body:not(.feature-page) .poster-hero .hero-actions .button,
+  body:not(.feature-page) .poster-hero .hero-actions a.button {
+    min-height: 48px !important;
+    padding: 12px 18px !important;
+  }
+}
