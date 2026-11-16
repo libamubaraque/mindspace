@@ -5046,3 +5046,79 @@ body:not(.feature-page) .poster-hero .hero-image-caption {
     min-height: 440px !important;
   }
 }
+
+
+/* FINAL CLEAN TYPOGRAPHY + CONTINUOUS SECTION BACKGROUNDS */
+body:not(.feature-page) .poster-hero .hero-text-panel,
+body:not(.feature-page) .poster-hero .hero-text-panel * {
+  text-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel h1 {
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* Long-form editorial writing sits directly on the section canvas,
+   rather than inside darker inset boxes. */
+body:not(.feature-page) .ether-editorial-section .ether-note-card,
+body:not(.feature-page) .ether-editorial-section .ether-editorial-heading,
+body:not(.feature-page) .ether-editorial-section .ether-editorial-foot,
+body:not(.feature-page) .intro-section .intro-content,
+body:not(.feature-page) .intro-section .intro-copy,
+body:not(.feature-page) .resources-section .section-heading,
+body:not(.feature-page) .resources-section .section-heading > div {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body:not(.feature-page) .ether-editorial-section .ether-note-card::before,
+body:not(.feature-page) .ether-editorial-section .ether-note-card::after {
+  content: none !important;
+  display: none !important;
+}
+body:not(.feature-page) .ether-editorial-section .ether-note-card {
+  padding: 26px 0 !important;
+  border-top: 1px solid rgba(57,70,43,.28) !important;
+}
+body:not(.feature-page) .ether-editorial-section .ether-note-card h3 {
+  color: #303B29 !important;
+}
+body:not(.feature-page) .ether-editorial-section .ether-note-card p,
+body:not(.feature-page) .ether-editorial-section .ether-editorial-heading > p:last-child,
+body:not(.feature-page) .ether-editorial-section .ether-editorial-foot > p:last-child {
+  color: #414B36 !important;
+}
+
+/* Resource and story text cards no longer have a darker fill.
+   Their content remains separated by spacing and fine borders. */
+body:not(.feature-page) .resources-section .resource-card,
+body:not(.feature-page) .stories-section .story-small {
+  color: #35412D !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(57,70,43,.28) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 26px 18px !important;
+}
+body:not(.feature-page) .resources-section .resource-card h3,
+body:not(.feature-page) .stories-section .story-small h3 {
+  color: #303B29 !important;
+  text-shadow: none !important;
+}
+body:not(.feature-page) .resources-section .resource-card p,
+body:not(.feature-page) .stories-section .story-small p {
+  color: #414B36 !important;
+}
+body:not(.feature-page) .resources-section .resource-card a,
+body:not(.feature-page) .stories-section .story-small a {
+  color: #596B43 !important;
+}
