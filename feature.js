@@ -1270,12 +1270,38 @@ async function initialiseFeatureSession() {
 /* 06. CONTENT RENDERING
 ========================================================= */
 
+/* CARD_INTERIOR_EXPANSION */
+const cardInteriorNotes = {
+  mood: "Try describing a specific moment, what you noticed and what you wish someone understood. You can write honestly without needing to reach a conclusion.",
+  breathing: "Adapt this idea to the place you are in and the time you have. Choose a comfortable approach and stop if the activity does not feel right.",
+  gratitude: "Look for the detail that made this moment meaningful. It might be a person's effort, a small comfort or something you learned.",
+  fitness: "Make choices that respect your comfort, safety and circumstances. Enjoyment, rest and support are important parts of wellbeing.",
+  checkin: "A few words can be enough to notice what matters today. Your next step can change when your circumstances change.",
+  study: "Connect the idea to a real example, explain it in your own words and check what you have understood. Ask a teacher if something remains unclear.",
+  selfcare: "Think about what is practical in your daily life and what support is available. A trusted adult can help with concerns that feel too big to manage alone.",
+  stories: "Check the context, source and date before drawing a conclusion. Consider whose voices are included and whether the information respects the people involved.",
+  career: "Compare real responsibilities, official course requirements and different pathways. Interests and plans can develop over time.",
+  scrapbook: "Add details that help you remember why the moment matters, while protecting your privacy and the privacy of others.",
+  movies: "Support your interpretation with a scene or creative choice. If the story is based on real events, compare it with reliable sources.",
+  commons: "Think about how different people could take part and feel respected. Clear expectations, shared responsibility and privacy help a group.",
+  sports: "Focus on learning, teamwork, fair play and safe participation. Ask for guidance when trying something new and remember that rest matters.",
+  planner: "Make the next action specific and realistic. Leave space for changes and ask for clarification if you are unsure what a task requires.",
+  creative: "Experiment, collect ideas and allow early attempts to be imperfect. Notice what you learned and respect other creators' work.",
+  kindness: "Consider what the other person actually needs, respect their choices and keep healthy boundaries.",
+  library: "Check who created the source, when it was published and what evidence supports it. Keep useful notes so you can return to reliable information.",
+  sleep: "Choose realistic changes that fit your home and schedule. If difficulties continue, discuss them with a trusted adult and healthcare professional.",
+  money: "Use trusted information, protect personal details and ask a trusted adult before making financial decisions.",
+  openmic: "Choose the form and level of sharing that feels right to you. Your work can be private, and sharing should respect everyone's privacy."
+};
+
 function renderSections(sections) {
   return sections.map(([heading, paragraph], index) => `
     <section class="feature-text-section">
       <p class="eyebrow">CHAPTER ${String(index + 1).padStart(2, "0")}</p>
       <h2>${escapeHTML(heading)}</h2>
       <p>${escapeHTML(paragraph)}</p>
+      <p>${escapeHTML(cardInteriorNotes[featureId] || "Take a moment to explore this idea in a way that feels useful and comfortable for you.")}</p>
+      <p class="chapter-note">A thought to carry with you: take what is useful, leave what is not, and return whenever you feel ready.</p>
     </section>
   `).join("");
 }
