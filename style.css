@@ -5633,3 +5633,67 @@ body:not(.feature-page) .explore-section #featureGrid > a:hover {
     min-height: 390px !important;
   }
 }
+
+
+/* TRUE EDGE-TO-EDGE HOMEPAGE — REMOVE THE OUTER PAGE GUTTERS */
+body:not(.feature-page) main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+body:not(.feature-page) .section-wrap {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+/* Keep editorial text comfortably inset while section backgrounds reach the edges. */
+body:not(.feature-page) .intro-section .intro-label,
+body:not(.feature-page) .intro-section .intro-content,
+body:not(.feature-page) .ether-editorial-section > .ether-editorial-heading,
+body:not(.feature-page) .ether-editorial-section > .ether-note-grid,
+body:not(.feature-page) .ether-editorial-section > .ether-editorial-foot,
+body:not(.feature-page) .stories-section > .section-heading,
+body:not(.feature-page) .stories-section > .stories-layout,
+body:not(.feature-page) .resources-section > .section-heading {
+  padding-left: clamp(22px, 5vw, 76px) !important;
+  padding-right: clamp(22px, 5vw, 76px) !important;
+}
+/* The six resource cards touch edge-to-edge and use a brighter pale-olive finish. */
+body:not(.feature-page) .resources-section .resources-grid {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  gap: 0 !important;
+}
+body:not(.feature-page) .resources-section .resources-grid > .resource-card {
+  color: #293728 !important;
+  background: linear-gradient(145deg, #F7F8F0 0%, #E8EFDC 100%) !important;
+  background-image: none !important;
+  border: 1px solid rgba(55, 72, 43, .12) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body:not(.feature-page) .resources-section .resources-grid > .resource-card h3,
+body:not(.feature-page) .resources-section .resources-grid > .resource-card p,
+body:not(.feature-page) .resources-section .resources-grid > .resource-card .eyebrow,
+body:not(.feature-page) .resources-section .resources-grid > .resource-card .resource-number {
+  color: #344431 !important;
+}
+body:not(.feature-page) .resources-section .resources-grid > .resource-card a {
+  color: #536B3F !important;
+}
+@media (max-width: 760px) {
+  body:not(.feature-page) .intro-section .intro-label,
+  body:not(.feature-page) .intro-section .intro-content,
+  body:not(.feature-page) .ether-editorial-section > .ether-editorial-heading,
+  body:not(.feature-page) .ether-editorial-section > .ether-note-grid,
+  body:not(.feature-page) .ether-editorial-section > .ether-editorial-foot,
+  body:not(.feature-page) .stories-section > .section-heading,
+  body:not(.feature-page) .stories-section > .stories-layout,
+  body:not(.feature-page) .resources-section > .section-heading {
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+}
