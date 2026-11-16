@@ -2973,3 +2973,33 @@ body {
   .poster-hero .hero-text-panel { background-color: rgba(242,240,228,.94); }
   .feature-page .feature-photo-strip { grid-template-columns: 1fr 1fr; }
 }
+
+
+/* 37 — SOFTER TEXT IN “THE STORY BEHIND THE SPACE” */
+.about-content .eyebrow {
+  color: #87916E;
+}
+.about-content h2 {
+  color: #65734A;
+}
+.about-content h2 i {
+  color: #87966B;
+}
+.about-content > p:not(.eyebrow) {
+  color: #777565;
+}
+.about-values span {
+  color: #929C78;
+}
+.about-values h3 {
+  color: #697653;
+}
+.about-values p {
+  color: #85816F;
+}
+.about-signature {
+  color: #899275;
+}
+.about-signature strong {
+  color: #78875B;
+}
