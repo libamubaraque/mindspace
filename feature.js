@@ -720,6 +720,293 @@ Object.entries(additionalChapters).forEach(([spaceId, chapters]) => {
   if (data[spaceId]) data[spaceId].sections.push(...chapters);
 });
 
+/* 03B. EXTENDED READING — THREE MORE DISTINCT CHAPTERS FOR EVERY SPACE */
+const extendedChapters = {
+  "mood": [
+    [
+      "The difference between a feeling and a fact",
+      "A feeling is real because you are experiencing it, but the first explanation that comes to mind may not tell the whole story. If you feel left out, for example, you might pause and ask what happened, what you know for certain and what you are still unsure about. This gentle distinction can help you respond with care rather than rushing to judge yourself or someone else."
+    ],
+    [
+      "Writing when words feel difficult",
+      "You can begin with fragments, a list of words, a question or a description of what is happening around you. Try writing, “Right now I notice…” or “I wish I had someone to talk to about…”. You are allowed to stop after a sentence. The value of a journal is not measured by how much you write."
+    ],
+    [
+      "Support beyond the page",
+      "A journal can help organise thoughts, but it cannot provide every kind of support. If something feels too heavy to manage alone, consider speaking with a trusted adult, school counsellor or qualified professional. You deserve to be listened to, and asking for help is a valid next step."
+    ]
+  ],
+  "breathing": [
+    [
+      "Mindfulness can be ordinary",
+      "Mindfulness does not need candles, music or a special room. It can be noticing the temperature of the air, the sounds nearby, the texture of a book cover or the feeling of sitting in a chair. These ordinary details can help bring attention back to the present moment."
+    ],
+    [
+      "Choose an activity that suits the moment",
+      "A quiet listening exercise may feel useful in one setting, while looking around the room may be more comfortable in another. You can choose silence, a familiar sound or no exercise at all. Your preferences and comfort are more important than following a particular technique."
+    ],
+    [
+      "Make the space your own",
+      "You might return to this page before studying, after travelling or during a transition between activities. Keep the experience simple and optional. If focusing on breathing feels unpleasant, leave that exercise and choose an external point of attention instead."
+    ]
+  ],
+  "gratitude": [
+    [
+      "Collect moments, not achievements",
+      "A meaningful entry does not have to describe a prize, a perfect result or a major event. It might be a familiar meal, a funny conversation, a kind message or a few minutes spent outdoors. Small observations can make a personal collection feel genuine and specific."
+    ],
+    [
+      "Appreciation and honesty can coexist",
+      "You can appreciate the people who support you while recognising that a relationship may sometimes be complicated. You can value an opportunity while feeling nervous about it. Gratitude is not a demand to ignore problems or excuse hurtful behaviour."
+    ],
+    [
+      "Turn a reflection into a kind action",
+      "If you notice that someone has helped you, you may choose to thank them, return a favour or pass along encouragement. Keep the action appropriate and comfortable for both people. A private note is just as meaningful as a message sent aloud."
+    ]
+  ],
+  "fitness": [
+    [
+      "Find movement that fits your day",
+      "The best activity is not necessarily the most intense or impressive one. It may be a walk with family, a game with friends, cycling in a safe place, dancing at home or a sport you enjoy. Access, comfort, health needs and supervision all matter when choosing an activity."
+    ],
+    [
+      "Rest, recovery and flexibility",
+      "Energy can vary from day to day. Rest is a normal part of wellbeing, and changing or skipping an activity when you need to is sensible. Avoid treating movement as punishment or feeling that you must make up for a rest day."
+    ],
+    [
+      "Build a positive relationship with activity",
+      "Notice whether an activity helps you feel engaged, connected, relaxed or curious. Avoid comparing your body, ability or progress with other people. If you have pain, dizziness or a health concern, stop and talk with a trusted adult or healthcare professional."
+    ]
+  ],
+  "checkin": [
+    [
+      "A question can be enough",
+      "You do not need to answer every prompt. One question such as “What do I need for the next hour?” may be enough to help you choose a manageable next step. You can also decide that you do not know yet."
+    ],
+    [
+      "Notice what is within your control",
+      "Some parts of a day depend on other people, circumstances or unexpected events. You can still consider one small choice available to you, such as asking a question, preparing a resource, taking a pause or reaching out to someone supportive."
+    ],
+    [
+      "Make check-ins welcoming",
+      "Try using this page at a time that suits you rather than turning it into another daily obligation. Missing a day does not create a task to catch up on. You can return whenever a moment of reflection feels useful."
+    ]
+  ],
+  "study": [
+    [
+      "Understand before you memorise",
+      "When possible, connect a new idea to something you already know. Explain it in your own words, draw a simple diagram or create an example. If you cannot explain a step, mark it as a question to revisit rather than assuming you should already understand it."
+    ],
+    [
+      "Use mistakes as information",
+      "A wrong answer can show which part of a method needs more practice. Look at the question, identify the step where your understanding changed and try a similar example. If the explanation is still unclear, ask a teacher or classmate for help."
+    ],
+    [
+      "Protect time for life outside study",
+      "Schoolwork is one part of a student's life, not the whole of it. Leave room for meals, sleep, movement, friendships, family responsibilities and interests. A realistic routine should support learning without making every free moment feel like an unfinished assignment."
+    ]
+  ],
+  "selfcare": [
+    [
+      "Care is more than appearance",
+      "Self-care includes physical comfort, emotional support, rest, relationships, safety and access to appropriate healthcare. It does not require buying products or following trends. Choose routines that are practical, safe and suitable for your circumstances."
+    ],
+    [
+      "Listen to your own needs",
+      "You might need quiet, company, help with a task, a break from a screen or a conversation with someone you trust. Needs can change, and it is fine to adjust a routine rather than forcing yourself to follow it exactly."
+    ],
+    [
+      "Use reliable health information",
+      "Online advice can be incomplete or misleading, especially when it makes dramatic promises. For medical questions, ongoing symptoms or personal health concerns, speak with a trusted adult and a qualified healthcare professional instead of relying on this website."
+    ]
+  ],
+  "stories": [
+    [
+      "Look for the people behind the headlines",
+      "News about a community or crisis can become a collection of numbers and headlines. Responsible learning also asks whose voices are included, what context is missing and how people directly affected describe their own experiences. Treat individuals with dignity rather than reducing them to a single story."
+    ],
+    [
+      "Check information before sharing",
+      "Look for the original report, date, author, evidence and other credible sources. Images and short clips can be taken out of context. If you cannot verify a claim, it is better to pause than to pass it along as fact."
+    ],
+    [
+      "Hope can be thoughtful and realistic",
+      "Recognising harm does not mean ignoring the people working towards solutions. Community organisations, educators, health workers, researchers and local volunteers may contribute to change in different ways. Learn about their work while remembering that complex problems rarely have one simple answer."
+    ]
+  ],
+  "career": [
+    [
+      "Explore the work behind a job title",
+      "A career name can sound exciting, but daily responsibilities may be very different from what you imagine. Look at typical tasks, working environments, training routes, required skills, challenges and the people a role serves. Reliable course and professional-body information can help you build a realistic picture."
+    ],
+    [
+      "Compare pathways, not just destinations",
+      "Different countries and institutions may have different entrance requirements, costs, qualifications and licensing rules. Check current official sources before making plans, and remember that a pathway can change as you learn more about yourself and the opportunities available."
+    ],
+    [
+      "Keep more than one possibility open",
+      "You do not have to choose a permanent future from a short quiz. Keep a list of subjects, activities and problems that interest you. Try projects, conversations and age-appropriate experiences that help you learn what the work actually involves."
+    ]
+  ],
+  "scrapbook": [
+    [
+      "A collection can hold ordinary days",
+      "Not every memory needs to be a milestone. You might keep a description of a rainy afternoon, a page about a school event, a favourite place or a message that made you feel appreciated. These details can become meaningful when you look back."
+    ],
+    [
+      "Write letters for different moments",
+      "You could write a letter to your future self, a thank-you note you may or may not send, or a reflection about something you have learned. Be thoughtful about names and private details if the device is shared with other people."
+    ],
+    [
+      "Protect the memories you choose to keep",
+      "This website's scrapbook prototype stores entries in the browser on the device you use. Browser data can be cleared, and entries may not appear on another device. Keep separate copies of important photographs or writing in a secure place you control."
+    ]
+  ],
+  "movies": [
+    [
+      "Watch actively, not just quickly",
+      "Notice what a film asks you to care about, whose perspective is centred and how the story presents difficult choices. You can pause, revisit a scene or write down a question. There is no need to turn every film into an assignment."
+    ],
+    [
+      "Stories reflect choices and context",
+      "Films are created by people working within particular times, cultures and industries. Consider how setting, casting, music, dialogue and editing influence the story. You can appreciate a film while still questioning its messages."
+    ],
+    [
+      "Make room for different opinions",
+      "Two viewers may interpret the same scene differently because they bring different experiences and expectations. Explain what led you to your view, listen to another interpretation and remember that disagreement can be respectful."
+    ]
+  ],
+  "commons": [
+    [
+      "A community is made through participation",
+      "Clubs and shared-interest groups grow when people have a reason to gather and a welcoming way to take part. A small reading circle, science activity, art exchange or environmental project can begin with a few interested people."
+    ],
+    [
+      "Make participation accessible",
+      "Think about timing, location, costs, communication and whether people with different needs can take part. Offer clear information and more than one way to contribute. Ask permission before sharing photographs, names or personal stories."
+    ],
+    [
+      "Work together with clear expectations",
+      "Agree on a purpose, simple responsibilities and a way to resolve misunderstandings. For school or community activities, involve a responsible adult and follow the relevant rules. Collaboration should be safe and respectful."
+    ]
+  ],
+  "sports": [
+    [
+      "Sport can teach more than technique",
+      "Playing a sport may involve patience, communication, teamwork, problem-solving and learning how to respond when plans change. These skills can be useful in many parts of life, whether or not someone wants to compete."
+    ],
+    [
+      "Respect different ways of participating",
+      "People may enjoy playing, coaching, organising, analysing matches, supporting a team or learning about sports history. Ability and access differ, and no single role makes someone more valuable than another."
+    ],
+    [
+      "Keep safety at the centre",
+      "Use age-appropriate activities, suitable supervision and appropriate equipment. Follow local guidance, respect personal limits and take breaks when needed. If something feels unsafe or causes pain, stop and seek appropriate help."
+    ]
+  ],
+  "planner": [
+    [
+      "Give your plan breathing room",
+      "A useful plan includes space for tasks to take longer than expected, unexpected responsibilities and proper breaks. If every minute is filled, one delay can make the whole day feel impossible. Leave room to adjust."
+    ],
+    [
+      "Choose the next useful action",
+      "When a task feels too large, write the smallest practical first step. It might be finding a textbook, opening a document, listing questions or asking someone to explain an instruction. A clear beginning can make the rest easier to approach."
+    ],
+    [
+      "Review without turning it into judgement",
+      "At the end of a planning period, notice which estimates were realistic and what interrupted your plans. Change the method if needed. A planner is a tool to support you, not a scorecard for your day."
+    ]
+  ],
+  "creative": [
+    [
+      "Collect ideas before they disappear",
+      "Keep a note of interesting phrases, colours, questions, images you are allowed to use or conversations that inspire you. Ideas can arrive at inconvenient times, and a rough note is enough to return to later."
+    ],
+    [
+      "Learn from references responsibly",
+      "Studying other creators can help you understand technique and style. Give credit, respect copyright and avoid presenting someone else's work as your own. Use references as a way to learn while developing your own choices."
+    ],
+    [
+      "Finish something small",
+      "A complete short poem, sketch, paragraph, collage or melody can teach you about your process. It does not need to be shared publicly or judged by likes. Making something for yourself is a valid creative outcome."
+    ]
+  ],
+  "kindness": [
+    [
+      "Kindness begins with attention",
+      "Notice whether someone wants advice, practical help, company or simply to be heard. Asking what would be useful can be more respectful than assuming you know what another person needs."
+    ],
+    [
+      "Include people without making assumptions",
+      "A welcoming gesture might be inviting someone into a group activity, explaining a shared task or making room for another person's contribution. Avoid putting someone on the spot or expecting them to respond in a particular way."
+    ],
+    [
+      "Care for yourself while caring for others",
+      "You are allowed to have limits. If a situation feels unsafe, overwhelming or beyond your role, involve a trusted adult. Kindness should not require you to ignore your own safety or wellbeing."
+    ]
+  ],
+  "library": [
+    [
+      "Follow curiosity across subjects",
+      "A question about nature might lead to science, geography, history and art. A question about a community might lead to law, public health, economics and personal stories. Learning becomes richer when you allow connections between subjects."
+    ],
+    [
+      "Check the quality of a source",
+      "Consider who published the information, when it was updated, what evidence is provided and whether other reliable sources agree. For important facts, prefer official institutions, educational organisations and reputable research sources."
+    ],
+    [
+      "Keep questions as well as answers",
+      "A useful reading note can include the question you began with, one idea you learned, a source to revisit and something that remains unclear. Curiosity does not end when you reach one answer."
+    ]
+  ],
+  "sleep": [
+    [
+      "Notice your evening environment",
+      "Light, noise, temperature, screen use, routines and daily responsibilities can all influence how restful an evening feels. Some factors are within your control and others are not. Focus on practical adjustments that are possible in your home."
+    ],
+    [
+      "Build a routine that can change",
+      "A wind-down routine might involve preparing for tomorrow, reading, listening to something calm or doing a quiet activity. Keep it flexible; a routine should help you, not become another reason to feel pressured."
+    ],
+    [
+      "Ask for help when rest stays difficult",
+      "If sleep concerns continue, affect school or everyday life, or leave you worried, talk with a trusted adult and a healthcare professional. This page offers general educational information and cannot diagnose or treat sleep problems."
+    ]
+  ],
+  "money": [
+    [
+      "Learn the language of money",
+      "Income, spending, saving, needs, wants and budgeting are useful words to understand. A budget simply helps organise available money and planned expenses. Examples can be imaginary; you do not need to share your family's financial details here."
+    ],
+    [
+      "Think carefully about online offers",
+      "Be cautious of messages promising easy money, guaranteed rewards or quick returns. Do not share passwords, one-time codes, bank details or identity documents with strangers. Ask a trusted adult before signing up for a financial service or making a payment."
+    ],
+    [
+      "Small decisions need context",
+      "Financial choices depend on personal and family circumstances. A simple calculator can demonstrate arithmetic, but it cannot decide what someone should spend or save. For real decisions, use reliable information and advice from a trusted adult."
+    ]
+  ],
+  "openmic": [
+    [
+      "Find a subject that matters to you",
+      "A piece of writing can begin with a memory, a question, a place, an idea or something you wish people understood. You can write from your own point of view or invent a fictional speaker. There is no requirement to share personal experiences."
+    ],
+    [
+      "Try different forms of expression",
+      "A short poem, spoken-word draft, monologue, letter, story or reflective paragraph can all be a starting point. Read it aloud privately if that helps you hear the rhythm, then revise only what you want to change."
+    ],
+    [
+      "Your voice does not need an audience",
+      "You can keep your writing private, share it with someone you trust or take part in an appropriate school activity. If a piece includes other people, protect their privacy and avoid sharing details without permission."
+    ]
+  ]
+};
+Object.entries(extendedChapters).forEach(([spaceId, chapters]) => {
+  if (data[spaceId]) data[spaceId].sections.push(...chapters);
+});
+
 /* 04. PAGE ELEMENTS
 ========================================================= */
 
