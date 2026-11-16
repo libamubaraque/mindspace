@@ -5365,3 +5365,169 @@ body:not(.feature-page) main > .stories-section:nth-of-type(10) .story-feature-c
 body:not(.feature-page) main > .stories-section:nth-of-type(10) .story-feature-content * {
   color: #F7F4E8 !important;
 }
+
+
+/* FEATURE PAGE HERO — PHOTOGRAPH-FIRST EDITORIAL LAYOUT
+   Let the image become the full hero background. Keep all copy directly
+   over the photograph instead of inside a centred rectangular panel. */
+body.feature-page .feature-main {
+  width: min(1540px, 94%);
+  padding-top: 28px;
+}
+
+body.feature-page .feature-hero {
+  position: relative !important;
+  display: block !important;
+  min-height: clamp(620px, 76vw, 820px) !important;
+  margin: 0 0 88px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #263528 !important;
+  box-shadow: none !important;
+}
+
+body.feature-page .feature-hero::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(14, 24, 16, .68) 0%, rgba(14, 24, 16, .34) 43%, rgba(14, 24, 16, .02) 100%),
+    linear-gradient(0deg, rgba(14, 24, 16, .48) 0%, transparent 45%) !important;
+}
+
+body.feature-page .feature-hero .feature-image-wrap {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  background: #344632 !important;
+}
+
+body.feature-page .feature-hero .feature-image {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  filter: saturate(.82) brightness(.88) !important;
+  transform: scale(1.015);
+}
+
+body.feature-page .feature-hero .feature-hero-text {
+  position: absolute !important;
+  z-index: 3 !important;
+  left: clamp(28px, 7vw, 104px) !important;
+  bottom: clamp(54px, 8vw, 108px) !important;
+  width: min(760px, 78%) !important;
+  max-width: 760px !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #F5F1E5 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.feature-page .feature-hero .feature-hero-text::before,
+body.feature-page .feature-hero .feature-hero-text::after {
+  content: none !important;
+  display: none !important;
+}
+
+body.feature-page .feature-hero .feature-hero-text .eyebrow {
+  margin: 0 0 25px !important;
+  color: #D8E2BD !important;
+  font-size: .68rem !important;
+  letter-spacing: .22em !important;
+}
+
+body.feature-page .feature-hero .feature-hero-text h1 {
+  max-width: 900px !important;
+  margin: 0 0 25px !important;
+  color: #F8F5E9 !important;
+  font-family: var(--serif) !important;
+  font-size: clamp(3.8rem, 8.4vw, 8.8rem) !important;
+  font-weight: 500 !important;
+  line-height: .91 !important;
+  letter-spacing: -.065em !important;
+  text-shadow: none !important;
+}
+
+body.feature-page .feature-hero .feature-hero-text h1 i {
+  color: #D5E1B6 !important;
+  font-weight: 500 !important;
+}
+
+body.feature-page .feature-hero .feature-hero-text > p:not(.eyebrow):not(.feature-breadcrumb) {
+  max-width: 530px !important;
+  margin: 0 !important;
+  color: rgba(248, 245, 233, .9) !important;
+  font-size: .96rem !important;
+  line-height: 1.85 !important;
+}
+
+body.feature-page .feature-hero .feature-breadcrumb {
+  margin-top: 30px !important;
+  color: #E1E8D0 !important;
+}
+
+body.feature-page .feature-hero .feature-image-caption {
+  z-index: 4 !important;
+  right: 34px !important;
+  bottom: 30px !important;
+  left: auto !important;
+  width: auto !important;
+  color: rgba(250, 247, 237, .92) !important;
+  font-size: .62rem !important;
+  letter-spacing: .2em !important;
+  text-align: right !important;
+  text-shadow: none !important;
+}
+
+/* Keep the editorial image treatment on smaller screens too. */
+@media (max-width: 760px) {
+  body.feature-page .feature-main {
+    width: 100% !important;
+    padding: 0 0 75px !important;
+  }
+
+  body.feature-page .feature-hero {
+    min-height: 690px !important;
+    margin-bottom: 58px !important;
+  }
+
+  body.feature-page .feature-hero .feature-hero-text {
+    left: 25px !important;
+    bottom: 58px !important;
+    width: calc(100% - 50px) !important;
+  }
+
+  body.feature-page .feature-hero .feature-hero-text h1 {
+    font-size: clamp(3.4rem, 15vw, 5.5rem) !important;
+  }
+
+  body.feature-page .feature-hero .feature-image-caption {
+    right: 24px !important;
+    bottom: 22px !important;
+    left: 24px !important;
+    text-align: left !important;
+  }
+}
