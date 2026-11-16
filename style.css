@@ -3005,13 +3005,13 @@ body {
 }
 
 
-/* 38 — STORY SECTION: SLIGHTLY DEEPER SOFT BOTANICAL TEXT */
-.about-content .eyebrow { color: #78845E; }
-.about-content h2 { color: #586642; }
-.about-content h2 i { color: #74845A; }
-.about-content > p:not(.eyebrow) { color: #686657; }
-.about-values span { color: #829067; }
-.about-values h3 { color: #5E6D49; }
-.about-values p { color: #74715F; }
-.about-signature { color: #788465; }
-.about-signature strong { color: #68794D; }
+/* 38 — STORY SECTION: DARKER, CLEARER BOTANICAL TEXT */
+.about-content .eyebrow { color: #596642; }
+.about-content h2 { color: #3F4D2F; }
+.about-content h2 i { color: #586B3E; }
+.about-content > p:not(.eyebrow) { color: #514A3E; }
+.about-values span { color: #68764A; }
+.about-values h3 { color: #465638; }
+.about-values p { color: #5D584A; }
+.about-signature { color: #596447; }
+.about-signature strong { color: #465B32; }
