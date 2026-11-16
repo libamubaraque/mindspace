@@ -4148,3 +4148,42 @@ body {
 .feature-page .nested-topics-section > p,
 .feature-page .nested-card p { color: #414d39 !important; }
 .feature-page .feature-photo-strip img { filter: saturate(.96); }
+
+
+/* 43 — HOMEPAGE ORGANIC TEXTURES + UPDATED HERO PHOTOGRAPH */
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  position: relative;
+  isolation: isolate;
+  background-color: #68794f;
+  background-image:
+    radial-gradient(ellipse at 14% 18%, rgba(224,232,199,.18) 0, transparent 34%),
+    radial-gradient(ellipse at 86% 78%, rgba(49,60,34,.16) 0, transparent 38%),
+    repeating-linear-gradient(118deg, rgba(244,240,218,.035) 0 1px, transparent 1px 7px),
+    linear-gradient(135deg, rgba(105,125,82,.97), rgba(72,91,55,.98));
+}
+body:not(.feature-page) .poster-hero .hero-text-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .22;
+  background-image:
+    radial-gradient(ellipse at 20% 35%, transparent 0 18%, rgba(239,235,211,.16) 19%, transparent 20%),
+    radial-gradient(ellipse at 76% 68%, transparent 0 23%, rgba(239,235,211,.12) 24%, transparent 25%),
+    repeating-linear-gradient(32deg, transparent 0 11px, rgba(242,239,219,.07) 12px, transparent 13px 22px);
+}
+body:not(.feature-page) .intro-section,
+body:not(.feature-page) .ether-editorial-section,
+body:not(.feature-page) .ether-note-card,
+body:not(.feature-page) .about-content {
+  background-image:
+    radial-gradient(ellipse at 12% 16%, rgba(255,255,245,.38), transparent 38%),
+    radial-gradient(ellipse at 88% 82%, rgba(112,132,83,.10), transparent 42%),
+    repeating-linear-gradient(135deg, rgba(94,111,70,.035) 0 1px, transparent 1px 8px),
+    linear-gradient(135deg, rgba(239,241,224,.94), rgba(211,222,197,.96));
+}
+body:not(.feature-page) .ether-note-card {
+  background-color: #F5F3E9;
+  border-color: rgba(86,105,70,.24);
+}
