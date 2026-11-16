@@ -5122,3 +5122,145 @@ body:not(.feature-page) .resources-section .resource-card a,
 body:not(.feature-page) .stories-section .story-small a {
   color: #596B43 !important;
 }
+
+
+/* HOMEPAGE FINAL BACKGROUND CORRECTION — FULL-BLEED HERO IMAGE */
+body:not(.feature-page) .poster-hero {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 820px !important;
+  height: min(900px, 100svh) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #dce4cb !important;
+}
+body:not(.feature-page) .poster-hero .hero-image {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+body:not(.feature-page) .poster-hero .hero-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  filter: brightness(.78) saturate(.78) sepia(.08) hue-rotate(7deg) !important;
+}
+body:not(.feature-page) .poster-hero .hero-image::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background: linear-gradient(90deg, rgba(24,36,23,.60) 0%, rgba(24,36,23,.30) 48%, rgba(24,36,23,.08) 100%) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  width: min(760px, 76%) !important;
+  min-height: 820px !important;
+  height: 100% !important;
+  padding: 145px clamp(28px, 8vw, 120px) 75px !important;
+  justify-content: center !important;
+  color: #f4f1e6 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel::before,
+body:not(.feature-page) .poster-hero .hero-text-panel::after {
+  content: none !important;
+  display: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel,
+body:not(.feature-page) .poster-hero .hero-text-panel * {
+  text-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel h1,
+body:not(.feature-page) .poster-hero .hero-text-panel .eyebrow,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-description,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-note,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  color: #f4f1e6 !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel h1 i {
+  color: #d4dfb5 !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .button-primary {
+  color: #263322 !important;
+  background: #dce6c4 !important;
+  border-color: #dce6c4 !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .button-outline {
+  color: #f4f1e6 !important;
+  background: rgba(244,241,230,.10) !important;
+  border-color: rgba(244,241,230,.72) !important;
+}
+body:not(.feature-page) .poster-hero .poster-meta,
+body:not(.feature-page) .poster-hero .hero-image-caption {
+  color: #f4f1e6 !important;
+  text-shadow: none !important;
+}
+
+/* One continuous colour per editorial section: no inset dark surfaces. */
+body:not(.feature-page) .intro-section,
+body:not(.feature-page) .ether-editorial-section,
+body:not(.feature-page) .stories-section,
+body:not(.feature-page) .resources-section {
+  background: #e3e8d5 !important;
+  background-color: #e3e8d5 !important;
+  background-image: none !important;
+}
+body:not(.feature-page) .intro-section *,
+body:not(.feature-page) .ether-editorial-section *,
+body:not(.feature-page) .stories-section *,
+body:not(.feature-page) .resources-section * {
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body:not(.feature-page) .intro-section .intro-content,
+body:not(.feature-page) .intro-section .intro-copy,
+body:not(.feature-page) .ether-editorial-section .ether-editorial-heading,
+body:not(.feature-page) .ether-editorial-section .ether-note-card,
+body:not(.feature-page) .ether-editorial-section .ether-editorial-foot,
+body:not(.feature-page) .stories-section .story-small,
+body:not(.feature-page) .resources-section .resource-card,
+body:not(.feature-page) .resources-section .section-heading,
+body:not(.feature-page) .resources-section .section-heading > div {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-radius: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+@media (max-width: 760px) {
+  body:not(.feature-page) .poster-hero {
+    height: auto !important;
+    min-height: 780px !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-text-panel {
+    width: 100% !important;
+    min-height: 780px !important;
+    height: auto !important;
+    padding: 135px 26px 65px !important;
+  }
+}
