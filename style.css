@@ -2659,3 +2659,317 @@ button:disabled {
   .feature-page .feature-photo-strip { grid-template-columns: 1fr 1fr; }
   .feature-page .feature-photo-strip figure:last-child { display: none; }
 }
+
+
+/* =========================================================
+   36 — WHOLE-SITE LIGHT BOTANICAL PALETTE + IMAGE-FRONT CARDS
+   Applied across homepage, feature pages, and shared sections.
+   ========================================================= */
+:root {
+  --ether-paper: #F2F0E4;
+  --ether-ivory: #F8F6ED;
+  --ether-sage: #E3E9D5;
+  --ether-pistachio: #D4DDB8;
+  --ether-olive: #AAB78A;
+  --ether-moss: #737F55;
+  --ether-forest: #34452D;
+  --ether-cocoa: #554638;
+  --ether-text: #514A3E;
+  --ether-line: rgba(76, 88, 57, .2);
+}
+
+/* Entire site canvas and shared typography */
+body {
+  color: var(--ether-text);
+  background-color: var(--ether-paper);
+  background-image:
+    linear-gradient(rgba(242,240,228,.86), rgba(242,240,228,.91)),
+    url("images/olive-texture.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.site-header {
+  color: var(--ether-forest);
+  background: rgba(242,240,228,.88);
+  border-bottom: 1px solid var(--ether-line);
+  backdrop-filter: blur(18px);
+}
+.site-header .brand,
+.site-header .main-nav a,
+.site-header .header-login { color: var(--ether-forest); }
+.site-header .brand-symbol { color: var(--ether-moss); }
+.site-header .main-nav a:hover { color: var(--ether-moss); }
+.site-header .button-primary,
+.button-primary {
+  color: var(--ether-ivory);
+  background: var(--ether-forest);
+  border-color: var(--ether-forest);
+}
+.site-header .button-primary:hover,
+.button-primary:hover { background: var(--ether-moss); }
+
+/* Light poster-style homepage hero */
+.poster-hero {
+  color: var(--ether-cocoa);
+  background:
+    linear-gradient(135deg, rgba(242,240,228,.97), rgba(227,233,213,.92)),
+    url("images/olive-texture.jpg") center / cover;
+}
+.poster-hero .hero-text-panel {
+  color: var(--ether-cocoa);
+  background:
+    linear-gradient(145deg, rgba(242,240,228,.94), rgba(212,221,184,.88)),
+    url("images/olive-texture.jpg") center / cover;
+}
+.poster-hero .hero h1,
+.poster-hero h1 { color: var(--ether-forest); }
+.poster-hero h1 i { color: var(--ether-moss); }
+.poster-hero .hero-description { color: var(--ether-text); }
+.poster-hero .hero-text-panel .eyebrow,
+.poster-hero .hero-note { color: var(--ether-moss); }
+.poster-hero .poster-meta { color: var(--ether-cocoa); }
+.poster-hero .poster-word { color: var(--ether-moss); opacity: .24; }
+.poster-hero .button-outline {
+  color: var(--ether-forest);
+  border-color: rgba(52,69,45,.45);
+  background: rgba(248,246,237,.62);
+}
+.poster-hero .hero-location-pill {
+  color: var(--ether-forest);
+  background: var(--ether-ivory);
+}
+
+/* Lighten all homepage content sections */
+.intro-section,
+.explore-section,
+.about-section,
+.stories-section,
+.resources-section,
+.saved-library-section {
+  color: var(--ether-text);
+  background-color: var(--ether-paper);
+  background-image:
+    linear-gradient(rgba(242,240,228,.91), rgba(227,233,213,.88)),
+    url("images/olive-texture.jpg");
+  background-size: cover;
+}
+.intro-label,
+.section-heading,
+.about-values,
+.saved-library-content { border-color: var(--ether-line); }
+.intro-number,
+.section-index { color: var(--ether-moss); }
+.intro-content h2,
+.section-heading h2,
+.about-content h2,
+.stories-section h2,
+.saved-library-content h2 { color: var(--ether-forest); }
+.intro-content h2 i,
+.section-heading h2 i,
+.about-content h2 i,
+.stories-section h2 i,
+.saved-library-content h2 i { color: var(--ether-moss); }
+.intro-copy p,
+.about-content > p:not(.eyebrow),
+.section-heading > div > p:last-child,
+.saved-library-content > div > p:last-child {
+  color: #625B4E;
+}
+.about-section { background-color: var(--ether-sage); }
+.about-image img { filter: saturate(.9); }
+.about-image-caption { color: #fff; }
+.about-values > div { border-color: var(--ether-line); }
+.about-values h3,
+.about-values p { color: var(--ether-forest); }
+.stories-section .story-small,
+.resources-section .resource-card,
+.saved-library-content {
+  color: var(--ether-text);
+  background: rgba(248,246,237,.72);
+  border: 1px solid var(--ether-line);
+  box-shadow: 0 15px 40px rgba(52,69,45,.08);
+}
+.story-small h3,
+.resource-card h3 { color: var(--ether-forest); }
+.story-small p,
+.resource-card > p:not(.eyebrow) { color: #625B4E; }
+.story-small a,
+.resource-card a { color: var(--ether-moss); }
+.resource-number,
+.resource-card .eyebrow { color: var(--ether-moss); }
+.resources-note { color: #6D7058; }
+.ticker {
+  color: var(--ether-forest);
+  background: var(--ether-pistachio);
+  border-color: var(--ether-line);
+}
+.site-footer {
+  color: var(--ether-text);
+  background: #E2E7D5;
+  border-color: var(--ether-line);
+}
+.site-footer .brand,
+.site-footer .footer-links a,
+.site-footer .footer-bottom a { color: var(--ether-forest); }
+.site-footer .footer-links h3 { color: var(--ether-moss); }
+.site-footer .footer-brand > p,
+.site-footer .footer-bottom { color: #686250; }
+.site-footer .footer-bottom { border-color: var(--ether-line); }
+
+/* The 20 homepage cards: make the photograph visibly cover each card front. */
+.feature-card,
+.feature-grid > a,
+#featureGrid > a,
+.features-grid > a {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  background: #89936F;
+  border: 1px solid rgba(52,69,45,.22);
+  box-shadow: 0 15px 34px rgba(52,69,45,.13);
+}
+.feature-card img,
+.feature-card .card-image,
+.feature-card .feature-card-image,
+#featureGrid > a img,
+.features-grid > a img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  visibility: visible;
+}
+.feature-card::before,
+.feature-grid > a::before,
+#featureGrid > a::before,
+.features-grid > a::before {
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(27,39,22,.02) 0%,
+    rgba(27,39,22,.08) 34%,
+    rgba(27,39,22,.76) 100%
+  );
+}
+.feature-card::after { z-index: 2; }
+.feature-card .card-content {
+  position: relative;
+  z-index: 3;
+}
+.feature-card .card-number,
+.feature-card h3,
+.feature-card p,
+.feature-card .card-link {
+  position: relative;
+  z-index: 3;
+  color: #fff;
+}
+.feature-card:hover img { transform: scale(1.055); }
+
+/* Individual feature pages: light green / ivory throughout, not only the cards. */
+.feature-page {
+  color: var(--ether-text);
+  background-color: var(--ether-paper);
+  background-image:
+    linear-gradient(rgba(242,240,228,.9), rgba(227,233,213,.91)),
+    url("images/olive-texture.jpg");
+  background-attachment: fixed;
+}
+.feature-page .site-header {
+  position: relative;
+  color: var(--ether-forest);
+}
+.feature-page .feature-hero {
+  color: var(--ether-ivory);
+  background:
+    linear-gradient(110deg, rgba(52,69,45,.84), rgba(115,127,85,.42)),
+    url("images/olive-texture.jpg") center / cover;
+}
+.feature-page .feature-workspace { color: var(--ether-text); }
+.feature-page .feature-content {
+  color: var(--ether-text);
+  background: rgba(248,246,237,.88);
+  border: 1px solid var(--ether-line);
+  box-shadow: 0 18px 45px rgba(52,69,45,.09);
+}
+.feature-page .feature-content h1,
+.feature-page .feature-content h2,
+.feature-page .feature-content h3 { color: var(--ether-forest); }
+.feature-page .feature-content p { color: #625B4E; }
+.feature-page .feature-text-section,
+.feature-page .activity-panel,
+.feature-page .journal-panel,
+.feature-page .saved-panel {
+  color: var(--ether-text);
+  background: rgba(227,233,213,.84);
+  border: 1px solid var(--ether-line);
+  box-shadow: 0 12px 32px rgba(52,69,45,.07);
+  backdrop-filter: blur(16px);
+}
+.feature-page .feature-text-section:nth-of-type(even),
+.feature-page .activity-panel:nth-of-type(even),
+.feature-page .journal-panel:nth-of-type(even) {
+  background: rgba(248,246,237,.9);
+}
+.feature-page .feature-text-section h2,
+.feature-page .activity-panel h2,
+.feature-page .journal-panel h2,
+.feature-page .saved-panel h2,
+.feature-page .feature-text-section h3,
+.feature-page .activity-panel h3,
+.feature-page .journal-panel h3 { color: var(--ether-forest); }
+.feature-page .feature-text-section p,
+.feature-page .activity-panel p,
+.feature-page .journal-panel p,
+.feature-page .saved-panel p { color: #625B4E; }
+.feature-page .nested-topics-section {
+  color: var(--ether-forest);
+  background: rgba(212,221,184,.72);
+  border: 1px solid var(--ether-line);
+}
+.feature-page .nested-topics-section h2 { color: var(--ether-forest); }
+.feature-page .nested-card {
+  color: var(--ether-text);
+  background: rgba(248,246,237,.96);
+  border: 1px solid var(--ether-line);
+}
+.feature-page .nested-card h3 { color: var(--ether-forest); }
+.feature-page .nested-card p { color: #625B4E; }
+.feature-page .saved-sidebar {
+  color: var(--ether-ivory);
+  background:
+    linear-gradient(rgba(52,69,45,.88), rgba(52,69,45,.94)),
+    url("images/olive-texture.jpg") center / cover;
+}
+.feature-page .feature-content input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.feature-page .feature-content textarea,
+.feature-page .feature-content select {
+  color: var(--ether-text);
+  background: var(--ether-ivory);
+  border-color: #B9C39F;
+}
+.feature-page .feature-content label,
+.feature-page .feature-content legend { color: var(--ether-forest); }
+.feature-page .feature-content button {
+  color: var(--ether-ivory);
+  background: var(--ether-forest);
+  border-color: var(--ether-forest);
+}
+.feature-page .feature-content button:hover {
+  color: var(--ether-forest);
+  background: var(--ether-pistachio);
+}
+.feature-page .site-footer {
+  color: var(--ether-text);
+  background: #E2E7D5;
+}
+@media (max-width: 700px) {
+  .poster-hero .hero-text-panel { background-color: rgba(242,240,228,.94); }
+  .feature-page .feature-photo-strip { grid-template-columns: 1fr 1fr; }
+}
