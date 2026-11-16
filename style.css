@@ -4540,3 +4540,43 @@ body:not(.feature-page) .site-footer {
     linear-gradient(135deg, rgba(57,70,43,.98), rgba(43,54,34,.99)),
     url("images/olive-texture.jpg") center / cover !important;
 }
+
+
+/* 43 — DEEPER OLIVE EDITORIAL HOMEPAGE + IMAGE-BACKED LONG READ */
+.poster-hero {
+  background:
+    radial-gradient(ellipse at 12% 18%, rgba(161,177,112,.16), transparent 38%),
+    linear-gradient(135deg, #17200d 0%, #26321a 48%, #151c0b 100%) !important;
+}
+.poster-hero::before {
+  background:
+    linear-gradient(90deg, rgba(17,25,10,.97) 0%, rgba(24,34,15,.91) 46%, rgba(20,29,13,.18) 100%),
+    url("images/olive-texture.jpg") center/cover !important;
+  opacity: .92;
+}
+.hero-text-panel h1 { color: #f3f0e5 !important; text-shadow: 0 5px 28px rgba(0,0,0,.25); }
+.hero-text-panel h1 i { color: #d0d8a4 !important; }
+.hero-text-panel .eyebrow, .hero-note { color: #c4ce91 !important; }
+.hero-description { color: rgba(247,244,229,.88) !important; }
+.hero-location-pill { background: rgba(205,216,165,.13) !important; border-color: rgba(205,216,165,.32) !important; color: #e8ebd4 !important; }
+.hero-image::after { background: linear-gradient(180deg, rgba(17,25,10,.08), rgba(17,25,10,.46)) !important; }
+.ether-longread { padding-top: clamp(76px, 10vw, 138px); padding-bottom: clamp(76px, 10vw, 138px); }
+.ether-longread-heading { max-width: 780px; margin: 0 auto 54px; text-align: center; }
+.ether-longread-heading h2 { color: #f2efdf; font-family: var(--serif); font-size: clamp(2.7rem, 6vw, 5.4rem); line-height: 1.03; margin: 16px 0 22px; }
+.ether-longread-heading h2 i { color: #cbd59c; }
+.ether-longread-heading > p:last-child { color: rgba(242,239,223,.78); max-width: 620px; margin: 0 auto; }
+.ether-longread-panel { position: relative; isolation: isolate; overflow: hidden; margin: 28px 0; padding: clamp(24px, 5vw, 62px); border: 1px solid rgba(229,232,203,.25); border-radius: 28px; background-size: cover; background-position: center; box-shadow: 0 24px 70px rgba(0,0,0,.22); }
+.ether-longread-panel::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(18,27,12,.94), rgba(24,35,16,.84) 58%, rgba(22,31,13,.58)); }
+.longread-one { background-image: url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=85"); }
+.longread-two { background-image: url("https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1800&q=85"); }
+.longread-three { background-image: url("https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1800&q=85"); }
+.longread-four { background-image: url("https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1800&q=85"); }
+.longread-copy { max-width: 850px; }
+.longread-copy .eyebrow { color: #cbd59c; letter-spacing: .16em; }
+.longread-copy h3 { color: #f5f1e3; font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.12; margin: 10px 0 24px; }
+.longread-copy p { color: rgba(247,244,230,.9); font-size: clamp(.98rem, 1.2vw, 1.08rem); line-height: 1.95; margin: 0 0 18px; max-width: 780px; }
+.longread-copy p:last-child { margin-bottom: 0; }
+@media (max-width: 720px) {
+  .ether-longread-panel { border-radius: 20px; padding: 25px 21px; }
+  .ether-longread-panel::before { background: rgba(18,27,12,.88); }
+}
