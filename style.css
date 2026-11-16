@@ -4591,3 +4591,111 @@ body:not(.feature-page) .site-footer {
     line-height: 0.9;
   }
 }
+
+
+/* HOMEPAGE HERO — FULL-BLEED IMAGE WITH ORIGINAL COPY OVERLAID */
+body:not(.feature-page) .poster-hero {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  min-height: min(940px, 100svh) !important;
+  height: min(940px, 100svh) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: #263523 !important;
+}
+body:not(.feature-page) .poster-hero .hero-image {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 52% !important;
+}
+body:not(.feature-page) .poster-hero .hero-image::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background: linear-gradient(90deg, rgba(13,22,14,.70) 0%, rgba(13,22,14,.43) 48%, rgba(13,22,14,.12) 100%), linear-gradient(0deg, rgba(13,22,14,.28), transparent 55%) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  position: relative !important;
+  z-index: 3 !important;
+  display: flex !important;
+  width: min(900px, 100%) !important;
+  min-height: min(940px, 100svh) !important;
+  height: auto !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 150px clamp(28px, 9vw, 150px) 90px !important;
+  color: #fffdf3 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel::before,
+body:not(.feature-page) .poster-hero .hero-text-panel::after {
+  content: none !important;
+  display: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .eyebrow,
+body:not(.feature-page) .poster-hero .hero-text-panel h1,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-description,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-note,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  color: #fffdf3 !important;
+  text-shadow: 0 2px 22px rgba(0,0,0,.28) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel h1 {
+  max-width: 850px !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-description {
+  max-width: 550px !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  background: transparent !important;
+  border-color: rgba(255,253,243,.48) !important;
+}
+body:not(.feature-page) .poster-hero .poster-meta,
+body:not(.feature-page) .poster-hero .poster-word {
+  z-index: 2 !important;
+}
+body:not(.feature-page) .poster-hero .hero-image-caption {
+  z-index: 2 !important;
+}
+@media (max-width: 700px) {
+  body:not(.feature-page) .poster-hero {
+    min-height: 850px !important;
+    height: auto !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-text-panel {
+    min-height: 850px !important;
+    padding: 150px 25px 90px !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-image img {
+    object-position: 58% center !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-image::after {
+    background: linear-gradient(90deg, rgba(13,22,14,.68), rgba(13,22,14,.28)), linear-gradient(0deg, rgba(13,22,14,.42), transparent 75%) !important;
+  }
+}
