@@ -6716,3 +6716,24 @@ body:not(.feature-page) .poster-hero .hero-image-caption {
     height: 100% !important;
   }
 }
+
+
+/* HERO EDITORIAL STRIPS — SHORTER WIDTH, FULL-BLEED PHOTO UNCHANGED */
+body:not(.feature-page) .poster-hero .poster-meta {
+  left: 50% !important;
+  right: auto !important;
+  width: min(760px, 68%) !important;
+  transform: translateX(-50%) !important;
+}
+body:not(.feature-page) .poster-hero .hero-image-caption {
+  left: 50% !important;
+  right: auto !important;
+  width: min(760px, 68%) !important;
+  transform: translateX(-50%) !important;
+}
+@media (max-width: 760px) {
+  body:not(.feature-page) .poster-hero .poster-meta,
+  body:not(.feature-page) .poster-hero .hero-image-caption {
+    width: 86% !important;
+  }
+}
