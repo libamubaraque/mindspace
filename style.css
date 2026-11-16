@@ -5785,3 +5785,179 @@ body:not(.feature-page) .resources-section .resources-grid > .resource-card a {
     gap: 16px !important;
   }
 }
+
+
+/* “A LITTLE HELP ALONG THE WAY” — REFINED RESOURCE SECTION */
+body:not(.feature-page) .resources-section {
+  background: #C8CEB1 !important;
+  padding: clamp(72px, 8vw, 118px) 0 !important;
+  color: #30382C !important;
+}
+
+body:not(.feature-page) .resources-section > .section-heading {
+  width: min(1320px, 90%) !important;
+  margin: 0 auto 46px !important;
+  padding: 0 !important;
+  align-items: end !important;
+}
+
+body:not(.feature-page) .resources-section > .section-heading .eyebrow {
+  color: #68764C !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .24em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 20px !important;
+}
+
+body:not(.feature-page) .resources-section > .section-heading h2 {
+  color: #30382C !important;
+  font-family: var(--serif, "Playfair Display", Georgia, serif) !important;
+  font-size: clamp(3rem, 6.4vw, 6.4rem) !important;
+  font-weight: 500 !important;
+  line-height: .98 !important;
+  letter-spacing: -.055em !important;
+  margin: 0 0 22px !important;
+  max-width: 850px !important;
+}
+
+body:not(.feature-page) .resources-section > .section-heading h2 i {
+  color: #66784A !important;
+  font-weight: 500 !important;
+  letter-spacing: -.065em !important;
+}
+
+body:not(.feature-page) .resources-section > .section-heading p:not(.eyebrow) {
+  max-width: 510px !important;
+  color: #505A43 !important;
+  font-size: .98rem !important;
+  line-height: 1.85 !important;
+}
+
+body:not(.feature-page) .resources-section > .section-heading .section-index {
+  color: #68764C !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .2em !important;
+  padding-bottom: 12px !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid {
+  width: min(1320px, 90%) !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 26px !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card {
+  position: relative !important;
+  overflow: hidden !important;
+  min-width: 0 !important;
+  min-height: 300px !important;
+  padding: clamp(26px, 3vw, 40px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  color: #30382C !important;
+  background: #F0F1E5 !important;
+  background-image: none !important;
+  border: 1px solid rgba(72, 84, 53, .13) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 14px 34px rgba(53, 62, 39, .09) !important;
+  transition: transform .28s ease, box-shadow .28s ease, background-color .28s ease !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 64px !important;
+  height: 4px !important;
+  background: #879568 !important;
+  border-radius: 0 0 5px 0 !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card:hover {
+  transform: translateY(-6px) !important;
+  background: #F7F7EF !important;
+  box-shadow: 0 20px 42px rgba(53, 62, 39, .14) !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card .resource-number {
+  color: #89966D !important;
+  font-family: var(--serif, "Playfair Display", Georgia, serif) !important;
+  font-size: 2.15rem !important;
+  line-height: 1 !important;
+  margin-bottom: 30px !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card .eyebrow {
+  color: #77865A !important;
+  font-size: .64rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .19em !important;
+  line-height: 1.5 !important;
+  margin: 0 0 12px !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card h3 {
+  color: #30382C !important;
+  font-family: var(--serif, "Playfair Display", Georgia, serif) !important;
+  font-size: clamp(1.45rem, 2vw, 1.9rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.18 !important;
+  letter-spacing: -.025em !important;
+  margin: 0 0 15px !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card p:not(.eyebrow) {
+  color: #59614F !important;
+  font-size: .9rem !important;
+  line-height: 1.8 !important;
+  margin: 0 0 24px !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: auto !important;
+  padding-bottom: 5px !important;
+  color: #536B3F !important;
+  font-size: .78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .045em !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(83, 107, 63, .45) !important;
+  transition: gap .2s ease, color .2s ease !important;
+}
+
+body:not(.feature-page) .resources-section .resources-grid > .resource-card a:hover {
+  gap: 13px !important;
+  color: #34472B !important;
+}
+
+@media (max-width: 900px) {
+  body:not(.feature-page) .resources-section .resources-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  body:not(.feature-page) .resources-section > .section-heading,
+  body:not(.feature-page) .resources-section .resources-grid {
+    width: calc(100% - 36px) !important;
+  }
+  body:not(.feature-page) .resources-section .resources-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  body:not(.feature-page) .resources-section .resources-grid > .resource-card {
+    min-height: 260px !important;
+  }
+}
