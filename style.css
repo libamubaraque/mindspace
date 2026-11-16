@@ -4875,3 +4875,29 @@ body:not(.feature-page) .poster-hero .hero-text-panel::after {
   content: none !important;
   display: none !important;
 }
+
+/* HOMEPAGE SECTION TEXT — remove the darker inset panels.
+   Keep each section's own background continuous behind its text. */
+body:not(.feature-page) .intro-content,
+body:not(.feature-page) .intro-copy,
+body:not(.feature-page) .resources-section .section-heading,
+body:not(.feature-page) .resources-section .section-heading > div {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  outline: none !important;
+}
+body:not(.feature-page) .intro-content::before,
+body:not(.feature-page) .intro-content::after,
+body:not(.feature-page) .intro-copy::before,
+body:not(.feature-page) .intro-copy::after,
+body:not(.feature-page) .resources-section .section-heading::before,
+body:not(.feature-page) .resources-section .section-heading::after,
+body:not(.feature-page) .resources-section .section-heading > div::before,
+body:not(.feature-page) .resources-section .section-heading > div::after {
+  content: none !important;
+  display: none !important;
+}
