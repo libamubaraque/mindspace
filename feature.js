@@ -1291,7 +1291,7 @@ Object.entries(data).forEach(([spaceId, space]) => {
   let promptIndex = 0;
   while (existing.length < 20) {
     const [heading, paragraph] = finalChapterPrompts[promptIndex % finalChapterPrompts.length];
-    const detail = cardInteriorNotes[spaceId] || space.description || "Explore this subject in a way that is thoughtful, practical and suited to your circumstances.";
+    const detail = space.description || "Explore this subject in a way that is thoughtful, practical and suited to your circumstances.";
     existing.push([
       heading,
       paragraph + " In " + space.title + ", this can mean taking the time to " + detail.charAt(0).toLowerCase() + detail.slice(1)
