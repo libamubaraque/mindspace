@@ -2162,3 +2162,183 @@ button:disabled {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* =========================================================
+   34 — WARM IVORY & DARK BEIGE CARD REDESIGN
+   Changes card interiors, preserves the forest-green theme
+   ========================================================= */
+
+:root {
+  --card-ivory: #EDE5D6;
+  --card-ivory-light: #F5F0E6;
+  --card-beige: #D9CCB7;
+  --card-dark-beige: #594638;
+  --card-cocoa: #49392C;
+}
+
+/* Main feature content */
+.feature-page .feature-content {
+  color: var(--card-cocoa);
+  background: rgba(237, 229, 214, .97);
+  border: 1px solid rgba(217, 204, 183, .9);
+}
+
+/* Main content headings and paragraphs */
+.feature-page .feature-content h2,
+.feature-page #featureContent h2,
+.feature-page .feature-content h3,
+.feature-page #featureContent h3 {
+  color: var(--card-cocoa);
+}
+
+.feature-page .feature-content p,
+.feature-page #featureContent p {
+  color: #665747;
+}
+
+/* Main frosted content and activity cards */
+.feature-page .feature-text-section,
+.feature-page .activity-panel,
+.feature-page .journal-panel,
+.feature-page .saved-panel {
+  color: var(--card-cocoa);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, .42),
+      rgba(217, 204, 183, .25)
+    ),
+    var(--card-ivory);
+  border: 1px solid rgba(89, 70, 56, .17);
+  box-shadow: 0 15px 38px rgba(21, 28, 5, .12);
+  backdrop-filter: blur(17px);
+}
+
+/* Headings inside cards */
+.feature-page .feature-text-section h2,
+.feature-page .activity-panel h2,
+.feature-page .journal-panel h2,
+.feature-page .saved-panel h2,
+.feature-page .feature-text-section h3,
+.feature-page .activity-panel h3,
+.feature-page .journal-panel h3,
+.feature-page .saved-panel h3 {
+  color: var(--card-cocoa);
+}
+
+/* Paragraphs inside cards */
+.feature-page .feature-text-section p,
+.feature-page .activity-panel p,
+.feature-page .journal-panel p,
+.feature-page .saved-panel p {
+  color: #665747;
+}
+
+/* Small labels */
+.feature-page .feature-text-section .eyebrow,
+.feature-page .activity-panel .eyebrow,
+.feature-page .journal-panel .eyebrow,
+.feature-page .saved-panel .eyebrow {
+  color: #77634E;
+}
+
+/* Nested cards */
+.feature-page .nested-grid {
+  background: rgba(89, 70, 56, .18);
+  border-color: rgba(237, 229, 214, .25);
+}
+
+.feature-page .nested-card {
+  color: var(--card-cocoa);
+  background:
+    linear-gradient(140deg, rgba(255,255,255,.4), transparent 75%),
+    var(--card-beige);
+  border: 1px solid rgba(89, 70, 56, .2);
+}
+
+.feature-page .nested-card:hover {
+  background: var(--card-ivory-light);
+  border-color: var(--card-dark-beige);
+}
+
+.feature-page .nested-card .card-number {
+  color: #80664C;
+}
+
+.feature-page .nested-card h3 {
+  color: var(--card-cocoa);
+}
+
+.feature-page .nested-card p {
+  color: #665747;
+}
+
+/* Saved entries */
+.feature-page .saved-entry {
+  color: #FFF5E8;
+  background: var(--card-dark-beige);
+  border: 1px solid rgba(255, 255, 255, .18);
+}
+
+.feature-page .saved-entry h3 {
+  color: #FFF5E8;
+}
+
+.feature-page .saved-entry p {
+  color: #E8DCCB;
+}
+
+.feature-page .saved-entry small {
+  color: #E5D2AD;
+}
+
+/* Form fields inside the light cards */
+.feature-page .feature-content input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.feature-page .feature-content textarea,
+.feature-page .feature-content select {
+  color: var(--card-cocoa);
+  background: var(--card-ivory-light);
+  border: 1px solid #C8B79E;
+}
+
+.feature-page .feature-content input::placeholder,
+.feature-page .feature-content textarea::placeholder {
+  color: #887864;
+}
+
+.feature-page .feature-content label,
+.feature-page .feature-content legend {
+  color: #66513D;
+}
+
+/* Buttons inside the light cards */
+.feature-page .feature-content .activity-panel button,
+.feature-page .feature-content .journal-panel button,
+.feature-page .feature-content .saved-entry button {
+  color: #FFF8EC;
+  background: var(--card-dark-beige);
+  border-color: var(--card-dark-beige);
+}
+
+.feature-page .feature-content .activity-panel button:hover,
+.feature-page .feature-content .journal-panel button:hover,
+.feature-page .feature-content .saved-entry button:hover {
+  color: var(--card-cocoa);
+  background: var(--card-beige);
+}
+
+/* Circular category labels */
+.feature-page .category-card h3,
+.feature-page .category-item h3,
+.feature-page .topic-card h3 {
+  color: var(--cream);
+}
+
+/* Preserve the darker botanical saved-pages sidebar */
+.feature-page .saved-sidebar {
+  background:
+    linear-gradient(rgba(32, 44, 24, .85), rgba(32, 44, 24, .92)),
+    url("images/olive-texture.jpg") center / cover;
+}
+
