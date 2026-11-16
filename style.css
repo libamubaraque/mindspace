@@ -5264,3 +5264,104 @@ body:not(.feature-page) .resources-section .section-heading > div {
     padding: 135px 26px 65px !important;
   }
 }
+
+
+/* HOMEPAGE SECTION COLOUR RHYTHM — ALTERNATING LIGHT AND DARK CANVASES */
+/* Section order: hero(1), ticker(2), intro(3), image break(4), explore(5),
+   about(6), note(7), possibilities(8), beyond-first-visit(9),
+   stories(10), resources(11). */
+
+/* Light canvas */
+body:not(.feature-page) main > .intro-section:nth-of-type(3),
+body:not(.feature-page) main > .ether-editorial-section:nth-of-type(8),
+body:not(.feature-page) main > .stories-section:nth-of-type(10) {
+  background: #E3E8D5 !important;
+  background-color: #E3E8D5 !important;
+  background-image: none !important;
+  color: #293728 !important;
+}
+
+/* Dark canvas */
+body:not(.feature-page) main > .intro-section:nth-of-type(7),
+body:not(.feature-page) main > .intro-section:nth-of-type(9),
+body:not(.feature-page) main > .resources-section:nth-of-type(11) {
+  background: #29392D !important;
+  background-color: #29392D !important;
+  background-image: none !important;
+  color: #F1F0E4 !important;
+}
+
+/* Light-section typography */
+body:not(.feature-page) main > .intro-section:nth-of-type(3) h2,
+body:not(.feature-page) main > .intro-section:nth-of-type(3) h2 i,
+body:not(.feature-page) main > .ether-editorial-section:nth-of-type(8) h2,
+body:not(.feature-page) main > .ether-editorial-section:nth-of-type(8) h2 i,
+body:not(.feature-page) main > .ether-editorial-section:nth-of-type(8) h3,
+body:not(.feature-page) main > .stories-section:nth-of-type(10) .section-heading h2,
+body:not(.feature-page) main > .stories-section:nth-of-type(10) .story-small h3 {
+  color: #293728 !important;
+}
+body:not(.feature-page) main > .intro-section:nth-of-type(3) p,
+body:not(.feature-page) main > .intro-section:nth-of-type(3) .eyebrow,
+body:not(.feature-page) main > .ether-editorial-section:nth-of-type(8) p,
+body:not(.feature-page) main > .ether-editorial-section:nth-of-type(8) .eyebrow,
+body:not(.feature-page) main > .stories-section:nth-of-type(10) .section-heading p,
+body:not(.feature-page) main > .stories-section:nth-of-type(10) .story-small p {
+  color: #58634C !important;
+}
+
+/* Dark-section typography */
+body:not(.feature-page) main > .intro-section:nth-of-type(7) h2,
+body:not(.feature-page) main > .intro-section:nth-of-type(7) h2 i,
+body:not(.feature-page) main > .intro-section:nth-of-type(9) h2,
+body:not(.feature-page) main > .intro-section:nth-of-type(9) h2 i,
+body:not(.feature-page) main > .resources-section:nth-of-type(11) h2,
+body:not(.feature-page) main > .resources-section:nth-of-type(11) h2 i,
+body:not(.feature-page) main > .resources-section:nth-of-type(11) h3 {
+  color: #F1F0E4 !important;
+}
+body:not(.feature-page) main > .intro-section:nth-of-type(7) p,
+body:not(.feature-page) main > .intro-section:nth-of-type(7) .eyebrow,
+body:not(.feature-page) main > .intro-section:nth-of-type(9) p,
+body:not(.feature-page) main > .intro-section:nth-of-type(9) .eyebrow,
+body:not(.feature-page) main > .resources-section:nth-of-type(11) p,
+body:not(.feature-page) main > .resources-section:nth-of-type(11) .eyebrow {
+  color: #CDD6C2 !important;
+}
+
+/* Keep the text sitting directly on each section's own canvas. */
+body:not(.feature-page) main > .intro-section .intro-content,
+body:not(.feature-page) main > .intro-section .intro-copy,
+body:not(.feature-page) main > .ether-editorial-section .ether-editorial-heading,
+body:not(.feature-page) main > .ether-editorial-section .ether-note-card,
+body:not(.feature-page) main > .ether-editorial-section .ether-editorial-foot,
+body:not(.feature-page) main > .stories-section .story-small,
+body:not(.feature-page) main > .resources-section .resource-card,
+body:not(.feature-page) main > .resources-section .section-heading,
+body:not(.feature-page) main > .resources-section .section-heading > div {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0 !important;
+}
+
+/* Links stay readable on both canvases. */
+body:not(.feature-page) main > .intro-section:nth-of-type(3) a,
+body:not(.feature-page) main > .ether-editorial-section:nth-of-type(8) a,
+body:not(.feature-page) main > .stories-section:nth-of-type(10) .story-small a {
+  color: #536B3F !important;
+}
+body:not(.feature-page) main > .intro-section:nth-of-type(7) a,
+body:not(.feature-page) main > .intro-section:nth-of-type(9) a,
+body:not(.feature-page) main > .resources-section:nth-of-type(11) a {
+  color: #D4E1B7 !important;
+}
+
+/* Preserve the photograph-led story feature and its readable image overlay. */
+body:not(.feature-page) main > .stories-section:nth-of-type(10) .story-feature-content,
+body:not(.feature-page) main > .stories-section:nth-of-type(10) .story-feature-content * {
+  color: #F7F4E8 !important;
+}
