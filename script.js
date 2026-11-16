@@ -32,140 +32,140 @@ const spaces = [
     name: "Mood Journal",
     category: "wellbeing",
     image: "images/mood.jpg",
-    desc: "Understand your feelings and make room for your thoughts."
+    desc: "A gentle place to name what you feel, write freely and notice patterns without judging yourself."
   },
   {
     id: "breathing",
     name: "Breathing Space",
     category: "wellbeing",
     image: "images/breathing.jpg",
-    desc: "Pause, breathe and discover gentle mindfulness activities."
+    desc: "Explore comfortable pauses, mindful attention, nature sounds and quiet moments at your own pace."
   },
   {
     id: "gratitude",
     name: "Gratitude Journal",
     category: "wellbeing",
     image: "images/gratitude.jpg",
-    desc: "Collect the little moments and people that matter."
+    desc: "Keep a collection of ordinary moments, thoughtful gestures and experiences you want to remember."
   },
   {
     id: "fitness",
     name: "Fitness & Wellness",
     category: "wellbeing",
     image: "images/fitness.jpg",
-    desc: "Explore movement, running, rest and everyday wellbeing."
+    desc: "Discover enjoyable movement, screen breaks, running reflections, rest and everyday wellbeing."
   },
   {
     id: "checkin",
     name: "Daily Check-in",
     category: "wellbeing",
     image: "images/checkin.jpg",
-    desc: "Reflect on small wins, feelings and fresh starts."
+    desc: "Pause for a small daily reflection, recognise little wins and choose one manageable next step."
   },
   {
     id: "study",
     name: "Study & Focus",
     category: "growth",
     image: "images/study.jpg",
-    desc: "Build manageable study habits and focus routines."
+    desc: "Find practical study methods, short focus sessions, useful breaks and ways to learn with understanding."
   },
   {
     id: "selfcare",
     name: "Self-care Corner",
     category: "wellbeing",
     image: "images/selfcare.jpg",
-    desc: "Explore everyday care and healthy routines."
+    desc: "Explore realistic routines for physical comfort, emotional wellbeing, rest, relationships and support."
   },
   {
     id: "stories",
     name: "Stories & Realities",
     category: "community",
     image: "images/stories.jpg",
-    desc: "Discover real stories, human rights and meaningful change."
+    desc: "Read about human dignity, communities, real-world challenges, reliable information and meaningful change."
   },
   {
     id: "career",
     name: "Career Exploration",
     category: "growth",
     image: "images/career.jpg",
-    desc: "Explore interests, careers and possibilities beyond school."
+    desc: "Explore interests, job families, education pathways and questions to ask before choosing a direction."
   },
   {
     id: "scrapbook",
     name: "My Little World",
     category: "creative",
     image: "images/scrapbook.jpg",
-    desc: "Keep memories, photographs, letters and reflections."
+    desc: "Create a personal collection of memories, photographs, letters, everyday moments and reflections."
   },
   {
     id: "movies",
     name: "Movies & Reflections",
     category: "creative",
     image: "images/movies.jpg",
-    desc: "Explore films, ideas, watchlists and thoughtful reflections."
+    desc: "Look beyond the screen with film reflections, creative choices, watchlists and thoughtful discussion."
   },
   {
     id: "commons",
     name: "The Commons",
     category: "community",
     image: "images/commons.jpg",
-    desc: "Discover clubs, shared interests and collaboration."
+    desc: "Find ideas for clubs, shared interests, group projects and welcoming community spaces."
   },
   {
     id: "sports",
     name: "Sports & Movement",
     category: "community",
     image: "images/sports.jpg",
-    desc: "Explore sports, movement and inspiring sporting stories."
+    desc: "Explore teamwork, sporting stories, movement, participation, safety and the many ways to enjoy sport."
   },
   {
     id: "planner",
     name: "Planner",
     category: "growth",
     image: "images/planner.jpg",
-    desc: "Organise your day with realistic plans and breaks."
+    desc: "Organise priorities, break large tasks into steps and leave realistic room for rest and change."
   },
   {
     id: "creative",
     name: "Creative Studio",
     category: "creative",
     image: "images/creative.jpg",
-    desc: "Write, imagine, experiment and bring ideas to life."
+    desc: "Experiment with writing, art, ideas and small projects while developing your own creative voice."
   },
   {
     id: "kindness",
     name: "Kindness Corner",
     category: "community",
     image: "images/kindness.jpg",
-    desc: "Discover small acts of kindness and community care."
+    desc: "Explore thoughtful actions, inclusion, respectful boundaries and ways to support your community."
   },
   {
     id: "library",
     name: "Little Library",
     category: "growth",
     image: "images/library.jpg",
-    desc: "Explore knowledge, explainers and new ideas."
+    desc: "Follow questions, discover reliable sources, connect ideas and build a personal trail of learning."
   },
   {
     id: "sleep",
     name: "Sleep & Rest",
     category: "wellbeing",
     image: "images/sleep.jpg",
-    desc: "Learn about rest and gentle bedtime routines."
+    desc: "Learn about rest, flexible evening routines, sleep-friendly habits and when to seek support."
   },
   {
     id: "money",
     name: "Money Matters",
     category: "growth",
     image: "images/money.jpg",
-    desc: "Learn about saving, budgeting and financial basics."
+    desc: "Understand basic budgeting language, saving concepts, careful online choices and everyday money decisions."
   },
   {
     id: "openmic",
     name: "Open Mic",
     category: "creative",
     image: "images/openmic.jpg",
-    desc: "A space for poetry, spoken word and expression."
+    desc: "Explore poetry, spoken word, letters and personal expression, whether you share your work or keep it private."
   }
 ];
 
