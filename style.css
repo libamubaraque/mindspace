@@ -3003,3 +3003,15 @@ body {
 .about-signature strong {
   color: #78875B;
 }
+
+
+/* 38 — STORY SECTION: SLIGHTLY DEEPER SOFT BOTANICAL TEXT */
+.about-content .eyebrow { color: #78845E; }
+.about-content h2 { color: #586642; }
+.about-content h2 i { color: #74845A; }
+.about-content > p:not(.eyebrow) { color: #686657; }
+.about-values span { color: #829067; }
+.about-values h3 { color: #5E6D49; }
+.about-values p { color: #74715F; }
+.about-signature { color: #788465; }
+.about-signature strong { color: #68794D; }
