@@ -31,141 +31,141 @@ const spaces = [
     id: "mood",
     name: "Mood Journal",
     category: "wellbeing",
-    image: "images/mood.jpg",
-    desc: "A gentle place to name what you feel, write freely and notice patterns without judging yourself."
+    image: "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    desc: "A gentle place to name what you feel, write freely and notice patterns without judging yourself. Try prompts, short lists or a page that is entirely your own."
   },
   {
     id: "breathing",
     name: "Breathing Space",
     category: "wellbeing",
-    image: "images/breathing.jpg",
-    desc: "Explore comfortable pauses, mindful attention, nature sounds and quiet moments at your own pace."
+    image: "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    desc: "Explore comfortable pauses, mindful attention, nature sounds and quiet moments at your own pace. Choose an activity that feels right and leave whenever you wish."
   },
   {
     id: "gratitude",
     name: "Gratitude Journal",
     category: "wellbeing",
-    image: "images/gratitude.jpg",
-    desc: "Keep a collection of ordinary moments, thoughtful gestures and experiences you want to remember."
+    image: "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    desc: "Keep a collection of ordinary moments, thoughtful gestures and experiences you want to remember. Let appreciation sit alongside honest feelings about difficult days."
   },
   {
     id: "fitness",
     name: "Fitness & Wellness",
     category: "wellbeing",
-    image: "images/fitness.jpg",
-    desc: "Discover enjoyable movement, screen breaks, running reflections, rest and everyday wellbeing."
+    image: "https://images.unsplash.com/photo-1774145617910-d29a5a07119c?auto=format&fit=crop&w=1200&q=85",
+    desc: "Discover enjoyable movement, screen breaks, running reflections, rest and everyday wellbeing. Focus on comfort, safety and activities you genuinely enjoy."
   },
   {
     id: "checkin",
     name: "Daily Check-in",
     category: "wellbeing",
-    image: "images/checkin.jpg",
-    desc: "Pause for a small daily reflection, recognise little wins and choose one manageable next step."
+    image: "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    desc: "Pause for a small daily reflection, recognise little wins and choose one manageable next step. There is no score and no pressure to have everything figured out."
   },
   {
     id: "study",
     name: "Study & Focus",
     category: "growth",
-    image: "images/study.jpg",
-    desc: "Find practical study methods, short focus sessions, useful breaks and ways to learn with understanding."
+    image: "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    desc: "Find practical study methods, short focus sessions, useful breaks and ways to learn with understanding. Explore active recall, planning and asking clearer questions."
   },
   {
     id: "selfcare",
     name: "Self-care Corner",
     category: "wellbeing",
-    image: "images/selfcare.jpg",
-    desc: "Explore realistic routines for physical comfort, emotional wellbeing, rest, relationships and support."
+    image: "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85",
+    desc: "Explore realistic routines for physical comfort, emotional wellbeing, rest, relationships and support. Keep what is useful and seek trusted help when you need it."
   },
   {
     id: "stories",
     name: "Stories & Realities",
     category: "community",
-    image: "images/stories.jpg",
-    desc: "Read about human dignity, communities, real-world challenges, reliable information and meaningful change."
+    image: "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    desc: "Read about human dignity, communities, real-world challenges, reliable information and meaningful change. Look beyond headlines and explore different perspectives with care."
   },
   {
     id: "career",
     name: "Career Exploration",
     category: "growth",
-    image: "images/career.jpg",
-    desc: "Explore interests, job families, education pathways and questions to ask before choosing a direction."
+    image: "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    desc: "Explore interests, job families, education pathways and questions to ask before choosing a direction. Treat every result as a starting point, not a fixed decision."
   },
   {
     id: "scrapbook",
     name: "My Little World",
     category: "creative",
-    image: "images/scrapbook.jpg",
-    desc: "Create a personal collection of memories, photographs, letters, everyday moments and reflections."
+    image: "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85",
+    desc: "Create a personal collection of memories, photographs, letters, everyday moments and reflections. Save the details that matter and remember to protect everyone's privacy."
   },
   {
     id: "movies",
     name: "Movies & Reflections",
     category: "creative",
-    image: "images/movies.jpg",
-    desc: "Look beyond the screen with film reflections, creative choices, watchlists and thoughtful discussion."
+    image: "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    desc: "Look beyond the screen with film reflections, creative choices, watchlists and thoughtful discussion. Notice storytelling techniques and explore the ideas a film raises."
   },
   {
     id: "commons",
     name: "The Commons",
     category: "community",
-    image: "images/commons.jpg",
-    desc: "Find ideas for clubs, shared interests, group projects and welcoming community spaces."
+    image: "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    desc: "Find ideas for clubs, shared interests, group projects and welcoming community spaces. Make room for different voices, interests and ways of participating."
   },
   {
     id: "sports",
     name: "Sports & Movement",
     category: "community",
-    image: "images/sports.jpg",
-    desc: "Explore teamwork, sporting stories, movement, participation, safety and the many ways to enjoy sport."
+    image: "https://images.unsplash.com/photo-1774145617910-d29a5a07119c?auto=format&fit=crop&w=1200&q=85",
+    desc: "Explore teamwork, sporting stories, movement, participation, safety and the many ways to enjoy sport. Celebrate cooperation and respect every participant."
   },
   {
     id: "planner",
     name: "Planner",
     category: "growth",
-    image: "images/planner.jpg",
-    desc: "Organise priorities, break large tasks into steps and leave realistic room for rest and change."
+    image: "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    desc: "Organise priorities, break large tasks into steps and leave realistic room for rest and change. Build a plan that supports your day instead of overwhelming it."
   },
   {
     id: "creative",
     name: "Creative Studio",
     category: "creative",
-    image: "images/creative.jpg",
-    desc: "Experiment with writing, art, ideas and small projects while developing your own creative voice."
+    image: "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85",
+    desc: "Experiment with writing, art, ideas and small projects while developing your own creative voice. Collect inspiration, try different approaches and let early drafts be imperfect."
   },
   {
     id: "kindness",
     name: "Kindness Corner",
     category: "community",
-    image: "images/kindness.jpg",
-    desc: "Explore thoughtful actions, inclusion, respectful boundaries and ways to support your community."
+    image: "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    desc: "Explore thoughtful actions, inclusion, respectful boundaries and ways to support your community. Remember that kindness also includes respecting your own needs."
   },
   {
     id: "library",
     name: "Little Library",
     category: "growth",
-    image: "images/library.jpg",
-    desc: "Follow questions, discover reliable sources, connect ideas and build a personal trail of learning."
+    image: "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    desc: "Follow questions, discover reliable sources, connect ideas and build a personal trail of learning. Read for school, curiosity, imagination or simple enjoyment."
   },
   {
     id: "sleep",
     name: "Sleep & Rest",
     category: "wellbeing",
-    image: "images/sleep.jpg",
-    desc: "Learn about rest, flexible evening routines, sleep-friendly habits and when to seek support."
+    image: "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85",
+    desc: "Learn about rest, flexible evening routines, sleep-friendly habits and when to seek support. Focus on realistic changes that fit your home and schedule."
   },
   {
     id: "money",
     name: "Money Matters",
     category: "growth",
-    image: "images/money.jpg",
-    desc: "Understand basic budgeting language, saving concepts, careful online choices and everyday money decisions."
+    image: "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    desc: "Understand basic budgeting language, saving concepts, careful online choices and everyday money decisions. Learn the basics with examples and trusted guidance."
   },
   {
     id: "openmic",
     name: "Open Mic",
     category: "creative",
-    image: "images/openmic.jpg",
-    desc: "Explore poetry, spoken word, letters and personal expression, whether you share your work or keep it private."
+    image: "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85",
+    desc: "Explore poetry, spoken word, letters and personal expression, whether you share your work or keep it private. Your voice can take many forms."
   }
 ];
 
