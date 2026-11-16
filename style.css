@@ -5961,3 +5961,90 @@ body:not(.feature-page) .resources-section .resources-grid > .resource-card a:ho
     min-height: 260px !important;
   }
 }
+
+
+/* HERO CALL-TO-ACTION VISIBILITY FIX */
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+body:not(.feature-page) .poster-hero .hero-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 14px !important;
+  width: auto !important;
+  margin: 32px 0 0 !important;
+  position: relative !important;
+  z-index: 8 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+body:not(.feature-page) .poster-hero .hero-actions .button {
+  display: inline-flex !important;
+  position: relative !important;
+  z-index: 9 !important;
+  min-height: 50px !important;
+  padding: 14px 24px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  font-size: .78rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+}
+
+body:not(.feature-page) .poster-hero .hero-actions .button-primary {
+  color: #263322 !important;
+  background: #edf1df !important;
+  border-color: #edf1df !important;
+  box-shadow: 0 8px 22px rgba(10, 18, 8, .2) !important;
+}
+
+body:not(.feature-page) .poster-hero .hero-actions .button-outline {
+  color: #fffdf5 !important;
+  background: rgba(24, 36, 23, .48) !important;
+  border-color: rgba(255, 253, 245, .9) !important;
+  box-shadow: 0 8px 22px rgba(10, 18, 8, .16) !important;
+}
+
+body:not(.feature-page) .poster-hero .hero-actions .button:hover {
+  transform: translateY(-3px) !important;
+}
+
+body:not(.feature-page) .poster-hero .hero-image {
+  z-index: 0 !important;
+}
+
+body:not(.feature-page) .poster-hero .hero-image::after {
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 760px) {
+  body:not(.feature-page) .poster-hero .hero-text-panel {
+    width: 100% !important;
+    min-height: 780px !important;
+    padding: 130px 26px 65px !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-actions {
+    gap: 11px !important;
+  }
+  body:not(.feature-page) .poster-hero .hero-actions .button {
+    min-height: 48px !important;
+    padding: 13px 18px !important;
+  }
+}
