@@ -4804,3 +4804,46 @@ body:not(.feature-page) .poster-hero .hero-image-caption {
     object-position: 58% center !important;
   }
 }
+
+
+/* HERO COLOUR HARMONY — LIGHT OLIVE, DARK OLIVE TYPE, QUIET BUTTONS */
+body:not(.feature-page) .poster-hero .hero-image img {
+  filter: brightness(.94) saturate(.82) !important;
+}
+body:not(.feature-page) .poster-hero .hero-image::after {
+  background: rgba(220, 228, 202, .30) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .eyebrow,
+body:not(.feature-page) .poster-hero .hero-text-panel h1,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-description,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-note,
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  color: #35452f !important;
+  text-shadow: 0 1px 10px rgba(244, 244, 226, .42) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel h1 i {
+  color: #68794f !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .button-primary,
+body:not(.feature-page) .poster-hero .hero-text-panel .button-outline {
+  color: #35452f !important;
+  background: rgba(226, 233, 210, .28) !important;
+  border: 1px solid rgba(53, 69, 47, .62) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .button-primary:hover,
+body:not(.feature-page) .poster-hero .hero-text-panel .button-outline:hover {
+  color: #293a27 !important;
+  background: rgba(235, 239, 220, .48) !important;
+  border-color: rgba(53, 69, 47, .82) !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel .hero-location-pill {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+body:not(.feature-page) .poster-hero .poster-meta {
+  color: #35452f !important;
+  text-shadow: 0 1px 10px rgba(244, 244, 226, .45) !important;
+}
