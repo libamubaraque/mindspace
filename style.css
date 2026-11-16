@@ -6645,3 +6645,26 @@ body:not(.feature-page) .poster-hero .hero-image::after,
 body:not(.feature-page) .poster-hero .hero-image-caption {
   z-index: 0 !important;
 }
+
+
+/* HERO IMAGE SPACING — KEEP THE TOP AND BOTTOM EDITORIAL STRIPS */
+body:not(.feature-page) .poster-hero {
+  background: #43523a !important;
+}
+body:not(.feature-page) .poster-hero .hero-image {
+  inset: 68px 3.5% !important;
+  width: 93% !important;
+  height: calc(100% - 136px) !important;
+  border-radius: 5px !important;
+}
+body:not(.feature-page) .poster-hero .hero-image img {
+  border-radius: 5px !important;
+}
+@media (max-width: 760px) {
+  body:not(.feature-page) .poster-hero .hero-image {
+    inset: 62px 14px 62px !important;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 5px !important;
+  }
+}
