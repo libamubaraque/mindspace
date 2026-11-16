@@ -1,8 +1,7 @@
-
 /* =========================================================
    TO THE ETHER — HOMEPAGE JAVASCRIPT
-   20 spaces • clickable cards • filters • guest access
-   Supabase authentication • mobile navigation
+   20 open spaces • filters • optional Supabase accounts
+   Mobile navigation
    ========================================================= */
 
 "use strict";
@@ -197,87 +196,11 @@ const mainNav = document.getElementById("mainNav");
 
 let authMode = "login";
 
-/* 04. GUEST ACCESS
+/* 04. ACCESS — EVERY SPACE IS OPEN
 ========================================================= */
 
-const GUEST_STORAGE_KEY = "ether_guest_spaces_v1";
-const GUEST_SPACE_LIMIT = 3;
-
-function getGuestSpaces() {
-  try {
-    const stored = JSON.parse(
-      localStorage.getItem(GUEST_STORAGE_KEY) || "[]"
-    );
-
-    if (!Array.isArray(stored)) {
-      return [];
-    }
-
-    return [...new Set(
-      stored.filter(id =>
-        spaces.some(space => space.id === id)
-      )
-    )];
-
-  } catch (error) {
-    console.warn("Could not read guest access data:", error);
-    return [];
-  }
-}
-
-function saveGuestSpaces(ids) {
-  try {
-    localStorage.setItem(
-      GUEST_STORAGE_KEY,
-      JSON.stringify(ids)
-    );
-  } catch (error) {
-    console.warn("Could not save guest access data:", error);
-  }
-}
-
-function updateGuestCounter() {
-  const guestCounter = document.getElementById("guestCounter");
-
-  if (!guestCounter) return;
-
-  if (currentSession) {
-    guestCounter.textContent =
-      "You're signed in. All 20 spaces are available.";
-    return;
-  }
-
-  const used = getGuestSpaces().length;
-  const remaining = Math.max(0, GUEST_SPACE_LIMIT - used);
-
-  guestCounter.textContent =
-    `${used} of ${GUEST_SPACE_LIMIT} guest spaces explored · ` +
-    `${remaining} remaining`;
-}
-
-function canOpenSpace(spaceId) {
-  if (currentSession) return true;
-
-  const accessed = getGuestSpaces();
-
-  if (accessed.includes(spaceId)) {
-    return true;
-  }
-
-  if (accessed.length >= GUEST_SPACE_LIMIT) {
-    showAuthModal(
-      "login",
-      "Your next chapter starts here.",
-      "You've explored three guest spaces. Log in or create an account to continue exploring all twenty."
-    );
-
-    return false;
-  }
-
-  accessed.push(spaceId);
-  saveGuestSpaces(accessed);
-  updateGuestCounter();
-
+function canOpenSpace() {
+  // Visitors never need an account to explore.
   return true;
 }
 
@@ -301,10 +224,7 @@ function renderSpaces(filter = "all") {
     card.className = "feature-card";
     card.href = `feature.html?id=${encodeURIComponent(space.id)}`;
     card.dataset.space = space.id;
-    card.setAttribute(
-      "aria-label",
-      `Explore ${space.name}`
-    );
+    card.setAttribute("aria-label", `Explore ${space.name}`);
 
     const image = document.createElement("img");
     image.src = space.image;
@@ -352,10 +272,9 @@ function renderSpaces(filter = "all") {
       cardContent
     );
 
-    card.addEventListener("click", event => {
-      if (!canOpenSpace(space.id)) {
-        event.preventDefault();
-      }
+    // No login or registration check is performed.
+    card.addEventListener("click", () => {
+      canOpenSpace(space.id);
     });
 
     grid.appendChild(card);
@@ -381,7 +300,7 @@ filterButtons.forEach(button => {
   });
 });
 
-/* 07. AUTHENTICATION MODAL
+/* 07. OPTIONAL AUTHENTICATION MODAL
 ========================================================= */
 
 function showAuthModal(
@@ -400,7 +319,8 @@ function showAuthModal(
 
   if (authDescription) {
     authDescription.textContent =
-      description || "Log in or create an account to continue your journey.";
+      description ||
+      "Create an optional account for your personal collection.";
   }
 
   authModal.hidden = false;
@@ -413,9 +333,7 @@ function showAuthModal(
     authMessage.className = "";
   }
 
-  window.setTimeout(() => {
-    authEmail?.focus();
-  }, 100);
+  authEmail?.focus();
 }
 
 function closeAuthModal() {
@@ -457,8 +375,8 @@ function setAuthMode(mode) {
   if (authDescription) {
     authDescription.textContent =
       authMode === "login"
-        ? "Log in to continue your journey."
-        : "Create an account to explore all twenty spaces.";
+        ? "Log in to access your personal account."
+        : "Create an account for your personal collection.";
   }
 
   if (authMessage) {
@@ -476,13 +394,10 @@ signupButton?.addEventListener("click", () => {
 });
 
 authClose?.addEventListener("click", closeAuthModal);
-
 authBackdrop?.addEventListener("click", closeAuthModal);
 
 authSwitch?.addEventListener("click", () => {
-  setAuthMode(
-    authMode === "login" ? "signup" : "login"
-  );
+  setAuthMode(authMode === "login" ? "signup" : "login");
 });
 
 document.addEventListener("keydown", event => {
@@ -568,11 +483,7 @@ authForm?.addEventListener("submit", async event => {
 
     currentSession = result.data.session;
 
-    updateGuestCounter();
-
-    showAuthMessage(
-      "You're signed in. Welcome to To the Ether."
-    );
+    showAuthMessage("You're signed in. Welcome to To the Ether.");
 
     window.setTimeout(() => {
       closeAuthModal();
@@ -598,10 +509,7 @@ authForm?.addEventListener("submit", async event => {
 ========================================================= */
 
 async function initialiseAuth() {
-  if (!supabaseClient) {
-    updateGuestCounter();
-    return;
-  }
+  if (!supabaseClient) return;
 
   try {
     const { data, error } =
@@ -614,18 +522,12 @@ async function initialiseAuth() {
     supabaseClient.auth.onAuthStateChange(
       (_event, session) => {
         currentSession = session;
-        updateGuestCounter();
       }
     );
 
   } catch (error) {
-    console.error(
-      "Could not restore Supabase session:",
-      error
-    );
+    console.error("Could not restore Supabase session:", error);
   }
-
-  updateGuestCounter();
 }
 
 /* 11. MOBILE NAVIGATION
@@ -634,11 +536,7 @@ async function initialiseAuth() {
 menuToggle?.addEventListener("click", () => {
   const isOpen = mainNav?.classList.toggle("open") || false;
 
-  menuToggle.setAttribute(
-    "aria-expanded",
-    String(isOpen)
-  );
-
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
   menuToggle.textContent = isOpen ? "×" : "☰";
 });
 
@@ -646,10 +544,7 @@ mainNav?.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
     mainNav.classList.remove("open");
 
-    menuToggle?.setAttribute(
-      "aria-expanded",
-      "false"
-    );
+    menuToggle?.setAttribute("aria-expanded", "false");
 
     if (menuToggle) {
       menuToggle.textContent = "☰";
@@ -670,7 +565,6 @@ if (yearElement) {
 ========================================================= */
 
 function startWebsite() {
-  // Keep the authentication modal closed on page load.
   if (authModal) {
     authModal.hidden = true;
     authModal.setAttribute("aria-hidden", "true");
@@ -678,10 +572,9 @@ function startWebsite() {
 
   document.body.classList.remove("modal-open");
 
-  // Display all twenty spaces.
+  // All twenty spaces are available immediately.
   renderSpaces("all");
 
-  // Set the default filter button.
   filterButtons.forEach(button => {
     const isAll = button.dataset.filter === "all";
 
@@ -689,7 +582,7 @@ function startWebsite() {
     button.setAttribute("aria-pressed", String(isAll));
   });
 
-  // Restore any existing login session.
+  // Restore an optional login session without blocking the site.
   initialiseAuth();
 }
 
