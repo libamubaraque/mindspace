@@ -2342,3 +2342,320 @@ button:disabled {
     url("images/olive-texture.jpg") center / cover;
 }
 
+
+
+/* =========================================================
+   35 — UNIFIED POSTER + LIGHT BOTANICAL REDESIGN
+   Organic Olive × Pistachio & Cocoa
+   ========================================================= */
+:root {
+  --sage-paper: #e7ead8;
+  --pistachio-soft: #dce3c4;
+  --olive-wash: #cbd5ae;
+  --ivory-green: #f3f2e7;
+  --cocoa-ink: #493b2d;
+  --olive-ink: #28351c;
+}
+
+/* Poster-inspired homepage hero */
+.poster-hero {
+  position: relative;
+  padding-top: 72px;
+  background:
+    linear-gradient(135deg, rgba(243,240,229,.97), rgba(220,227,196,.94)),
+    url("images/olive-texture.jpg") center / cover;
+  color: var(--cocoa-ink);
+}
+.poster-hero .poster-meta {
+  position: absolute;
+  z-index: 5;
+  top: 28px;
+  left: 5%;
+  right: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #514638;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+.poster-hero .poster-meta b {
+  padding: 0 18px;
+  border-left: 1px solid rgba(73,59,45,.45);
+  border-right: 1px solid rgba(73,59,45,.45);
+  font-family: var(--serif);
+  font-size: .95rem;
+}
+.poster-hero .poster-word {
+  position: absolute;
+  z-index: 1;
+  top: 8%;
+  left: 2%;
+  width: 96%;
+  overflow: hidden;
+  color: #737b49;
+  font-family: Impact, "Arial Narrow", sans-serif;
+  font-size: clamp(6rem, 18vw, 17rem);
+  font-stretch: condensed;
+  line-height: .8;
+  letter-spacing: -.065em;
+  text-align: center;
+  opacity: .22;
+  pointer-events: none;
+}
+.poster-hero .hero-text-panel {
+  z-index: 3;
+  min-height: 760px;
+  padding-top: 110px;
+  color: var(--cocoa-ink);
+  background:
+    linear-gradient(145deg, rgba(231,234,216,.91), rgba(207,216,184,.78)),
+    url("images/olive-texture.jpg") center / cover;
+  border-right: 1px solid rgba(73,59,45,.13);
+  backdrop-filter: blur(16px);
+}
+.poster-hero .hero-text-panel::before {
+  background: radial-gradient(ellipse at 20% 18%, rgba(255,255,255,.45), transparent 55%);
+}
+.poster-hero .hero-text-panel .eyebrow,
+.poster-hero .hero-note { color: #5d6740; }
+.poster-hero .hero h1,
+.poster-hero h1 { color: #28351c; }
+.poster-hero h1 i { color: #737b49; }
+.poster-hero .hero-description { color: #5c5749; }
+.poster-hero .button-outline {
+  color: #354126;
+  border-color: rgba(53,65,38,.55);
+  background: rgba(255,255,255,.28);
+}
+.poster-hero .button-outline:hover { background: #f3f0e5; }
+.poster-hero .hero-image {
+  z-index: 2;
+  margin: 55px 5% 55px -3%;
+  min-height: 650px;
+  border: 1px solid rgba(73,59,45,.2);
+  border-radius: 4px;
+  box-shadow: 0 28px 70px rgba(35,42,23,.24);
+}
+.poster-hero .hero-image img {
+  min-height: 650px;
+  filter: saturate(.9) contrast(1.04);
+}
+.poster-hero .hero-location-pill {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 26px;
+  padding: 12px 18px;
+  color: #3e4a2a;
+  background: rgba(243,240,229,.92);
+  border: 1px solid rgba(87,96,44,.2);
+  border-radius: 999px;
+  font-size: .72rem;
+  box-shadow: 0 8px 24px rgba(21,28,5,.1);
+}
+
+/* Home sections keep the same botanical paper/olive family */
+.ticker { background: #d4d9a0; }
+.intro-section, .stories-section, .resources-section {
+  background-image: radial-gradient(ellipse at 85% 15%, rgba(145,155,114,.12), transparent 38%);
+}
+.resource-card, .story-small {
+  border-color: rgba(212,217,160,.2);
+}
+
+/* Light green + beige feature-page canvas */
+.feature-page {
+  color: var(--cocoa-ink);
+  background-color: #dfe4cf;
+  background-image:
+    linear-gradient(rgba(226,232,211,.9), rgba(226,232,211,.94)),
+    url("images/olive-texture.jpg");
+  background-attachment: fixed;
+}
+.feature-page .feature-hero {
+  background:
+    linear-gradient(110deg, rgba(21,28,5,.78), rgba(40,53,28,.52)),
+    url("images/olive-texture.jpg") center / cover;
+  border-color: rgba(243,240,229,.22);
+}
+.feature-page .feature-workspace { align-items: start; }
+.feature-page .feature-content {
+  color: var(--cocoa-ink);
+  background: rgba(231,234,216,.94);
+  border: 1px solid rgba(87,96,44,.22);
+  box-shadow: 0 22px 55px rgba(40,53,28,.12);
+}
+.feature-page .feature-content > section:first-child {
+  padding: 8px 4px 30px;
+  border-color: rgba(87,96,44,.22);
+}
+.feature-page .feature-content h2,
+.feature-page #featureContent h2,
+.feature-page .feature-content h3,
+.feature-page #featureContent h3 { color: #28351c; }
+.feature-page .feature-content p,
+.feature-page #featureContent p { color: #5a5142; }
+.feature-page .feature-content .eyebrow { color: #667247; }
+
+.feature-page .feature-text-section,
+.feature-page .activity-panel,
+.feature-page .journal-panel,
+.feature-page .saved-panel {
+  color: var(--cocoa-ink);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.54), rgba(212,217,160,.24)),
+    rgba(243,242,231,.95);
+  border: 1px solid rgba(87,96,44,.2);
+  box-shadow: 0 16px 38px rgba(40,53,28,.1);
+  backdrop-filter: blur(18px);
+}
+.feature-page .feature-text-section:nth-of-type(even),
+.feature-page .activity-panel:nth-of-type(even),
+.feature-page .journal-panel:nth-of-type(even) {
+  margin-left: 5%;
+}
+.feature-page .feature-text-section:nth-of-type(odd),
+.feature-page .activity-panel:nth-of-type(odd),
+.feature-page .journal-panel:nth-of-type(odd) {
+  margin-right: 5%;
+}
+.feature-page .feature-text-section h2,
+.feature-page .activity-panel h2,
+.feature-page .journal-panel h2,
+.feature-page .saved-panel h2,
+.feature-page .feature-text-section h3,
+.feature-page .activity-panel h3,
+.feature-page .journal-panel h3 { color: #28351c; }
+.feature-page .feature-text-section p,
+.feature-page .activity-panel p,
+.feature-page .journal-panel p,
+.feature-page .saved-panel p { color: #5a5142; }
+.feature-page .feature-text-section .eyebrow,
+.feature-page .activity-panel .eyebrow,
+.feature-page .journal-panel .eyebrow,
+.feature-page .saved-panel .eyebrow { color: #6a754b; }
+
+/* Topic cards become image-led cards */
+.feature-page .nested-topics-section {
+  margin: 44px 0;
+  padding: clamp(20px,3vw,34px);
+  color: #28351c;
+  background: rgba(203,213,174,.62);
+  border: 1px solid rgba(87,96,44,.18);
+  border-radius: 22px;
+}
+.feature-page .nested-topics-section > h2 { color: #28351c !important; }
+.feature-page .nested-grid {
+  background: transparent;
+  border: 0;
+  padding: 12px 0 0;
+}
+.feature-page .nested-card {
+  min-height: 300px;
+  padding: 0 0 22px;
+  overflow: hidden;
+  color: #493b2d;
+  background: rgba(243,242,231,.94);
+  border: 1px solid rgba(87,96,44,.2);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(40,53,28,.1);
+}
+.feature-page .nested-card:hover {
+  background: #f3f2e7;
+  border-color: #737b49;
+  transform: translateY(-5px);
+}
+.feature-page .nested-card .topic-image {
+  display: block;
+  width: 100%;
+  height: 175px;
+  object-fit: cover;
+}
+.feature-page .nested-card .topic-card-copy { padding: 18px 21px 0; }
+.feature-page .nested-card .card-number { color: #737b49; }
+.feature-page .nested-card h3 { color: #28351c; margin-top: 12px; }
+.feature-page .nested-card p { color: #5a5142; padding: 0 21px; }
+
+/* Photo strip inside every individual feature page */
+.feature-page .feature-photo-strip {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr 1fr;
+  gap: 14px;
+  margin: 34px 0;
+}
+.feature-page .feature-photo-strip figure {
+  min-width: 0;
+  height: clamp(150px, 20vw, 245px);
+  overflow: hidden;
+  border-radius: 16px;
+  background: #cbd5ae;
+  box-shadow: 0 12px 28px rgba(40,53,28,.12);
+}
+.feature-page .feature-photo-strip figure:nth-child(2) { transform: translateY(18px); }
+.feature-page .feature-photo-strip img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.feature-page .feature-photo-strip figcaption {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+}
+.feature-page .nested-card .card-number,
+.feature-page .nested-card h3,
+.feature-page .nested-card p { position: relative; z-index: 1; }
+
+.feature-page .nested-card .topic-card-copy { display: block; }
+.feature-page .saved-entry {
+  color: #f3f0e5;
+  background: #57602c;
+  border: 1px solid rgba(243,240,229,.24);
+}
+.feature-page .saved-entry h3 { color: #f3f0e5; }
+.feature-page .saved-entry p { color: #e6e8d8; }
+.feature-page .saved-entry small { color: #d4d9a0; }
+.feature-page .saved-sidebar {
+  color: #f3f0e5;
+  background:
+    linear-gradient(rgba(32,44,24,.86), rgba(32,44,24,.93)),
+    url("images/olive-texture.jpg") center / cover;
+}
+.feature-page .feature-content input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.feature-page .feature-content textarea,
+.feature-page .feature-content select {
+  color: #493b2d;
+  background: #f3f2e7;
+  border: 1px solid #b7c39a;
+}
+.feature-page .feature-content input::placeholder,
+.feature-page .feature-content textarea::placeholder { color: #81745f; }
+.feature-page .feature-content label,
+.feature-page .feature-content legend { color: #4d5a34; }
+.feature-page .feature-content fieldset { border-color: rgba(87,96,44,.25); }
+.feature-page .feature-content fieldset label { color: #514638; }
+.feature-page .feature-content .activity-panel button,
+.feature-page .feature-content .journal-panel button,
+.feature-page .feature-content .saved-entry button {
+  color: #f3f0e5;
+  background: #57602c;
+  border-color: #57602c;
+}
+.feature-page .feature-content .activity-panel button:hover,
+.feature-page .feature-content .journal-panel button:hover {
+  color: #28351c;
+  background: #d4d9a0;
+}
+.feature-page .feature-content a:not(.button) { color: #57602c; }
+.feature-page .saved-sidebar .saved-entry { background: rgba(243,240,229,.1); }
+.feature-page .saved-photo { max-width: 100%; border-radius: 12px; }
+
+@media (max-width: 700px) {
+  .poster-hero { padding-top: 66px; }
+  .poster-hero .poster-meta { top: 18px; font-size: .48rem; letter-spacing: .1em; }
+  .poster-hero .poster-meta b { font-size: .7rem; padding: 0 8px; }
+  .poster-hero .poster-word { top: 9%; font-size: 22vw; }
+  .poster-hero .hero-text-panel { min-height: 590px; padding-top: 110px; }
+  .poster-hero .hero-image { margin: 0 5% 35px; min-height: 420px; }
+  .poster-hero .hero-image img { min-height: 420px; }
+  .feature-page .feature-photo-strip { grid-template-columns: 1fr 1fr; }
+  .feature-page .feature-photo-strip figure:last-child { display: none; }
+}
