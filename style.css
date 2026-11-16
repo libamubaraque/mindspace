@@ -4078,3 +4078,73 @@ body {
 .features-grid > a::before {
   background: linear-gradient(180deg, rgba(37,50,31,.02), rgba(37,50,31,.12) 34%, rgba(37,50,31,.68));
 }
+
+
+/* 42 — LIGHT FEATURE PANELS WITH STRONG DARK TEXT */
+.feature-page .feature-content {
+  color: #303d2b !important;
+  background: rgba(235, 240, 225, .96) !important;
+  border-color: rgba(66, 82, 51, .22) !important;
+}
+.feature-page .feature-content h1,
+.feature-page .feature-content h2,
+.feature-page .feature-content h3,
+.feature-page .feature-content h4,
+.feature-page #featureContent h2,
+.feature-page #featureContent h3 {
+  color: #293724 !important;
+}
+.feature-page .feature-content p,
+.feature-page #featureContent p,
+.feature-page .feature-content li {
+  color: #414d39 !important;
+  line-height: 2 !important;
+  font-size: .98rem !important;
+}
+.feature-page .feature-text-section,
+.feature-page .activity-panel,
+.feature-page .journal-panel,
+.feature-page .saved-panel {
+  color: #303d2b !important;
+  background: linear-gradient(135deg, rgba(250,249,239,.98), rgba(229,236,218,.98)) !important;
+  border: 1px solid rgba(73,91,57,.22) !important;
+  box-shadow: 0 14px 34px rgba(54,69,43,.10) !important;
+}
+.feature-page .feature-text-section h2,
+.feature-page .activity-panel h2,
+.feature-page .journal-panel h2,
+.feature-page .saved-panel h2 {
+  color: #293724 !important;
+}
+.feature-page .feature-text-section p,
+.feature-page .activity-panel p,
+.feature-page .journal-panel p,
+.feature-page .saved-panel p {
+  color: #414d39 !important;
+  font-size: 1rem !important;
+  line-height: 2.05 !important;
+}
+.feature-page .feature-text-section .eyebrow,
+.feature-page .activity-panel .eyebrow,
+.feature-page .journal-panel .eyebrow,
+.feature-page .saved-panel .eyebrow {
+  color: #687c4c !important;
+}
+.feature-page .chapter-note {
+  margin-top: 20px;
+  padding: 13px 16px;
+  color: #3c4b32 !important;
+  background: rgba(203,216,185,.55);
+  border-left: 3px solid #788b5b;
+  border-radius: 0 10px 10px 0;
+  font-size: .92rem !important;
+}
+.feature-page .nested-topics-section {
+  color: #303d2b !important;
+  background: rgba(211,224,198,.96) !important;
+}
+.feature-page .nested-topics-section > h2,
+.feature-page .nested-card h3 { color: #293724 !important; }
+.feature-page .nested-topics-section > p,
+.feature-page .nested-card p { color: #414d39 !important; }
+.feature-page .feature-photo-strip img { filter: saturate(.96); }
