@@ -1314,17 +1314,18 @@ function renderNestedCards(item) {
       <p class="topic-intro">Each part of this space has its own little world. Choose a photograph and follow the subject that interests you.</p>
 
       <div class="nested-grid">
-        ${item.topics.map(([id, title, description]) => `
+        ${item.topics.map(([id, title, description], index) => `
           <a
             class="nested-card"
             href="feature.html?id=${encodeURIComponent(featureId)}&page=${encodeURIComponent(id)}"
           >
-            <img class="topic-image" src="images/${escapeHTML(id)}.jpg" alt="${escapeHTML(title)}" loading="lazy">
+            <img class="topic-image" src="${(featurePhotoSets[featureId] || [item.image])[index % (featurePhotoSets[featureId] || [item.image]).length]}" alt="${escapeHTML(title)}" loading="lazy">
             <div class="topic-card-copy">
               <span class="card-number">DISCOVER ↗</span>
               <h3>${escapeHTML(title)}</h3>
             </div>
             <p>${escapeHTML(description)}</p>
+            <p class="nested-detail">Explore the ideas, examples and small practical steps in this part of the space. Take your time, follow what interests you and return to the main space whenever you wish.</p>
           </a>
         `).join("")}
       </div>
