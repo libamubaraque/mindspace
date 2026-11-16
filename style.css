@@ -5558,3 +5558,78 @@ body:not(.feature-page) .resources-grid > .resource-card:nth-child(1) a,
 body:not(.feature-page) .resources-grid > .resource-card:nth-child(6) a {
   color: #536B3F !important;
 }
+
+
+/* RESOURCE SECTION — ALL SIX CARDS USE A LIGHT, CONSISTENT PALETTE */
+body:not(.feature-page) .resources-grid > .resource-card {
+  color: #293728 !important;
+  background: linear-gradient(145deg, #F0F2E8 0%, #DDE6D1 100%) !important;
+  background-image: none !important;
+  border: 1px solid rgba(55, 72, 43, .16) !important;
+  box-shadow: 0 12px 30px rgba(20, 34, 19, .07) !important;
+}
+body:not(.feature-page) .resources-grid > .resource-card .resource-number,
+body:not(.feature-page) .resources-grid > .resource-card .eyebrow,
+body:not(.feature-page) .resources-grid > .resource-card h3,
+body:not(.feature-page) .resources-grid > .resource-card p {
+  color: #344431 !important;
+}
+body:not(.feature-page) .resources-grid > .resource-card a {
+  color: #536B3F !important;
+}
+
+/* THE 20 EXPLORE SPACES — FULL-BLEED, EDGE-TO-EDGE IMAGE GRID */
+body:not(.feature-page) .explore-section {
+  width: 100% !important;
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+body:not(.feature-page) .explore-section > .section-heading,
+body:not(.feature-page) .explore-section > .filter-bar,
+body:not(.feature-page) .explore-section > .explore-bottom {
+  width: min(1440px, 90%) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+body:not(.feature-page) .explore-section > .feature-grid,
+body:not(.feature-page) .explore-section > #featureGrid {
+  width: 100vw !important;
+  max-width: none !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+}
+body:not(.feature-page) .explore-section .feature-grid > a,
+body:not(.feature-page) .explore-section #featureGrid > a {
+  min-width: 0 !important;
+  min-height: clamp(330px, 34vw, 510px) !important;
+  margin: 0 !important;
+  border: 1px solid rgba(241, 240, 228, .24) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+body:not(.feature-page) .explore-section .feature-grid > a:hover,
+body:not(.feature-page) .explore-section #featureGrid > a:hover {
+  box-shadow: inset 0 0 0 3px rgba(218, 229, 190, .72) !important;
+  transform: none !important;
+}
+@media (max-width: 900px) {
+  body:not(.feature-page) .explore-section > .feature-grid,
+  body:not(.feature-page) .explore-section > #featureGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 560px) {
+  body:not(.feature-page) .explore-section > .feature-grid,
+  body:not(.feature-page) .explore-section > #featureGrid {
+    grid-template-columns: 1fr !important;
+  }
+  body:not(.feature-page) .explore-section .feature-grid > a,
+  body:not(.feature-page) .explore-section #featureGrid > a {
+    min-height: 390px !important;
+  }
+}
