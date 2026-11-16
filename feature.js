@@ -1035,6 +1035,197 @@ Object.entries(additionalReading).forEach(([spaceId, chapter]) => {
   if (data[spaceId]) data[spaceId].sections.push(chapter);
 });
 
+
+/* MORE TEXT + PHOTO GALLERY UPDATE */
+const additionalReadingRoundTwo = {
+  "mood": [
+    "A page without pressure",
+    "There is no required length, style or schedule for a personal journal. You might write a paragraph, make a list, record a question or simply name one thing that has been on your mind. If you return to an old entry, read it with the understanding that you were doing the best you could with what you knew at the time."
+  ],
+  "breathing": [
+    "Grounding through your surroundings",
+    "If focusing on breathing is not comfortable, turn your attention outward. Notice the colours, shapes, sounds or textures around you. You can name a few things you see, listen to a familiar sound or feel your feet resting on the floor. Choose an activity that feels comfortable and stop whenever you want."
+  ],
+  "gratitude": [
+    "A collection of ordinary moments",
+    "You might remember a helpful explanation, a favourite meal, a message from someone you care about or a moment when the weather changed. These details do not need to be extraordinary to matter. Keep your entries honest: appreciating one part of a day does not mean every other part was easy."
+  ],
+  "fitness": [
+    "Wellbeing is more than a workout",
+    "Everyday wellbeing includes movement you enjoy, enough rest, regular meals, hydration, supportive relationships and time away from screens. There is no single activity or routine that suits everyone. Choose safe, age-appropriate movement and avoid comparing your body, ability or progress with other people."
+  ],
+  "checkin": [
+    "One small next step is enough",
+    "When a day feels crowded, choose one action that is realistic for the time and energy you have. It might be asking a teacher to explain something, preparing one item for tomorrow or taking a short break. A check-in is not a demand to fix everything; it is a chance to notice what could help."
+  ],
+  "study": [
+    "Build understanding one connection at a time",
+    "When learning a new idea, connect it to something you already know. Explain the concept in your own words, draw a simple diagram or create an example. After practising, check the textbook or class notes for gaps. Understanding often develops through several small attempts rather than one perfect study session."
+  ],
+  "selfcare": [
+    "Support can be part of self-care",
+    "Sometimes the most useful form of care is telling a trusted adult that something is difficult. You can ask for help with school pressure, health questions, relationships or a routine that is not working. You do not need to manage every concern independently, and online information cannot replace personal professional advice."
+  ],
+  "stories": [
+    "Make room for context and different voices",
+    "When exploring a real-world issue, look for reliable reporting, original sources and perspectives from people directly affected. Check when information was published and distinguish confirmed facts from commentary. Avoid sharing images or personal stories without permission, especially when they involve children or people in vulnerable situations."
+  ],
+  "career": [
+    "A career choice can remain a work in progress",
+    "Interests often develop as you meet new subjects, people and experiences. Compare official course information and professional requirements, but also learn about the everyday responsibilities of a job. A quiz or list of careers can offer ideas; it cannot predict what you must become."
+  ],
+  "scrapbook": [
+    "Your memories deserve thoughtful privacy",
+    "Before saving a photograph or a story involving another person, ask whether they are comfortable with it. Be careful when using a shared device, and remember that locally saved browser entries may be lost if browser data is cleared. Keep a separate copy of anything you would be upset to lose."
+  ],
+  "movies": [
+    "A film can be a starting point for questions",
+    "After watching, consider what the story made you notice, which characters had a voice and what the film left unexplored. If it depicts real events, compare it with reliable sources. A creative work can invite discussion, but it is not automatically a complete or accurate account of history."
+  ],
+  "commons": [
+    "A community grows through participation and respect",
+    "A welcoming group makes room for people who are new, quiet or still finding their interests. Share tasks fairly, communicate clearly and make sure people can choose how much they participate. Respect privacy and involve responsible adults when organising activities or handling difficult situations."
+  ],
+  "sports": [
+    "Teamwork is built in small moments",
+    "Encouraging a teammate, listening to instructions, respecting rules and accepting different skill levels all contribute to a positive sporting environment. Enjoyment and safety matter more than winning every time. Choose activities with appropriate supervision and equipment."
+  ],
+  "planner": [
+    "Make your plan useful, not intimidating",
+    "Write tasks as clear actions rather than broad worries. Instead of 'study science', you might note 'review the diagram' or 'try three practice questions'. Leave room for breaks and unexpected changes. If a task repeatedly feels too large, divide it again or ask someone to help clarify it."
+  ],
+  "creative": [
+    "Collect ideas before judging them",
+    "Keep a small list of interesting words, images, questions, colours or observations. Later, combine two ideas and see what happens. Early drafts are allowed to be messy. If you use references or materials created by others, respect copyright and credit or request permission where needed."
+  ],
+  "kindness": [
+    "Care for others without forgetting your own boundaries",
+    "You can be considerate while still saying no, asking for space or seeking help from an adult. Listening does not mean agreeing with everything, and helping does not mean taking responsibility for another person's safety alone. Healthy communities make room for mutual respect."
+  ],
+  "library": [
+    "Let curiosity guide your next book",
+    "Choose something that answers a question you already have or introduces a subject you have never explored. Keep track of useful sources and check who wrote them, when they were published and what evidence they use. You can read for enjoyment as well as for school."
+  ],
+  "sleep": [
+    "Rest routines should be realistic",
+    "A calm evening might include preparing a school bag earlier, dimming a screen or choosing a quiet activity. Your home and schedule may not allow the same routine every day, so small practical changes are enough to begin. If sleep problems continue, speak with a trusted adult and healthcare professional."
+  ],
+  "money": [
+    "Learn financial language before making decisions",
+    "Understand basic ideas such as income, spending, saving, needs and wants using examples or imaginary amounts. Be cautious of online promises of easy money. Never share passwords, one-time codes or bank details, and involve a trusted adult before using financial services."
+  ],
+  "openmic": [
+    "Your words can take many forms",
+    "A contribution might be a poem, a short paragraph, a question, a drawing or a thoughtful response to someone else's work. You can keep your writing private or share it in a safe, respectful setting. Always ask before recording or reposting another person's contribution."
+  ]
+};
+Object.entries(additionalReadingRoundTwo).forEach(([spaceId, chapter]) => {
+  if (data[spaceId]) data[spaceId].sections.push(chapter);
+});
+
+const featurePhotoSets = {
+  "mood": [
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "breathing": [
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "gratitude": [
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "fitness": [
+    "https://images.unsplash.com/photo-1774145617910-d29a5a07119c?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "checkin": [
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "study": [
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "selfcare": [
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "stories": [
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "career": [
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "scrapbook": [
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "movies": [
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "commons": [
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "sports": [
+    "https://images.unsplash.com/photo-1774145617910-d29a5a07119c?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "planner": [
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "creative": [
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "kindness": [
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "library": [
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "sleep": [
+    "https://images.unsplash.com/photo-1761464508925-f421635ea61b?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1654356709115-3f68998bead4?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "money": [
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1747515203898-2df8f083f417?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85"
+  ],
+  "openmic": [
+    "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?auto=format&fit=crop&w=1200&q=85",
+    "https://images.unsplash.com/photo-1770750869369-5968806bbd82?auto=format&fit=crop&w=1200&q=85"
+  ]
+};
+
 /* 04. PAGE ELEMENTS
 ========================================================= */
 
@@ -2010,7 +2201,7 @@ function renderNestedPage(item, topic) {
   descriptionElement.textContent = topicDescription;
   breadcrumb.textContent = topicTitle;
 
-  imageElement.src = item.image;
+  imageElement.src = featurePhotoSets[featureId]?.[0] || item.image;
   imageElement.alt = topicTitle;
 
   contentElement.innerHTML = `
@@ -2074,7 +2265,7 @@ function renderPage() {
   titleElement.textContent = feature.title;
   categoryElement.textContent = feature.category;
   descriptionElement.textContent = feature.description;
-  imageElement.src = feature.image;
+  imageElement.src = featurePhotoSets[featureId]?.[0] || feature.image;
   imageElement.alt = feature.title;
   breadcrumb.textContent = feature.title;
 
@@ -2109,9 +2300,9 @@ function renderPage() {
     ${renderSections(feature.sections)}
 
     <section class="feature-photo-strip" aria-label="Photographs from this space">
-      <figure><img src="images/${encodeURIComponent(featureId)}-detail-1.jpg" alt="${escapeHTML(feature.title)} — photograph one" loading="lazy"><figcaption>${escapeHTML(feature.title)}</figcaption></figure>
-      <figure><img src="images/${encodeURIComponent(featureId)}-detail-2.jpg" alt="${escapeHTML(feature.title)} — photograph two" loading="lazy"><figcaption>${escapeHTML(feature.title)}</figcaption></figure>
-      <figure><img src="images/${encodeURIComponent(featureId)}-detail-3.jpg" alt="${escapeHTML(feature.title)} — photograph three" loading="lazy"><figcaption>${escapeHTML(feature.title)}</figcaption></figure>
+      ${(featurePhotoSets[featureId] || [feature.image, feature.image, feature.image]).map((photo, index) => `
+        <figure><img src="${photo}" alt="${escapeHTML(feature.title)} — related photograph ${index + 1}" loading="lazy"><figcaption>${escapeHTML(feature.title)}</figcaption></figure>
+      `).join("")}
     </section>
 
     ${renderNestedCards(feature)}
