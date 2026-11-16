@@ -1,3 +1,4 @@
+
 /* =========================================================
    TO THE ETHER — HOMEPAGE JAVASCRIPT
    20 open spaces • filters • optional Supabase accounts
@@ -6,8 +7,7 @@
 
 "use strict";
 
-/* 01. SUPABASE CONFIGURATION
-========================================================= */
+/* 01. SUPABASE CONFIGURATION */
 
 const SUPABASE_URL = "https://sckcrrriiatfxcafabmh.supabase.co";
 
@@ -24,8 +24,7 @@ if (window.supabase?.createClient) {
   );
 }
 
-/* 02. WEBSITE SPACES — ALL 20
-========================================================= */
+/* 02. WEBSITE SPACES — ALL 20 */
 
 const spaces = [
   {
@@ -170,8 +169,7 @@ const spaces = [
   }
 ];
 
-/* 03. ELEMENT REFERENCES
-========================================================= */
+/* 03. ELEMENT REFERENCES */
 
 const grid = document.getElementById("featureGrid");
 
@@ -196,16 +194,13 @@ const mainNav = document.getElementById("mainNav");
 
 let authMode = "login";
 
-/* 04. ACCESS — EVERY SPACE IS OPEN
-========================================================= */
+/* 04. ACCESS — EVERY SPACE IS OPEN */
 
 function canOpenSpace() {
-  // Visitors never need an account to explore.
   return true;
 }
 
-/* 05. CREATE AND DISPLAY SPACE CARDS
-========================================================= */
+/* 05. CREATE AND DISPLAY SPACE CARDS */
 
 function renderSpaces(filter = "all") {
   if (!grid) return;
@@ -272,7 +267,6 @@ function renderSpaces(filter = "all") {
       cardContent
     );
 
-    // No login or registration check is performed.
     card.addEventListener("click", () => {
       canOpenSpace(space.id);
     });
@@ -281,8 +275,7 @@ function renderSpaces(filter = "all") {
   });
 }
 
-/* 06. CATEGORY FILTERS
-========================================================= */
+/* 06. CATEGORY FILTERS */
 
 const filterButtons = document.querySelectorAll(".filter-button");
 
@@ -300,8 +293,7 @@ filterButtons.forEach(button => {
   });
 });
 
-/* 07. OPTIONAL AUTHENTICATION MODAL
-========================================================= */
+/* 07. OPTIONAL AUTHENTICATION MODAL */
 
 function showAuthModal(
   mode = "login",
@@ -406,8 +398,7 @@ document.addEventListener("keydown", event => {
   }
 });
 
-/* 08. AUTHENTICATION MESSAGES
-========================================================= */
+/* 08. AUTHENTICATION MESSAGES */
 
 function showAuthMessage(message, isError = false) {
   if (!authMessage) return;
@@ -417,8 +408,7 @@ function showAuthMessage(message, isError = false) {
   authMessage.classList.toggle("success", !isError);
 }
 
-/* 09. SUPABASE LOGIN AND SIGNUP
-========================================================= */
+/* 09. SUPABASE LOGIN AND SIGNUP */
 
 authForm?.addEventListener("submit", async event => {
   event.preventDefault();
@@ -505,8 +495,7 @@ authForm?.addEventListener("submit", async event => {
   }
 });
 
-/* 10. RESTORE SIGN-IN SESSION
-========================================================= */
+/* 10. RESTORE SIGN-IN SESSION */
 
 async function initialiseAuth() {
   if (!supabaseClient) return;
@@ -530,8 +519,7 @@ async function initialiseAuth() {
   }
 }
 
-/* 11. MOBILE NAVIGATION
-========================================================= */
+/* 11. MOBILE NAVIGATION */
 
 menuToggle?.addEventListener("click", () => {
   const isOpen = mainNav?.classList.toggle("open") || false;
@@ -552,8 +540,7 @@ mainNav?.querySelectorAll("a").forEach(link => {
   });
 });
 
-/* 12. FOOTER YEAR
-========================================================= */
+/* 12. FOOTER YEAR */
 
 const yearElement = document.getElementById("year");
 
@@ -561,8 +548,7 @@ if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
 
-/* 13. STARTUP
-========================================================= */
+/* 13. STARTUP */
 
 function startWebsite() {
   if (authModal) {
@@ -572,7 +558,6 @@ function startWebsite() {
 
   document.body.classList.remove("modal-open");
 
-  // All twenty spaces are available immediately.
   renderSpaces("all");
 
   filterButtons.forEach(button => {
@@ -582,7 +567,6 @@ function startWebsite() {
     button.setAttribute("aria-pressed", String(isAll));
   });
 
-  // Restore an optional login session without blocking the site.
   initialiseAuth();
 }
 
