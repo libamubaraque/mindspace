@@ -1271,36 +1271,6 @@ async function initialiseFeatureSession() {
 ========================================================= */
 
 
-/* 03C. EXPAND EVERY INDIVIDUAL SPACE TO TWENTY LONG-FORM CHAPTERS */
-const finalChapterPrompts = [
-  ["Begin with what is already here", "Start with the details of your present situation rather than an ideal version of how things should be. Notice what is working, what feels confusing and what you would like to understand better. A realistic starting point makes it easier to choose a next step that belongs to your actual life."],
-  ["Notice the small details", "The smallest details can reveal what a broad description misses. Look for a particular moment, example, question or choice that helps you understand this subject more clearly. Specific observations make reflection more useful and give you something concrete to return to later."],
-  ["Make the idea your own", "There is no need to copy someone else's routine or approach exactly. Consider which parts fit your interests, resources, responsibilities and surroundings. Adapt the idea so it is practical for you, and leave out anything that does not feel appropriate or useful."],
-  ["Learn from different perspectives", "One person's experience rarely explains an entire subject. When it is appropriate, consider other viewpoints and seek reliable information from people with relevant knowledge. Listening does not mean agreeing with everything; it means giving yourself a fuller picture before deciding what you think."],
-  ["Give yourself room to experiment", "Trying something new can involve uncertainty, and the first attempt may not tell you whether an idea is right for you. Treat early efforts as experiments. Notice what you learned, adjust what you can and remember that changing your approach is part of learning."],
-  ["Turn a broad thought into one step", "A large idea can feel difficult to begin until you make the next action smaller. Choose something clear enough to do in the time and circumstances you have. It might be writing a few lines, finding one trustworthy source, preparing a question or asking someone for guidance."],
-  ["Keep useful notes", "A short note can help you remember an insight, a question to investigate or a method you want to try again. Keep the information that is genuinely useful and avoid collecting details simply to create more work. If your notes include other people, respect their privacy."],
-  ["Make space for change", "Your preferences, priorities and circumstances can shift. Something that helps today may not be the right choice next month, and that does not make the earlier effort pointless. Revisit your approach when needed and allow your understanding to grow with experience."],
-  ["Recognise the role of other people", "Supportive relationships can make learning and everyday life feel less isolating. Consider who could answer a question, offer practical help or simply listen. Respect other people's boundaries too, and remember that you can choose what you are comfortable sharing."],
-  ["Reflect without grading yourself", "Reflection works best when it is honest and kind. Instead of deciding whether you were successful or unsuccessful, ask what happened, what you noticed and what you might try next. Progress is not always visible, and a difficult day does not define your abilities or worth."],
-  ["Choose a pace that is sustainable", "A useful activity should fit alongside rest, school, relationships and other responsibilities. You do not need to complete everything at once. Pause when you need to, return when it suits you and seek support if the subject raises questions that require help beyond this page."],
-  ["Carry one thought forward", "Before leaving this space, choose one idea you want to remember. It might be a question, a practical action, a new perspective or simply permission to approach something differently. You can save the thought, discuss it with someone you trust or leave it here and return another day."]
-];
-Object.entries(data).forEach(([spaceId, space]) => {
-  const existing = Array.isArray(space.sections) ? space.sections : [];
-  let promptIndex = 0;
-  while (existing.length < 20) {
-    const [heading, paragraph] = finalChapterPrompts[promptIndex % finalChapterPrompts.length];
-    const detail = space.description || "Explore this subject in a way that is thoughtful, practical and suited to your circumstances.";
-    existing.push([
-      heading,
-      paragraph + " In " + space.title + ", this can mean taking the time to " + detail.charAt(0).toLowerCase() + detail.slice(1)
-    ]);
-    promptIndex++;
-  }
-  space.sections = existing.slice(0, 20);
-});
-
 /* CARD_INTERIOR_EXPANSION */
 const cardInteriorNotes = {
   mood: "Try describing a specific moment, what you noticed and what you wish someone understood. You can write honestly without needing to reach a conclusion.",
