@@ -6598,3 +6598,50 @@ body:not(.feature-page) .poster-hero .hero-actions .button-outline:hover {
     padding: 12px 18px !important;
   }
 }
+
+
+/* HERO CTA — REMOVE CROSSING DECORATIVE STRIPS AND LIFT BUTTONS */
+body:not(.feature-page) .poster-hero .hero-text-panel {
+  z-index: 100 !important;
+  overflow: visible !important;
+}
+body:not(.feature-page) .poster-hero .hero-text-panel > .hero-actions {
+  isolation: isolate !important;
+  z-index: 200 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions::before,
+body:not(.feature-page) .poster-hero .hero-actions::after,
+body:not(.feature-page) .poster-hero .hero-actions .button::before,
+body:not(.feature-page) .poster-hero .hero-actions .button::after {
+  content: none !important;
+  display: none !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions .button,
+body:not(.feature-page) .poster-hero .hero-actions a.button {
+  z-index: 300 !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background-clip: padding-box !important;
+  transform: translateZ(0) !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions .button-primary {
+  color: #263322 !important;
+  background: #e4ebd1 !important;
+  border: 2px solid #e4ebd1 !important;
+}
+body:not(.feature-page) .poster-hero .hero-actions .button-outline {
+  color: #fffdf2 !important;
+  background: #354a32 !important;
+  border: 2px solid #fffdf2 !important;
+}
+body:not(.feature-page) .poster-hero .hero-image,
+body:not(.feature-page) .poster-hero .hero-image::after,
+body:not(.feature-page) .poster-hero .hero-image-caption {
+  z-index: 0 !important;
+}
