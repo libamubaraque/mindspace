@@ -3814,3 +3814,267 @@ body {
   .feature-page .activity-panel:nth-of-type(odd),
   .feature-page .journal-panel:nth-of-type(odd) { margin-right: 0; }
 }
+
+
+/* =========================================================
+   41 — LIGHTER SAGE + OLIVE EDITION
+   A brighter, softer botanical palette across every page.
+   ========================================================= */
+:root {
+  --ether-balanced-bg: #78896A;
+  --ether-balanced-bg-2: #879879;
+  --ether-balanced-bg-3: #A5B394;
+  --ether-balanced-light: #F5F3E9;
+  --ether-balanced-sage: #E7EBD9;
+  --ether-balanced-ink: #3F4B36;
+  --ether-balanced-copy: #626957;
+  --ether-balanced-pale: #E4E9D8;
+}
+body {
+  color: #394632;
+  background-color: #DDE4D2;
+  background-image:
+    linear-gradient(rgba(221,228,210,.94), rgba(221,228,210,.96)),
+    url("images/olive-texture.jpg");
+}
+.site-header {
+  color: #F8F6EC;
+  background: rgba(92,112,79,.97);
+  border-color: rgba(248,246,236,.3);
+}
+.site-header .brand,
+.site-header .main-nav a,
+.site-header .header-login { color: #F8F6EC; }
+.site-header .brand-symbol,
+.site-header .main-nav a:hover { color: #E8EED9; }
+.site-header .header-cta,
+.button-primary {
+  color: #43523A;
+  background: #F2F2E7;
+  border-color: #F2F2E7;
+}
+.site-header .header-cta:hover,
+.button-primary:hover { background: #DCE5CC; }
+
+/* Bright, soft sage hero and page sections */
+.poster-hero,
+.poster-hero .hero-text-panel {
+  color: #F8F6EC;
+  background: linear-gradient(135deg, rgba(105,127,91,.94), rgba(137,155,119,.91));
+}
+.poster-hero h1,
+.poster-hero .hero h1 { color: #FFFDF5; }
+.poster-hero h1 i,
+.poster-hero .hero-text-panel .eyebrow,
+.poster-hero .hero-note { color: #E7EED9; }
+.poster-hero .hero-description,
+.poster-hero .poster-meta { color: #F1F3E9; }
+.poster-hero .poster-word { color: #F2F4E9; opacity: .2; }
+.poster-hero .hero-location-pill {
+  color: #F8F6EC;
+  background: rgba(91,111,78,.8);
+  border-color: rgba(248,246,236,.35);
+}
+.intro-section,
+.explore-section,
+.about-section,
+.stories-section,
+.resources-section,
+.saved-library-section,
+.closing-section,
+.ether-editorial-section {
+  color: #3F4B36;
+  background-color: #DDE4D2;
+  background-image: linear-gradient(135deg, #E4E9DA, #D5DFCA);
+}
+.intro-section:nth-of-type(even),
+.stories-section,
+.saved-library-section {
+  background-color: #D0DAC4;
+  background-image: linear-gradient(135deg, #DCE4D1, #C9D5BB);
+}
+.intro-label,
+.section-heading,
+.about-values,
+.saved-library-content { border-color: rgba(66,82,56,.22); }
+.intro-number,
+.section-index,
+.resource-number { color: #687C55; }
+.intro-content h2,
+.section-heading h2,
+.about-content h2,
+.stories-section h2,
+.saved-library-content h2 { color: #3F4B36; }
+.intro-content h2 i,
+.section-heading h2 i,
+.about-content h2 i,
+.stories-section h2 i,
+.saved-library-content h2 i { color: #71865B; }
+.intro-copy p,
+.about-content > p:not(.eyebrow),
+.section-heading > div > p:last-child,
+.saved-library-content > div > p:last-child,
+.resources-note { color: #59634F; }
+.about-section { background: #D8E1CD; }
+.about-content { background: transparent; }
+.about-content .eyebrow,
+.about-values span,
+.about-signature { color: #687D55; }
+.about-content h2,
+.about-values h3,
+.about-signature strong { color: #3F4B36; }
+.about-values p { color: #626957; }
+.ticker { color: #3F4B36; background: #C4D2B2; }
+.site-footer { color: #F3F2E8; background: #687D5A; }
+.site-footer .brand,
+.site-footer .footer-links a,
+.site-footer .footer-bottom a { color: #FFFDF5; }
+.site-footer .footer-links h3 { color: #E5ECD8; }
+.site-footer .footer-brand > p,
+.site-footer .footer-bottom { color: #EDF0E5; }
+.site-footer .footer-bottom { border-color: rgba(255,255,255,.25); }
+
+/* Editorial cards: mostly light paper, with gentle sage accents */
+.ether-editorial-section {
+  color: #3F4B36;
+  background: linear-gradient(135deg, #DCE5D1, #CBD8BE);
+}
+.ether-editorial-heading .eyebrow,
+.ether-editorial-foot .eyebrow { color: #687D55; }
+.ether-editorial-heading h2 { color: #3F4B36; }
+.ether-editorial-heading h2 i { color: #71865B; }
+.ether-editorial-heading > p:last-child,
+.ether-editorial-foot > p:last-child { color: #59634F; }
+.ether-note-card,
+.ether-note-card:nth-child(even) {
+  color: #3F4B36;
+  background: #F5F3E9;
+  border: 1px solid rgba(86,105,70,.2);
+  box-shadow: 0 12px 28px rgba(61,78,51,.1);
+}
+.ether-note-card:nth-child(2),
+.ether-note-card:nth-child(3) {
+  background: #E8EDDF;
+}
+.ether-note-card .eyebrow,
+.ether-note-card:nth-child(even) .eyebrow { color: #71865B; }
+.ether-note-card h3,
+.ether-note-card:nth-child(even) h3 { color: #3F4B36; }
+.ether-note-card p,
+.ether-note-card:nth-child(even) p { color: #626957; }
+.ether-editorial-foot { border-color: rgba(66,82,56,.22); }
+
+/* Individual feature pages now use a light sage canvas and readable dark text */
+.feature-page {
+  color: #3F4B36;
+  background-color: #DDE4D2;
+  background-image: linear-gradient(135deg, #E4E9DA, #D2DDC6);
+}
+.feature-page .site-header { background: rgba(105,127,91,.97); }
+.feature-page .feature-hero {
+  color: #FFFDF5;
+  background: linear-gradient(110deg, rgba(105,127,91,.9), rgba(145,164,126,.82));
+}
+.feature-page .feature-content {
+  color: #3F4B36;
+  background: rgba(245,243,233,.78);
+  border: 1px solid rgba(86,105,70,.2);
+  box-shadow: 0 16px 36px rgba(61,78,51,.1);
+}
+.feature-page .feature-content h1,
+.feature-page .feature-content h2,
+.feature-page .feature-content h3 { color: #3F4B36; }
+.feature-page .feature-content > section:first-child p { color: #59634F; }
+.feature-page .feature-content .eyebrow { color: #71865B; }
+.feature-page .feature-text-section,
+.feature-page .activity-panel,
+.feature-page .journal-panel,
+.feature-page .saved-panel,
+.feature-page .feature-text-section:nth-of-type(even),
+.feature-page .activity-panel:nth-of-type(even),
+.feature-page .journal-panel:nth-of-type(even),
+.feature-page .saved-panel:nth-of-type(even) {
+  color: #3F4B36;
+  background: #F5F3E9;
+  border: 1px solid rgba(86,105,70,.2);
+  box-shadow: 0 12px 28px rgba(61,78,51,.09);
+}
+.feature-page .feature-text-section:nth-of-type(even),
+.feature-page .activity-panel:nth-of-type(even),
+.feature-page .journal-panel:nth-of-type(even),
+.feature-page .saved-panel:nth-of-type(even) { background: #E8EDDF; }
+.feature-page .feature-text-section h2,
+.feature-page .activity-panel h2,
+.feature-page .journal-panel h2,
+.feature-page .saved-panel h2,
+.feature-page .feature-text-section h3,
+.feature-page .activity-panel h3,
+.feature-page .journal-panel h3,
+.feature-page .feature-text-section:nth-of-type(even) h2,
+.feature-page .activity-panel:nth-of-type(even) h2,
+.feature-page .journal-panel:nth-of-type(even) h2,
+.feature-page .saved-panel:nth-of-type(even) h2,
+.feature-page .feature-text-section:nth-of-type(even) h3,
+.feature-page .activity-panel:nth-of-type(even) h3,
+.feature-page .journal-panel:nth-of-type(even) h3 { color: #3F4B36; }
+.feature-page .feature-text-section p,
+.feature-page .activity-panel p,
+.feature-page .journal-panel p,
+.feature-page .saved-panel p,
+.feature-page .feature-text-section:nth-of-type(even) p,
+.feature-page .activity-panel:nth-of-type(even) p,
+.feature-page .journal-panel:nth-of-type(even) p,
+.feature-page .saved-panel:nth-of-type(even) p { color: #626957; }
+.feature-page .feature-text-section .eyebrow,
+.feature-page .activity-panel .eyebrow,
+.feature-page .journal-panel .eyebrow,
+.feature-page .saved-panel .eyebrow,
+.feature-page .feature-text-section:nth-of-type(even) .eyebrow,
+.feature-page .activity-panel:nth-of-type(even) .eyebrow,
+.feature-page .journal-panel:nth-of-type(even) .eyebrow,
+.feature-page .saved-panel:nth-of-type(even) .eyebrow { color: #71865B; }
+.feature-page .nested-topics-section {
+  color: #3F4B36;
+  background: rgba(205,218,192,.82);
+  border: 1px solid rgba(86,105,70,.2);
+}
+.feature-page .nested-topics-section > h2 { color: #3F4B36 !important; }
+.feature-page .nested-card,
+.feature-page .nested-card:nth-child(even) {
+  color: #3F4B36;
+  background: #F5F3E9;
+  border-color: rgba(86,105,70,.2);
+  box-shadow: 0 10px 24px rgba(61,78,51,.08);
+}
+.feature-page .nested-card:nth-child(even) { background: #E8EDDF; }
+.feature-page .nested-card h3,
+.feature-page .nested-card:nth-child(even) h3 { color: #3F4B36; }
+.feature-page .nested-card p,
+.feature-page .nested-card:nth-child(even) p { color: #626957; }
+.feature-page .nested-card .card-number,
+.feature-page .nested-card:nth-child(even) .card-number { color: #71865B; }
+.feature-page .saved-sidebar {
+  color: #3F4B36;
+  background: #D0DAC4;
+}
+.feature-page .saved-entry {
+  color: #3F4B36;
+  background: #F5F3E9;
+  border-color: rgba(86,105,70,.2);
+}
+.feature-page .saved-entry h3 { color: #3F4B36; }
+.feature-page .saved-entry p { color: #626957; }
+.feature-page .saved-entry small { color: #71865B; }
+.feature-page .feature-content label,
+.feature-page .feature-content legend { color: #46543C; }
+.feature-page .feature-content fieldset label { color: #59634F; }
+.feature-page .feature-content a:not(.button) { color: #60784B; }
+.feature-page .site-footer { color: #F3F2E8; background: #687D5A; }
+
+/* Keep photographic card titles legible without making the page dark */
+.feature-card::before,
+.feature-grid > a::before,
+#featureGrid > a::before,
+.features-grid > a::before {
+  background: linear-gradient(180deg, rgba(37,50,31,.02), rgba(37,50,31,.12) 34%, rgba(37,50,31,.68));
+}
