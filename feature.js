@@ -1,13 +1,13 @@
-
 /* =========================================================
    TO THE ETHER — FEATURE ENGINE
-   20 spaces • nested pages • activities • saved work
-   Supabase authentication • guest access
+   20 open spaces • detailed content • activities
+   Optional accounts • saved entries • nested pages
    ========================================================= */
 
 "use strict";
 
-/* ---------------- SUPABASE ---------------- */
+/* 01. SUPABASE
+========================================================= */
 
 const SUPABASE_URL = "https://sckcrrriiatfxcafabmh.supabase.co";
 const SUPABASE_KEY =
@@ -19,23 +19,37 @@ const db = window.supabase?.createClient
 
 let activeSession = null;
 
-/* ---------------- STORAGE ---------------- */
+/* 02. STORAGE
+========================================================= */
 
-const GUEST_KEY = "ether_guest_spaces_v1";
-const SAVED_KEY = "ether_saved_pages_v1";
-const PLANNER_KEY = "ether_planner_tasks_v1";
+const PLANNER_KEY = "ether_planner_tasks_v2";
+
+function currentStorageId() {
+  return activeSession?.user?.id || "guest";
+}
+
+function savedStorageKey() {
+  return `ether_saved_pages_v2_${currentStorageId()}`;
+}
 
 function readStore(key, fallback = []) {
   try {
     const value = JSON.parse(localStorage.getItem(key) || "null");
     return value ?? fallback;
-  } catch {
+  } catch (error) {
+    console.warn("Could not read saved information:", error);
     return fallback;
   }
 }
 
 function writeStore(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (error) {
+    console.error("Could not save information:", error);
+    return false;
+  }
 }
 
 function escapeHTML(value) {
@@ -48,20 +62,30 @@ function escapeHTML(value) {
   })[char]);
 }
 
-/* ---------------- ALL 20 SPACES ---------------- */
+function makeId() {
+  return window.crypto?.randomUUID?.()
+    || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+/* 03. ALL TWENTY SPACES
+========================================================= */
 
 const data = {
+
   mood: {
     title: "Mood Journal",
     category: "WELLBEING",
     image: "images/mood.jpg",
     description: "Understand your feelings and make space for your thoughts without judgement.",
     sections: [
-      ["Understanding your emotions", "Emotions are information about how you experience the world. Happiness, frustration, sadness, excitement and uncertainty are all part of being human."],
-      ["Name what you feel", "Try using a few words to describe your day. Calm, disappointed, nervous, hopeful, confused or excited are all valid descriptions."],
-      ["Five journal ideas", "Write about a moment you want to remember, something that challenged you, a person who helped you, something you wish people understood or one thing you want to try tomorrow."],
-      ["Difficult days", "You do not have to turn every difficult experience into a lesson immediately. You can simply describe what happened and what support you might need."],
-      ["Notice patterns gently", "Looking back may help you notice which situations or routines affect your mood. A journal is for reflection, not diagnosis."]
+      ["Understanding your emotions", "Emotions are information about how you experience the world. Happiness, frustration, sadness, excitement and uncertainty are all part of being human. Different feelings can appear together, and they can change throughout a day."],
+      ["Putting feelings into words", "Try describing an emotion with a few simple words. You might feel calm, disappointed, nervous, hopeful, confused or excited. You do not need to find the perfect word. The purpose is to notice what is happening inside you."],
+      ["Five ways to begin writing", "Write about a moment you want to remember, something that challenged you, a person who helped you, something you wish people understood or one thing you would like to try tomorrow. A few honest sentences are enough."],
+      ["Difficult days deserve space too", "You do not have to turn every difficult experience into a lesson immediately. You can describe what happened, what you needed and what might make the next step easier. Your journal does not need to sound positive all the time."],
+      ["Notice patterns gently", "Looking back at entries may help you notice which situations, routines or experiences affect your mood. This is personal reflection, not a diagnosis or a test. Avoid judging yourself for having a particular feeling."],
+      ["When you do not know what to write", "Begin with a sentence such as 'Today felt different because…' or 'One thing I wish I could explain is…'. You can also write a list, draw a small picture or leave the page blank until you feel ready."],
+      ["Privacy and your journal", "Your thoughts can be personal. Use a device you trust, avoid sharing private entries publicly and remember that browser-based storage is not the same as a secure private diary service. Do not save passwords or highly sensitive information here."],
+      ["A gentle closing thought", "Your feelings do not have to be perfectly organised to deserve attention. Use this space to notice, reflect and understand yourself a little better, one entry at a time."]
     ],
     topics: [
       ["understanding-emotions", "Understanding Emotions", "Learn to name and understand different feelings."],
@@ -76,11 +100,14 @@ const data = {
     image: "images/breathing.jpg",
     description: "Take a comfortable pause and explore simple mindfulness activities.",
     sections: [
-      ["What is mindful breathing?", "Mindful breathing means paying attention to the natural movement of your breath. It is not about forcing yourself to breathe in a particular way."],
-      ["A comfortable pause", "Sit somewhere comfortable. Let your breathing remain natural. Notice the air moving in and out. If your attention wanders, gently return to the present."],
-      ["Four ways to pause", "Try natural breathing, a gentle longer exhale, counting comfortable breaths or simply sitting quietly. Never force a breath or hold it."],
-      ["Mindfulness beyond breathing", "Notice five things around you, listen to nearby sounds or feel your feet resting on the floor."],
-      ["Reflect afterwards", "Ask whether the activity felt comfortable and whether you would prefer another activity next time. Stop if you feel dizzy or uncomfortable."]
+      ["What is mindful breathing?", "Mindful breathing means paying attention to the natural movement of your breath. It is not about forcing yourself to breathe in a particular way or trying to achieve a perfect result."],
+      ["Finding a comfortable position", "Sit or rest somewhere comfortable if you can. Let your shoulders and hands relax naturally. You can keep your eyes open or look at a calm point in the room."],
+      ["Notice without forcing", "Pay attention to the ordinary movement of breathing. If your attention wanders, that is normal. You can simply notice the room around you instead of trying to control your breath."],
+      ["Four ways to pause", "Try natural breathing, noticing a comfortable exhale, counting a few ordinary breaths or sitting quietly. You do not need to hold your breath, breathe deeply or follow a strict rhythm."],
+      ["Mindfulness beyond breathing", "You can notice sounds outside, the feeling of your feet resting on the floor, the colours around you or the sensation of your hands. Mindfulness can involve the world around you, not only breathing."],
+      ["Nature sounds and silence", "Some people enjoy gentle rain, birds or flowing water in the background. Others prefer silence. Neither choice is better. Choose what feels comfortable and stop the activity whenever you wish."],
+      ["After your pause", "Ask yourself whether the activity felt comfortable, whether you noticed anything around you and whether you would choose the same activity again. There is no score or performance target."],
+      ["A note about comfort", "Stop if an exercise makes you dizzy, uncomfortable or worried. Return to your ordinary breathing and surroundings. This activity is a simple pause, not a treatment or replacement for professional support."]
     ],
     topics: [
       ["mindful-breathing", "What Is Mindful Breathing?", "Understand the basics of paying attention to your natural breath."],
@@ -95,11 +122,14 @@ const data = {
     image: "images/gratitude.jpg",
     description: "Collect the little moments, people and experiences that matter.",
     sections: [
-      ["What gratitude means", "Gratitude is noticing something you appreciate. It does not mean pretending that difficult experiences do not exist."],
-      ["Small things count", "A good conversation, a favourite song, a comfortable place or a moment outdoors can be worth remembering."],
-      ["People who matter", "Think about someone who encouraged you or made an ordinary day better. You can write a letter without sending it."],
-      ["Five prompts", "What made me smile? What did I learn? Who supported me? What place feels comfortable? What ordinary thing do I appreciate?"],
-      ["Gratitude and difficult days", "You can appreciate one thing while still being upset about something else."]
+      ["What gratitude means", "Gratitude is noticing something you appreciate. It does not mean pretending that difficult experiences do not exist or forcing yourself to feel happy when you do not."],
+      ["Small things count", "A good conversation, a favourite song, a comfortable place, a helpful teacher or a moment outdoors can be worth remembering. Ordinary moments can be meaningful without being extraordinary."],
+      ["People who matter", "Think about someone who encouraged you or made an ordinary day better. You can write a letter to that person without sending it. You can also appreciate something about a friendship or family relationship."],
+      ["Five prompts to try", "What made me smile today? What did I learn? Who supported me? What place feels comfortable? What ordinary thing do I appreciate? Choose one question rather than trying to answer all of them."],
+      ["Gratitude on difficult days", "You can appreciate one thing while still being upset about something else. Gratitude should never be used to dismiss a real problem or tell someone that their difficulties do not matter."],
+      ["Create a collection", "Keep short notes about moments you want to remember. You might collect kind words, places you visited, things you learned or small experiences that made a difference."],
+      ["Say thank you thoughtfully", "A meaningful thank-you does not need to be long. Be specific about what someone did and why it mattered. You can write a note privately if you do not want to send it."],
+      ["Look back with kindness", "When you revisit old entries, remember that every day is different. Your collection is not a competition to find the happiest moments. It is simply a record of things you chose to notice."]
     ],
     topics: [
       ["daily-gratitude", "Daily Gratitude", "Find small, meaningful moments to appreciate."],
@@ -114,11 +144,14 @@ const data = {
     image: "images/fitness.jpg",
     description: "Explore movement, running, rest and everyday wellbeing.",
     sections: [
-      ["Movement belongs to everyone", "Movement can be walking, playing, cycling, dancing, stretching or participating in a sport you enjoy."],
-      ["Screen-time breaks", "After a long period of screen use, consider looking away from the screen, changing position or taking a comfortable break."],
-      ["Running and walking", "Start with comfortable movement and give yourself time to rest. Your activity should suit your age, ability and circumstances."],
-      ["Rest matters", "Rest, sleep, hydration and enjoyable activities are important parts of wellbeing."],
-      ["Strava", "Strava is an external activity platform. This website can link to it, but a real account connection requires a separately configured Strava developer application and OAuth."]
+      ["Movement belongs to everyone", "Movement can be walking, playing, cycling, dancing, stretching or participating in a sport you enjoy. It does not have to look the same for everyone."],
+      ["Taking a screen break", "After a long period of screen use, consider looking away from the screen, changing position or taking a comfortable break. A short pause can make a screen-heavy day feel less continuous."],
+      ["Running and walking", "Running and walking can be ways to explore movement outdoors. Begin at a comfortable level, pay attention to your surroundings and allow time for rest. Your activity should suit your age, ability and circumstances."],
+      ["Enjoyment matters", "Choose activities because you enjoy them, want to learn a skill or like spending time with others. Movement should not be a punishment or a way to compare your body with somebody else's."],
+      ["Rest is part of wellbeing", "Rest, sleep, hydration and enjoyable activities all matter. Taking a break is not a failure and does not mean you have lost progress."],
+      ["Finding an activity", "You might enjoy a school sport, cycling with family, dancing, walking with a friend or trying a beginner-friendly class. Consider safety, access, supervision and what feels comfortable."],
+      ["Reflect on the experience", "Instead of focusing only on numbers, notice what you enjoyed, what felt comfortable and whether you would like to try the activity again. Your reflection can be about the experience itself."],
+      ["Using activity platforms", "Strava is an external activity platform. This website provides a link to Strava, not a live account connection. A real connection requires a separately configured developer application and permission from the account holder."]
     ],
     topics: [
       ["movement-breaks", "Movement Breaks", "Explore simple ways to move between study sessions."],
@@ -133,10 +166,14 @@ const data = {
     image: "images/checkin.jpg",
     description: "A small place for daily reflections, little wins and fresh starts.",
     sections: [
-      ["A moment for yourself", "A check-in can be as simple as noticing how your day is going."],
-      ["Little wins", "A small achievement can be finishing a task, asking a question, trying something new or taking a break."],
-      ["Small talks", "Think about one person you could talk to when you want company or support."],
-      ["Fresh starts", "You can begin again without having to make a perfect plan."]
+      ["A moment for yourself", "A check-in can be as simple as noticing how your day is going. You do not need a long questionnaire or a perfect answer."],
+      ["Little wins", "A small achievement can be finishing a task, asking a question, trying something new, helping someone or taking a break when you needed one."],
+      ["Small talks", "Think about one person you could talk to when you want company or support. A conversation can begin with an ordinary question or a simple hello."],
+      ["Fresh starts", "You can begin again without having to make a perfect plan. One manageable next step is often more useful than a long list of promises."],
+      ["Questions for today", "What was one memorable moment? What felt easier than expected? What would you like to understand better? What is one thing you want to make time for?"],
+      ["A little celebration", "Notice effort as well as outcomes. Trying, practising, asking for help and returning to something after a break are all experiences worth recognising."],
+      ["When the day feels complicated", "You do not need to force a positive answer. You can write 'I am not sure yet' or leave a question unanswered. A check-in should feel like an invitation, not another school task."],
+      ["End with one next step", "Choose one small thing that might help tomorrow feel more manageable. It could be preparing a book, asking a question, resting or making time for something you enjoy."]
     ],
     topics: [
       ["daily-reflection", "Daily Reflection", "A short reflection about your day."],
@@ -151,11 +188,14 @@ const data = {
     image: "images/study.jpg",
     description: "Build manageable study habits and make room for focused learning.",
     sections: [
-      ["Start small", "Choose one manageable task instead of trying to complete everything at once."],
-      ["The 10 and 5 method", "Try ten minutes of focused study followed by five minutes away from your screen."],
-      ["Make a study space", "Keep the materials you need nearby and reduce distractions where possible."],
-      ["Different approaches", "Reading, practice questions, teaching a concept aloud and spaced revision can all support learning."],
-      ["Rest is part of learning", "Breaks help you change activities and return with a fresh perspective."]
+      ["Start with one task", "Choose one manageable task instead of trying to complete everything at once. A clear starting point can make a large assignment feel easier to approach."],
+      ["The 10 and 5 method", "Try ten minutes of focused study followed by five minutes away from your screen. The aim is to make a short, manageable beginning, not to measure your worth by how much you finish."],
+      ["Make a study space", "Keep the materials you need nearby and reduce distractions where possible. Your study space does not have to be perfect or expensive."],
+      ["Different ways to learn", "Reading, practice questions, teaching a concept aloud, drawing a diagram and spaced revision can all support learning. Different subjects may need different methods."],
+      ["Use breaks well", "During a five-minute break, stand up if comfortable, drink water, look away from your screen or simply rest. A break does not need another task."],
+      ["Beginner, steady and advanced sessions", "A beginner session can focus on opening the book and understanding one idea. A steady session can include practice questions. A more challenging session can involve explaining a topic or reviewing mistakes."],
+      ["When focus is difficult", "Try reducing the task, changing your environment or asking for help with a confusing concept. If you are tired, a break may be more useful than forcing yourself to continue."],
+      ["Review without judgement", "At the end of a session, note what you worked on, what you understood and what you want to revisit. Learning is a process, and mistakes can show you what to practise next."]
     ],
     topics: [
       ["focus-session", "Focus Sessions", "Try a short, manageable study session."],
@@ -170,11 +210,14 @@ const data = {
     image: "images/selfcare.jpg",
     description: "Explore everyday care, healthy routines and looking after yourself.",
     sections: [
-      ["Self-care is personal", "Self-care can include rest, connection, enjoyable activities, asking for help and looking after everyday needs."],
-      ["Physical wellbeing", "Regular meals, hydration, comfortable movement, sleep and appropriate healthcare all matter."],
-      ["Mental wellbeing", "You can make room for feelings, talk to someone you trust and take breaks when needed."],
-      ["Your surroundings", "A comfortable study corner, a short walk or a conversation with someone supportive may help."],
-      ["Support", "If you have a health concern, speak with a trusted adult or qualified healthcare professional. This website does not diagnose or treat conditions."]
+      ["Self-care is personal", "Self-care can include rest, connection, enjoyable activities, asking for help and looking after everyday needs. It is not one fixed routine that everyone must follow."],
+      ["Physical wellbeing", "Regular meals, hydration, comfortable movement, sleep and appropriate healthcare all matter. Everyday care should be realistic for your circumstances."],
+      ["Mental wellbeing", "You can make room for feelings, talk to someone you trust and take breaks when needed. Asking for support is a normal part of looking after yourself."],
+      ["Your surroundings", "A comfortable study corner, a short walk, a tidy surface or a conversation with someone supportive may help make everyday life feel more manageable."],
+      ["Personal care without pressure", "Skincare and grooming routines are personal choices. You do not need expensive products or a complicated routine. If a product causes irritation, stop using it and ask a trusted adult or healthcare professional for guidance."],
+      ["Different needs and experiences", "People may have different health, hygiene and personal-care needs. Choose information that is relevant to you and avoid comparing your routines with other people's."],
+      ["Periods and health questions", "If you menstruate, keeping a simple private note of dates or symptoms may help you describe patterns to a healthcare professional. Do not use a tracker to diagnose a condition. Ask a trusted adult or clinician about concerns or severe discomfort."],
+      ["Support when you need it", "If you have a health concern, speak with a trusted adult or qualified healthcare professional. This website does not diagnose or treat conditions."]
     ],
     topics: [
       ["self-care-basics", "Everyday Self-care", "Explore practical everyday care."],
@@ -189,10 +232,14 @@ const data = {
     image: "images/stories.jpg",
     description: "Discover real stories, human rights, challenges and meaningful change.",
     sections: [
-      ["Understanding realities", "The world contains serious challenges. Learning about them can help us understand people and communities."],
-      ["Human rights", "Human rights belong to every person. They include dignity, education, safety and equal treatment."],
-      ["People and communities", "Listen to people's experiences with respect and avoid reducing a person's life to one event."],
-      ["Hope and change", "Positive change can come from education, community support, public services and sustained efforts."]
+      ["Understanding realities", "The world contains serious challenges. Learning about them can help us understand people and communities without reducing their experiences to headlines."],
+      ["Human rights", "Human rights belong to every person. They include dignity, education, safety, equality and the freedom to participate in society."],
+      ["People and communities", "Listen to people's experiences with respect. Avoid reducing a person's life to one event, one photograph or one label."],
+      ["Looking beyond headlines", "When reading about a difficult issue, check the date, source and context. Look for reporting from reliable organisations and distinguish verified information from opinion."],
+      ["Hope and change", "Positive change can come from education, community support, public services, advocacy and sustained efforts. Progress is often gradual and involves many people."],
+      ["Understand different perspectives", "People may experience the same event in different ways. Listening carefully and checking evidence can help you understand an issue more fully."],
+      ["What young people can learn", "Students can explore rights, history, geography, public health and community action through reliable educational resources. Learning does not require putting yourself in unsafe situations."],
+      ["Respond with care", "When discussing difficult realities, use respectful language and avoid sharing graphic material. Thoughtful learning can build understanding while protecting the dignity of the people involved."]
     ],
     topics: [
       ["human-rights", "Human Rights", "Explore dignity, equality and fundamental rights."],
@@ -207,14 +254,17 @@ const data = {
     image: "images/career.jpg",
     description: "Explore interests, career paths, courses and possibilities beyond school.",
     sections: [
-      ["There is no single path", "Different careers involve different subjects, training, skills and experiences."],
-      ["Start with curiosity", "Think about the subjects, problems and activities that interest you."],
-      ["Explore pathways", "Compare courses, degrees, entrance requirements and the time involved."],
-      ["Beyond a job title", "Consider the lifestyle, values, working environment and opportunities associated with a career."],
-      ["Dreams beyond career", "Your interests, relationships, learning and contributions matter beyond your future job."]
+      ["There is no single path", "Different careers involve different subjects, training, skills and experiences. A career choice does not have to be final while you are still discovering what interests you."],
+      ["Start with curiosity", "Think about the subjects, problems and activities that interest you. You might enjoy helping people, investigating questions, designing, teaching, organising or building things."],
+      ["Explore career families", "Career families can include healthcare, education, science, public service, technology, creative work, business, environment and community development. Each family contains many different roles."],
+      ["Compare pathways", "Look at the degrees, diplomas, training routes and entrance requirements associated with a role. Requirements can differ between institutions and countries, so use official course information."],
+      ["Think about the everyday work", "A job title tells you only part of the story. Explore the daily responsibilities, working environment, teamwork, study requirements and challenges involved."],
+      ["India and international options", "Qualifications and professional registration can differ between India and other countries. A degree earned in one place may require additional recognition, exams or training elsewhere."],
+      ["Consider lifestyle and values", "Think about the kind of contribution, environment, stability, flexibility and learning opportunities that matter to you. No career offers every advantage all the time."],
+      ["Dreams beyond career", "Your interests, relationships, learning, creativity and contributions matter beyond your future job. Your life is bigger than a single career decision."]
     ],
     topics: [
-      ["career-quiz", "Discover Your Interests", "Try a short interest exploration quiz."],
+      ["career-quiz", "Discover Your Interests", "Try a ten-question interest exploration quiz."],
       ["career-pathways", "Career Pathways", "Compare study routes and possible qualifications."],
       ["dreams-beyond-career", "Dreams Beyond Career", "Reflect on the life you want to build."]
     ]
@@ -226,10 +276,14 @@ const data = {
     image: "images/scrapbook.jpg",
     description: "A personal corner for memories, photographs, letters and reflections.",
     sections: [
-      ["Your personal collection", "Keep memories, thoughts, photographs and meaningful moments together."],
-      ["Good and difficult days", "Your memories do not have to be perfect or polished. You can write honestly."],
-      ["Letters to yourself", "Write a letter to your future self or record something you want to remember."],
-      ["A timeline of moments", "Collect entries over time and look back at what you have experienced."]
+      ["Your personal collection", "Keep memories, thoughts, photographs and meaningful moments together. Your collection can be simple, colourful, organised or completely unfiltered."],
+      ["Good and difficult days", "Your memories do not have to be perfect or polished. You can write honestly about an ordinary day, a disappointment, a funny moment or something you are still trying to understand."],
+      ["Photographs and captions", "A photograph can remind you of a place, person, event or feeling. Add a short caption so that you remember why the moment mattered."],
+      ["Letters to yourself", "Write a letter to your future self or record something you want to remember. You can include hopes, questions, reminders and things you are learning."],
+      ["A timeline of moments", "Collect entries over time and look back at what you have experienced. A timeline can include school milestones, new interests, trips, projects and everyday moments."],
+      ["Keep your own style", "You can organise memories by date, theme, people or mood. There is no required layout and no need to make every page look the same."],
+      ["Privacy matters", "Think carefully before saving photographs or personal details about other people. Ask permission before sharing someone else's image or private story."],
+      ["Your collection belongs to you", "This scrapbook prototype saves entries in the browser on the device you use. Clearing browser data or changing devices can remove access to those entries, so do not treat it as your only backup."]
     ],
     topics: [
       ["memory-gallery", "Memory Gallery", "Collect photographs and captions."],
@@ -244,10 +298,14 @@ const data = {
     image: "images/movies.jpg",
     description: "Explore films, ideas, watchlists and thoughtful reflections.",
     sections: [
-      ["Stories on screen", "Films can introduce different places, experiences and perspectives."],
-      ["Watch with curiosity", "Notice the characters, themes, choices and ideas in a story."],
-      ["Your watchlist", "Keep a list of films you want to explore."],
-      ["Reflect afterwards", "Think about what stayed with you and what questions the story raised."]
+      ["Stories on screen", "Films can introduce different places, experiences and perspectives. They can entertain, ask questions and help audiences imagine lives different from their own."],
+      ["Watch with curiosity", "Notice the characters, themes, choices and ideas in a story. Ask what the filmmaker wants the audience to consider."],
+      ["Your watchlist", "Keep a list of films you would like to explore. You can organise it by genre, topic, language or the people who recommended it."],
+      ["Reflect afterwards", "Think about what stayed with you and what questions the story raised. You might write about a character, a setting, a decision or an idea."],
+      ["Stories and representation", "Consider whose perspectives are included and whose experiences may be missing. Media can shape how audiences understand people and communities."],
+      ["Fact and fiction", "A film may be inspired by real events without showing every detail accurately. Check reliable sources when you want to learn about the history behind a story."],
+      ["Discuss respectfully", "People can interpret the same film differently. Explain your view, listen to others and remember that disagreement does not need to become an argument."],
+      ["Your film journal", "Save a title, a short reflection and one question you want to explore further. Your notes can focus on ideas rather than ratings."]
     ],
     topics: [
       ["watchlist", "My Watchlist", "Keep a personal list of films to explore."],
@@ -262,10 +320,14 @@ const data = {
     image: "images/commons.jpg",
     description: "Discover clubs, shared interests and ways to work together.",
     sections: [
-      ["Shared interests", "Communities can form around books, science, art, sports, volunteering and many other interests."],
-      ["Working together", "Good collaboration includes listening, sharing responsibilities and respecting different ideas."],
-      ["Find your people", "Look for school clubs, supervised community activities and positive shared interests."],
-      ["Make room for everyone", "A welcoming community values different experiences and perspectives."]
+      ["Shared interests", "Communities can form around books, science, art, sports, volunteering, languages and many other interests. A shared activity can help people learn from one another."],
+      ["Working together", "Good collaboration includes listening, sharing responsibilities and respecting different ideas. A group works better when people understand what they are contributing."],
+      ["Find your people", "Look for school clubs, supervised community activities and positive shared interests. You do not need to join everything to find a place where you feel comfortable."],
+      ["Make room for everyone", "A welcoming community values different experiences and perspectives. People should be able to participate without being mocked or pressured."],
+      ["Plan a small project", "A project might involve a reading group, a school display, a science activity or a community information campaign. Begin with a clear purpose and manageable steps."],
+      ["Communication matters", "Ask questions, explain your ideas clearly and listen before responding. If a disagreement happens, focus on the issue rather than attacking a person."],
+      ["Online and offline safety", "Use supervised spaces and trusted groups. Avoid sharing private details with strangers or meeting people from online groups without a trusted adult's involvement."],
+      ["A community can grow", "Groups change as people learn and interests develop. Reflect on what worked, what could be improved and how everyone can feel included."]
     ],
     topics: [
       ["interest-clubs", "Interest Clubs", "Explore ideas for clubs and shared activities."],
@@ -280,10 +342,14 @@ const data = {
     image: "images/sports.jpg",
     description: "Explore sports, movement, participation and inspiring sporting stories.",
     sections: [
-      ["Sport is for participation", "Sport can build friendships, teamwork and enjoyment."],
-      ["Try different activities", "Explore activities that are accessible and appropriate for you."],
-      ["Teamwork", "Communication, fair play and respect are important parts of sport."],
-      ["Sporting stories", "Learn about athletes, teams and the communities around sport."]
+      ["Sport is for participation", "Sport can build friendships, teamwork, confidence and enjoyment. People take part for many different reasons and at many different levels."],
+      ["Try different activities", "Explore activities that are accessible and appropriate for you. School teams, casual games, cycling, swimming and recreational clubs can all offer different experiences."],
+      ["Teamwork", "Communication, fair play and respect are important parts of sport. A team includes people with different strengths and learning styles."],
+      ["Sporting stories", "Learn about athletes, teams and the communities around sport. Their stories may include practice, setbacks, teamwork and important decisions."],
+      ["Respect and inclusion", "Everyone deserves to participate in a respectful environment. Encourage others, follow agreed rules and avoid making fun of someone's ability."],
+      ["Learning a skill", "A new sport can feel unfamiliar at first. Learn the basic rules, listen to qualified coaches and allow yourself time to understand the activity."],
+      ["Safety and rest", "Use appropriate equipment and supervision. Take breaks when needed and tell a trusted adult if an activity causes pain or discomfort."],
+      ["Reflect on participation", "Record what you tried, what you enjoyed and what you learned. You do not need to compare your performance with another person's."]
     ],
     topics: [
       ["sports-discovery", "Discover a Sport", "Explore different sports and activities."],
@@ -298,10 +364,14 @@ const data = {
     image: "images/planner.jpg",
     description: "Organise your day with realistic plans, breaks and room to restart.",
     sections: [
-      ["Make a realistic plan", "A useful plan makes room for school, rest, family and personal interests."],
-      ["Choose priorities", "Pick one or two important tasks instead of filling every minute."],
-      ["Leave room to change", "Plans can change. Adjusting a plan is not failure."],
-      ["Review your day", "Notice what worked and what you might make easier tomorrow."]
+      ["Make a realistic plan", "A useful plan makes room for school, rest, family and personal interests. It should support your day rather than fill every available minute."],
+      ["Choose priorities", "Pick one or two important tasks instead of filling your schedule with too many commitments. A clear priority can make it easier to begin."],
+      ["Break tasks into steps", "A large task may become easier when divided into smaller actions. For example, opening your notes, reading one section and answering a question are separate steps."],
+      ["Leave room to change", "Plans can change because of school, family, health or unexpected events. Adjusting a plan is not failure."],
+      ["Remember breaks", "Short breaks can help you switch activities and return with a fresh perspective. Include meals, movement, rest and screen-free time where possible."],
+      ["Avoid overplanning", "A planner is a tool, not a measure of personal value. If the plan becomes stressful, simplify it and keep only the most useful parts."],
+      ["Review your day", "Notice what worked and what you might make easier tomorrow. You can move unfinished tasks to another day without blaming yourself."],
+      ["Make it your own", "Some people prefer a short list, while others like a weekly view. Choose a format that is easy to understand and realistic for your routine."]
     ],
     topics: [
       ["daily-planner", "Daily Planner", "Create a simple task list."],
@@ -316,10 +386,14 @@ const data = {
     image: "images/creative.jpg",
     description: "Write, imagine, experiment and bring your ideas to life.",
     sections: [
-      ["Make something", "Creativity can begin with a sentence, sketch, melody, photograph or idea."],
-      ["Experiment", "Try different approaches without expecting everything to be perfect."],
-      ["Collect inspiration", "Notice colours, places, conversations and ideas that inspire you."],
-      ["Keep creating", "You can return to an unfinished idea whenever you want."]
+      ["Make something", "Creativity can begin with a sentence, sketch, melody, photograph, design or idea. You do not need special equipment to begin exploring."],
+      ["Experiment", "Try different approaches without expecting everything to be perfect. An unfinished draft can still be a useful step in the creative process."],
+      ["Collect inspiration", "Notice colours, places, conversations, books, nature and ideas that inspire you. Keep a note of things you might want to explore later."],
+      ["Keep creating", "You can return to an unfinished idea whenever you want. Taking a break from a project does not mean you have failed."],
+      ["Explore different forms", "Writing, illustration, photography, crafts, design and storytelling all offer different ways to communicate. You can try more than one."],
+      ["Learn from feedback", "Helpful feedback is specific and respectful. You can listen to suggestions while still deciding which changes fit your own idea."],
+      ["Give credit", "If another person's work inspires you, acknowledge it. Do not present someone else's writing, art or photographs as your own."],
+      ["Keep a record of ideas", "Save a short description of what you made, what you learned and what you might try next. Your collection can show how your ideas develop over time."]
     ],
     topics: [
       ["writing-studio", "Writing Studio", "Explore creative writing prompts."],
@@ -334,10 +408,14 @@ const data = {
     image: "images/kindness.jpg",
     description: "Discover small acts of kindness and ways to contribute to your community.",
     sections: [
-      ["Everyday kindness", "Kindness can be listening, including someone or offering help when appropriate."],
-      ["Respect boundaries", "Kindness should respect other people's comfort, privacy and choices."],
-      ["Community care", "Small contributions can make shared spaces more welcoming."],
-      ["Notice the good", "Reflect on kind actions you have seen or experienced."]
+      ["Everyday kindness", "Kindness can be listening, including someone, sharing useful information or offering help when appropriate. Small actions can make shared spaces more welcoming."],
+      ["Respect boundaries", "Kindness should respect other people's comfort, privacy and choices. Helping someone does not mean deciding what they need without listening."],
+      ["Community care", "Small contributions can make a difference in a classroom, neighbourhood or shared space. Consider activities that are safe, supervised and suitable for your circumstances."],
+      ["Notice the good", "Reflect on kind actions you have seen or experienced. You can also write a note of appreciation for someone who made a difference."],
+      ["Kindness to yourself", "Treat yourself with the same patience you would offer another person. Making mistakes and needing help are ordinary parts of learning."],
+      ["Include others", "A simple invitation to join a group activity can help someone feel welcome. Be respectful if they prefer not to participate."],
+      ["Kindness without pressure", "You do not have to say yes to every request. Healthy boundaries matter, and kindness should never require you to put yourself in an unsafe situation."],
+      ["Build a thoughtful habit", "Choose one realistic action you can take, reflect on how it felt and consider what you learned. The goal is genuine care, not collecting points."]
     ],
     topics: [
       ["kindness-challenge", "Kindness Challenge", "Try thoughtful, safe acts of kindness."],
@@ -352,10 +430,14 @@ const data = {
     image: "images/library.jpg",
     description: "Explore knowledge, explainers, learning resources and new ideas.",
     sections: [
-      ["Follow your curiosity", "Learning can begin with a question about science, history, nature, culture or society."],
-      ["Check your sources", "Look for reliable sources, clear evidence and more than one perspective."],
-      ["Keep a reading list", "Save books, articles and topics you want to explore."],
-      ["Share what you learn", "Explain an idea in your own words to strengthen your understanding."]
+      ["Follow your curiosity", "Learning can begin with a question about science, history, nature, culture, language or society. A question can lead you towards a subject you had never considered."],
+      ["Check your sources", "Look for reliable sources, clear evidence and more than one perspective. Check who published the information and when it was updated."],
+      ["Keep a reading list", "Save books, articles and topics you want to explore. A reading list can include school subjects as well as personal interests."],
+      ["Share what you learn", "Explain an idea in your own words to strengthen your understanding. If you cannot explain a concept yet, identify which part you want to revisit."],
+      ["Separate fact and opinion", "An opinion expresses a viewpoint, while a factual claim should be supported by evidence. Some topics contain both, so look carefully at how information is presented."],
+      ["Ask better questions", "Try questions that begin with how, why, when and what evidence. Clear questions can make research more focused."],
+      ["Use information responsibly", "Respect copyright, credit creators and avoid copying entire articles or books. Summarise ideas in your own words and link to original sources."],
+      ["Keep discovering", "You do not need to learn everything at once. Choose one interesting question and follow it as far as your time and curiosity allow."]
     ],
     topics: [
       ["reading-list", "Reading List", "Collect books and articles to explore."],
@@ -370,10 +452,14 @@ const data = {
     image: "images/sleep.jpg",
     description: "Learn about rest, bedtime routines and creating space to unwind.",
     sections: [
-      ["Why rest matters", "Sleep supports learning, memory, mood and everyday functioning."],
-      ["A calmer evening", "A predictable evening routine may help you transition from busy activities to rest."],
-      ["Make your space comfortable", "Consider light, noise, comfort and a routine that suits your home."],
-      ["When sleep is difficult", "If sleep problems continue or affect daily life, talk with a trusted adult or healthcare professional."]
+      ["Why rest matters", "Sleep supports learning, memory, mood and everyday functioning. Rest is part of health and should not be treated as something you have to earn."],
+      ["A calmer evening", "A predictable evening routine may help you transition from busy activities to rest. Keep it realistic for your family and school schedule."],
+      ["Make your space comfortable", "Consider light, noise, temperature and comfort. You may not be able to control every part of your environment, so focus on what is practical."],
+      ["Screen habits", "Some people find it useful to step away from screens before bedtime. If that is difficult, try a small change that fits your routine rather than expecting perfection."],
+      ["Rest during the day", "Quiet activities, a short pause and time away from demanding tasks can also support everyday wellbeing. Rest does not always mean sleeping."],
+      ["When routines change", "Schoolwork, travel, family responsibilities and other events can affect routines. Return to familiar habits when possible without blaming yourself."],
+      ["When sleep is difficult", "If sleep problems continue or affect daily life, talk with a trusted adult or healthcare professional. This page is educational and cannot diagnose a sleep condition."],
+      ["Make room for recovery", "A balanced routine includes learning, relationships, enjoyable activities and rest. Your day does not have to be productive every minute."]
     ],
     topics: [
       ["rest-routine", "A Restful Routine", "Create a gentle evening routine."],
@@ -388,10 +474,14 @@ const data = {
     image: "images/money.jpg",
     description: "Learn about saving, budgeting, needs, wants and financial basics.",
     sections: [
-      ["Money basics", "Understanding income, spending, saving and budgeting can help with everyday decisions."],
-      ["Needs and wants", "A need is something important for everyday life. A want is something you would like to have."],
-      ["Plan before spending", "A simple budget can help you understand where money goes."],
-      ["Build financial knowledge", "Learn about safe saving habits and ask a trusted adult when you need guidance."]
+      ["Money basics", "Understanding income, spending, saving and budgeting can help with everyday decisions. These are useful ideas to learn gradually."],
+      ["Needs and wants", "A need is something important for everyday life. A want is something you would like to have. The difference can depend on a person's circumstances."],
+      ["Plan before spending", "A simple budget can help you understand where money goes. Start with an example amount and list the things it may need to cover."],
+      ["Saving goals", "A saving goal gives you a reason to set aside money over time. Make the goal realistic and remember that not everyone has the same financial circumstances."],
+      ["Compare choices", "When comparing products or services, consider quality, usefulness, total cost and whether the purchase is necessary. Do not rely only on advertising."],
+      ["Understand digital payments", "Digital payments can be convenient, but account details, passwords and one-time codes must remain private. Never share them with someone who contacts you unexpectedly."],
+      ["Ask before making decisions", "If you are unsure about a financial decision, discuss it with a trusted adult. Avoid sending money or personal details to people you do not know."],
+      ["Build financial knowledge", "Learning about money is a gradual process. Start with basic concepts and use reliable educational information rather than promises of quick earnings."]
     ],
     topics: [
       ["budget-basics", "Budget Basics", "Learn how a simple budget works."],
@@ -406,10 +496,14 @@ const data = {
     image: "images/openmic.jpg",
     description: "A place for poetry, spoken word, personal writing and expression.",
     sections: [
-      ["Find your voice", "Writing can be a way to explore ideas, feelings and imagination."],
-      ["Poetry starts anywhere", "A poem can begin with a place, a sound, a memory or a question."],
-      ["Write without pressure", "Your first draft does not have to be polished."],
-      ["Share thoughtfully", "Only share writing publicly when you feel comfortable and have considered your privacy."]
+      ["Find your voice", "Writing can be a way to explore ideas, feelings and imagination. You do not need to sound like another writer to create something meaningful."],
+      ["Poetry starts anywhere", "A poem can begin with a place, a sound, a memory, a colour or a question. A first line can be simple and still lead somewhere interesting."],
+      ["Write without pressure", "Your first draft does not have to be polished. Try writing freely, then return later if you want to edit or rearrange it."],
+      ["Spoken word", "Spoken word combines writing with voice and performance. Think about rhythm, pauses and the way a sentence might sound when read aloud."],
+      ["Explore different forms", "You might write a short poem, a personal reflection, a dialogue, a letter or a piece of spoken word. Different forms offer different ways to express an idea."],
+      ["Editing your work", "Read your writing again and notice which lines feel clear or important. Editing can involve removing words, changing the order or choosing a more precise expression."],
+      ["Share thoughtfully", "Only share writing publicly when you feel comfortable and have considered your privacy. You can keep work private or share it with someone you trust."],
+      ["Keep a creative record", "Save drafts and finished pieces if you want to see how your writing develops. Every piece does not need to be published or shown to anyone."]
     ],
     topics: [
       ["poetry-corner", "Poetry Corner", "Explore poetry prompts."],
@@ -419,7 +513,8 @@ const data = {
   }
 };
 
-/* ---------------- PAGE ELEMENTS ---------------- */
+/* 04. PAGE ELEMENTS
+========================================================= */
 
 const params = new URLSearchParams(window.location.search);
 const featureId = params.get("id");
@@ -433,136 +528,39 @@ const descriptionElement = document.getElementById("featureDescription");
 const imageElement = document.getElementById("featureImage");
 const contentElement = document.getElementById("featureContent");
 const breadcrumb = document.getElementById("breadcrumbCurrent");
+const sidebarElement = document.getElementById("featureSavedPages");
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+const yearElement = document.getElementById("year");
 
-/* ---------------- GUEST ACCESS ---------------- */
-
-function getGuestSpaces() {
-  const stored = readStore(GUEST_KEY, []);
-  return Array.isArray(stored) ? [...new Set(stored)] : [];
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
 }
 
-function saveGuestSpaces(list) {
-  writeStore(GUEST_KEY, list);
-}
+/* 05. OPTIONAL SESSION CHECK — NEVER BLOCK ACCESS
+========================================================= */
 
-function showAccessGate() {
-  document.querySelector("main").innerHTML = `
-    <section class="feature-content">
-      <div class="activity-panel">
-        <p class="eyebrow">YOUR NEXT CHAPTER</p>
-        <h1>Continue exploring.</h1>
-        <p>
-          You've used your three guest spaces. Log in or create
-          an account to continue exploring all twenty spaces.
-        </p>
+async function initialiseFeatureSession() {
+  if (!db) return;
 
-        <form id="featureAuthForm">
-          <label for="gateEmail">Email address</label>
-          <input id="gateEmail" type="email" required>
+  try {
+    const { data: sessionData, error } = await db.auth.getSession();
 
-          <label for="gatePassword">Password</label>
-          <input id="gatePassword" type="password" minlength="8" required>
+    if (error) throw error;
 
-          <button type="submit" id="gateSubmit">Log in</button>
-          <button type="button" id="gateSignup">Create account</button>
+    activeSession = sessionData.session;
 
-          <p id="gateMessage" role="status"></p>
-        </form>
-
-        <a class="text-link" href="index.html#explore">
-          Return to the homepage →
-        </a>
-      </div>
-    </section>
-  `;
-
-  const form = document.getElementById("featureAuthForm");
-  const message = document.getElementById("gateMessage");
-  const signup = document.getElementById("gateSignup");
-
-  let mode = "login";
-
-  signup.addEventListener("click", () => {
-    mode = "signup";
-    document.getElementById("gateSubmit").textContent = "Create account";
-    signup.textContent = "Switch to log in";
-    signup.onclick = () => {
-      mode = "login";
-      document.getElementById("gateSubmit").textContent = "Log in";
-      signup.textContent = "Create account";
-    };
-  });
-
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
-
-    if (!db) {
-      message.textContent = "Supabase could not load. Check your connection.";
-      return;
-    }
-
-    const email = document.getElementById("gateEmail").value.trim();
-    const password = document.getElementById("gatePassword").value;
-
-    try {
-      const result = mode === "signup"
-        ? await db.auth.signUp({ email, password })
-        : await db.auth.signInWithPassword({ email, password });
-
-      if (result.error) throw result.error;
-
-      if (mode === "signup" && !result.data.session) {
-        message.textContent =
-          "Check your email for the confirmation link, then log in.";
-        return;
-      }
-
-      window.location.reload();
-
-    } catch (error) {
-      message.textContent = error.message || "Please try again.";
-    }
-  });
-}
-
-async function checkAccess() {
-  if (!feature) return false;
-
-  if (db) {
-    try {
-      const { data: sessionData } = await db.auth.getSession();
-      activeSession = sessionData.session;
-    } catch (error) {
-      console.error("Could not check login:", error);
-    }
+  } catch (error) {
+    console.warn("Could not restore account session:", error);
   }
-
-  if (activeSession) return true;
-
-  const accessed = getGuestSpaces();
-
-  if (accessed.includes(featureId)) return true;
-
-  if (accessed.length >= 3) {
-    showAccessGate();
-    return false;
-  }
-
-  accessed.push(featureId);
-  saveGuestSpaces(accessed);
-
-  return true;
 }
 
-/* ---------------- MAIN FEATURE CONTENT ---------------- */
+/* 06. CONTENT RENDERING
+========================================================= */
 
 function renderSections(sections) {
-  return sections.map(([heading, paragraph]) => `
+  return sections.map(([heading, paragraph], index) => `
     <section class="feature-text-section">
-      <p class="eyebrow">EXPLORE THIS IDEA</p>
+      <p class="eyebrow">CHAPTER ${String(index + 1).padStart(2, "0")}</p>
       <h2>${escapeHTML(heading)}</h2>
       <p>${escapeHTML(paragraph)}</p>
     </section>
@@ -571,7 +569,7 @@ function renderSections(sections) {
 
 function renderNestedCards(item) {
   return `
-    <section>
+    <section class="nested-topics-section">
       <p class="eyebrow">GO A LITTLE DEEPER</p>
       <h2>Explore inside this space.</h2>
 
@@ -591,26 +589,27 @@ function renderNestedCards(item) {
   `;
 }
 
-/* ---------------- SAVED PAGES ---------------- */
+/* 07. SAVED ENTRIES
+========================================================= */
 
 function getSavedPages() {
-  return readStore(SAVED_KEY, []);
+  const entries = readStore(savedStorageKey(), []);
+  return Array.isArray(entries) ? entries : [];
 }
 
 function savePage(entry) {
   const entries = getSavedPages();
 
   entries.unshift({
-    id: crypto.randomUUID
-      ? crypto.randomUUID()
-      : String(Date.now()),
+    id: makeId(),
     space: featureId,
-    title: entry.title,
-    content: entry.content,
+    title: String(entry.title || "Untitled entry"),
+    content: String(entry.content || ""),
+    photo: entry.photo || "",
     date: new Date().toISOString()
   });
 
-  writeStore(SAVED_KEY, entries);
+  return writeStore(savedStorageKey(), entries);
 }
 
 function renderSavedPages() {
@@ -628,16 +627,19 @@ function renderSavedPages() {
           ? entries.map(entry => `
               <article class="saved-entry" data-entry="${escapeHTML(entry.id)}">
                 <h3>${escapeHTML(entry.title)}</h3>
+
+                ${
+                  entry.photo
+                    ? `<img class="saved-photo" src="${escapeHTML(entry.photo)}" alt="Saved memory photograph" loading="lazy">`
+                    : ""
+                }
+
                 <p>${escapeHTML(entry.content).replace(/\n/g, "<br>")}</p>
                 <small>${new Date(entry.date).toLocaleDateString()}</small>
 
-                <div>
-                  <button type="button" data-edit="${escapeHTML(entry.id)}">
-                    Edit
-                  </button>
-                  <button type="button" data-delete="${escapeHTML(entry.id)}">
-                    Delete
-                  </button>
+                <div class="saved-entry-actions">
+                  <button type="button" data-edit="${escapeHTML(entry.id)}">Edit</button>
+                  <button type="button" data-delete="${escapeHTML(entry.id)}">Delete</button>
                 </div>
               </article>
             `).join("")
@@ -647,12 +649,36 @@ function renderSavedPages() {
   `;
 }
 
+function renderSidebarSavedPages() {
+  if (!sidebarElement) return;
+
+  const entries = getSavedPages().slice(0, 3);
+
+  sidebarElement.innerHTML = entries.length
+    ? entries.map(entry => `
+        <article class="saved-entry">
+          <h3>${escapeHTML(entry.title)}</h3>
+          <p>${escapeHTML(entry.content).slice(0, 120)}${entry.content.length > 120 ? "…" : ""}</p>
+          <small>${new Date(entry.date).toLocaleDateString()}</small>
+        </article>
+      `).join("")
+    : "<p>Your saved work will appear here.</p>";
+}
+
 function connectSavedPageActions() {
+  if (!contentElement) return;
+
   contentElement.querySelectorAll("[data-delete]").forEach(button => {
     button.addEventListener("click", () => {
       const id = button.dataset.delete;
+
       const updated = getSavedPages().filter(entry => entry.id !== id);
-      writeStore(SAVED_KEY, updated);
+
+      if (!writeStore(savedStorageKey(), updated)) {
+        alert("Your changes could not be saved on this device.");
+        return;
+      }
+
       renderPage();
     });
   });
@@ -670,19 +696,42 @@ function connectSavedPageActions() {
       const newContent = prompt("Edit your entry:", entry.content);
       if (newContent === null) return;
 
+      if (!newTitle.trim()) {
+        alert("Please enter a title.");
+        return;
+      }
+
       const updated = getSavedPages().map(item =>
         item.id === id
           ? { ...item, title: newTitle.trim(), content: newContent }
           : item
       );
 
-      writeStore(SAVED_KEY, updated);
+      if (!writeStore(savedStorageKey(), updated)) {
+        alert("Your changes could not be saved on this device.");
+        return;
+      }
+
       renderPage();
     });
   });
 }
 
-/* ---------------- JOURNAL ACTIVITY ---------------- */
+function renderSavedArea() {
+  const old = document.getElementById("savedPages");
+
+  if (old) {
+    old.outerHTML = renderSavedPages();
+  } else if (contentElement) {
+    contentElement.insertAdjacentHTML("beforeend", renderSavedPages());
+  }
+
+  connectSavedPageActions();
+  renderSidebarSavedPages();
+}
+
+/* 08. JOURNAL ACTIVITY
+========================================================= */
 
 function journalActivity() {
   return `
@@ -692,12 +741,20 @@ function journalActivity() {
 
       <form id="journalForm">
         <label for="journalTitle">Entry title</label>
-        <input id="journalTitle" maxlength="100" required
-          placeholder="Give this entry a title">
+        <input
+          id="journalTitle"
+          maxlength="100"
+          required
+          placeholder="Give this entry a title"
+        >
 
         <label for="journalText">Your thoughts</label>
-        <textarea id="journalText" maxlength="10000" required
-          placeholder="Write whatever you would like to remember..."></textarea>
+        <textarea
+          id="journalText"
+          maxlength="10000"
+          required
+          placeholder="Write whatever you would like to remember..."
+        ></textarea>
 
         <button type="submit">Save entry</button>
         <p id="journalMessage" role="status"></p>
@@ -715,34 +772,36 @@ function connectJournal() {
 
     const title = document.getElementById("journalTitle").value.trim();
     const content = document.getElementById("journalText").value.trim();
+    const message = document.getElementById("journalMessage");
 
-    if (!title || !content) return;
+    if (!title || !content) {
+      message.textContent = "Please complete both fields.";
+      return;
+    }
 
-    savePage({ title, content });
+    const saved = savePage({ title, content });
 
-    document.getElementById("journalMessage").textContent =
-      "Your entry has been saved on this device.";
+    if (!saved) {
+      message.textContent =
+        "Your entry could not be saved. Your browser storage may be full.";
+      return;
+    }
 
+    message.textContent = "Your entry has been saved on this device.";
     form.reset();
     renderSavedArea();
   });
 }
 
-function renderSavedArea() {
-  const old = document.getElementById("savedPages");
-  if (old) old.outerHTML = renderSavedPages();
-  else contentElement.insertAdjacentHTML("beforeend", renderSavedPages());
-
-  connectSavedPageActions();
-}
-
-/* ---------------- BREATHING ACTIVITY ---------------- */
+/* 09. BREATHING ACTIVITY
+========================================================= */
 
 function breathingActivity() {
   return `
     <section class="activity-panel">
       <p class="eyebrow">A GENTLE PAUSE</p>
       <h2>Take a comfortable moment.</h2>
+
       <p>
         Let your breathing remain natural. You do not need to hold
         your breath or follow a strict pattern.
@@ -769,13 +828,14 @@ function connectBreathing() {
   const text = document.getElementById("breathingText");
   const message = document.getElementById("breathingMessage");
 
-  if (!orb || !start || !stop) return;
+  if (!orb || !start || !stop || !text || !message) return;
 
   let interval = null;
   let phase = 0;
 
   function stopActivity() {
     if (interval) clearInterval(interval);
+
     interval = null;
     orb.classList.remove("active");
     text.textContent = "Rest";
@@ -786,10 +846,15 @@ function connectBreathing() {
     if (interval) return;
 
     phase = 0;
-    const labels = ["Notice your breath", "Rest naturally"];
+
+    const labels = [
+      "Notice your breath",
+      "Rest naturally"
+    ];
 
     text.textContent = labels[0];
-    message.textContent = "No need to change or force your breathing.";
+    message.textContent =
+      "No need to change or force your breathing.";
 
     interval = setInterval(() => {
       phase = 1 - phase;
@@ -801,14 +866,17 @@ function connectBreathing() {
   stop.addEventListener("click", stopActivity);
 }
 
-/* ---------------- STUDY TIMER ---------------- */
+/* 10. STUDY TIMER — 10 MINUTES + 5 MINUTE BREAK
+========================================================= */
 
 function studyActivity() {
   return `
     <section class="activity-panel">
       <p class="eyebrow">FOCUS SESSION</p>
-      <h2>10 minutes of focus.</h2>
-      <p>Then take five minutes away from your screen.</p>
+      <h2 id="studyHeading">10 minutes of focus.</h2>
+      <p id="studyDescription">
+        Choose one task. When the session ends, take five minutes away from your screen.
+      </p>
 
       <h2 id="studyClock">10:00</h2>
 
@@ -823,49 +891,99 @@ function studyActivity() {
 
 function connectStudyTimer() {
   const clock = document.getElementById("studyClock");
-  if (!clock) return;
+  const start = document.getElementById("studyStart");
+  const pause = document.getElementById("studyPause");
+  const reset = document.getElementById("studyReset");
+  const heading = document.getElementById("studyHeading");
+  const description = document.getElementById("studyDescription");
+  const message = document.getElementById("studyMessage");
+
+  if (!clock || !start || !pause || !reset) return;
 
   let seconds = 600;
   let timer = null;
+  let mode = "focus";
 
   function display() {
     const minutes = Math.floor(seconds / 60);
     const remainder = seconds % 60;
+
     clock.textContent =
       `${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
   }
 
-  document.getElementById("studyStart").addEventListener("click", () => {
+  function finishFocus() {
+    clearInterval(timer);
+    timer = null;
+    mode = "break";
+    seconds = 300;
+
+    heading.textContent = "Five-minute break.";
+    description.textContent =
+      "Step away from your screen, rest or move comfortably.";
+    message.textContent =
+      "Your focus session is complete. Your break is ready.";
+    display();
+  }
+
+  function finishBreak() {
+    clearInterval(timer);
+    timer = null;
+    mode = "focus";
+    seconds = 600;
+
+    heading.textContent = "Ready for another focus session?";
+    description.textContent =
+      "Your break is complete. Start again whenever you are ready.";
+    message.textContent = "Break complete.";
+    display();
+  }
+
+  start.addEventListener("click", () => {
     if (timer) return;
+
+    message.textContent =
+      mode === "focus" ? "Your focus session has started." : "Your break has started.";
 
     timer = setInterval(() => {
       seconds--;
       display();
 
       if (seconds <= 0) {
-        clearInterval(timer);
-        timer = null;
-        document.getElementById("studyMessage").textContent =
-          "Focus session complete. Take a five-minute screen-free break.";
+        if (mode === "focus") {
+          finishFocus();
+        } else {
+          finishBreak();
+        }
       }
     }, 1000);
   });
 
-  document.getElementById("studyPause").addEventListener("click", () => {
+  pause.addEventListener("click", () => {
     clearInterval(timer);
     timer = null;
+    message.textContent = "Timer paused.";
   });
 
-  document.getElementById("studyReset").addEventListener("click", () => {
+  reset.addEventListener("click", () => {
     clearInterval(timer);
     timer = null;
+    mode = "focus";
     seconds = 600;
+
+    heading.textContent = "10 minutes of focus.";
+    description.textContent =
+      "Choose one task. When the session ends, take five minutes away from your screen.";
+    message.textContent = "Timer reset.";
+
     display();
-    document.getElementById("studyMessage").textContent = "";
   });
+
+  display();
 }
 
-/* ---------------- PLANNER ---------------- */
+/* 11. PLANNER
+========================================================= */
 
 function plannerActivity() {
   return `
@@ -880,6 +998,7 @@ function plannerActivity() {
       </form>
 
       <div id="plannerList"></div>
+      <p id="plannerMessage" role="status"></p>
     </section>
   `;
 }
@@ -887,23 +1006,39 @@ function plannerActivity() {
 function connectPlanner() {
   const form = document.getElementById("plannerForm");
   const list = document.getElementById("plannerList");
+  const message = document.getElementById("plannerMessage");
+
   if (!form || !list) return;
 
-  function renderTasks() {
+  function getTasks() {
     const tasks = readStore(PLANNER_KEY, []);
+    return Array.isArray(tasks) ? tasks : [];
+  }
 
-    list.innerHTML = tasks.map(task => `
-      <div class="saved-entry">
-        <label>
-          <input type="checkbox" data-task="${escapeHTML(task.id)}"
-            ${task.done ? "checked" : ""}>
-          ${escapeHTML(task.text)}
-        </label>
-        <button type="button" data-remove-task="${escapeHTML(task.id)}">
-          Delete
-        </button>
-      </div>
-    `).join("");
+  function renderTasks() {
+    const tasks = getTasks();
+
+    list.innerHTML = tasks.length
+      ? tasks.map(task => `
+          <div class="saved-entry">
+            <label>
+              <input
+                type="checkbox"
+                data-task="${escapeHTML(task.id)}"
+                ${task.done ? "checked" : ""}
+              >
+              ${escapeHTML(task.text)}
+            </label>
+
+            <button
+              type="button"
+              data-remove-task="${escapeHTML(task.id)}"
+            >
+              Delete
+            </button>
+          </div>
+        `).join("")
+      : "<p>Your task list is empty. Add a task when you are ready.</p>";
   }
 
   form.addEventListener("submit", event => {
@@ -911,17 +1046,24 @@ function connectPlanner() {
 
     const input = document.getElementById("plannerTask");
     const text = input.value.trim();
+
     if (!text) return;
 
-    const tasks = readStore(PLANNER_KEY, []);
+    const tasks = getTasks();
+
     tasks.push({
-      id: String(Date.now()),
+      id: makeId(),
       text,
       done: false
     });
 
-    writeStore(PLANNER_KEY, tasks);
+    if (!writeStore(PLANNER_KEY, tasks)) {
+      message.textContent = "Could not save this task on your device.";
+      return;
+    }
+
     form.reset();
+    message.textContent = "Task added.";
     renderTasks();
   });
 
@@ -929,8 +1071,11 @@ function connectPlanner() {
     if (!event.target.matches("[data-task]")) return;
 
     const id = event.target.dataset.task;
-    const tasks = readStore(PLANNER_KEY, []).map(task =>
-      task.id === id ? { ...task, done: event.target.checked } : task
+
+    const tasks = getTasks().map(task =>
+      task.id === id
+        ? { ...task, done: event.target.checked }
+        : task
     );
 
     writeStore(PLANNER_KEY, tasks);
@@ -941,7 +1086,7 @@ function connectPlanner() {
     const button = event.target.closest("[data-remove-task]");
     if (!button) return;
 
-    const tasks = readStore(PLANNER_KEY, []).filter(
+    const tasks = getTasks().filter(
       task => task.id !== button.dataset.removeTask
     );
 
@@ -952,7 +1097,8 @@ function connectPlanner() {
   renderTasks();
 }
 
-/* ---------------- SCRAPBOOK ---------------- */
+/* 12. SCRAPBOOK
+========================================================= */
 
 function scrapbookActivity() {
   return `
@@ -986,29 +1132,47 @@ function connectScrapbook() {
 
     const title = document.getElementById("memoryTitle").value.trim();
     const content = document.getElementById("memoryText").value.trim();
-    const file = document.getElementById("memoryPhoto").files[0];
+    const fileInput = document.getElementById("memoryPhoto");
+    const file = fileInput.files?.[0];
+    const message = document.getElementById("memoryMessage");
 
-    if (file && file.size > 1200000) {
-      document.getElementById("memoryMessage").textContent =
-        "Please choose an image smaller than 1.2 MB.";
+    if (!title) {
+      message.textContent = "Please give your memory a title.";
+      return;
+    }
+
+    if (file && !file.type.startsWith("image/")) {
+      message.textContent = "Please choose an image file.";
+      return;
+    }
+
+    // Keep browser storage manageable.
+    if (file && file.size > 500000) {
+      message.textContent =
+        "Please choose a photograph smaller than 500 KB.";
       return;
     }
 
     let photoText = "";
 
     if (file) {
-      photoText = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result));
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+      try {
+        photoText = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      } catch (error) {
+        message.textContent = "The photograph could not be read.";
+        return;
+      }
     }
 
     const entries = getSavedPages();
 
     entries.unshift({
-      id: String(Date.now()),
+      id: makeId(),
       space: "scrapbook",
       title,
       content,
@@ -1016,17 +1180,20 @@ function connectScrapbook() {
       date: new Date().toISOString()
     });
 
-    writeStore(SAVED_KEY, entries);
+    if (!writeStore(savedStorageKey(), entries)) {
+      message.textContent =
+        "Could not save this memory. Your browser storage may be full.";
+      return;
+    }
 
-    document.getElementById("memoryMessage").textContent =
-      "Your memory has been saved on this device.";
-
+    message.textContent = "Your memory has been saved on this device.";
     form.reset();
     renderSavedArea();
   });
 }
 
-/* ---------------- CAREER QUIZ ---------------- */
+/* 13. CAREER QUIZ — TEN QUESTIONS
+========================================================= */
 
 function careerActivity() {
   const questions = [
@@ -1034,14 +1201,23 @@ function careerActivity() {
     ["Which subject would you explore further?", ["Biology", "History", "Mathematics", "Art and design"]],
     ["Which task sounds interesting?", ["Supporting a community", "Investigating a question", "Making something", "Leading a team"]],
     ["What matters most in a project?", ["Its human impact", "Its discoveries", "Its originality", "Its organisation"]],
-    ["Which environment appeals to you?", ["A healthcare or community setting", "A research environment", "A creative studio", "A collaborative workplace"]]
+    ["Which environment appeals to you?", ["A healthcare or community setting", "A research environment", "A creative studio", "A collaborative workplace"]],
+    ["Which challenge would you enjoy?", ["Helping someone solve a problem", "Finding an explanation", "Designing a new idea", "Coordinating a group"]],
+    ["Which skill would you like to develop?", ["Communication and care", "Analysis and research", "Creative expression", "Planning and leadership"]],
+    ["Which project would you choose?", ["A community health project", "A science investigation", "A design or writing project", "A school event"]],
+    ["What kind of learning interests you?", ["Learning about people", "Learning how things work", "Learning to create", "Learning to organise"]],
+    ["What would make work meaningful?", ["Helping others", "Discovering something", "Making something original", "Bringing people together"]]
   ];
 
   return `
     <section class="activity-panel">
       <p class="eyebrow">EXPLORE YOUR INTERESTS</p>
-      <h2>A starting-point quiz</h2>
-      <p>This is for exploration, not a scientific career assessment.</p>
+      <h2>A ten-question starting point</h2>
+      <p>
+        This is an informal exploration activity, not a scientific
+        assessment or a final career recommendation. Choose what
+        genuinely interests you.
+      </p>
 
       <form id="careerForm">
         ${questions.map((question, index) => `
@@ -1050,8 +1226,12 @@ function careerActivity() {
 
             ${question[1].map((option, optionIndex) => `
               <label>
-                <input type="radio" name="career${index}"
-                  value="${optionIndex}" required>
+                <input
+                  type="radio"
+                  name="career${index}"
+                  value="${optionIndex}"
+                  required
+                >
                 ${escapeHTML(option)}
               </label>
             `).join("")}
@@ -1061,7 +1241,7 @@ function careerActivity() {
         <button type="submit">Explore my interests</button>
       </form>
 
-      <p id="careerResult" role="status"></p>
+      <div id="careerResult" class="nested-card" role="status"></div>
     </section>
   `;
 }
@@ -1075,31 +1255,57 @@ function connectCareerQuiz() {
 
     const totals = [0, 0, 0, 0];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       const answer = form.querySelector(
         `input[name="career${i}"]:checked`
       );
 
-      if (answer) totals[Number(answer.value)]++;
+      if (answer) {
+        totals[Number(answer.value)]++;
+      }
     }
 
     const labels = [
-      "People, health and community",
-      "Science, research and discovery",
-      "Creativity and design",
-      "Organisation and collaboration"
+      {
+        name: "People, health and community",
+        examples: "healthcare, education, social services, public health and community work"
+      },
+      {
+        name: "Science, research and discovery",
+        examples: "scientific research, laboratory work, environmental studies and analysis"
+      },
+      {
+        name: "Creativity and design",
+        examples: "design, writing, media, architecture and creative communication"
+      },
+      {
+        name: "Organisation and collaboration",
+        examples: "management, public administration, project coordination and operations"
+      }
     ];
 
     const highest = Math.max(...totals);
-    const matches = labels.filter((label, index) => totals[index] === highest);
+    const matches = labels.filter((item, index) => totals[index] === highest);
 
-    document.getElementById("careerResult").textContent =
-      `Your strongest interest areas: ${matches.join(" · ")}. ` +
-      "Explore different subjects and pathways before making decisions.";
+    const result = document.getElementById("careerResult");
+
+    result.innerHTML = `
+      <h3>Your strongest interest areas</h3>
+      ${matches.map(item => `
+        <p><strong>${escapeHTML(item.name)}</strong></p>
+        <p>Some fields to explore: ${escapeHTML(item.examples)}.</p>
+      `).join("")}
+      <p>
+        Use this as a starting point. Explore actual job responsibilities,
+        qualifications, course requirements and professional pathways
+        before making decisions.
+      </p>
+    `;
   });
 }
 
-/* ---------------- MONEY CALCULATOR ---------------- */
+/* 14. MONEY CALCULATOR
+========================================================= */
 
 function moneyActivity() {
   return `
@@ -1120,14 +1326,23 @@ function moneyActivity() {
 }
 
 function connectMoney() {
-  document.getElementById("budgetCalculate")?.addEventListener("click", () => {
+  const button = document.getElementById("budgetCalculate");
+  if (!button) return;
+
+  button.addEventListener("click", () => {
     const total = Number(document.getElementById("budgetAmount").value);
     const saving = Number(document.getElementById("budgetSaving").value);
     const result = document.getElementById("budgetResult");
 
-    if (!Number.isFinite(total) || !Number.isFinite(saving) ||
-        total < 0 || saving < 0 || saving > total) {
-      result.textContent = "Enter valid amounts. Savings cannot exceed the total.";
+    if (
+      !Number.isFinite(total) ||
+      !Number.isFinite(saving) ||
+      total < 0 ||
+      saving < 0 ||
+      saving > total
+    ) {
+      result.textContent =
+        "Enter valid amounts. Savings cannot exceed the total.";
       return;
     }
 
@@ -1136,7 +1351,8 @@ function connectMoney() {
   });
 }
 
-/* ---------------- FITNESS AND STRAVA ---------------- */
+/* 15. FITNESS AND STRAVA
+========================================================= */
 
 function fitnessActivity() {
   return `
@@ -1185,20 +1401,28 @@ function connectFitness() {
   form.addEventListener("submit", event => {
     event.preventDefault();
 
-    savePage({
-      title: document.getElementById("activityName").value,
-      content: document.getElementById("activityReflection").value
+    const activity = document.getElementById("activityName").value;
+    const reflection = document.getElementById("activityReflection").value.trim();
+    const message = document.getElementById("fitnessMessage");
+
+    const saved = savePage({
+      title: activity,
+      content: reflection || "Activity recorded."
     });
 
-    document.getElementById("fitnessMessage").textContent =
-      "Your activity reflection has been saved on this device.";
+    if (!saved) {
+      message.textContent = "Could not save your reflection on this device.";
+      return;
+    }
 
+    message.textContent = "Your activity reflection has been saved.";
     form.reset();
     renderSavedArea();
   });
 }
 
-/* ---------------- GENERIC TOPIC ACTIVITY ---------------- */
+/* 16. SELECT THE ACTIVITY FOR EACH SPACE
+========================================================= */
 
 function activityForSpace(id) {
   switch (id) {
@@ -1230,17 +1454,11 @@ function activityForSpace(id) {
       return fitnessActivity();
 
     default:
-      return `
-        <section class="activity-panel">
-          <p class="eyebrow">YOUR REFLECTION</p>
-          <h2>Save a thought</h2>
-          ${journalActivity()}
-        </section>
-      `;
+      return journalActivity();
   }
 }
 
-function connectActivity(id) {
+function connectActivity() {
   connectJournal();
   connectBreathing();
   connectStudyTimer();
@@ -1252,7 +1470,8 @@ function connectActivity(id) {
   connectSavedPageActions();
 }
 
-/* ---------------- NESTED PAGE RENDERING ---------------- */
+/* 17. NESTED PAGE RENDERING
+========================================================= */
 
 function renderNestedPage(item, topic) {
   const topicTitle = topic[1];
@@ -1276,43 +1495,45 @@ function renderNestedPage(item, topic) {
       ← Back to ${escapeHTML(item.title)}
     </a>
 
-    <section>
+    <section class="feature-text-section">
+      <p class="eyebrow">EXPLORE THIS TOPIC</p>
       <h2>${escapeHTML(topicTitle)}</h2>
       <p>${escapeHTML(topicDescription)}</p>
       <p>
         This page is part of ${escapeHTML(item.title)}. Explore the
-        topic at your own pace, consider the questions and try the
-        activity below if it feels useful.
+        topic at your own pace, consider the ideas and use the
+        reflection activity below if it feels useful.
       </p>
     </section>
 
     ${renderSections(item.sections)}
 
-    <section class="activity-panel">
-      <p class="eyebrow">THINK ABOUT IT</p>
-      <h2>A small reflection</h2>
-      ${journalActivity()}
-    </section>
+    ${journalActivity()}
 
-    <section>
-      <a class="button button-primary"
-        href="feature.html?id=${encodeURIComponent(featureId)}">
-        Return to this space ↗
-      </a>
-    </section>
+    <a class="button button-primary"
+      href="feature.html?id=${encodeURIComponent(featureId)}">
+      Return to this space ↗
+    </a>
+
+    ${renderSavedPages()}
   `;
 
   connectJournal();
   connectSavedPageActions();
+  renderSidebarSavedPages();
 }
 
-/* ---------------- MAIN PAGE RENDERING ---------------- */
+/* 18. MAIN PAGE RENDERING
+========================================================= */
 
 function renderPage() {
+  if (!contentElement) return;
+
   if (!feature) {
     document.title = "Space not found | To the Ether.";
+
     contentElement.innerHTML = `
-      <section>
+      <section class="feature-text-section">
         <h2>We couldn't find that space.</h2>
         <p>It may have moved, or the link may be incorrect.</p>
         <a class="button button-primary" href="index.html#explore">
@@ -1320,6 +1541,7 @@ function renderPage() {
         </a>
       </section>
     `;
+
     return;
   }
 
@@ -1337,7 +1559,7 @@ function renderPage() {
 
     if (!topic) {
       contentElement.innerHTML = `
-        <section>
+        <section class="feature-text-section">
           <h2>Topic not found.</h2>
           <a href="feature.html?id=${encodeURIComponent(featureId)}">
             Return to the space →
@@ -1367,37 +1589,46 @@ function renderPage() {
     ${renderSavedPages()}
   `;
 
-  connectActivity(featureId);
+  connectActivity();
+  renderSidebarSavedPages();
 }
 
-/* ---------------- MOBILE NAVIGATION ---------------- */
+/* 19. MOBILE NAVIGATION
+========================================================= */
 
 const menuToggle = document.getElementById("menuToggle");
 const mainNav = document.getElementById("mainNav");
 
 menuToggle?.addEventListener("click", () => {
-  const open = mainNav.classList.toggle("open");
+  const open = mainNav?.classList.toggle("open") || false;
+
   menuToggle.setAttribute("aria-expanded", String(open));
+  menuToggle.textContent = open ? "×" : "☰";
 });
 
 mainNav?.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
     mainNav.classList.remove("open");
     menuToggle?.setAttribute("aria-expanded", "false");
+
+    if (menuToggle) {
+      menuToggle.textContent = "☰";
+    }
   });
 });
 
-/* ---------------- START ---------------- */
+/* 20. START
+========================================================= */
 
 (async function startFeaturePage() {
-  if (!feature) {
-    renderPage();
+  // Account restoration is optional and never blocks a visitor.
+  await initialiseFeatureSession();
+
+  if (!contentElement) {
+    console.error("Feature content container was not found.");
     return;
   }
 
-  const allowed = await checkAccess();
-
-  if (allowed) {
-    renderPage();
-  }
+  // No three-space limit. No sign-up gate. All spaces are open.
+  renderPage();
 })();
