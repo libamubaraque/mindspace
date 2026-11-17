@@ -6932,3 +6932,30 @@ body:not(.feature-page) .life-note-section .intro-copy p {
 .life-note-section .text-link {
   color: var(--cream) !important;
 }
+
+
+/* FINAL DARK TEXTURE BACKGROUND — LIFE NOTE SECTION */
+body:not(.feature-page) .life-note-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #10180b !important;
+  background-image:
+    radial-gradient(ellipse at 18% 20%, rgba(93, 112, 51, .20), transparent 42%),
+    radial-gradient(ellipse at 82% 78%, rgba(40, 62, 27, .28), transparent 48%),
+    repeating-linear-gradient(118deg, rgba(220, 226, 180, .025) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(28deg, rgba(0, 0, 0, .16) 0 2px, transparent 2px 7px),
+    linear-gradient(135deg, #17220f, #0b1209 58%, #1b2611) !important;
+  color: #f3f0e5 !important;
+}
+body:not(.feature-page) .life-note-section .intro-label,
+body:not(.feature-page) .life-note-section .intro-label .eyebrow,
+body:not(.feature-page) .life-note-section .intro-number,
+body:not(.feature-page) .life-note-section .intro-content > h2,
+body:not(.feature-page) .life-note-section .intro-copy,
+body:not(.feature-page) .life-note-section .intro-copy p {
+  color: #f3f0e5 !important;
+}
+body:not(.feature-page) .life-note-section .intro-content > h2 i {
+  color: #d4d9a0 !important;
+}
