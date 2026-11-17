@@ -7002,3 +7002,43 @@ body:not(.feature-page) .life-note-section {
 }
 
 
+
+
+/* USER'S TEXTURE PLACEMENT — PAGE CANVAS ONLY, NOT WRITING PANELS
+   Life note: uploaded texture replaces the light section canvas.
+   Individual feature pages: texture is the large canvas behind the writing/activity panels.
+   The frosted writing panels themselves retain their existing backgrounds. */
+body:not(.feature-page) .life-note-section {
+  background-color: #10180b !important;
+  background-image:
+    linear-gradient(rgba(7, 13, 6, .38), rgba(7, 13, 6, .46)),
+    url("images/life-note-texture.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+body.feature-page,
+body.feature-page .feature-main,
+body.feature-page .feature-workspace,
+body.feature-page .feature-content {
+  background-color: #10180b !important;
+  background-image:
+    linear-gradient(rgba(7, 13, 6, .42), rgba(7, 13, 6, .50)),
+    url("images/life-note-texture.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+}
+
+/* Preserve the original writing surfaces and frosted cards exactly. */
+body.feature-page .feature-text-section,
+body.feature-page .activity-panel,
+body.feature-page .journal-panel,
+body.feature-page .saved-panel,
+body.feature-page .nested-card,
+body.feature-page .chapter-note,
+body.feature-page .nested-topics-section {
+  background-image: revert !important;
+}
