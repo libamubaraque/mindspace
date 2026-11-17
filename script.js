@@ -73,7 +73,7 @@ const spaces = [
     id: "selfcare",
     name: "Self-care Corner",
     category: "wellbeing",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=85",
+    image: "https://i.pinimg.com/736x/19/d9/47/19d9476e183488fd54a19457940a7fc3.jpg",
     desc: "Explore realistic routines for physical comfort, emotional wellbeing, rest, relationships and support. Keep what is useful and seek trusted help when you need it."
   },
   {
