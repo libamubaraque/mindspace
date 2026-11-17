@@ -31,7 +31,7 @@ const spaces = [
     id: "mood",
     name: "Mood Journal",
     category: "wellbeing",
-    image: "images/mood-journal-card.jpg",
+    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=85",
     desc: "A gentle place to name what you feel, write freely and notice patterns without judging yourself. Try prompts, short lists or a page that is entirely your own."
   },
   {
@@ -73,7 +73,7 @@ const spaces = [
     id: "selfcare",
     name: "Self-care Corner",
     category: "wellbeing",
-    image: "https://i.pinimg.com/736x/19/d9/47/19d9476e183488fd54a19457940a7fc3.jpg",
+    image: "images/mood-journal-card.jpg",
     desc: "Explore realistic routines for physical comfort, emotional wellbeing, rest, relationships and support. Keep what is useful and seek trusted help when you need it."
   },
   {
