@@ -7126,3 +7126,18 @@ body.feature-page .feature-content {
 @media (max-width: 760px) {
   body.feature-page { background-attachment: scroll !important; }
 }
+
+
+/* REMOVE THE TEXTURE FROM INDIVIDUAL FEATURE PAGES */
+body.feature-page {
+  color: #514A3E !important;
+  background: #E8EDDF !important;
+  background-image: none !important;
+  background-attachment: scroll !important;
+}
+body.feature-page .feature-main,
+body.feature-page .feature-workspace,
+body.feature-page .feature-content {
+  background: transparent !important;
+  background-image: none !important;
+}
