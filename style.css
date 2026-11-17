@@ -6906,3 +6906,29 @@ body:not(.feature-page) .life-note-section .intro-copy,
 body:not(.feature-page) .life-note-section .intro-copy p {
   color: rgba(243, 240, 229, .88) !important;
 }
+
+
+/* User-supplied dark green texture: Life isn't just about getting things done */
+.life-note-section {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(rgba(10, 20, 7, .70), rgba(10, 20, 7, .78)),
+    url("images/life-note-texture.png") center / cover no-repeat !important;
+  color: var(--cream);
+  border-radius: 28px;
+  overflow: hidden;
+}
+.life-note-section .intro-label,
+.life-note-section .intro-content,
+.life-note-section .intro-copy {
+  position: relative;
+  z-index: 1;
+}
+.life-note-section h2,
+.life-note-section .eyebrow,
+.life-note-section .intro-number,
+.life-note-section .intro-copy p,
+.life-note-section .text-link {
+  color: var(--cream) !important;
+}
