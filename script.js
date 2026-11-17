@@ -73,7 +73,7 @@ const spaces = [
     id: "selfcare",
     name: "Self-care Corner",
     category: "wellbeing",
-    image: "images/mood-journal-card.jpg",
+    image: "images/self-care-card.jpg",
     desc: "Explore realistic routines for physical comfort, emotional wellbeing, rest, relationships and support. Keep what is useful and seek trusted help when you need it."
   },
   {
