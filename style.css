@@ -6971,18 +6971,7 @@ radial-gradient(ellipse at 92% 88%, rgba(115,123,73,.10), transparent 32%),
   color: #f3f0e5 !important;
 }
 
-/* Use that same dark botanical backdrop throughout every individual card page. */
-body.feature-page,
-body.feature-page .feature-main {
-  background: radial-gradient(ellipse at 8% 12%, rgba(212,217,160,.08), transparent 30%),
-radial-gradient(ellipse at 92% 88%, rgba(115,123,73,.10), transparent 32%),
-#11180f !important;
-  background-color: #11180f !important;
-  color: #f3f0e5;
-}
-body.feature-page .feature-main > section:not(.feature-hero) {
-  background-color: transparent;
-}
+
 
 
 /* EXACT UPLOADED GREEN TEXTURE — LIFE NOTE + ALL CARD INTERIORS */
@@ -6997,20 +6986,7 @@ body:not(.feature-page) .life-note-section {
   background-repeat: no-repeat !important;
 }
 
-/* The same texture sits behind the content inside every individual space page card. */
-body.feature-page .feature-text-section,
-body.feature-page .activity-panel,
-body.feature-page .journal-panel,
-body.feature-page .saved-panel {
-  background-color: rgba(12, 20, 9, .72) !important;
-  background-image:
-    linear-gradient(rgba(8, 15, 6, .58), rgba(8, 15, 6, .68)),
-    url("images/life-note-texture.png") !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  backdrop-filter: none !important;
-}
+
 
 
 /* FINAL SCOPE: TEXTURE ONLY ON LIFE NOTE + INDIVIDUAL CARD INTERIORS */
@@ -7025,21 +7001,4 @@ body:not(.feature-page) .life-note-section {
   background-repeat: no-repeat !important;
 }
 
-/* Individual spaces: texture only on the actual content cards, not the page,
-   navigation, hero, or surrounding workspace. */
-body.feature-page #featureContent .feature-text-section,
-body.feature-page #featureContent .nested-card,
-body.feature-page #featureContent .nested-detail,
-body.feature-page #featureContent .chapter-note,
-body.feature-page #featureContent .activity-panel,
-body.feature-page #featureContent .journal-panel,
-body.feature-page #featureContent .saved-panel,
-body.feature-page .saved-sidebar {
-  background-color: rgba(12, 20, 9, .76) !important;
-  background-image:
-    linear-gradient(rgba(8, 15, 6, .56), rgba(8, 15, 6, .62)),
-    url("images/life-note-texture.png") !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-}
+
