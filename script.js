@@ -59,7 +59,7 @@ const spaces = [
     id: "checkin",
     name: "Daily Check-in",
     category: "wellbeing",
-    image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1200&q=85",
+    image: "https://i.pinimg.com/736x/63/2e/45/632e45ba5c4fc3596d5bda046880a54a.jpg",
     desc: "Pause for a small daily reflection, recognise little wins and choose one manageable next step. There is no score and no pressure to have everything figured out."
   },
   {
