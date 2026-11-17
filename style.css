@@ -6959,3 +6959,27 @@ body:not(.feature-page) .life-note-section .intro-copy p {
 body:not(.feature-page) .life-note-section .intro-content > h2 i {
   color: #d4d9a0 !important;
 }
+
+
+/* QUICK MATCH: LIFE NOTE + ALL INDIVIDUAL SPACE PAGES USE FIND YOUR SPACE BACKDROP */
+/* Match the homepage "Find Your Space" section exactly. */
+body:not(.feature-page) .life-note-section {
+  background: radial-gradient(ellipse at 8% 12%, rgba(212,217,160,.08), transparent 30%),
+radial-gradient(ellipse at 92% 88%, rgba(115,123,73,.10), transparent 32%),
+#11180f !important;
+  background-color: #11180f !important;
+  color: #f3f0e5 !important;
+}
+
+/* Use that same dark botanical backdrop throughout every individual card page. */
+body.feature-page,
+body.feature-page .feature-main {
+  background: radial-gradient(ellipse at 8% 12%, rgba(212,217,160,.08), transparent 30%),
+radial-gradient(ellipse at 92% 88%, rgba(115,123,73,.10), transparent 32%),
+#11180f !important;
+  background-color: #11180f !important;
+  color: #f3f0e5;
+}
+body.feature-page .feature-main > section:not(.feature-hero) {
+  background-color: transparent;
+}
