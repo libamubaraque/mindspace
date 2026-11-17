@@ -4730,8 +4730,9 @@ body:not(.feature-page) .poster-hero .hero-image img {
   width: 100% !important;
   height: 100% !important;
   min-height: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
+  background: #151c05 !important;
   filter: brightness(.76) saturate(.88) !important;
 }
 /* A single gentle tint across the photograph — not a darker patch behind the words. */
