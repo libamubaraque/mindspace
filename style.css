@@ -6763,3 +6763,57 @@ body:not(.feature-page) .poster-hero > .hero-image::after {
   background: transparent !important;
   opacity: 0 !important;
 }
+
+
+/* TO THE ETHER — DARK BOTANICAL TEXTURE LAYER (NOV 2026)
+   User-selected marbled green textures, balanced with dark overlays for legibility. */
+:root {
+  --ether-texture-moss: url("https://i.pinimg.com/1200x/26/a4/b5/26a4b5ef7b53691fd5e8d72dd9c7a64d.jpg");
+  --ether-texture-woodgrain: url("https://i.pinimg.com/736x/e6/99/e4/e699e4eec531e70bbec9b732d71949e9.jpg");
+}
+
+/* Darker moss-marble texture */
+body:not(.feature-page) #about,
+body:not(.feature-page) .beyond-note-section,
+body:not(.feature-page) .closing-section {
+  background-image:
+    linear-gradient(180deg, rgba(7, 13, 8, .84), rgba(10, 18, 10, .78)),
+    var(--ether-texture-moss) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+}
+
+/* Flowing woodgrain texture for editorial / transition sections */
+body:not(.feature-page) .image-break,
+body:not(.feature-page) .ether-editorial-section {
+  background-image:
+    linear-gradient(180deg, rgba(6, 12, 7, .82), rgba(9, 17, 9, .78)),
+    var(--ether-texture-woodgrain) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+}
+
+/* Preserve contrast for text and translucent panels above textured sections */
+body:not(.feature-page) #about,
+body:not(.feature-page) .beyond-note-section,
+body:not(.feature-page) .closing-section,
+body:not(.feature-page) .image-break,
+body:not(.feature-page) .ether-editorial-section {
+  color: var(--cream, #f3f0e5);
+  isolation: isolate;
+}
+
+@media (max-width: 760px) {
+  body:not(.feature-page) #about,
+  body:not(.feature-page) .beyond-note-section,
+  body:not(.feature-page) .closing-section,
+  body:not(.feature-page) .image-break,
+  body:not(.feature-page) .ether-editorial-section {
+    background-attachment: scroll !important;
+    background-position: center !important;
+  }
+}
