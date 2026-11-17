@@ -230,10 +230,6 @@ function renderSpaces(filter = "all") {
       image.style.display = "none";
     });
 
-    const imageFrame = document.createElement("div");
-    imageFrame.className = "card-image-frame";
-    imageFrame.appendChild(image);
-
     const cardContent = document.createElement("div");
     cardContent.className = "card-content";
 
@@ -267,7 +263,7 @@ function renderSpaces(filter = "all") {
     );
 
     card.append(
-      imageFrame,
+      image,
       cardContent
     );
 
