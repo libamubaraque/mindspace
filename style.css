@@ -6817,3 +6817,68 @@ body:not(.feature-page) .ether-editorial-section {
     background-position: center !important;
   }
 }
+
+
+/* TO THE ETHER — SITE-WIDE DARK BOTANICAL BACKGROUND
+   Textures belong to the page/section canvas, never to text blocks or cards. */
+:root {
+  --pepper: #080d08;
+  --forest: #101a10;
+  --deep-forest: #080f09;
+  --hinterlands: #1b2916;
+  --olive: #394525;
+  --moss: #58663b;
+  --sage: #84906a;
+  --pistachio: #c5ce91;
+  --cream: #eeeadd;
+  --paper: #dcd8c6;
+  --white: #fffdf5;
+  --cocoa: #403329;
+  --espresso: #211b15;
+  --line: rgba(238, 234, 221, .16);
+  --glass: rgba(185, 198, 142, .10);
+}
+
+/* The two uploaded references form one continuous, subdued site backdrop. */
+body:not(.feature-page) {
+  background-color: #070c08 !important;
+  background-image:
+    linear-gradient(rgba(4, 9, 5, .76), rgba(4, 9, 5, .82)),
+    url("https://i.pinimg.com/1200x/26/a4/b5/26a4b5ef7b53691fd5e8d72dd9c7a64d.jpg"),
+    url("https://i.pinimg.com/736x/e6/99/e4/e699e4eec531e70bbec9b732d71949e9.jpg") !important;
+  background-size: cover, cover, cover !important;
+  background-position: center, center top, center bottom !important;
+  background-repeat: no-repeat, repeat-y, repeat-y !important;
+  background-attachment: fixed, fixed, fixed !important;
+}
+
+/* Let the page texture show through the large section canvases.
+   Individual text panels, journal cards and content cards keep their own styling. */
+body:not(.feature-page) main > section:not(.poster-hero) {
+  background-color: rgba(5, 11, 6, .48) !important;
+  background-image: none !important;
+}
+
+/* The hero keeps its own photograph; the navigation uses a deeper solid glass tone. */
+body:not(.feature-page) .site-header {
+  background: rgba(5, 10, 6, .90) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Undo the earlier texture-on-specific-sections treatment. */
+body:not(.feature-page) #about,
+body:not(.feature-page) .beyond-note-section,
+body:not(.feature-page) .closing-section,
+body:not(.feature-page) .image-break,
+body:not(.feature-page) .ether-editorial-section {
+  background-image: none !important;
+  background-color: rgba(5, 11, 6, .48) !important;
+}
+
+@media (max-width: 760px) {
+  body:not(.feature-page) {
+    background-attachment: scroll, scroll, scroll !important;
+    background-position: center, center top, center bottom !important;
+  }
+}
