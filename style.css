@@ -6991,7 +6991,7 @@ body:not(.feature-page) .life-note-section {
   background-color: #10180b !important;
   background-image:
     linear-gradient(rgba(8, 15, 6, .42), rgba(8, 15, 6, .52)),
-    url("images/life-note-texture.jpg") !important;
+    url("images/life-note-texture.png") !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -7005,7 +7005,7 @@ body.feature-page .saved-panel {
   background-color: rgba(12, 20, 9, .72) !important;
   background-image:
     linear-gradient(rgba(8, 15, 6, .58), rgba(8, 15, 6, .68)),
-    url("images/life-note-texture.jpg") !important;
+    url("images/life-note-texture.png") !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
