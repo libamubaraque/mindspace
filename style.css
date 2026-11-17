@@ -6747,3 +6747,19 @@ body:not(.feature-page) .poster-hero > .hero-image img {
 body:not(.feature-page) .poster-hero > .hero-image::after {
   background: linear-gradient(90deg, rgba(13,22,14,.34) 0%, rgba(13,22,14,.12) 48%, rgba(13,22,14,0) 100%) !important;
 }
+
+
+/* HERO IMAGE — REMOVE ALL WASHED-OUT OVERLAYS */
+body:not(.feature-page) .poster-hero > .hero-image {
+  opacity: 1 !important;
+}
+body:not(.feature-page) .poster-hero > .hero-image img {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+body:not(.feature-page) .poster-hero > .hero-image::before,
+body:not(.feature-page) .poster-hero > .hero-image::after {
+  background: transparent !important;
+  opacity: 0 !important;
+}
