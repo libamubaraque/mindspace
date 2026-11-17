@@ -6882,3 +6882,27 @@ body:not(.feature-page) .ether-editorial-section {
     background-position: center, center top, center bottom !important;
   }
 }
+
+
+/* LIFE ISN'T JUST ABOUT GETTING THINGS DONE — textured section background */
+body:not(.feature-page) .life-note-section {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(5, 13, 5, .58), rgba(5, 13, 5, .72)),
+    url("images/life-note-texture.png") center / cover no-repeat !important;
+  color: #f3f0e5;
+}
+body:not(.feature-page) .life-note-section .intro-label,
+body:not(.feature-page) .life-note-section .intro-label .eyebrow,
+body:not(.feature-page) .life-note-section .intro-number,
+body:not(.feature-page) .life-note-section .intro-content > h2 {
+  color: #f3f0e5 !important;
+}
+body:not(.feature-page) .life-note-section .intro-content > h2 i {
+  color: #d4d9a0 !important;
+}
+body:not(.feature-page) .life-note-section .intro-copy,
+body:not(.feature-page) .life-note-section .intro-copy p {
+  color: rgba(243, 240, 229, .88) !important;
+}
