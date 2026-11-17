@@ -7042,31 +7042,3 @@ body.feature-page .chapter-note,
 body.feature-page .nested-topics-section {
   background-image: revert !important;
 }
-
-
-/* DEFINITIVE TEXTURE PLACEMENT — section canvas + feature-page canvas only.
-   Keep all journal inputs, text panels and activity cards on their original surfaces. */
-body:not(.feature-page) section.life-note-section {
-  background: linear-gradient(rgba(7, 13, 6, .34), rgba(7, 13, 6, .42)),
-    url("./images/life-note-texture.png") center center / cover no-repeat !important;
-  background-color: #10180b !important;
-}
-
-body.feature-page,
-body.feature-page .feature-main,
-body.feature-page .feature-workspace,
-body.feature-page .feature-content {
-  background: linear-gradient(rgba(7, 13, 6, .34), rgba(7, 13, 6, .42)),
-    url("./images/life-note-texture.png") center center / cover no-repeat !important;
-  background-color: #10180b !important;
-}
-
-/* Do not put the texture on the writing/activity surfaces. */
-body.feature-page .feature-text-section,
-body.feature-page .activity-panel,
-body.feature-page .journal-panel,
-body.feature-page .saved-panel,
-body.feature-page .nested-card,
-body.feature-page .chapter-note {
-  background-image: none !important;
-}
