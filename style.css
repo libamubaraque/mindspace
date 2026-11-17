@@ -6738,3 +6738,12 @@ body:not(.feature-page) .poster-hero .hero-image-caption {
     width: 86% !important;
   }
 }
+
+/* HERO PHOTO CLARITY — keep the photograph vivid, not washed out */
+body:not(.feature-page) .poster-hero > .hero-image img {
+  opacity: 1 !important;
+  filter: brightness(1.08) contrast(1.08) saturate(1.12) !important;
+}
+body:not(.feature-page) .poster-hero > .hero-image::after {
+  background: linear-gradient(90deg, rgba(13,22,14,.34) 0%, rgba(13,22,14,.12) 48%, rgba(13,22,14,0) 100%) !important;
+}
