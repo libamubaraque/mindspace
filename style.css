@@ -7104,3 +7104,25 @@ body.feature-page .chapter-note {
   color: #3c4b32 !important;
   background: rgba(203,216,185,.72) !important;
 }
+
+
+/* LIGHTEN THE FEATURE-PAGE TEXTURE — keep the grain visible, not muddy */
+body.feature-page {
+  background-color: #dfe5d4 !important;
+  background-image:
+    linear-gradient(rgba(235, 239, 222, .76), rgba(226, 233, 214, .80)),
+    url("images/life-note-texture.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+body.feature-page .feature-main,
+body.feature-page .feature-workspace,
+body.feature-page .feature-content {
+  background: transparent !important;
+  background-image: none !important;
+}
+@media (max-width: 760px) {
+  body.feature-page { background-attachment: scroll !important; }
+}
