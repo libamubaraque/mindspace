@@ -6983,3 +6983,31 @@ radial-gradient(ellipse at 92% 88%, rgba(115,123,73,.10), transparent 32%),
 body.feature-page .feature-main > section:not(.feature-hero) {
   background-color: transparent;
 }
+
+
+/* EXACT UPLOADED GREEN TEXTURE — LIFE NOTE + ALL CARD INTERIORS */
+/* This uses the supplied moss-green texture as the actual background image. */
+body:not(.feature-page) .life-note-section {
+  background-color: #10180b !important;
+  background-image:
+    linear-gradient(rgba(8, 15, 6, .42), rgba(8, 15, 6, .52)),
+    url("images/life-note-texture.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* The same texture sits behind the content inside every individual space page card. */
+body.feature-page .feature-text-section,
+body.feature-page .activity-panel,
+body.feature-page .journal-panel,
+body.feature-page .saved-panel {
+  background-color: rgba(12, 20, 9, .72) !important;
+  background-image:
+    linear-gradient(rgba(8, 15, 6, .58), rgba(8, 15, 6, .68)),
+    url("images/life-note-texture.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  backdrop-filter: none !important;
+}
