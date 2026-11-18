@@ -31,7 +31,7 @@ const spaces = [
     id: "mood",
     name: "Mood Journal",
     category: "wellbeing",
-    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/mood-journal.jpg",
     desc: "A gentle place to name what you feel, write freely and notice patterns without judging yourself. Try prompts, short lists or a page that is entirely your own."
   },
   {
