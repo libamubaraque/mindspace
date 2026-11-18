@@ -7141,3 +7141,83 @@ body.feature-page .feature-content {
   background: transparent !important;
   background-image: none !important;
 }
+
+
+/* EXPLORE CARDS — TOP PHOTOGRAPH + LIGHT OLIVE TEXT PANEL */
+body:not(.feature-page) #explore #featureGrid > .feature-card {
+  display: flex !important;
+  min-height: 0 !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  padding: 13px !important;
+  overflow: hidden !important;
+  color: #34392d !important;
+  background: #e4e7d2 !important;
+  border: 1px solid rgba(212, 217, 160, .55) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, .18) !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card::before,
+body:not(.feature-page) #explore #featureGrid > .feature-card::after {
+  display: none !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card .card-image-frame {
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 190px !important;
+  flex: 0 0 190px !important;
+  overflow: hidden !important;
+  border-radius: 15px !important;
+  background: #c6ceb0 !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card .card-image-frame img {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  transition: transform .65s ease !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card:hover .card-image-frame img {
+  transform: scale(1.05) !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card .card-content {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  min-height: 220px !important;
+  flex: 1 !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 20px 9px 10px !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card .card-number {
+  margin-bottom: 18px !important;
+  color: #596346 !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card h3 {
+  color: #30372a !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card p {
+  color: #4d5544 !important;
+}
+body:not(.feature-page) #explore #featureGrid > .feature-card .card-link {
+  color: #465536 !important;
+  border-color: rgba(70, 85, 54, .45) !important;
+}
+@media (max-width: 700px) {
+  body:not(.feature-page) #explore #featureGrid > .feature-card .card-image-frame {
+    height: 205px !important;
+    flex-basis: 205px !important;
+  }
+  body:not(.feature-page) #explore #featureGrid > .feature-card .card-content {
+    min-height: 210px !important;
+  }
+}
