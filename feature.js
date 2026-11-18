@@ -1257,14 +1257,38 @@ async function initialiseFeatureSession() {
 
   try {
     const { data: sessionData, error } = await db.auth.getSession();
-
     if (error) throw error;
-
     activeSession = sessionData.session;
-
   } catch (error) {
     console.warn("Could not restore account session:", error);
   }
+}
+
+async function loadMoodJournalEntries() {
+  if (featureId !== "mood" || !db || !activeSession?.user?.id) return;
+
+  const { data: rows, error } = await db
+    .from("journal_entries")
+    .select("id, title, content, created_at")
+    .eq("user_id", activeSession.user.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Mood Journal Supabase load failed:", error);
+    return;
+  }
+
+  const otherSpaces = getSavedPages().filter(entry => entry.space !== "mood");
+  const journalEntries = (rows || []).map(row => ({
+    id: row.id,
+    space: "mood",
+    title: row.title || "Untitled entry",
+    content: row.content || "",
+    photo: "",
+    date: row.created_at || new Date().toISOString()
+  }));
+
+  writeStore(savedStorageKey(), [...journalEntries, ...otherSpaces]);
 }
 
 /* 06. CONTENT RENDERING
@@ -1342,18 +1366,48 @@ function getSavedPages() {
   return Array.isArray(entries) ? entries : [];
 }
 
-function savePage(entry) {
-  const entries = getSavedPages();
+async function savePage(entry) {
+  const title = String(entry.title || "Untitled entry");
+  const content = String(entry.content || "");
 
+  if (featureId === "mood" && db && activeSession?.user?.id) {
+    const { data: row, error } = await db
+      .from("journal_entries")
+      .insert({
+        user_id: activeSession.user.id,
+        title,
+        content,
+        entry_date: new Date().toISOString().slice(0, 10)
+      })
+      .select("id, title, content, created_at")
+      .single();
+
+    if (error) {
+      console.error("Mood Journal Supabase save failed:", error);
+      return false;
+    }
+
+    const entries = getSavedPages().filter(item => item.id !== row.id);
+    entries.unshift({
+      id: row.id,
+      space: "mood",
+      title: row.title || title,
+      content: row.content || content,
+      photo: "",
+      date: row.created_at || new Date().toISOString()
+    });
+    return writeStore(savedStorageKey(), entries);
+  }
+
+  const entries = getSavedPages();
   entries.unshift({
     id: makeId(),
     space: featureId,
-    title: String(entry.title || "Untitled entry"),
-    content: String(entry.content || ""),
+    title,
+    content,
     photo: entry.photo || "",
     date: new Date().toISOString()
   });
-
   return writeStore(savedStorageKey(), entries);
 }
 
@@ -1512,7 +1566,7 @@ function connectJournal() {
   const form = document.getElementById("journalForm");
   if (!form) return;
 
-  form.addEventListener("submit", event => {
+  form.addEventListener("submit", async event => {
     event.preventDefault();
 
     const title = document.getElementById("journalTitle").value.trim();
@@ -1524,15 +1578,18 @@ function connectJournal() {
       return;
     }
 
-    const saved = savePage({ title, content });
+    const saved = await savePage({ title, content });
 
     if (!saved) {
-      message.textContent =
-        "Your entry could not be saved. Your browser storage may be full.";
+      message.textContent = activeSession?.user?.id
+        ? "Your entry could not be saved to your account. Please try again."
+        : "Your entry could not be saved on this device.";
       return;
     }
 
-    message.textContent = "Your entry has been saved on this device.";
+    message.textContent = featureId === "mood" && activeSession?.user?.id
+      ? "Your entry has been saved to your account."
+      : "Your entry has been saved on this device.";
     form.reset();
     renderSavedArea();
   });
@@ -2374,6 +2431,7 @@ mainNav?.querySelectorAll("a").forEach(link => {
 (async function startFeaturePage() {
   // Account restoration is optional and never blocks a visitor.
   await initialiseFeatureSession();
+  await loadMoodJournalEntries();
 
   if (!contentElement) {
     console.error("Feature content container was not found.");
