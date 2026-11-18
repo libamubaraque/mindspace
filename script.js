@@ -66,7 +66,7 @@ const spaces = [
     id: "study",
     name: "Study & Focus",
     category: "growth",
-    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/study-focus.jpg",
     desc: "Find practical study methods, short focus sessions, useful breaks and ways to learn with understanding. Explore active recall, planning and asking clearer questions."
   },
   {
