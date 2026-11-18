@@ -59,7 +59,7 @@ const spaces = [
     id: "checkin",
     name: "Daily Check-in",
     category: "wellbeing",
-    image: "https://i.pinimg.com/736x/63/2e/45/632e45ba5c4fc3596d5bda046880a54a.jpg",
+    image: "images/daily-check-in-cat.jpg",
     desc: "Pause for a small daily reflection, recognise little wins and choose one manageable next step. There is no score and no pressure to have everything figured out."
   },
   {
@@ -73,7 +73,7 @@ const spaces = [
     id: "selfcare",
     name: "Self-care Corner",
     category: "wellbeing",
-    image: "https://i.pinimg.com/736x/63/2e/45/632e45ba5c4fc3596d5bda046880a54a.jpg",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/self-care-card.jpg",
     desc: "Explore realistic routines for physical comfort, emotional wellbeing, rest, relationships and support. Keep what is useful and seek trusted help when you need it."
   },
   {
@@ -221,19 +221,14 @@ function renderSpaces(filter = "all") {
     card.dataset.space = space.id;
     card.setAttribute("aria-label", `Explore ${space.name}`);
 
-    const imageFrame = document.createElement("div");
-    imageFrame.className = "card-image-frame";
-
     const image = document.createElement("img");
     image.src = space.image;
     image.alt = "";
     image.loading = "lazy";
 
     image.addEventListener("error", () => {
-      imageFrame.style.display = "none";
+      image.style.display = "none";
     });
-
-    imageFrame.appendChild(image);
 
     const cardContent = document.createElement("div");
     cardContent.className = "card-content";
@@ -268,7 +263,7 @@ function renderSpaces(filter = "all") {
     );
 
     card.append(
-      imageFrame,
+      image,
       cardContent
     );
 
