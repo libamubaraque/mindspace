@@ -230,6 +230,34 @@ button {
   transition: var(--ease);
 }
 
+.account-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 1000;
+  min-width: 220px;
+  padding: 16px;
+  display: grid;
+  gap: 9px;
+  color: var(--cream, #f5f0e6);
+  background: rgba(20, 31, 25, .97);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  box-shadow: 0 14px 35px rgba(0,0,0,.25);
+}
+.header-actions { position: relative; }
+.account-menu span { font-size: .8rem; opacity: .75; overflow-wrap: anywhere; }
+.account-menu button {
+  margin-top: 5px;
+  padding: 8px 12px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px;
+  cursor: pointer;
+}
+[hidden] { display: none !important; }
+
 .header-cta:hover {
   color: var(--pistachio);
   background: transparent;
