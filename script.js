@@ -52,7 +52,7 @@ const spaces = [
     id: "fitness",
     name: "Fitness & Wellness",
     category: "wellbeing",
-    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/fitness-wellness.jpg",
     desc: "Discover enjoyable movement, screen breaks, running reflections, rest and everyday wellbeing. Focus on comfort, safety and activities you genuinely enjoy."
   },
   {
