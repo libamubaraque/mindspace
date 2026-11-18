@@ -108,7 +108,7 @@ const spaces = [
     id: "commons",
     name: "The Commons",
     category: "community",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/the-commons.jpg",
     desc: "Find ideas for clubs, shared interests, group projects and welcoming community spaces. Make room for different voices, interests and ways of participating."
   },
   {
@@ -150,7 +150,7 @@ const spaces = [
     id: "sleep",
     name: "Sleep & Rest",
     category: "wellbeing",
-    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/sleep%20and%20rest.jpg",
     desc: "Learn about rest, flexible evening routines, sleep-friendly habits and when to seek support. Focus on realistic changes that fit your home and schedule."
   },
   {
