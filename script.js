@@ -80,28 +80,28 @@ const spaces = [
     id: "stories",
     name: "Stories & Realities",
     category: "community",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/stories-realities.jpg",
     desc: "Read about human dignity, communities, real-world challenges, reliable information and meaningful change. Look beyond headlines and explore different perspectives with care."
   },
   {
     id: "career",
     name: "Career Exploration",
     category: "growth",
-    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/career-exploration.jpg",
     desc: "Explore interests, job families, education pathways and questions to ask before choosing a direction. Treat every result as a starting point, not a fixed decision."
   },
   {
     id: "scrapbook",
     name: "My Little World",
     category: "creative",
-    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/my-little-world.jpg",
     desc: "Create a personal collection of memories, photographs, letters, everyday moments and reflections. Save the details that matter and remember to protect everyone's privacy."
   },
   {
     id: "movies",
     name: "Movies & Reflections",
     category: "creative",
-    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/movies-reflection.jpg",
     desc: "Look beyond the screen with film reflections, creative choices, watchlists and thoughtful discussion. Notice storytelling techniques and explore the ideas a film raises."
   },
   {
