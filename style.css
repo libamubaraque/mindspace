@@ -957,9 +957,15 @@ button {
 /* 14 — RESOURCES */
 
 .resources-section {
-  padding-top: 130px;
-  padding-bottom: 130px;
-  background: rgba(25, 37, 19, .45);
+  width: 100%;
+  margin-inline: 0;
+  padding: 130px 5%;
+  background-image:
+    linear-gradient(rgba(12, 20, 10, .76), rgba(12, 20, 10, .82)),
+    url("images/little-help-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .resources-grid {
