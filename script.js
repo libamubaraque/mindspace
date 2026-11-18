@@ -262,8 +262,12 @@ function renderSpaces(filter = "all") {
       cardBottom
     );
 
+    const imageFrame = document.createElement("div");
+    imageFrame.className = "card-image-frame";
+    imageFrame.appendChild(image);
+
     card.append(
-      image,
+      imageFrame,
       cardContent
     );
 
