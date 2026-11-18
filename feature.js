@@ -1245,6 +1245,16 @@ const sidebarElement = document.getElementById("featureSavedPages");
 
 const yearElement = document.getElementById("year");
 
+function updateFeatureMetaDescription(title, description) {
+  let meta = document.querySelector('meta[name="description"]');
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.name = "description";
+    document.head.appendChild(meta);
+  }
+  meta.content = `${title} at To the Ether: ${description} Explore student wellbeing, learning, creativity and personal growth.`.slice(0, 300);
+}
+
 if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
@@ -2280,6 +2290,7 @@ function renderNestedPage(item, topic) {
   const topicDescription = topic[2];
 
   document.title = `${topicTitle} | To the Ether.`;
+  updateFeatureMetaDescription(topicTitle, topicDescription);
 
   titleElement.textContent = topicTitle;
   categoryElement.textContent = item.category;
@@ -2355,6 +2366,7 @@ function renderPage() {
   breadcrumb.textContent = feature.title;
 
   document.title = `${feature.title} | To the Ether.`;
+  updateFeatureMetaDescription(feature.title, feature.description);
 
   if (nestedId) {
     const topic = feature.topics.find(item => item[0] === nestedId);
