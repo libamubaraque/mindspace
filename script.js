@@ -115,35 +115,35 @@ const spaces = [
     id: "sports",
     name: "Sports & Movement",
     category: "community",
-    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/sports-fitness.jpg",
     desc: "Explore teamwork, sporting stories, movement, participation, safety and the many ways to enjoy sport. Celebrate cooperation and respect every participant."
   },
   {
     id: "planner",
     name: "Planner",
     category: "growth",
-    image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/planner.jpg",
     desc: "Organise priorities, break large tasks into steps and leave realistic room for rest and change. Build a plan that supports your day instead of overwhelming it."
   },
   {
     id: "creative",
     name: "Creative Studio",
     category: "creative",
-    image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/creative-studio.jpg",
     desc: "Experiment with writing, art, ideas and small projects while developing your own creative voice. Collect inspiration, try different approaches and let early drafts be imperfect."
   },
   {
     id: "kindness",
     name: "Kindness Corner",
     category: "community",
-    image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/kindness-corner.jpg",
     desc: "Explore thoughtful actions, inclusion, respectful boundaries and ways to support your community. Remember that kindness also includes respecting your own needs."
   },
   {
     id: "library",
     name: "Little Library",
     category: "growth",
-    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/little-library.jpg",
     desc: "Follow questions, discover reliable sources, connect ideas and build a personal trail of learning. Read for school, curiosity, imagination or simple enjoyment."
   },
   {
@@ -157,14 +157,14 @@ const spaces = [
     id: "money",
     name: "Money Matters",
     category: "growth",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/money-matters.jpg",
     desc: "Understand basic budgeting language, saving concepts, careful online choices and everyday money decisions. Learn the basics with examples and trusted guidance."
   },
   {
     id: "openmic",
     name: "Open Mic",
     category: "creative",
-    image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/open-mic.jpg",
     desc: "Explore poetry, spoken word, letters and personal expression, whether you share your work or keep it private. Your voice can take many forms."
   }
 ];
