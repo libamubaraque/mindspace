@@ -38,7 +38,7 @@ const spaces = [
     id: "breathing",
     name: "Breathing Space",
     category: "wellbeing",
-    image: "https://i.pinimg.com/736x/28/e3/e2/28e3e279ce94a158802af390127be743.jpg"
+    image: "https://i.pinimg.com/736x/28/e3/e2/28e3e279ce94a158802af390127be743.jpg",
     desc: "Explore comfortable pauses, mindful attention, nature sounds and quiet moments at your own pace. Choose an activity that feels right and leave whenever you wish."
   },
   {
