@@ -221,14 +221,19 @@ function renderSpaces(filter = "all") {
     card.dataset.space = space.id;
     card.setAttribute("aria-label", `Explore ${space.name}`);
 
+    const imageFrame = document.createElement("div");
+    imageFrame.className = "card-image-frame";
+
     const image = document.createElement("img");
     image.src = space.image;
     image.alt = "";
     image.loading = "lazy";
 
     image.addEventListener("error", () => {
-      image.style.display = "none";
+      imageFrame.style.display = "none";
     });
+
+    imageFrame.appendChild(image);
 
     const cardContent = document.createElement("div");
     cardContent.className = "card-content";
@@ -263,7 +268,7 @@ function renderSpaces(filter = "all") {
     );
 
     card.append(
-      image,
+      imageFrame,
       cardContent
     );
 
