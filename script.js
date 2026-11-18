@@ -45,7 +45,7 @@ const spaces = [
     id: "gratitude",
     name: "Gratitude Journal",
     category: "wellbeing",
-    image: "https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?auto=format&fit=crop&w=1200&q=85",
+    image: "https://raw.githubusercontent.com/libamubaraque/mindspace/main/images/self-care-card.jpg",
     desc: "Keep a collection of ordinary moments, thoughtful gestures and experiences you want to remember. Let appreciation sit alongside honest feelings about difficult days."
   },
   {
