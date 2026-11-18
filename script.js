@@ -188,6 +188,29 @@ const authSwitch = document.getElementById("authSwitch");
 
 const loginButton = document.getElementById("loginButton");
 const signupButton = document.getElementById("signupButton");
+const accountButton = document.getElementById("accountButton");
+const accountMenu = document.getElementById("accountMenu");
+const accountName = document.getElementById("accountName");
+const accountEmail = document.getElementById("accountEmail");
+const logoutButton = document.getElementById("logoutButton");
+
+function renderAccount(session) {
+  const user = session?.user;
+  const metadata = user?.user_metadata || {};
+  const displayName = metadata.full_name || metadata.name ||
+    metadata.display_name || (user?.email ? user.email.split("@")[0] : "My Account");
+
+  if (accountName) accountName.textContent = displayName;
+  if (accountEmail) accountEmail.textContent = user?.email || "";
+  if (accountButton) {
+    accountButton.textContent = displayName;
+    accountButton.hidden = !user;
+    accountButton.title = user?.email || "My Account";
+  }
+  if (loginButton) loginButton.hidden = !!user;
+  if (signupButton) signupButton.hidden = !!user;
+  if (!user && accountMenu) accountMenu.hidden = true;
+}
 
 const menuToggle = document.getElementById("menuToggle");
 const mainNav = document.getElementById("mainNav");
@@ -476,6 +499,7 @@ authForm?.addEventListener("submit", async event => {
     }
 
     currentSession = result.data.session;
+    renderAccount(currentSession);
 
     showAuthMessage("You're signed in. Welcome to To the Ether.");
 
@@ -511,10 +535,12 @@ async function initialiseAuth() {
     if (error) throw error;
 
     currentSession = data.session;
+    renderAccount(currentSession);
 
     supabaseClient.auth.onAuthStateChange(
       (_event, session) => {
         currentSession = session;
+        renderAccount(session);
       }
     );
 
@@ -522,6 +548,22 @@ async function initialiseAuth() {
     console.error("Could not restore Supabase session:", error);
   }
 }
+
+accountButton?.addEventListener("click", () => {
+  if (accountMenu) accountMenu.hidden = !accountMenu.hidden;
+});
+
+logoutButton?.addEventListener("click", async () => {
+  if (!supabaseClient) return;
+  const { error } = await supabaseClient.auth.signOut();
+  if (error) {
+    console.error("Could not log out:", error);
+    return;
+  }
+  currentSession = null;
+  renderAccount(null);
+  window.location.reload();
+});
 
 /* 11. MOBILE NAVIGATION */
 
