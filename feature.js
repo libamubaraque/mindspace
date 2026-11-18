@@ -2200,14 +2200,14 @@ function connectFitness() {
   const form = document.getElementById("fitnessForm");
   if (!form) return;
 
-  form.addEventListener("submit", event => {
+  form.addEventListener("submit", async event => {
     event.preventDefault();
 
     const activity = document.getElementById("activityName").value;
     const reflection = document.getElementById("activityReflection").value.trim();
     const message = document.getElementById("fitnessMessage");
 
-    const saved = savePage({
+    const saved = await savePage({
       title: activity,
       content: reflection || "Activity recorded."
     });
